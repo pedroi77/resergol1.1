@@ -1,0 +1,20 @@
+  a.menu:after, .dropdown-toggle:after { 
+        content: none; 
+      } 
+
+    ul.nav li.dropdown:hover { 
+      font-weight: bold; 
+     
+
+      
+} 
+  ul.nav li.dropdown:hover ul.dropdown-menu.submenu{ 
+    display: block; 
+    margin-left: 220px; 
+     
+    margin-top: -36px; 
+                 
+    background-color:#FFF; 
+    font-weight: normal; 
+                 
+  } 

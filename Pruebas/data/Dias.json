@@ -1,0 +1,9 @@
+[
+  {"IdDia":1,"Nombre":"Lunes"},
+  {"IdDia":2,"Nombre":"Martes"},
+  {"IdDia":3,"Nombre":"Miercoles"},
+  {"IdDia":4,"Nombre":"Jueves"},
+  {"IdDia":5,"Nombre":"Viernes"},
+  {"IdDia":6,"Nombre":"Sabado"},
+  {"IdDia":7,"Nombre":"Domingo"}
+  ]

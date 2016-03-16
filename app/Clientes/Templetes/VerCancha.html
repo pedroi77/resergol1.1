@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>ReserGol - Cancha</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="../../../bower_components/bootstrap/CSS/bootstrap.min.css">
+	    <link href="../../../css/styles.css" rel="stylesheet">      
+        
+        
+         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+        
+	</head>
+	<body class="background-dark">
+
+<div class="navbar navbar-default" id="navbar">
+    <div class="col-md-12">
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+             <li><a href="#loginModal" role="button" data-toggle="modal">Iniciar Sesión</a></li>
+             <li><a href="#registracionModal" role="button" data-toggle="modal">¡Registrate!</a></li>
+             <li><a href="#aboutModal" role="button" data-toggle="modal">Acerca de</a></li>
+          </ul>
+        </div>	
+     </div>	
+</div>
+
+<!--main-->
+<div class="container" id="main">
+    
+    
+     <div class="container">
+
+
+   <div class="row">
+
+            <div class="col-md-3 boxComplejo"> 
+            <section class="widget boxComplejo">
+                    <div class="row">
+                     <header>
+                        <h3 class="fa fa-user titul">Cancha 1</h3>
+                         <h4 class="fa fa-user titul">Complejo: <a href="VerComplejo.html">Todo Futbol</a></h4>
+                     </header>
+                      <!--<div class="imgMiniatura">
+                            <img src="images/complejos/complejo1.jpeg" alt="">
+                      <div>-->
+                          
+                      <ul class="liSeparados">
+                          <li>
+                        <b>Provincia:</b> <label>Buenos Aires</label>
+                          </li>
+                          <li>
+                            <b>Localidad:</b> <label>Lomas de Zamora</label>  
+                          </li>
+                          <li>
+                            <b>Direccion:</b> <label>Laprida 950</label>  
+                          </li>
+                          <li>
+                           <b>Teléfono:</b> <label>4-244-1933</label>  
+                          </li>
+                          <li class="glyphicon glyphicon-time">
+                            <label class="letraHorarios">L a V - 12hs - 18hs.</label>
+                          </li>
+                          
+                      </ul>
+                    </div>   
+                    
+                    <div>
+                        <button class="btn btn-success center-block" id="btnReservarCancha">RESERVAR</button>
+                    </div>
+                    
+           
+           </section>
+           
+           
+          </div>
+       
+       
+       
+
+       <div class="col-md-6">
+       
+           <div class="col-md-6 carousel-container anchoCarousel ">
+          <div id="carouselComplejos" class="carousel slide carousel-fade">
+            <!-- Carousel items -->
+            <div class="carousel-inner anchoCarousel">
+              <div data-slide-no="0" class="item carousel-item active">
+                <img src="images/complejos/complejo1.jpeg" alt="">
+                <div class="carousel-caption">
+                </div>
+              </div>
+              <div data-slide-no="1" class="item carousel-item">
+                <img src="images/complejos/complejo2.jpg" alt="">
+                <div class="carousel-caption">
+                </div>
+              </div>
+              <div data-slide-no="2" class="item carousel-item">
+                <img src="images/complejos/complejo3.jpg" alt="">
+                <div class="carousel-caption">
+                </div>
+              </div>
+            </div>
+            <!-- Carousel nav -->
+            <a class="carousel-control left" href="#carouselComplejos" data-slide="prev">‹</a>
+            <a class="carousel-control right" href="#carouselComplejos" data-slide="next">›</a>
+          </div>
+        
+       
+       </div>
+           
+       
+    </div> 
+       
+       <div class="col-md-3"> 
+           
+           <section class="widget2">
+   			     
+                  <div class="row">
+                      <div class="col-md-12">
+                          <ul>
+                            <li>
+                                <b>Tamaño:</b> <label>6 (12 jugadores)</label>
+                            </li>
+                            <li>
+                                <b>Superficie:</b> <label>Pasto sintético</label>
+                            </li>
+                            <li>
+                                <b>Techada:</b> <label>NO</label>
+                            </li>
+                            <li>
+                                <b>Luz:</b> <label>SI</label>
+                            </li>
+                            <li>
+                                <b>Precio por hora:</b> <label>$380</label>
+                                <label class="glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title="Tanto el precio como la seña que se indican no incluyen luz." ></label>
+                            </li>
+                            <li>
+                                <b>Seña requerida:</b> <label>$80</label>
+                            </li>  
+                          </ul>
+                          
+                      </div>
+                  </div>
+                  
+               </section>
+            
+           
+           
+           <section class="widget">
+                <div class="panel-heading" ><h4>Servicios adicionales</h4></div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label>Buffet </label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
+                      </div>
+                      <div class="col-md-6">
+                        <label>Parrilla </label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>  
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label>Duchas </label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
+                      </div>
+                      <div class="col-md-6">
+                        <label>Wifi</label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>  
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-8">
+                        <label>Estacionamiento</label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
+                      </div>
+                  </div>   
+            </section>
+
+
+                   
+                  </div>
+           
+           
+          </div>
+        
+            
+         <div class="row">
+           
+             <div class="col-md-3">
+              <div class="widget">
+                <h4 class="fa fa-user titul">Ubicación</h4>
+                <div class="boxMapa">
+                    <div id="map-containerIvan"></div>
+                </div>
+              </div>
+             </div>
+             
+     <div class="col-md-6">
+     <div class="detailBox">
+    <div class="titleBox">
+      <label>Comentarios</label>
+    </div>
+    <div class="commentBox">
+        
+        <p class="taskDescription">Lo que opina la gente acerca de la cancha "CANCHA 1" de "Todo Fútbol"</p>
+    </div>
+    <div class="actionBox">
+        <ul class="commentList">
+            <li>
+                <div class="commentText">
+                    <p style="color:gray">Pedro77:  </p>
+                    <p class="">Voy siempre, aguante las canchas de Laprida!</p> <span class="date sub-text">3 de Marzo, 2015</span>
+
+                </div>
+            </li>
+            <li>
+                <div class="commentText">
+                    <p style="color:gray">Maty1992:  </p>
+                    <p class="">Muy buenas canchas, excelente para ir a jugar con amigos!</p> <span class="date sub-text">10 de Mayo, 2015</span>
+
+                </div>
+            </li>
+            <li>
+                <div class="commentText">
+                    <p style="color:gray">IvanTaladro:  </p>
+                    <p class="">Excelente! lo mejor de zona sur!</p> <span class="date sub-text">2 de Octubre, 2015</span>
+
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Agregar comentario" />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default">Comentar</button>
+            </div>
+        </form>
+    </div>
+</div>
+                  
+             </div>
+             
+            <div class="col-md-3 "> 
+            <div class="widget2">
+                <div><h4>Puntuación de "Cancha 1"</h4></div>
+                  <div class="row">
+                      <div class="col-md-12">
+                        <label>Puntuación = </label><span> "Muy buena!"</span>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h5>Votá:</h5>
+                      </div>
+                      <div class="col-md-6" style="padding : 5px; padding-top: 2px;">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-success" id="cinco">"Una fantasía"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-6"  style="padding : 5px; padding-top: 2px;">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-primary" id="cuatro">"Muy buena!"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-6" style="padding : 5px; padding-top: 2px;" >
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-info" id="tres">"Mas o menos"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-6" style="padding : 5px; padding-top: 2px;">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-warning" id="dos">"No me gustan"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-12" style="padding : 5px; padding-top: 2px;">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-danger" id="uno">"Las peores canchas"</button>
+                        </div>
+                      </div> 
+                       <div class="col-md-12" style="padding : 5px; padding-top: 4 px;">
+                        <label>Votaste: </label>
+                      </div>    
+                  </div>
+                
+                
+                </div>
+
+            </div>
+         </div>
+         
+    </div>
+        
+        
+
+    <div class="clearfix"></div>
+      
+    <hr>
+    <div class="col-md-12 text-center">ReserGol 2015 -  Copyright © Todos los Derechos Reservados</div>
+    <hr>
+    
+  </div>
+</div><!--/main-->
+
+<!--login modal-->
+<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h2 class="text-center"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"><br>Ingresar</h2>
+      </div>
+      <div class="modal-body">
+          <form class="form col-md-12 center-block">
+            <div class="form-group">
+              <input type="text" class="form-control input-lg" placeholder="Usuario">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control input-lg" placeholder="Contraseña">
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary btn-lg btn-block">Iniciar Sesión</button>
+              <span class="pull-right"></span><span><a href="#">¿Olvidaste tu contraseña?</a></span>
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+          
+      </div>
+  </div>
+  </div>
+</div>
+        
+                   
+
+        
+<!--Registración modal-->
+<div id="registracionModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-registracion">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+      <div class = 'form-horizontal well'>
+        <fieldset>
+         <legend>Datos de usuario</legend>
+          <div class="control-group">
+            <form class="form center-block">
+              <div class="col-md-6">    
+              <div class="form-group">
+                <input type="text" id="usuario" class="form-control input-md" placeholder="Usuario">
+              </div>
+              <div class="form-group">
+                <input type="password" id="contraseña" class="form-control input-md" placeholder="Contraseña">
+              </div>
+             </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                    <input type="email" id="email" class="form-control input-md" placeholder="E-Mail">
+                </div> 
+                <div class="form-group">
+                    <input type="password" id="contraseñaRepetida" class="form-control input-md" placeholder="Repita contraseña">
+                </div>  
+             </div>    
+          </fieldset>
+        </div>
+        <div class = 'form-horizontal well'>
+            <fieldset>
+                <legend>Datos personales</legend>    
+                     <div class="control-group">
+                        <form class="form center-block">
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                    <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre">
+                                </div>
+                                <div class="form-group">
+                                   <select class="form-control">
+                                      <option value="-1">Tipo Doc.</option> 
+                                      <option value="1">DNI</option>
+                                      <option value="2">LC</option>
+                                      <option value="3">CI</option>  
+                                    </select>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="email" id="apellido" class="form-control input-md" placeholder="Apellido">
+                                </div> 
+                                <div class="form-group">
+                                    <input type="text" id="contraseñaRepetida" class="form-control input-md" placeholder="N° documento">
+                                </div>  
+                            </div>    
+            </fieldset>
+                         
+                        </div>
+                
+                <div class="form-group">
+                <button class="btn btn-primary btn-lg btn-block">Terminado</button>
+            </div>
+            </fieldset> 
+            </div>
+         </form>
+          </div>
+
+            
+            
+                    
+                
+          
+          
+          
+          
+      
+  </div>
+  </div>
+</div>
+
+
+
+<!--about modal-->
+<div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h2 class="text-center">ReserGol</h2>
+      </div>
+      <div class="modal-body">
+          <div class="col-md-12 text-center">
+           ReserGol es una plataforma web en la que podrás buscar las mejores canchas de fútbol! y reservar tu turno para jugar, con sólo un click!
+          
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>
+      </div>
+  </div>
+  </div>
+</div>
+	<!-- script references -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/scripts.js"></script>
+	</body>
+</html>
