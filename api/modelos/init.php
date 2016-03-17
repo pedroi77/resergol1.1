@@ -48,10 +48,11 @@ function request($val){
     */
 };
 
+    
 
   function getConnection(){
-    $servername = getenv('IP');
-    $username = getenv('C9_USER');
+    $servername = 'localhost';
+    $username =  'root';
     $password = "";
     $database = "resergol";
     $dbport = 3306;

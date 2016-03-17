@@ -12,10 +12,10 @@ class Connection extends MySQLi {
      private static $instance = null ;
      
      //si lo uso desde localhost
-     /*const HOST = 'localhost';
+     const HOST = 'localhost';
      const USER = 'root';
      const PASSWORD = '';       
-     const DATABASE = 'resergol';*/
+     const DATABASE = 'resergol';
      
      
  
@@ -28,14 +28,22 @@ class Connection extends MySQLi {
        
          
          if (self::$instance == null){
-             //self::$instance = new self(self::HOST, self::USER, self::PASSWORD, self::DATABASE); //si lo uso desde localhost
-             
+            self::$instance = new self(self::HOST, self::USER, self::PASSWORD, self::DATABASE); //si lo uso desde localhost
+            
+            /*
             $servername = getenv('IP');
             $username = getenv('C9_USER');
             $password = "";
             $database = "resergol";
             $dbport = 3306;
-                     
+            */  
+              
+            $servername ='localhost';
+            $username = 'root';
+            $password = '';
+            $database = 'resergol';
+            $dbport = 3306;
+             
              self::$instance =new mysqli($servername, $username, $password, $database, $dbport);
              self::$instance->query("SET NAMES 'utf8'");
          }

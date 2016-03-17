@@ -12,7 +12,7 @@ app.service("CommonService", function($http){
 		})
 	};*/
 	
-	var TIPOSDOCS_URI = "https://resergol-pedro77.c9.io/api/tiposDocs";
+	var TIPOSDOCS_URI = "http://localhost/resergol1.1/api/tiposDocs";
 	
     //var CATEGORIAS_URI = "http://localhost/slim/api/categorias";
 	
