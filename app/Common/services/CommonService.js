@@ -1,27 +1,34 @@
 var app = angular.module("resergolApp");
 
-app.service("CommonService", function($http){
+app.service("CommonService", function($http, $resource){
 
 	
 	
-	/*this.getTiposDoc = function(){
-	    var promise = $http.get('https://resergol-pedro77.c9.io/api/modelos/common.php?action=listTiposDoc');
-		/*var promise = $http.get('api/common.php?action=listTiposDoc');
-		return promise.then(function(response){
-			return response.data.data.TiposDoc;
-		})
-	};*/
 	
 	var TIPOSDOCS_URI = "http://localhost/resergol1.1/api/tiposDocs";
 	
     //var CATEGORIAS_URI = "http://localhost/slim/api/categorias";
 	
-	this.getTiposDoc = function(){
+    var res = $resource(TIPOSDOCS_URI,{}, {
+                                                query: { method: "GET", 
+                                                          transformResponse: function(data) {
+                                                            return angular.fromJson(data).data;
+                                                          },
+                                                        isArray: true }
+                                               }
+                                            );
+    
+    this.getTiposDoc = function(){    
+        return res.query();
+    };
+    
+    
+	/*this.getTiposDoc = function(){
 		return $http.get(TIPOSDOCS_URI)
 			.then(function(response){
 				return response.data.data;
 			});
-	};
+	};*/
     
 	
 });

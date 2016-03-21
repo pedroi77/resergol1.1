@@ -31,4 +31,5 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			controllerAs : "due"
 		});
 		$urlRouterProvider.otherwise("/duenios");
+    
 });

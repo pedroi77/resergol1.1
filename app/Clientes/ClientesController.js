@@ -5,18 +5,23 @@ app.controller("ClientesController", function(ClientesService, CommonService){
     var self = this;
     this.tiposDoc =[];
     this.someScopeVariable ='Contraseña Test',
-     this.tiposDoc = {
-        tipos: [],
+    this.tiposDoc = {
+        //tipos: [],
+        tipos: CommonService.getTiposDoc(),
+        
         selectedOption: {idTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
     };    
     
-   
-    CommonService.getTiposDoc()
+  self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+    //self.tiposDoc.tipos=CommonService.getTiposDoc();
+    //self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+  
+    /*  CommonService.getTiposDoc()
         .then(function(data){
             self.tiposDoc.tipos=data;
             self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
         })
-	
+	*/
 	
     this.cliente = { 
                     usuario: '', 

@@ -15,12 +15,6 @@
     
     <body  class="background-dark">
         <div id="container" ng-controller="MainController as main">
-          
-          
-          
-          
- 
-            
             <!-- <Menu> -->
             
             <nav class="navbar navbar-default navbar-fixed-top">
@@ -28,25 +22,26 @@
                 <div class="collapse navbar-collapse">
                   <div class="navbar-header">
                     <a class="navbar-brand" href="#">
-						            {{main.brand}}
+                        {{main.brand}}
                     </a>
                   </div>
-                    <ul class="nav navbar-nav">
-                      <li ui-sref-active="duenios">
-						            <a ui-sref="reserva">Reservas</a>
-					            </li>
-                      <li ui-sref-active="duenios">
-            						<a ui-sref="torneo">Torneos</a>
-            					</li>
-            					<li ui-sref-active="duenios">
-            						<a ui-sref="complejo">Complejo</a>
-            					</li>
-            					<li ui-sref-active="duenios">
-            						<a ui-sref="cancha">Canchas</a>
-            					</li>
-            					<li ui-sref-active="duenios">
-            					  <a ui-sref="listaNegra">Lista Negra</a>
-            					</li>
+                    
+                  <ul class="nav navbar-nav">
+                        <li ui-sref-active="duenios">
+                            <a ui-sref="reserva">Reservas</a>
+                        </li>
+                        <li ui-sref-active="duenios">
+                            <a ui-sref="torneo">Torneos</a>
+                        </li>
+                        <li ui-sref-active="duenios">
+                            <a ui-sref="complejo">Complejo</a>
+                        </li>
+                        <li ui-sref-active="duenios">
+                            <a ui-sref="cancha">Canchas</a>
+                        </li>
+                        <li ui-sref-active="duenios">
+                            <a ui-sref="listaNegra">Lista Negra</a>
+                        </li>
                   </ul>
                   
                   <ul class="nav navbar-nav navbar-right">
@@ -54,41 +49,31 @@
                     <li><a href="#registracionModal" role="button" data-toggle="modal">Configuración de la cuenta</a></li>
                     <li><a href="#aboutModal" role="button" data-toggle="modal">Salir</a></li>
                   </ul>
+                    
                 </div>
               </div>
             </nav>
             
             <!-- </Menu> -->
             
+        <div class="container" ui-view></div>
            
-        
-           
-            
-            
-            
-
-
-           <div class="container" ui-view></div>
-           
-           
-           
-           
-          
+             
         </div>
         
         
         <script src="../../../bower_components/angular/angular.min.js"></script>
         <script src="../../../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-		    <script src="../../../bower_components/jquery/jquery-1.11.3.min.js"></script>
-		    <script src="../../../bower_components/bootstrap/bootstrap.min.js"></script> 
-		    <script src="../../../js/scripts.js"></script> 
+        <script src="../../../bower_components/jquery/jquery-1.11.3.min.js"></script>
+        <script src="../../../bower_components/bootstrap/bootstrap.min.js"></script> 
+        <script src="../../../js/scripts.js"></script> 
 	       
-	      <script src="../../app.js"></script>
-    		<script src="../../MainController.js"></script>
-    	  <script src="../js/Duenios.js"></script>
+	    <script src="../../app.js"></script>
+    	<script src="../../MainController.js"></script>
+    	<script src="../js/Duenios.js"></script>
         <script src="../js/DueniosController.js"></script>
         
-	      <script src="../..//Common/common.js"></script>
-    		<script src="../..//Clientes/Clientes.js"></script>
+	    <script src="../..//Common/common.js"></script>
+    	<script src="../..//Clientes/Clientes.js"></script>
     </body>
 </html>

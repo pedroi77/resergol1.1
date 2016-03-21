@@ -10,15 +10,21 @@ app.controller("CommonController", function(CommonService){
         selectedOption: {idTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
     };    
     
-   
-    CommonService.getTiposDoc()
+    self.tiposDoc.tipos = CommonService.getTiposDoc();
+    self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+    
+    /*CommonService.getTiposDoc()
         .then(function(data){
             self.tiposDoc.tipos=data;
             self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
         })
-        
-    
+      */  
    
+    
+   /* this.getCategorias= function(){    
+        self.categorias =CategoriaService.getCategorias();
+    };*/
+    
    
   
  
