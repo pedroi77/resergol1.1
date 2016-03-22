@@ -420,14 +420,9 @@
                                     <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre" ng-model="cli.cliente.nombre">
                                 </div>
                                 <div class="form-group" >
-                                    <!--
-                                   <select class="form-control">
-                                     <option value="-1">Tipo Doc.</option> 
-                                     <option ng-repeat="tipoDoc in common.tiposDoc" value="1" >{{ tipoDoc.Descripcion }}</option>
-                                    </select>
-                                    -->
+                                  
                                     <select class="form-control" ng-model="cli.tiposDoc.selectedOption" 
-                                                                 ng-options="tipoDoc.Descripcion for tipoDoc in cli.tiposDoc.tipos track by tipoDoc.IdTipoDoc">
+                                                                 ng-options="tipoDoc.Descripcion for tipoDoc in cli.tiposDoc.tipos track by tipoDoc.IdTipoDoc" >
                                                             
                                     </select>
                                     

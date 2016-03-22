@@ -6,22 +6,23 @@ app.controller("ClientesController", function(ClientesService, CommonService){
     this.tiposDoc =[];
     this.someScopeVariable ='Contraseña Test',
     this.tiposDoc = {
-        //tipos: [],
-        tipos: CommonService.getTiposDoc(),
-        
+        tipos: [],
         selectedOption: {idTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
     };    
     
-  self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
-    //self.tiposDoc.tipos=CommonService.getTiposDoc();
-    //self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
   
-    /*  CommonService.getTiposDoc()
-        .then(function(data){
-            self.tiposDoc.tipos=data;
-            self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
-        })
-	*/
+    
+    CommonService.query().$promise.then(function(data) {
+        self.tiposDoc.tipos = data;
+        self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+    });
+    
+    
+    /*
+    self.tiposDoc.tipos = CommonService.getTiposDoc();
+    self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+   */
+    
 	
     this.cliente = { 
                     usuario: '', 
@@ -38,6 +39,7 @@ app.controller("ClientesController", function(ClientesService, CommonService){
    {
        self.cliente.tipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
        
+       
        ClientesService.createCliente(self.cliente.usuario, self.cliente.contrasenia, self.cliente.nombre,
                                     self.cliente.apellido,self.cliente.tipoDoc,self.cliente.nroDoc,self.cliente.eMail).then(function(response){
             if(response.data.error){
@@ -45,10 +47,10 @@ app.controller("ClientesController", function(ClientesService, CommonService){
                 return;
             }
             alert("El registro se realizo correctamente! " + response.data.data.cliente);
-            /*self.getCategorias();
-            self.cat_desc = '';*/
+            //self.getCategorias();
+            //self.cat_desc = '';
         });
-       
+    
    };
   
    

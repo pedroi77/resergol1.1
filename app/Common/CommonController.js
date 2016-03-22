@@ -11,7 +11,7 @@ app.controller("CommonController", function(CommonService){
     };    
     
     self.tiposDoc.tipos = CommonService.getTiposDoc();
-    self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+    //self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
     
     /*CommonService.getTiposDoc()
         .then(function(data){
