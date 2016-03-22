@@ -3,11 +3,7 @@
     header('Content-Type: application/json; charset=utf-8');
     header('Access-Control-Allow-Headers: Content-Type');
     
-class Connection extends MySQLi {
-
-
-
-    
+class Connection extends MySQLi 
     
      private static $instance = null ;
      
@@ -17,8 +13,6 @@ class Connection extends MySQLi {
      const PASSWORD = '';       
      const DATABASE = 'resergol';
      
-     
- 
          
      private function __construct($host, $user, $password, $database){ 
          parent::__construct($host, $user, $password, $database);
@@ -29,14 +23,6 @@ class Connection extends MySQLi {
          
          if (self::$instance == null){
             self::$instance = new self(self::HOST, self::USER, self::PASSWORD, self::DATABASE); //si lo uso desde localhost
-            
-            /*
-            $servername = getenv('IP');
-            $username = getenv('C9_USER');
-            $password = "";
-            $database = "resergol";
-            $dbport = 3306;
-            */  
               
             $servername ='localhost';
             $username = 'root';

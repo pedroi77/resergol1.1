@@ -1,6 +1,6 @@
 <?php
-
-require_once("init.php");
+//Hay que cambiar esto para que funcione con SLIM
+require_once("connection.php");
 
 
 
