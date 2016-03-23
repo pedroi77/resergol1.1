@@ -2,10 +2,10 @@
 
 USE resergol;
 
-DROP PROCEDURE IF EXISTS SP_insertClientes; 
+DROP PROCEDURE IF EXISTS SP_insertDuenios; 
 
 DELIMITER // 
-CREATE PROCEDURE SP_insertClientes 
+CREATE PROCEDURE SP_insertDuenios 
 (
     pUsuario	    VARCHAR(25),
     pContrasenia	BLOB(30),
@@ -14,10 +14,11 @@ CREATE PROCEDURE SP_insertClientes
     pIdTipoDoc 	  INT        ,
     pNroDoc	      INT        ,   
     pEmail	      VARCHAR(60),
-    OUT pIdCliente  INT
+    OUT pIdDuenio  INT
 ) 
 
 BEGIN 
+	/*call SP_insertDuenios ('pepe', 'nn', 'cosme', 'fulanito', 1, 29456111,'fula@gmail.com', @du);*/
     DECLARE Error INT DEFAULT 0;
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
     
@@ -28,7 +29,7 @@ BEGIN
      
     IF Error = 0 THEN
         
-        INSERT INTO Clientes(IdPersona, 
+        INSERT INTO Duenios(IdPersona, 
                             Usuario,
                             Contrasenia,	
                             IdEstado,	
@@ -40,16 +41,16 @@ BEGIN
                 1,
                 now(),
                 null );
-        
+				
     ELSE
-        SET pIdCliente = -1; /*Devuelve -1 en caso de error*/
+        SET pIdDuenio = -1; /*Devuelve -1 en caso de error*/
     END IF;
     
     
     IF Error=-1 THEN
-        SET pIdCliente = -1; /*Devuelve -1 en caso de error*/
+        SET pIdDuenio = -1; /*Devuelve -1 en caso de error*/
     ELSE
-        SET pIdCliente = (SELECT MAX(idCliente) FROM Clientes); 
+        SET pIdDuenio = (SELECT MAX(idDuenio) FROM Duenios); 
     END IF;
 
 END 

@@ -1,5 +1,5 @@
 
-CREATE DATABASE resergol;
+
 
 use resergol;
 
@@ -43,7 +43,7 @@ Descripcion	VARCHAR(30)   NOT NULL );
 CREATE TABLE Duenios(	
 IdDuenio	    INT         NOT NULL PRIMARY KEY AUTO_INCREMENT,  
 IdPersona	    INT         NOT NULL,
-Ususario	    VARCHAR(25) NOT NULL,
+Usuario	    VARCHAR(25) NOT NULL,
 Contrasenia   BLOB        NOT NULL,
 IdEstado	    INT         NOT NULL,
 FechaAlta	    DATE        NOT NULL,
@@ -65,7 +65,7 @@ PRIMARY KEY (IdEstado)
 CREATE TABLE Clientes (	
 IdCliente	INT			NOT NULL AUTO_INCREMENT,
 IdPersona	INT			NOT NULL,
-Ususario	VARCHAR(25) NOT NULL,
+Usuario	VARCHAR(25) NOT NULL,
 Contrasenia	BLOB(30)	NOT NULL,
 IdEstado	INT			NOT NULL,
 FechaAlta	DATE		NOT NULL,	

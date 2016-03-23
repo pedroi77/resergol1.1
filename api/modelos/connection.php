@@ -3,7 +3,7 @@
     header('Content-Type: application/json; charset=utf-8');
     header('Access-Control-Allow-Headers: Content-Type');
     
-class Connection extends MySQLi 
+class Connection extends MySQLi{
     
      private static $instance = null ;
      

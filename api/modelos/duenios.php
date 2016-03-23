@@ -1,7 +1,7 @@
 <?php
 require_once("connection.php");
 
-class tiposDocs
+class duenios
 {
     private $connection;
     
@@ -9,7 +9,7 @@ class tiposDocs
         $this->connection = Connection::getInstance();
     }
  
-    public function getAll(){
+   /* public function getAll(){
         $query = "CALL SP_getTiposDoc();";
         $tiposDocs= array();
         
@@ -20,6 +20,6 @@ class tiposDocs
             $result->free();
         }
         return $tiposDocs;
-    }
+    }*/
    
 }
