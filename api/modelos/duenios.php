@@ -19,70 +19,60 @@ class Duenio
         $email = $this->connection->real_escape_string($duenio['email']);
         
         $valor='';
-        
-        
+      
+       
         // Parametros
-        $stmt = $c->prepare('SET @usuario := ?');
+    
+        $stmt = $this->connection->prepare('SET @usuario := ?');
         $stmt->bind_param('s', $usuario);
         $stmt->execute();
 
-        $stmt = $c->prepare('SET @contrasenia := ?');
+        $stmt = $this->connection->prepare('SET @contrasenia := ?');
         $stmt->bind_param('s', $contrasenia);
         $stmt->execute();
 
-        $stmt = $c->prepare('SET @nombre := ?');
+        $stmt = $this->connection->prepare('SET @nombre := ?');
         $stmt->bind_param('s', $nombre);
         $stmt->execute();
 
-        $stmt = $c->prepare('SET @apellido := ?');
+        $stmt = $this->connection->prepare('SET @apellido := ?');
         $stmt->bind_param('s', $apellido);
         $stmt->execute();
 
-        $stmt = $c->prepare('SET @tipoDoc := ?');
-        $stmt->bind_param('i', $tipoDoc);
+        $stmt = $this->connection->prepare('SET @tipoDoc := ?');
+        $stmt->bind_param('i', $idTipoDoc);
         $stmt->execute();
 
-        $stmt = $c->prepare('SET @nroDoc := ?');
+        $stmt = $this->connection->prepare('SET @nroDoc := ?');
         $stmt->bind_param('i', $nroDoc);
         $stmt->execute();
 
-        $stmt = $c->prepare('SET @eMail := ?');
-        $stmt->bind_param('s', $eMail);
+        $stmt = $this->connection->prepare('SET @eMail := ?');
+        $stmt->bind_param('s', $email);
         $stmt->execute();
 
         //Salida
-        $stmt = $c->prepare('SET @valor := ?');
-        $stmt->bind_param('i', $valor);
+        $stmt = $this->connection->prepare('SET @valor := ?');
+        //$stmt->bind_param('i', $valor);
+        $stmt->bind_param('s', $valor);
         $stmt->execute();
         
+       
         
-        $query = "INSERT INTO productos VALUES (
-                    DEFAULT,
-                    '$idCategoria',
-                    '$descripcion',
-                    '$precio')";
-        if($this->connection->query($query)){
-            $producto['producto_id'] = $this->connection->insert_id;
-            return $producto;
-        }else{
-            return false;
-        }
-        
-        
-         // execute the stored Procedure
-        $result = $c->query('CALL SP_insertDuenios( @usuario, @contrasenia, @nombre, @apellido, @tipoDoc, @nroDoc,@eMail, @valor)');
+         // execute the stored Procedure         SP_insertDuenios
+        $result = $this->connection->query('CALL SP_insertDuenios( @usuario, @contrasenia, @nombre, @apellido, @tipoDoc, @nroDoc,@eMail, @valor)');
 
         // getting the value of the OUT parameter
-        $r = $c->query('SELECT @valor as duenio');
+        $r = $this->connection->query('SELECT @valor as duenio');
         $row = $r->fetch_assoc();               
 
         $res = $row['duenio'] ;
 
         if($res > -1){
-            $dat= array( duenio  => $res);
+            $dat= array($res);
             sendResult($dat, 'OK' );
         }else{
-           sendError("Error, no se pudo registrar al dueño."); //por algun motivo pincha aca
+           sendError("Error, no se pudo registrar al dueño." . $res ); //por algun motivo pincha aca
         }
         
     }

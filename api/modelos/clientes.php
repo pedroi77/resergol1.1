@@ -33,7 +33,7 @@ if(isset($_GET["action"])){
 function createCliente(){
     
     /*--------------------------------------------------------------------------*/
-    $c=getConnection();
+    $c= Connection::getInstance();
     
     $usuario =  $c->real_escape_string(request('usuario'));
     $contrasenia= $c->real_escape_string(request('contrasenia'));

@@ -39,7 +39,7 @@ BEGIN
                 pUsuario, 
                 pContrasenia, 
                 1,
-                now(),
+                CURDATE(),
                 null );
 				
     ELSE
