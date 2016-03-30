@@ -1,21 +1,27 @@
-<div class="container-fluid">
-
-    <header class="row widget" >
-        <div style = "color: white" class="container">
-            <h3  style=" font-size: 50px; text-align:center;  font-style:italic;" ></span>Busqueda de canchas</h3>
-        </div>
-    </header>
+<!--<div class="container-fluid">-->
+    <div class="container-fluid">
+        <header class="row widget" >
+            <div style = "color: white; " class="container">
+                <h3  style=" font-size: 50px; text-align:center; font-style:italic;" ></span>Buscar Chancha</h3>
+            </div>
+        </header>
+    </div> 
     
-    <div class="container">
-        <div class ="principal row filtro-Complejos">
+    
+    <div id="main" ng-controller="MainController as main" class="container clear-top" style="min-height: 300px;">
+        
+        <div class="container">
+        <div class ="principal row filtro-Canchas">
             <!-- Comienza la clase  row -->
             <div class="row">
             <div class="col-xs-12 col-md-3">
                 <section class="widget">
                     <header>
-                        <h2>Canchas</h2>    
+                        <h2>Tipos de Filtros</h2>    
                     </header>
                     <hr>
+                    <!--Filtros de las Canchas -->
+                    <h3 style= "margin-left: 1px; ">Complejos</h3>
                     
                     <!--Hacer que por defecto se muestre comprimido -->
                     <div id="filtroCancha">
@@ -147,9 +153,8 @@
                         </button>
                     </div>       
                 </div>
-                <!--Espacio en blanco -->
-                <hr>
-                <!--Filtros de los complejos -->
+
+            </div>
             </section>
             </div>
             <!-- poner aca los cuadros de complejos -->
@@ -184,13 +189,45 @@
             <!-- /.row -->
         </div>
         </div> 
-    
-</div>
-    
-    <div class="clearfix"></div>
-    <hr>
-        <div class="col-md-12 text-center">ReserGol 2015 -  Copyright © Todos los Derechos Reservados</div>
-    <hr>
+        <!-- Pagination -->
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <ul class="pagination">
+                    <li>
+                        <a href="#">&laquo;</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">1</a>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li>
+                        <a href="#">3</a>
+                    </li>
+                    <li>
+                        <a href="#">4</a>
+                    </li>
+                    <li>
+                        <a href="#">5</a>
+                    </li>
+                    <li>
+                        <a href="#">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>    
+        
+    </div>
+        
 
-<div/>
-    
+
+    <!--pi-->
+    <div class="clearfix"></div>
+        <hr>
+        <div class="col-md-12 text-center">ReserGol 2015 -  Copyright © Todos los Derechos Reservados</div>
+        <hr>
+    <div/>
+    <div/>

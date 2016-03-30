@@ -2,77 +2,52 @@
 <html lang="en"  ng-app="resergolApp">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		
 		<title>ReserGol</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link href="bower_components/bootstrap/CSS/bootstrap.min.css" rel="stylesheet">
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
 		<link href="css/styles.css" rel="stylesheet">
-		
-	
 	</head>
+    
 	<body class="background-dark" >
 
-<div class="navbar navbar-default" id="navbar">
-    <div class="col-md-12">
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-            <div class="pull-left">
-                <a href="Index.html" class="menuLink" role="application"><h4><b>RESERGOL</b></h4></a>
-            </div>
-            
-            <ul class="nav navbar-nav">
-                <li ui-sref-active="active">
-                    <a ui-sref="Duenios">Duenios</a>
-                </li>
-                <li ui-sref-active="active">
-                    <a ui-sref="Clientes">Torneos</a>
-                </li>
-            </ul>
+        <div class="navbar navbar-default" id="navbar">
+            <div class="col-md-12">
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <div class="pull-left">
+                        <a href="Index.html" class="menuLink" role="application"><h4><b>RESERGOL</b></h4></a>
+                    </div>
 
-            
-          <ul class="nav navbar-nav navbar-right">
-             <li><a href="#loginModal" role="button" data-toggle="modal">Iniciar Sesión</a></li>
-             <li><a href="#registracionModal" role="button" data-toggle="modal">¡Registrate!</a></li>
-              
-              <!--<li class="dropdown">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Registrate! 
-                   <span class="caret"></span>
-               </a>
-                 <ul class="dropdown-menu" role="menu">
-                       <li><a href="#">Action</a></li>
-                       <li><a href="#">Another action</a></li>
-                       <li><a href="#">Something else here</a></li>
-                       <li class="divider"></li>
-                       <li><a href="#">Separated link</a></li>
-                       <li class="divider"></li>
-                       <li><a href="#">One more separated link</a></li>
-                 </ul>
-            </li>-->
-              
-              
-             <li><a href="#registracionDuenioModal" role="button" data-toggle="modal">Registra tu cancha!</a></li>
-             <li><a href="#aboutModal" role="button" data-toggle="modal">Acerca de</a></li>
-              
-          </ul>
-            
-            
-            
-        </div>	
-     </div>	
-</div>
+                      <ul class="nav navbar-nav navbar-right">
+                         <li>
+                             <a href="#loginModal" role="button" data-toggle="modal">Iniciar Sesión</a>
+                         </li>
+                         <li>
+                             <a href="#registracionModal" role="button" data-toggle="modal">¡Registrate!</a>
+                         </li>
+                         <li>
+                             <a href="#registracionDuenioModal" role="button" data-toggle="modal">Registra tu cancha!</a>                               </li>
+                         <li><a href="#aboutModal" role="button" data-toggle="modal">Acerca de</a></li>
 
-<!--main-->
-<div class="container" id="main">
-    <div class="container" ui-view></div>
+                      </ul>
 
-    <div class="col-md-12 text-center">ReserGol 2015 -  Copyright © Todos los Derechos Reservados</div>
-  
-    
-  </div>
-</div><!--/main-->
+
+
+                </div>	
+             </div>	
+        </div>
+        
+       
+
+        <!--main-->
+        <div class="container" id="main">
+            <div class="container" ui-view></div>
+
+            <div class="col-md-12 text-center">ReserGol 2015 -  Copyright © Todos los Derechos Reservados</div>
+
+
+          </div>
+        </div><!--/main-->
 
 <!--login modal-->
 <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
