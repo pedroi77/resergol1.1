@@ -7,7 +7,7 @@ var resergolApp = angular.module("resergolApp",
 "ngResource"
 ]);
 
-/*
+
 resergolApp.config(function($stateProvider, $urlRouterProvider){
 
 	$stateProvider
@@ -17,14 +17,15 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			controller : "DueniosController",
 			controllerAs : "due"
 		})
-		.state("Clientes", { //Esta parte de cliente solo la pongo. ni me fije los ht
+		.state("Clientes", {
 			url : "/clientes",
-			templateUrl : "app/Clientes/BuscarCanchas.html",
+			templateUrl : "app/Clientes/Templates/BuscarCanchas.html",
 			controller : "ClientesController",
 			controllerAs : "CLI"
 		});
 	
+        //Aca falta la parte de administradores
 	$urlRouterProvider.otherwise("/duenios");
-    $urlRouterProvider.otherwise("/clientes");
+   // $urlRouterProvider.otherwise("/clientes");
 	
-});*/
+});
