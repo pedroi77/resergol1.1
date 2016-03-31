@@ -17,3 +17,14 @@ INSERT INTO DueniosEstados(Descripcion) VALUES('Aceptado');
 INSERT INTO DueniosEstados(Descripcion) VALUES('Activo');
 INSERT INTO DueniosEstados(Descripcion) VALUES('Inactivo');
 /*select * from DueniosEstados;*/
+
+
+
+
+insert into Provincias values(1, 'Buenos Aires');
+insert into Provincias values(2, 'Cordoba');
+
+insert into Localidades values(1,1, 'Avellaneda');
+insert into Localidades values(1,2, 'Lomas de Zamora');
+insert into Localidades values(2,1, 'La falda');
+insert into Localidades values(2,2, 'La cumbresita');

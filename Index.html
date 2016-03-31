@@ -183,9 +183,7 @@
             
             <div class="modal-body">
           
-               <label class="text-center">En Resergol te damos la posibilidad de llegar a todos los jugadores del fútbol amateur de manera
-                   gratuita.
-                Sólo tenés que completar los siguientes datos y te mandaremos un e-mail como aviso para que puedas registrar tu complejo!
+               <label class="text-center">{{due.mensajeBienvenida}}
                </label>
           
                 <hr>
@@ -231,11 +229,8 @@
                                             <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre">
                                         </div>
                                         <div class="form-group">
-                                           <select class="form-control">
-                                              <option value="-1">Tipo Doc.</option> 
-                                              <option value="1">DNI</option>
-                                              <option value="2">LC</option>
-                                              <option value="3">CI</option>  
+                                            <select class="form-control" ng-model="due.tiposDoc.selectedOption" 
+                                                                 ng-options="tipoDoc.Descripcion for tipoDoc in due.tiposDoc.tipos track by tipoDoc.IdTipoDoc" >
                                             </select>
                                         </div>
                                     </div>
