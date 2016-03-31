@@ -1,20 +1,36 @@
 var duenios = angular.module("resergolApp");
 
-duenios.controller("DueniosController", function(DueniosService, CommonService){
+duenios.controller("DueniosController", function(DueniosService, DocumentosService, ProvinciasService){
 	
     this.mensajeBienvenida = 'En Resergol te damos la posibilidad de llegar a todos los jugadores del fútbol amateur de manera gratuita. Sólo tenés que completar los siguientes datos y te mandaremos un  e-mail como aviso para que puedas registrar tu complejo!'
     
     var self = this;
+    
     this.tiposDoc =[];                      
+    this.provincias = [];
+    
+    
     this.tiposDoc = {
         tipos: [],
-        selectedOption: {idTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
-    };    
+        selectedOption: {} 
+    };  
     
-    CommonService.query().$promise.then(function(data) {
+     
+    this.provincias = {
+        prov: [],
+        selectedOption:{} 
+    }; 
+    
+    DocumentosService.query().$promise.then(function(data) {
         self.tiposDoc.tipos = data;
-        self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+        self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'}); //Valor por defecto
     });
+    
+    ProvinciasService.query().$promise.then(function(data) {
+        self.provincias.prov = data;
+        self.provincias.prov.push({IdProvincia: '-1', Nombre: 'Provincias'}); //Valor por defecto
+    });
+    
     
 	this.createDuenio = function(){
      

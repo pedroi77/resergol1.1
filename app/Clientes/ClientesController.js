@@ -1,6 +1,6 @@
 var app = angular.module("resergolApp");
 
-app.controller("ClientesController", function(ClientesService, CommonService){
+app.controller("ClientesController", function(ClientesService, DocumentosService){
     
     var self = this;
     this.tiposDoc =[];
@@ -12,7 +12,7 @@ app.controller("ClientesController", function(ClientesService, CommonService){
     
   
     
-    CommonService.query().$promise.then(function(data) {
+    DocumentosService.query().$promise.then(function(data) {
         self.tiposDoc.tipos = data;
         self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
     });

@@ -1,7 +1,7 @@
 <?php
 require_once("connection.php");
 
-class tiposDocs
+class Common
 {
     private $connection;
     
@@ -9,7 +9,8 @@ class tiposDocs
         $this->connection = Connection::getInstance();
     }
  
-    public function getAll(){
+    //Documentos
+    public function getAllDocumentos(){
         $query = "CALL SP_getTiposDoc();";
         $tiposDocs= array();
         
@@ -22,4 +23,17 @@ class tiposDocs
         return $tiposDocs;
     }
    
+    //Provincias
+    public function getAllProvincias(){
+        $query = "CALL SP_getProvincias();";
+        $provincias= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $provincias[] = $fila;
+            }
+            $result->free();
+        }
+        return $provincias;
+    }
 }

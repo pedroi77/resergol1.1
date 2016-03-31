@@ -11,21 +11,7 @@ app.controller("CommonController", function(CommonService){
     };    
     
     self.tiposDoc.tipos = CommonService.getTiposDoc();
-    //self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
     
-    /*CommonService.getTiposDoc()
-        .then(function(data){
-            self.tiposDoc.tipos=data;
-            self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
-        })
-      */  
-   
     
-   /* this.getCategorias= function(){    
-        self.categorias =CategoriaService.getCategorias();
-    };*/
-    
-   
-  
- 
+
 });

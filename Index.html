@@ -183,7 +183,8 @@
             
             <div class="modal-body">
           
-               <label class="text-center">{{due.mensajeBienvenida}}
+               <label class="text-center">
+                   {{due.mensajeBienvenida}}
                </label>
           
                 <hr>
@@ -259,14 +260,12 @@
                                     <div class="form-group">
                                         <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre">
                                     </div>
+                                    
                                     <div class="form-group">
-                                       <select class="form-control">
-                                          <option value="-1">Seleccione Provincia</option> 
-                                          <option value="1">Buenos Aires</option>
-                                          <option value="2">Córdoba</option>
-                                          <option value="3">Catamarca</option>  
-                                          <option value="4">Salta</option>  
-                                          <option value="4">Rosario</option>
+                                        <select class="form-control" ng-model="due.provincias.selectedOption" 
+                                                ng-options="provincias.Nombre for provincias in due.provincias.prov track by                                                                                                    provincia.IdProvincias" >
+      
+                                      
                                         </select>
 
                                      </div>
@@ -356,7 +355,8 @@
       
 		
 		<script src="app/Common/CommonController.js"></script>
-		<script src="app/Common/services/CommonService.js"></script>
+		<script src="app/Common/services/DocumentosService.js"></script>
+        <script src="app/Common/services/ProvinciasService.js"></script>
 		<script src="app/Clientes/ClientesController.js"></script>
 		<script src="app/Common/services/ClientesService.js"></script>
 		<!--<PI> agrego dependencias FIN-->

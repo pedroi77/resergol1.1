@@ -2,7 +2,7 @@
 
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
-require_once("modelos/tiposDocs.php");
+require_once("modelos/common.php");
 require_once("modelos/duenios.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
@@ -14,8 +14,15 @@ $app = new Slim\Slim();
 
 //Documentos
 $app->get('/tiposDocs', function(){
-	$tiposDocs = new tiposDocs();
-	$data = $tiposDocs->getAll();
+    $tiposDocs = new Common();
+    $data = $tiposDocs->getAllDocumentos();
+	sendResult($data);
+});
+
+//Provincias
+$app->get('/provincias', function(){
+    $provincias = new Common();
+    $data = $provincias->getAllProvincias();
 	sendResult($data);
 });
 
