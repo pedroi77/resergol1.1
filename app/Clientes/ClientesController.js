@@ -38,6 +38,7 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
    this.createCliente = function()
    {
        self.cliente.tipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
+       console.log(self.tiposDoc.selectedOption.IdTipoDoc);
        
        
        ClientesService.createCliente(self.cliente.usuario, self.cliente.contrasenia, self.cliente.nombre,

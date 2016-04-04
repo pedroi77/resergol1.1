@@ -261,9 +261,11 @@
                                         <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre">
                                     </div>
                                     
-                                    <div class="form-group">
-                                        <select class="form-control" ng-model="due.provincias.selectedOption" 
-                                                ng-options="provincias.Nombre for provincias in due.provincias.prov track by                                                                                                                                        provincia.IdProvincias" >
+                                    <div class="form-group">            
+                                        <select class="form-control" ng-model="due.provincias.provSelected" 
+                                                ng-options="provincias.Nombre for provincias in due.provincias.prov 
+                                                            track by                                                                                                                     provincia.IdProvincias" 
+                                                >
                                         </select>
 
                                      </div>

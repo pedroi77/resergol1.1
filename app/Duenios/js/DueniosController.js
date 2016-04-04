@@ -6,23 +6,23 @@ duenios.controller("DueniosController", function(DueniosService, DocumentosServi
     
     var self = this;
     
-    this.tiposDoc =[];                      
-    this.provincias = [];
-    this.localidades = [];
+    self.tiposDoc =[];                      
+    self.provincias = [];
+    self.localidades = [];
     
     
-    this.tiposDoc = {
+    self.tiposDoc = {
         tipos: [],
         selectedOption: {} 
     };  
     
      
-    this.provincias = {
+    self.provincias = {
         prov: [],
-        selectedOption:{} 
+        provSelected:{IdProvincia: '-1', Nombre: 'Localidad'} 
     }; 
     
-    this.localidades = {
+    self.localidades = {
         loc: [],
         selectedOption:{} 
     }; 
@@ -38,18 +38,32 @@ duenios.controller("DueniosController", function(DueniosService, DocumentosServi
     });
    
     
-    LocalidadesService.query({id:1}).$promise.then(function(data) {
-        self.localidades.loc = data;
-        self.localidades.loc.push({IdProvincia: '-1', Nombre: 'Localidad'}); //Valor por defecto
-    });
+   
+     self.localidades.loc.push({IdLocalidad: '-1', Nombre: 'Localidad'}); 
     
     //self.localidades.loc = LocalidadesService.get({id:1});
     //self.localidades.loc.push({IdLocalidad: '-1', Nombre: 'Localidad'}); //Valor por defecto
     
+    this.getLocalidades = function(){
+        //self.provincias.selectedOption.IdProvincia;
+        console.log(self.provincias.provSelected.IdProvincia);
+         console.log(self.tiposDoc.selectedOption.idTipoDoc);
+        
+        LocalidadesService.query({id:1}).$promise.then(function(data) {
+            self.localidades.loc = data;
+             
+         });
+    };
+    
+    
     
     
 	this.createDuenio = function(){
-     
+      console.log(self.provincias.provSelected.IdProvincia);
+         console.log(self.tiposDoc.selectedOption.idTipoDoc);
+        
+       
+        /*
        var duenioNuevo = new DueniosService();
         
        duenio.duenioNuevo = {
@@ -73,7 +87,7 @@ duenios.controller("DueniosController", function(DueniosService, DocumentosServi
         },function(errorResponse){
             console.log(errorResponse.data.message);  
         });
-      
+      */
     };
 });
 
