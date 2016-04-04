@@ -1,5 +1,14 @@
 
 $(document).ready(function(){  /* jQuery toggle layout */
+    
+  $('#idTourDateDetails').datepicker({
+     dateFormat: 'dd-mm-yy',
+     minDate: '+5d',
+     changeMonth: true,
+     changeYear: true,
+     altField: "#idTourDateDetailsHidden",
+     altFormat: "yy-mm-dd"
+ });   
 
 $('#btnToggle').click(function(){
   if ($(this).hasClass('on')) {
@@ -59,7 +68,7 @@ function init_map() {
  
       }
  
- /*     google.maps.event.addDomListener(window, 'load', init_map);*/
+     //google.maps.event.addDomListener(window, 'load', init_map);
 
 
 /*<PI> funciones agregadas por Pedro Irala. INICIO*/
@@ -78,9 +87,8 @@ function init_map() {
   function mostrarCalendario(){
       $('#fecha').datepicker("show");
   }
- 
 
- 
+
 
  /*<pi> FIN*/
  
@@ -126,4 +134,7 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip(); 
 });
 /*FIN IVAN TOOLTIP*/
+
+
+  
 

@@ -2,11 +2,11 @@
 
         <div id="container" ng-controller="MainController as main">
             <!-- <Menu> -->
-        <nav class="navbar navbar-default">    
+        <nav class="navbar navbar-default" style="margin-top: -55px">    
             <div class="collapse navbar-collapse" id="navbar-collapse">
-                <div class="pull-left">
+                <!--<div class="pull-left">
                     <a href="" class="" role="application"><h4>Qué vas a buscar?</h4></a>
-                </div>
+                </div>-->
 
                 <ul class="nav navbar-nav">
                     <li ui-sref-active="active">
@@ -17,6 +17,15 @@
                     </li>
                     <li ui-sref-active="active">
                         <a ui-sref="Clientes.buscarTorneos">Torneos</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="Clientes.verComplejo">Ver Complejo</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="Clientes.verCancha">Ver Cancha</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="Clientes.misReservas">Mis Reservas</a>
                     </li>
                 </ul>
 

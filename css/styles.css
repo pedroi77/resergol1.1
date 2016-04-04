@@ -840,7 +840,7 @@ PRICING STYLES
 @import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
 
 .detailBox {
-    width:540px;
+    width:850px;
     border:1px solid #bbb;
     margin-left:0px;
     background-color: aliceblue;
@@ -861,7 +861,7 @@ PRICING STYLES
     border-top:1px dotted #bbb;
 }
 .commentBox .form-group:first-child, .actionBox .form-group:first-child {
-    width:80%;
+    width:75%;
 }
 .commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
     width:18%;
@@ -913,6 +913,18 @@ PRICING STYLES
 {
     min-height: 310px;
     max-height: 310px;
+}
+
+.boxServAdicionales
+{
+    min-height: 135px;
+    max-height: 135px;
+}
+
+.boxInfoCancha
+{
+    min-height: 145px;
+    max-height: 145px;
 }
 
 .widget {
@@ -1040,5 +1052,4 @@ background: #333333;
 }
 
 /*********FIN BOTONES FECHAS DE FIXTURE**********/
-
 

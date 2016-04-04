@@ -1,52 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-		<title>ReserGol - Cancha</title>
-		<meta name="generator" content="Bootply" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="../../../bower_components/bootstrap/CSS/bootstrap.min.css">
-	    <link href="../../../css/styles.css" rel="stylesheet">      
-        
-        
-         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    
-    
-    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-        
-	</head>
-	<body class="background-dark">
 
-<div class="navbar navbar-default" id="navbar">
-    <div class="col-md-12">
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-          <ul class="nav navbar-nav navbar-right">
-             <li><a href="#loginModal" role="button" data-toggle="modal">Iniciar Sesión</a></li>
-             <li><a href="#registracionModal" role="button" data-toggle="modal">¡Registrate!</a></li>
-             <li><a href="#aboutModal" role="button" data-toggle="modal">Acerca de</a></li>
-          </ul>
-        </div>	
-     </div>	
-</div>
-
-<!--main-->
-<div class="container" id="main">
-    
-    
-     <div class="container">
-
-
-   <div class="row">
-
+  
+<div class="container">
+    <div class="row">
             <div class="col-md-3 boxComplejo"> 
-            <section class="widget boxComplejo">
+                <section class="widget2 boxComplejo">
                     <div class="row">
                      <header>
                         <h3 class="fa fa-user titul">Cancha 1</h3>
-                         <h4 class="fa fa-user titul">Complejo: <a href="VerComplejo.html">Todo Futbol</a></h4>
+                         <h4 class="fa fa-user titul">Complejo: <a ui-sref="Clientes.verComplejo">Todo Futbol</a></h4>
                      </header>
                       <!--<div class="imgMiniatura">
                             <img src="images/complejos/complejo1.jpeg" alt="">
@@ -68,60 +29,54 @@
                           <li class="glyphicon glyphicon-time">
                             <label class="letraHorarios">L a V - 12hs - 18hs.</label>
                           </li>
-                          
+                          <!--<li class="glyphicon glyphicon-time">
+                            <label class="letraHorarios">S a D - 16hs - 22:30hs.</label>
+                          </li>-->
                       </ul>
                     </div>   
                     
                     <div>
-                        <button class="btn btn-success center-block" id="btnReservarCancha">RESERVAR</button>
+                        <!--<button class="btn btn-success center-block" id="btnReservarCancha" data-target="#reservasModal">RESERVAR</button>-->
+                        <a id="btnReservarCancha" href="VerCancha/#reservasModal" data-toggle="modal" class="btn btn-success center-block" style="border-radius: 7px;" role="button">RESERVAR</a>
+                        
+                        
+                        
                     </div>
-                    
-           
-           </section>
-           
-           
+                </section>
           </div>
-       
-       
        
 
        <div class="col-md-6">
        
            <div class="col-md-6 carousel-container anchoCarousel ">
-          <div id="carouselComplejos" class="carousel slide carousel-fade">
-            <!-- Carousel items -->
-            <div class="carousel-inner anchoCarousel">
-              <div data-slide-no="0" class="item carousel-item active">
-                <img src="/../resergol1.1/images/complejos/complejo1.jpeg" alt="">
-                <div class="carousel-caption">
+              <div id="carouselComplejos" class="carousel slide carousel-fade">
+                <!-- Carousel items -->
+                <div class="carousel-inner anchoCarousel">
+                      <div data-slide-no="0" class="item carousel-item active">
+                        <img src="/../resergol1.1/images/complejos/complejo1.jpeg" alt="">
+                        <div class="carousel-caption">
+                        </div>
+                      </div>
+                      <div data-slide-no="1" class="item carousel-item">
+                        <img src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
+                        <div class="carousel-caption">
+                        </div>
+                      </div>
+                      <div data-slide-no="2" class="item carousel-item">
+                        <img src="/../resergol1.1/images/complejos/complejo3.jpg" alt="">
+                        <div class="carousel-caption">
+                        </div>
+                      </div>
                 </div>
-              </div>
-              <div data-slide-no="1" class="item carousel-item">
-                <img src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
-                <div class="carousel-caption">
-                </div>
-              </div>
-              <div data-slide-no="2" class="item carousel-item">
-                <img src="/../resergol1.1/images/complejos/complejo3.jpg" alt="">
-                <div class="carousel-caption">
-                </div>
-              </div>
+                <!-- Carousel nav -->
+                <a class="carousel-control left" href="#carouselComplejos" data-slide="prev">‹</a>
+                <a class="carousel-control right" href="#carouselComplejos" data-slide="next">›</a>
+               </div>
             </div>
-            <!-- Carousel nav -->
-            <a class="carousel-control left" href="#carouselComplejos" data-slide="prev">‹</a>
-            <a class="carousel-control right" href="#carouselComplejos" data-slide="next">›</a>
-          </div>
-        
-       
-       </div>
-           
-       
-    </div> 
+        </div> 
        
        <div class="col-md-3"> 
-           
-           <section class="widget2">
-   			     
+           <section class="widget2 boxInfoCancha">
                   <div class="row">
                       <div class="col-md-12">
                           <ul>
@@ -145,15 +100,11 @@
                                 <b>Seña requerida:</b> <label>$80</label>
                             </li>  
                           </ul>
-                          
                       </div>
                   </div>
-                  
-               </section>
+              </section>
             
-           
-           
-           <section class="widget">
+           <section class="widget2 boxServAdicionales">
                 <div class="panel-heading" ><h4>Servicios adicionales</h4></div>
                   <div class="row">
                       <div class="col-md-6">
@@ -177,17 +128,49 @@
                       </div>
                   </div>   
             </section>
-
-
-                   
-                  </div>
            
-           
-          </div>
+    </div>
+                
+</div>
+
+        <div class="widget2">
+            <div class="row">
+                      <div class="col-md-2">
+                          <h5>¡Votá la cancha!:</h5>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-success" id="cinco">"Una fantasía"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-primary" id="cuatro">"Muy buena!"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-info" id="tres">"Mas o menos"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-warning" id="dos">"No me gustan"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-danger" id="uno">"Las peores canchas"</button>
+                        </div>
+                      </div>
+                          </div>
+        </div>
         
-            
          <div class="row">
-           
              <div class="col-md-3">
               <div class="widget">
                 <h4 class="fa fa-user titul">Ubicación</h4>
@@ -197,53 +180,56 @@
               </div>
              </div>
              
-     <div class="col-md-6">
-     <div class="detailBox">
-    <div class="titleBox">
-      <label>Comentarios</label>
-    </div>
-    <div class="commentBox">
-        
-        <p class="taskDescription">Lo que opina la gente acerca de la cancha "CANCHA 1" de "Todo Fútbol"</p>
-    </div>
-    <div class="actionBox">
-        <ul class="commentList">
-            <li>
-                <div class="commentText">
-                    <p style="color:gray">Pedro77:  </p>
-                    <p class="">Voy siempre, aguante las canchas de Laprida!</p> <span class="date sub-text">3 de Marzo, 2015</span>
+         <div class="col-md-9">
+         <div class="detailBox">
+        <div class="titleBox">
+          <label>Comentarios</label>
+        </div>
+        <div class="commentBox">
 
-                </div>
-            </li>
-            <li>
-                <div class="commentText">
-                    <p style="color:gray">Maty1992:  </p>
-                    <p class="">Muy buenas canchas, excelente para ir a jugar con amigos!</p> <span class="date sub-text">10 de Mayo, 2015</span>
+            <p class="taskDescription">Lo que opina la gente acerca de la cancha "CANCHA 1" de "Todo Fútbol"</p>
+        </div>
+        <div class="actionBox">
+            <ul class="commentList">
+                <li>
+                    <div class="commentText">
+                        <p style="color:gray">Pedro77:  </p>
+                        <p class="">Voy siempre, aguante las canchas de Laprida!</p> <span class="date sub-text">3 de Marzo, 2015</span>
 
-                </div>
-            </li>
-            <li>
-                <div class="commentText">
-                    <p style="color:gray">IvanTaladro:  </p>
-                    <p class="">Excelente! lo mejor de zona sur!</p> <span class="date sub-text">2 de Octubre, 2015</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="commentText">
+                        <p style="color:gray">Maty1992:  </p>
+                        <p class="">Muy buenas canchas, excelente para ir a jugar con amigos!</p> <span class="date sub-text">10 de Mayo, 2015</span>
 
+                    </div>
+                </li>
+                <li>
+                    <div class="commentText">
+                        <p style="color:gray">IvanTaladro:  </p>
+                        <p class="">Excelente! lo mejor de zona sur!</p> <span class="date sub-text">2 de Octubre, 2015</span>
+
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Agregar comentario" />
                 </div>
-            </li>
-        </ul>
-        <form class="form-inline" role="form">
-            <div class="form-group">
-                <input class="form-control" type="text" placeholder="Agregar comentario" />
-            </div>
-            <div class="form-group">
-                <button class="btn btn-default">Comentar</button>
-            </div>
-        </form>
+                <div class="form-group">
+                    <button class="btn btn-default">Comentar</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-                  
-             </div>
+
+    </div>
+      
              
-            <div class="col-md-3 "> 
+</div>
+             
+            <!--<div class="col-md-3 "> 
             <div class="widget2">
                 <div><h4>Puntuación de "Cancha 1"</h4></div>
                   <div class="row">
@@ -292,162 +278,186 @@
                 
                 </div>
 
-            </div>
+            </div>-->
+                          
+                          
          </div>
          
-    </div>
-        
-        
+ </div> <!--Cierra DIV Container-->
+                
+                
+               
 
-    <div class="clearfix"></div>
-      
-    <hr>
-    <div class="col-md-12 text-center">ReserGol 2015 -  Copyright © Todos los Derechos Reservados</div>
-    <hr>
-    
-  </div>
-</div><!--/main-->
-
-<!--login modal-->
-<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-  <div class="modal-content">
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h2 class="text-center"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"><br>Ingresar</h2>
-      </div>
-      <div class="modal-body">
-          <form class="form col-md-12 center-block">
-            <div class="form-group">
-              <input type="text" class="form-control input-lg" placeholder="Usuario">
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-control input-lg" placeholder="Contraseña">
-            </div>
-            <div class="form-group">
-              <button class="btn btn-primary btn-lg btn-block">Iniciar Sesión</button>
-              <span class="pull-right"></span><span><a href="#">¿Olvidaste tu contraseña?</a></span>
-            </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-          
-      </div>
-  </div>
-  </div>
-</div>
-        
-                   
-
-        
-<!--Registración modal-->
-<div id="registracionModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-registracion">
-  <div class="modal-content">
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      </div>
-      <div class="modal-body">
-      <div class = 'form-horizontal well'>
-        <fieldset>
-         <legend>Datos de usuario</legend>
-          <div class="control-group">
-            <form class="form center-block">
-              <div class="col-md-6">    
-              <div class="form-group">
-                <input type="text" id="usuario" class="form-control input-md" placeholder="Usuario">
-              </div>
-              <div class="form-group">
-                <input type="password" id="contraseña" class="form-control input-md" placeholder="Contraseña">
-              </div>
-             </div>
-             <div class="col-md-6">
-                <div class="form-group">
-                    <input type="email" id="email" class="form-control input-md" placeholder="E-Mail">
-                </div> 
-                <div class="form-group">
-                    <input type="password" id="contraseñaRepetida" class="form-control input-md" placeholder="Repita contraseña">
-                </div>  
-             </div>    
-          </fieldset>
-        </div>
-        <div class = 'form-horizontal well'>
-            <fieldset>
-                <legend>Datos personales</legend>    
-                     <div class="control-group">
-                        <form class="form center-block">
-                            <div class="col-md-6">    
-                                <div class="form-group">
-                                    <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre">
-                                </div>
-                                <div class="form-group">
-                                   <select class="form-control">
-                                      <option value="-1">Tipo Doc.</option> 
-                                      <option value="1">DNI</option>
-                                      <option value="2">LC</option>
-                                      <option value="3">CI</option>  
-                                    </select>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="email" id="apellido" class="form-control input-md" placeholder="Apellido">
-                                </div> 
-                                <div class="form-group">
-                                    <input type="text" id="contraseñaRepetida" class="form-control input-md" placeholder="N° documento">
-                                </div>  
-                            </div>    
-            </fieldset>
-                         
+<!--reservas modal-->
+          <div id="reservasModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-registracion">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
-                
-                <div class="form-group">
-                <button class="btn btn-primary btn-lg btn-block">Terminado</button>
+                        
+                        <div class="modal-body">
+                            
+                            <div class = 'form-horizontal well'>
+                              <fieldset>
+                               <legend>¿A qué hora querés jugar?</legend>
+                                <div class="control-group">
+                                    
+                                  <form class="form center-block">
+                                      
+                                
+                                               <div class='input-group date'>
+                                <input type='text'  class="form-control" id="fecha" style="height:31px;"/>
+                                <span class="input-group-addon"  style="height:30px;"  id="fecha2" onclick="mostrarCalendario2()" >
+                                <span class="glyphicon glyphicon-calendar"  ></span>
+                                </span>
+                                      </div>                                                   
+                                             
+                                             
+                                      <div class="col-md-4"> 
+                                           <div class="form-group">
+                                               
+                                              <label class="control-label">Cancha:</label>
+                                              <br>
+                                              <label class="control-label">Precio</label>
+                                              <br>
+                                              <label class="control-label">Cant. de jugadores:</label>
+                                              <br>
+                                              <label class="control-label">Superficie:</label>
+                                           </div>
+                                      </div>
+                                  <div class="col-md-8">
+                                      <div class="form-group">
+                                          <label class="control-label">Maracana</label>
+                                          <br>
+                                          <label class="control-label">$ 300</label>
+                                          <br>
+                                          <label class="control-label">5</label>
+                                          <br>
+                                          <label class="control-label">Cesped</label>
+                                      </div>
+                                   </div>    
+                                </fieldset>
+                              </div>
+                          <div class = 'form-horizontal well'>
+                              <fieldset>
+                                  <legend>Datos de la reserva</legend>    
+                                       <div class="control-group">
+                                          <form class="form center-block">
+                                              <div class="col-md-2">    
+                                                  <div class="form-group" style= "margin-top:8px;">
+                                                      <label >Ususario:</label>
+                                                  </div>
+                                                  <div class="form-group" style= "margin-top:22px;">
+                                                          <label >Horario:</label>
+                                                  </div>
+                                                  <div class="form-group" style= "margin-top:26px;">
+                                                      <label >Seña:</label>
+                                                  </div>
+                                                    <div class="form-group" style= "margin-top:22px;">
+                                                      <label>Resta:</label>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-10">
+                                                  <div class="form-group">
+                                                      <input type="text" id="usuario" class="form-control input-md" placeholder="Cliente">
+                                                  </div> 
+                                                  <div class="form-group">
+                                                       <label for="sel2"  class="fontMasChica" style= "margin-left: 2px;" >Desde:</label>
+                                                          <SELECT NAME="cboHoraInicial" > 
+                                                          <OPTION>8 Hs</OPTION>
+                                                          <OPTION>9 Hs</OPTION>
+                                                          <OPTION>10 Hs</OPTION>
+                                                          <OPTION>11 Hs</OPTION> 
+                                                          <OPTION>12 Hs</OPTION> 
+                                                          <OPTION>13 Hs</OPTION> 
+                                                          <OPTION>14 Hs</OPTION> 
+                                                          <OPTION>15 Hs</OPTION>
+                                                          <OPTION>16 Hs</OPTION> 
+                                                          <OPTION>17 Hs</OPTION> 
+                                                          <OPTION>18 Hs</OPTION> 
+                                                          <OPTION>19 Hs</OPTION> 
+                                                          <OPTION>19 Hs</OPTION> 
+                                                          <OPTION>20 Hs</OPTION> 
+                                                          <OPTION>21 Hs</OPTION> 
+                                                          <OPTION>22 Hs</OPTION> 
+                                                          <OPTION>23 Hs</OPTION> 
+                                                      </SELECT> 
+                                                     
+                                                          <label for="sel2" class="fontMasChica" style= "margin-left: 50px; " > Hasta:</label>
+                                                          <SELECT NAME="cboHoraFin" SIZE=1 > 
+                                                          <OPTION>8 Hs</OPTION>
+                                                          <OPTION>9 Hs</OPTION>
+                                                          <OPTION>10 Hs</OPTION>
+                                                          <OPTION>11 Hs</OPTION> 
+                                                          <OPTION>12 Hs</OPTION> 
+                                                          <OPTION>13 Hs</OPTION> 
+                                                          <OPTION>14 Hs</OPTION> 
+                                                          <OPTION>15 Hs</OPTION>
+                                                          <OPTION>16 Hs</OPTION> 
+                                                          <OPTION>17 Hs</OPTION> 
+                                                          <OPTION>18 Hs</OPTION> 
+                                                          <OPTION>19 Hs</OPTION> 
+                                                          <OPTION>19 Hs</OPTION> 
+                                                          <OPTION>20 Hs</OPTION> 
+                                                          <OPTION>21 Hs</OPTION> 
+                                                          <OPTION>22 Hs</OPTION> 
+                                                          <OPTION  selected="selected">23</OPTION> 
+                                                      </SELECT> 
+                                                  </div> 
+                                                  <div class ="principal row" style= "margin-top:0px;">
+                                                      <input type="text" id="seña" class="form-control input-md" placeholder="$ 150">
+                                                  </div>
+                                                  <div class="form-group" style= "margin-top:8px;">
+                                                      <input type="text" id="resta" class="form-control input-md" placeholder="$ 150">
+                                                  </div> 
+                                              </div>    
+                              </fieldset>
+                                           
+                                          </div>
+                                  
+                              <fieldset>
+                                  <div class="form-group">
+                                     <div class="col-md-4"> 
+                                          <div class="form-group">
+                                              <button class="btn  btn-md btn-danger btn-block" style="border-radius: 7px;">Cancelar</button>   
+                                          </div>
+                                      </div>
+                                      
+                                      <div class="col-md-4"> 
+                                          <div class="form-group">
+                                              <button class="btn  btn-md btn-warning btn-block" style="border-radius: 7px;">Reserva Fija</button>
+                                          </div>
+                                      </div>
+                                      
+                                      <div class="col-md-4"> 
+                                          <div class="form-group">
+                                              <button class="btn  btn-md btn-success btn-block" style="border-radius: 7px;">Completar pago</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </fieldset>
+                              
+                              <fieldset>
+                                  <div class="form-group">
+                                     <div class="col-md-12"> 
+                                          <div class="form-group">
+                                              <button class="btn  btn-md btn-primary btn-block" style="border-radius: 7px;">Reservar</button>
+                                          </div>
+                                      </div>
+                              </fieldset>
+                              
+                              </fieldset> 
+                              </div>
+                                                </form>
+                            </div>
+                    </div>
+                </div>
             </div>
-            </fieldset> 
-            </div>
-         </form>
-          </div>
+    
+    
+    
+    
 
-            
-            
-                    
-                
-          
-          
-          
-          
-      
-  </div>
-  </div>
-</div>
-
-
-
-<!--about modal-->
-<div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-  <div class="modal-content">
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h2 class="text-center">ReserGol</h2>
-      </div>
-      <div class="modal-body">
-          <div class="col-md-12 text-center">
-           ReserGol es una plataforma web en la que podrás buscar las mejores canchas de fútbol! y reservar tu turno para jugar, con sólo un click!
-          
-          </div>
-      </div>
-      <div class="modal-footer">
-          <button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>
-      </div>
-  </div>
-  </div>
-</div>
-	<!-- script references -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="/../resergol1.1/js/scripts.js"></script>
-	</body>
-</html>
+<hr>
+        
