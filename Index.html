@@ -171,8 +171,8 @@
     
     
     
-<!--//ACA iba el original-->
-        <!--Registración Duenio modal-->
+
+<!--Registración Duenio modal-->
 <div id="registracionDuenioModal" ng-controller="DueniosController as due" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-registracion">
         
@@ -263,9 +263,7 @@
                                     
                                     <div class="form-group">
                                         <select class="form-control" ng-model="due.provincias.selectedOption" 
-                                                ng-options="provincias.Nombre for provincias in due.provincias.prov track by                                                                                                    provincia.IdProvincias" >
-      
-                                      
+                                                ng-options="provincias.Nombre for provincias in due.provincias.prov track by                                                                                                                                        provincia.IdProvincias" >
                                         </select>
 
                                      </div>
@@ -278,10 +276,8 @@
                                         <input type="text" id="telefono" class="form-control input-md" placeholder="Teléfono">
                                     </div> 
                                     <div class="form-group">
-                                       <select class="form-control">
-                                          <option value="-1">Seleccione Localidad</option> 
-                                          <option value="1">Lomas de Zamora</option>
-                                          <option value="2">Lanús</option>
+                                       <select class="form-control" ng-model="due.localidades.selectedOption" 
+                                                ng-options="localidades.Nombre for localidades in due.localidades.loc track by                                                                                                                                        localidad.IdLocalidad" >
                                        </select>
                                     </div>
                                     <div class="form-group">
@@ -356,6 +352,7 @@
 		<script src="app/Common/CommonController.js"></script>
 		<script src="app/Common/services/DocumentosService.js"></script>
         <script src="app/Common/services/ProvinciasService.js"></script>
+        <script src="app/Common/services/LocalidadesService.js"></script>
 		<script src="app/Clientes/ClientesController.js"></script>
 		<script src="app/Common/services/ClientesService.js"></script>
 		<!--<PI> agrego dependencias FIN-->

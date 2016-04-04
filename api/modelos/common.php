@@ -36,4 +36,24 @@ class Common
         }
         return $provincias;
     }
+    
+    //Localidades
+     public function getAllLocalidadesByProvincia($IdProv){  
+        $stmt = $this->connection->prepare('SET @idProv := ?');
+        $stmt->bind_param('i', $IdProv);
+        $stmt->execute(); 
+         
+        $query = "CALL SP_getLocalidadesByProvincia(@idProv);";
+        $localidades= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $localidades[] = $fila;
+            }
+            $result->free();
+        }
+        return $localidades;
+    }
+    
+    
 }

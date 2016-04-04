@@ -26,6 +26,14 @@ $app->get('/provincias', function(){
 	sendResult($data);
 });
 
+//Localidades
+$app->get('/localidades/:id', function($id){
+    $localidades = new Common();
+    $data = $localidades->getAllLocalidadesByProvincia($id);
+	sendResult($data);
+});
+
+
 
 //Duenios
 $app->post('/duenios', function(){

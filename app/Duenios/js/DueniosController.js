@@ -1,6 +1,6 @@
 var duenios = angular.module("resergolApp");
 
-duenios.controller("DueniosController", function(DueniosService, DocumentosService, ProvinciasService){
+duenios.controller("DueniosController", function(DueniosService, DocumentosService, ProvinciasService, LocalidadesService){
 	
     this.mensajeBienvenida = 'En Resergol te damos la posibilidad de llegar a todos los jugadores del fútbol amateur de manera gratuita. Sólo tenés que completar los siguientes datos y te mandaremos un  e-mail como aviso para que puedas registrar tu complejo!'
     
@@ -8,6 +8,7 @@ duenios.controller("DueniosController", function(DueniosService, DocumentosServi
     
     this.tiposDoc =[];                      
     this.provincias = [];
+    this.localidades = [];
     
     
     this.tiposDoc = {
@@ -21,6 +22,11 @@ duenios.controller("DueniosController", function(DueniosService, DocumentosServi
         selectedOption:{} 
     }; 
     
+    this.localidades = {
+        loc: [],
+        selectedOption:{} 
+    }; 
+    
     DocumentosService.query().$promise.then(function(data) {
         self.tiposDoc.tipos = data;
         self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'}); //Valor por defecto
@@ -28,8 +34,18 @@ duenios.controller("DueniosController", function(DueniosService, DocumentosServi
     
     ProvinciasService.query().$promise.then(function(data) {
         self.provincias.prov = data;
-        self.provincias.prov.push({IdProvincia: '-1', Nombre: 'Provincias'}); //Valor por defecto
+        self.provincias.prov.push({IdProvincia: '-1', Nombre: 'Provincia'}); //Valor por defecto
     });
+   
+    
+    LocalidadesService.query({id:1}).$promise.then(function(data) {
+        self.localidades.loc = data;
+        self.localidades.loc.push({IdProvincia: '-1', Nombre: 'Localidad'}); //Valor por defecto
+    });
+    
+    //self.localidades.loc = LocalidadesService.get({id:1});
+    //self.localidades.loc.push({IdLocalidad: '-1', Nombre: 'Localidad'}); //Valor por defecto
+    
     
     
 	this.createDuenio = function(){
