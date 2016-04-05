@@ -85,7 +85,7 @@
 
 
         
-<!--Registración modal-->
+<!--Registración modal  -->
 <!--<div  id="registracionModal" ng-controller="CommonController as common" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">-->
 <div  id="registracionModal" ng-controller="ClientesController as cli" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-registracion">
@@ -230,7 +230,7 @@
                                             <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre">
                                         </div>
                                         <div class="form-group">
-                                            <select class="form-control" ng-model="due.tiposDoc.selectedOption" 
+                                           <select class="form-control" ng-model="due.tiposDoc.selectedOption" 
                                                                  ng-options="tipoDoc.Descripcion for tipoDoc in due.tiposDoc.tipos track by tipoDoc.IdTipoDoc" >
                                             </select>
                                         </div>
@@ -261,13 +261,13 @@
                                         <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre">
                                     </div>
                                     
-                                    <div class="form-group">            
-                                        <select class="form-control" ng-model="due.provincias.provSelected" 
-                                                ng-options="provincias.Nombre for provincias in due.provincias.prov 
-                                                            track by                                                                                                                     provincia.IdProvincias" 
-                                                >
-                                        </select>
-
+                                    <div class="form-group">
+                                        
+                                        
+                                        <select class="form-control" ng-model="due.provincias.selectedProv" 
+                                            ng-options="provincia.Nombre for provincia in due.provincias.prov track by          provincia.IdProvincia" ng-click="due.getLocalidades()">
+                                          </select>         
+                                        
                                      </div>
                                     <div class="form-group">
                                         <input type="text" id="direccion" class="form-control input-md" placeholder="Dirección (calle)">
@@ -279,7 +279,7 @@
                                     </div> 
                                     <div class="form-group">
                                        <select class="form-control" ng-model="due.localidades.selectedOption" 
-                                                ng-options="localidades.Nombre for localidades in due.localidades.loc track by                                                                                                                                        localidad.IdLocalidad" >
+                                                ng-options="localidad.Nombre for localidad in due.localidades.loc track by                                                                                                                                        localidad.IdLocalidad" >
                                        </select>
                                     </div>
                                     <div class="form-group">
