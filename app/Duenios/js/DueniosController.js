@@ -41,16 +41,20 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
     this.getLocalidades = function(){
         var idProv = self.provincias.selectedProv.IdProvincia;
         
-        if(idProv != null){
-            if(idProv != -1){
-                LocalidadesService.query({id:idProv}).$promise.then(function(data) {
-                    self.localidades.loc = data;
-                });
-            };
+        if(idProv != -1){
+            LocalidadesService.query({id:idProv}).$promise.then(function(data) {
+                self.localidades.loc = data;
+                var idSel =  self.localidades.loc[0].IdLocalidad;
+                var nomSel = self.localidades.loc[0].Nombre;
+                self.localidades.selectedOption = {IdLocalidad: idSel, Nombre:nomSel}; 
+            });
         }
         else{
-            self.localidades.loc.push({IdLocalidad: '-1', Nombre: 'Localidad'}); 
+            self.localidades.loc = [];
+            self.localidades.loc.push({IdLocalidad: '-1', Nombre: 'Localidad'});  
+            self.localidades.selectedOption = {IdLocalidad: '-1', Nombre: 'Localidad'}; 
         };
+        
     };
 	
     

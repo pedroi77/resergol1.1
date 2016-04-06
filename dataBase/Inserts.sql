@@ -26,5 +26,6 @@ insert into Provincias values(2, 'Cordoba');
 
 insert into Localidades values(1,1, 'Avellaneda');
 insert into Localidades values(1,2, 'Lomas de Zamora');
+insert into Localidades values(1,3, 'Adrogue');
 insert into Localidades values(2,1, 'La falda');
 insert into Localidades values(2,2, 'La cumbresita');

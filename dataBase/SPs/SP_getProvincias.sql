@@ -8,7 +8,8 @@ CREATE PROCEDURE SP_getProvincias ()
 BEGIN 
     SELECT IdProvincia,
            Nombre 
-    FROM Provincias;
+    FROM Provincias
+    ORDER BY Nombre;
 END 
 
 // 

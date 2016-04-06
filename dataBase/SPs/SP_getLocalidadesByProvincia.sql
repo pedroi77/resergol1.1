@@ -13,7 +13,8 @@ BEGIN
            l.Nombre 
     FROM Localidades as l
     INNER JOIN Provincias as p ON l.IdProvincia = p.IdProvincia
-    WHERE p.IdProvincia = pIdProvincia;
+    WHERE p.IdProvincia = pIdProvincia
+    ORDER BY  l.Nombre ;
 END 
 
 // 
