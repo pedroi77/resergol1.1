@@ -1,6 +1,6 @@
 
   
-<div class="container">
+<div class="container" ng-controller="VerCanchaController as can">
     <div class="row">
             <div class="col-md-3 boxComplejo"> 
                 <section class="widget2 boxComplejo">
@@ -37,7 +37,9 @@
                     
                     <div>
                         <!--<button class="btn btn-success center-block" id="btnReservarCancha" data-target="#reservasModal">RESERVAR</button>-->
-                        <a id="btnReservarCancha" href="VerCancha/#reservasModal" data-toggle="modal" class="btn btn-success center-block" style="border-radius: 7px;" role="button">RESERVAR</a>
+                        <!--<a id="btnReservarCancha" href="VerCancha/#reservasModal" data-toggle="modal" class="btn btn-success center-block" style="border-radius: 7px;" role="button">RESERVAR</a>-->
+                        
+                        <a id="btnReservarCancha" onclick="$('html,body').animate({scrollTop:1000},'slow');return false;" ng-click="can.mostrarReservar()"  data-toggle="modal" class="btn btn-success center-block" style="border-radius: 7px;" role="button">RESERVAR</a>
                         
                         
                         
@@ -229,60 +231,16 @@
              
 </div>
              
-            <!--<div class="col-md-3 "> 
-            <div class="widget2">
-                <div><h4>Puntuación de "Cancha 1"</h4></div>
-                  <div class="row">
-                      <div class="col-md-12">
-                        <label>Puntuación = </label><span> "Muy buena!"</span>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-12">
-                          <h5>Votá:</h5>
-                      </div>
-                      <div class="col-md-6" style="padding : 5px; padding-top: 2px;">
-                        <div class="botonesPuntuacion">
-                            <button class="btn btn-success" id="cinco">"Una fantasía"</button>
-                        </div>
-                          <br2>
-                      </div>
-                      <div class="col-md-6"  style="padding : 5px; padding-top: 2px;">
-                        <div class="botonesPuntuacion">
-                            <button class="btn btn-primary" id="cuatro">"Muy buena!"</button>
-                        </div>
-                          <br2>
-                      </div>
-                      <div class="col-md-6" style="padding : 5px; padding-top: 2px;" >
-                        <div class="botonesPuntuacion">
-                            <button class="btn btn-info" id="tres">"Mas o menos"</button>
-                        </div>
-                          <br2>
-                      </div>
-                      <div class="col-md-6" style="padding : 5px; padding-top: 2px;">
-                        <div class="botonesPuntuacion">
-                            <button class="btn btn-warning" id="dos">"No me gustan"</button>
-                        </div>
-                          <br2>
-                      </div>
-                      <div class="col-md-12" style="padding : 5px; padding-top: 2px;">
-                        <div class="botonesPuntuacion">
-                            <button class="btn btn-danger" id="uno">"Las peores canchas"</button>
-                        </div>
-                      </div> 
-                       <div class="col-md-12" style="padding : 5px; padding-top: 4 px;">
-                        <label>Votaste: </label>
-                      </div>    
-                  </div>
-                
-                
-                </div>
-
-            </div>-->
+           
                           
                           
          </div>
-         
+                          
+                          
+    <div class="container" ui-view></div>
+       
+ 
+                
  </div> <!--Cierra DIV Container-->
                 
                 
