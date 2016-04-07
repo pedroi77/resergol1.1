@@ -199,19 +199,23 @@
                             <form class="form center-block">
                                 <div class="col-md-6">    
                                     <div class="form-group">
-                                        <input type="text" id="usuario" class="form-control input-md" placeholder="Usuario">
+                                        <input type="text" id="usuario" class="form-control input-md" placeholder="Usuario" 
+                                               ng-model="due.duenio.usuario">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" id="contraseña" class="form-control input-md" placeholder="Contraseña">
+                                        <input type="password" id="contraseña" class="form-control input-md" placeholder="Contraseña"
+                                               ng-model="due.duenio.contrasenia">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="email" id="email" class="form-control input-md" placeholder="E-Mail">
+                                        <input type="email" id="email" class="form-control input-md" placeholder="E-Mail" 
+                                               ng-model="due.duenio.email">
                                     </div> 
                                     <div class="form-group">
-                                        <input type="password" id="contraseñaRepetida" class="form-control input-md" placeholder="Repita contraseña">
+                                        <input type="password" id="contraseñaRepetida" class="form-control input-md" placeholder="Repita contraseña"
+                                               ng-model = "due.duenio.contrasenia2">
                                     </div>  
                                 </div>    
                             </form>
@@ -227,7 +231,8 @@
                             <form class="form center-block">
                                     <div class="col-md-6">    
                                         <div class="form-group">
-                                            <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre">
+                                            <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre"
+                                                   ng-model="due.duenio.nombre">
                                         </div>
                                         <div class="form-group">
                                            <select class="form-control" ng-model="due.tiposDoc.selectedOption" 
@@ -238,10 +243,12 @@
                                     
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" id="apellido" class="form-control input-md" placeholder="Apellido">
+                                            <input type="text" id="apellido" class="form-control input-md" placeholder="Apellido"
+                                                   ng-model="due.duenio.apellido">
                                         </div> 
                                         <div class="form-group">
-                                            <input type="text" id="nroDocumento" class="form-control input-md" placeholder="N° documento">
+                                            <input type="text" id="nroDocumento" class="form-control input-md" placeholder="N° documento"
+                                                   ng-model="due.duenio.nroDoc">
                                         </div>  
                                     </div>    
                             </form>
@@ -258,7 +265,8 @@
                             <form class="form center-block">
                                 <div class="col-md-6">    
                                     <div class="form-group">
-                                        <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre">
+                                        <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre"
+                                            ng-model="due.duenio.nombreComplejo">
                                     </div>
                                     
                                     <div class="form-group">
@@ -270,12 +278,14 @@
                                         
                                      </div>
                                     <div class="form-group">
-                                        <input type="text" id="direccion" class="form-control input-md" placeholder="Dirección (calle)">
+                                        <input type="text" id="direccion" class="form-control input-md" placeholder="Dirección (calle)"
+                                                ng-model="due.duenio.direccion">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                      <div class="form-group">
-                                        <input type="text" id="telefono" class="form-control input-md" placeholder="Teléfono">
+                                        <input type="text" id="telefono" class="form-control input-md" placeholder="Teléfono"
+                                               ng-model="due.duenio.NroTelef">
                                     </div> 
                                     <div class="form-group">
                                        <select class="form-control" ng-model="due.localidades.selectedOption" 
@@ -283,7 +293,8 @@
                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" id="numeroDireccion" class="form-control input-md" placeholder="Número (altura)">
+                                        <input type="text" id="numeroDireccion" class="form-control input-md" placeholder="Número (altura)"
+                                               ng-model="due.duenio.nroCalle">
                                     </div> 
                                 </div> 
                             </form>
@@ -292,7 +303,8 @@
                 </div>
                 
                 <div class="form-group">
-                    <button class="btn btn-primary btn-lg btn-block btn-custom "  ng-click="due.createDuenio()" >Terminado</button>
+                    <!--<button class="btn btn-primary btn-lg btn-block btn-custom "  ng-click="due.createDuenio()" >Terminado</button> -->
+                    <button class="btn btn-primary btn-lg btn-block btn-custom "  ng-click="due.mostrarDatos()" >Terminado</button>
                 </div>
             
             </div>

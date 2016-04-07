@@ -209,18 +209,18 @@ CONSTRAINT Localidades_Provincias_fk   FOREIGN KEY (IdProvincia) REFERENCES Prov
 );
 
 CREATE TABLE DueniosPendientes(
-IdDuenio   	INT           NOT NULL,
-Calle	    VARCHAR(40)   NOT NULL,
-Altura	    INT           NOT NULL,
-IdLocalidad	INT           NOT NULL,
-IdProvincia	INT           NOT NULL,
-CP	        INT           NOT NULL,
-X	        INT           NOT NULL,
-Y           INT           NOT NULL,
+IdDuenio   	      INT           NOT NULL,
+nombreComplejo    VARCHAR(60)   NOT NULL,
+NroTelef          VARCHAR(15)   NOT NULL, 
+Calle	          VARCHAR(40)   NOT NULL,
+Altura	          INT           NOT NULL,
+IdLocalidad	      INT           NOT NULL,
+IdProvincia	      INT           NOT NULL,
 PRIMARY KEY (IdDuenio),
 CONSTRAINT Duenio_ProvLoc_fk   FOREIGN KEY (IdProvincia,IdLocalidad) REFERENCES Localidades(IdProvincia,IdLocalidad),
 CONSTRAINT Duenio_fk   FOREIGN KEY (IdDuenio) REFERENCES Duenios(IdDuenio)
 );
+
 
 
 CREATE TABLE ComplejosDireccion	(
