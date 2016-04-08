@@ -1,7 +1,3 @@
-
-
-USE resergol;
-
 DROP PROCEDURE IF EXISTS SP_insertDuenios; 
 
 DELIMITER // 
