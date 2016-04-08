@@ -2,11 +2,11 @@
     <hr>
     <div class="row">
             <div class="col-md-3 boxComplejo"> 
-                <section class="widget2 boxComplejo">
+                <section class="widget2 boxInfoReserva">
                     <div class="row">
                      <header>
-                        <h3 class="fa fa-user titul">Cancha 1</h3>
-                         <h4 class="fa fa-user titul">Complejo: <a ui-sref="Clientes.verComplejo">Todo Futbol</a></h4>
+                        <h3 class="fa fa-user titul">Estás reservando...</h3>
+                         <h5 class="fa fa-user titul">Maracaná, en  <a ui-sref="Clientes.verComplejo">Todo Futbol Club</a></h5>
                      </header>
                       <!--<div class="imgMiniatura">
                             <img src="images/complejos/complejo1.jpeg" alt="">
@@ -33,101 +33,154 @@
                           </li>-->
                       </ul>
                     </div>   
-                    
-                    <div>
-                        <!--<button class="btn btn-success center-block" id="btnReservarCancha" data-target="#reservasModal">RESERVAR</button>-->
-                        <a id="btnReservarCancha" href="VerCancha/#reservasModal" data-toggle="modal" class="btn btn-success center-block" style="border-radius: 7px;" role="button">RESERVAR</a>
-                        
-                        
-                        
-                    </div>
                 </section>
           </div>
-       
-
-       <div class="col-md-6">
-       
-           <div class="col-md-6 carousel-container anchoCarousel ">
-              <div id="carouselComplejos" class="carousel slide carousel-fade">
-                <!-- Carousel items -->
-                <div class="carousel-inner anchoCarousel">
-                      <div data-slide-no="0" class="item carousel-item active">
-                        <img src="/../resergol1.1/images/complejos/complejo1.jpeg" alt="">
-                        <div class="carousel-caption">
-                        </div>
-                      </div>
-                      <div data-slide-no="1" class="item carousel-item">
-                        <img src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
-                        <div class="carousel-caption">
-                        </div>
-                      </div>
-                      <div data-slide-no="2" class="item carousel-item">
-                        <img src="/../resergol1.1/images/complejos/complejo3.jpg" alt="">
-                        <div class="carousel-caption">
-                        </div>
-                      </div>
+         
+           <div class="col-md-9 boxComplejo">      
+           <section class="widget">
+                    <fieldset>
+                    <div class="body">
+                        <!--<p class="mensajeExplicacion">Administre aquí los datos del dueño del complejo.</p>-->
+                        <div class="form-group">
+                            <form action="" class="">
+                                <div class="form-group">
+                                    <label for="diaReserva" class="control-label col-sm-1">Día:<span class="required"></span></label>
+                                    <div class='col-sm-4 input-group date'>
+                                    <input type='text'  class="form-control" id="fecha" style="height:31px;"/>
+                                    <span class="input-group-addon" id="fechaReserva" onclick="mostrarCalendario()" >
+                                    <span class="glyphicon glyphicon-calendar"  ></span>
+                                    </span>
+                                    </div>   
+                                    
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="desde" class="control-label col-sm-1">Desde <span class="required"></span></label>
+                                    <div class="col-xs-12 col-sm-3">  
+                                            <SELECT NAME="cboHoraDesde" style="height:30px;" SIZE=1 class="select2 form-control col-sm-2" placeholder=".col-lg-2"> 
+                                            <OPTION >08 Hs</OPTION>
+                                            <OPTION>09 Hs</OPTION>
+                                            <OPTION>10 Hs</OPTION>
+                                            <OPTION>11 Hs</OPTION> 
+                                            <OPTION>12 Hs</OPTION> 
+                                            <OPTION>13 Hs</OPTION> 
+                                            <OPTION>14 Hs</OPTION> 
+                                            <OPTION>15 Hs</OPTION>
+                                            <OPTION>16 Hs</OPTION> 
+                                            <OPTION>17 Hs</OPTION> 
+                                            <OPTION>18 Hs</OPTION> 
+                                            <OPTION>19 Hs</OPTION> 
+                                            <OPTION>19 Hs</OPTION> 
+                                            <OPTION>20 Hs</OPTION> 
+                                            <OPTION>21 Hs</OPTION> 
+                                            <OPTION>22 Hs</OPTION> 
+                                            <OPTION  selected="selected">08 HS</OPTION> 
+                                        </SELECT> 
+                                    </div> 
+                                    <label for="hasta" class="control-label col-sm-1">Hasta <span class="required"></span></label>
+                                    <div class="col-xs-12 col-sm-3">  
+                                            <SELECT NAME="cboHoraHasta" SIZE=1 class="input-small form-control col-sm-2"> 
+                                            <OPTION>08 Hs</OPTION>
+                                            <OPTION>09 Hs</OPTION>
+                                            <OPTION>10 Hs</OPTION>
+                                            <OPTION>11 Hs</OPTION> 
+                                            <OPTION>12 Hs</OPTION> 
+                                            <OPTION>13 Hs</OPTION> 
+                                            <OPTION>14 Hs</OPTION> 
+                                            <OPTION>15 Hs</OPTION>
+                                            <OPTION>16 Hs</OPTION> 
+                                            <OPTION>17 Hs</OPTION> 
+                                            <OPTION>18 Hs</OPTION> 
+                                            <OPTION>19 Hs</OPTION> 
+                                            <OPTION>19 Hs</OPTION> 
+                                            <OPTION>20 Hs</OPTION> 
+                                            <OPTION>21 Hs</OPTION> 
+                                            <OPTION>22 Hs</OPTION> 
+                                            <OPTION  selected="selected">23 HS</OPTION> 
+                                        </SELECT> 
+                                    </div> 
+                                </div>
+  
+                            </form>
+                            
+                            
+                            
+                            <div class="col-xs-12 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><img class="pull-right" src="http://i76.imgup.net/accepted_c22e0.png">Payment Details</h3>
                 </div>
-                <!-- Carousel nav -->
-                <a class="carousel-control left" href="#carouselComplejos" data-slide="prev">‹</a>
-                <a class="carousel-control right" href="#carouselComplejos" data-slide="next">›</a>
-               </div>
+                <div class="panel-body">
+                    <form role="form" id="payment-form">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="cardNumber">CARD NUMBER</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="cardNumber" placeholder="Valid Card Number" required autofocus data-stripe="number" />
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                    </div>
+                                </div>                            
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-7 col-md-7">
+                                <div class="form-group">
+                                    <label for="expMonth">EXPIRATION DATE</label>
+                                    <div class="col-xs-6 col-lg-6 pl-ziro">
+                                        <input type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
+                                    </div>
+                                    <div class="col-xs-6 col-lg-6 pl-ziro">
+                                        <input type="text" class="form-control" name="expYear" placeholder="YY" required data-stripe="exp_year" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-5 col-md-5 pull-right">
+                                <div class="form-group">
+                                    <label for="cvCode">CV CODE</label>
+                                    <input type="password" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="couponCode">COUPON CODE</label>
+                                    <input type="text" class="form-control" name="couponCode" />
+                                </div>
+                            </div>                        
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button class="btn btn-success btn-lg btn-block" type="submit">Place Order</button>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none;">
+                            <div class="col-xs-12">
+                                <p class="payment-errors"></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div> 
+        </div>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                    
+                    </div>
+                    </fieldset>
+                </section>
+        </div>
+      
        
-       <div class="col-md-3"> 
-           <section class="widget2 boxInfoCancha">
-                  <div class="row">
-                      <div class="col-md-12">
-                          <ul>
-                            <li>
-                                <b>Tamaño:</b> <label>6 (12 jugadores)</label>
-                            </li>
-                            <li>
-                                <b>Superficie:</b> <label>Pasto sintético</label>
-                            </li>
-                            <li>
-                                <b>Techada:</b> <label>NO</label>
-                            </li>
-                            <li>
-                                <b>Luz:</b> <label>SI</label>
-                            </li>
-                            <li>
-                                <b>Precio por hora:</b> <label>$380</label>
-                                <label class="glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title="Tanto el precio como la seña que se indican no incluyen luz." ></label>
-                            </li>
-                            <li>
-                                <b>Seña requerida:</b> <label>$80</label>
-                            </li>  
-                          </ul>
-                      </div>
-                  </div>
-              </section>
-            
-           <section class="widget2 boxServAdicionales">
-                <div class="panel-heading" ><h4>Servicios adicionales</h4></div>
-                  <div class="row">
-                      <div class="col-md-6">
-                        <label>Buffet </label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
-                      </div>
-                      <div class="col-md-6">
-                        <label>Parrilla </label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>  
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-6">
-                        <label>Duchas </label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
-                      </div>
-                      <div class="col-md-6">
-                        <label>Wifi</label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>  
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-8">
-                        <label>Estacionamiento</label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
-                      </div>
-                  </div>   
-            </section>
-           
-    </div>
+       
                 
 </div>
