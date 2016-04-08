@@ -29,3 +29,5 @@ insert into Localidades values(1,2, 'Lomas de Zamora');
 insert into Localidades values(1,3, 'Adrogue');
 insert into Localidades values(2,1, 'La falda');
 insert into Localidades values(2,2, 'La cumbresita');
+
+insert into administradores(Usuario, Contrasenia) values('ADMIN', '454545');

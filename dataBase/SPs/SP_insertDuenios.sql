@@ -27,12 +27,19 @@ BEGIN
 	/*call SP_insertDuenios ('pepe', 'nn', 'cosme', 'fulanito', 1, 29456111,'fula@gmail.com', @du);*/
     /*call SP_insertDuenios ('pepe', 'nn', 'cosme', 'fulanito', 1, 37444111,'fula@gmail.com','Open', '44442222',1,2,'lavalle',1450    ,@du);*/
     DECLARE Error INT DEFAULT 0;
+    DECLARE idPersonaAux INT DEFAULT 0;
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
     
-      /*primero creo la persona*/
-    CALL SP_insertPersonas (pNombre, pApellido, pIdTipoDoc, pNroDoc,pEmail, @idPersona);
+      /*primero busco si ya existe la persona*/
+      SELECT IFNULL(idPersona, 0) INTO idPersonaAux FROM personas WHERE idTipoDoc = pIdTipoDoc and nroDoc = pNroDoc;
+      
+      IF (idPersonaAux = 0) THEN /*NUEVO*/
+        CALL SP_insertPersonas (pNombre, pApellido, pIdTipoDoc, pNroDoc,pEmail, @idPersona);
+      END IF;
+      
+    
      
-    IF (Error = 0 AND  @idPersona > -1) THEN
+    IF (Error = 0) THEN
         
         INSERT INTO Duenios(IdPersona, 
                             Usuario,

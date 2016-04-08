@@ -1,6 +1,6 @@
 
 $(document).ready(function(){  /* jQuery toggle layout */
-    
+    /*
   $('#idTourDateDetails').datepicker({
      dateFormat: 'dd-mm-yy',
      minDate: '+5d',
@@ -9,7 +9,7 @@ $(document).ready(function(){  /* jQuery toggle layout */
      altField: "#idTourDateDetailsHidden",
      altFormat: "yy-mm-dd"
  });   
-
+*/
 $('#btnToggle').click(function(){
   if ($(this).hasClass('on')) {
     $('#main .col-md-6').addClass('col-md-4').removeClass('col-md-6');
