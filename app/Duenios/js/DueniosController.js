@@ -11,7 +11,7 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
     
     this.tiposDoc = {
         tipos: [],
-        selectedOption: {idTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
+        selectedOption: {IdTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
     };    
     
     this.provincias = {
@@ -27,7 +27,7 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
     
     DocumentosService.query().$promise.then(function(data) {
         self.tiposDoc.tipos = data;
-        self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+        self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
     });
     
     ProvinciasService.query().$promise.then(function(data) {
@@ -57,24 +57,71 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
         
     };
 	
-    
+   
     this.duenio = { 
                     usuario: '', 
-                    eMail: '',
+                    email: '',
                     contrasenia: '', 
                     contrasenia2: '' ,
                     nombre: '',
                     apellido: '',
-                    tipoDoc:1,
-                    nroDoc:''
+                    idTipoDoc:0,
+                    nroDoc:'',
+                    nombreComplejo: '',
+                    NroTelef:'',
+                    idProv:0,
+                    idLoc:0,
+                    direccion:'',
+                    nroCalle:''
                   };
+    
+    /* ejemplo para post
+    {
+	"usuario": "TANQUE",
+	"contrasenia": "7444",
+	"nombre": "diego",
+	"apellido": "forlan",
+	"idTipoDoc": 1,
+	"nroDoc": 23399135,
+	"email": "test@gmail.com",
+	"nombreComplejo": "amigos",
+	"NroTelef": "42852221",
+	"idProv": 1,
+	"idLoc": 2,
+	"direccion": "lavalle",
+	"nroCalle": 1544,
+	"valor": -5
+}
+  
+    */
    
+    
+   this.mostrarDatos = function()
+   {
+       alert("usuario: " + self.duenio.usuario
+             + '\n' + "eMail: " + self.duenio.email
+             + '\n'+ "contrasenia: " + self.duenio.contrasenia
+             + '\n'+ "contrasenia2: " + self.duenio.contrasenia2
+             + '\n'+ "nombre: " + self.duenio.nombre
+             + '\n'+ "apellido: " + self.duenio.apellido
+             + '\n'+ "tipoDoc: " + self.tiposDoc.selectedOption.IdTipoDoc
+             + '\n'+ "nroDoc: " + self.duenio.nroDoc
+             + '\n'+ "nombreComplejo: " + self.duenio.nombreComplejo
+             + '\n'+ "NroTelef: " + self.duenio.NroTelef
+             + '\n'+ "prov: " + self.provincias.selectedProv.IdProvincia
+             + '\n'+ "loc: " + self.localidades.selectedOption.IdLocalidad
+             + '\n'+ "direccion: " + self.duenio.direccion
+             + '\n'+ "nroCalle: " + self.duenio.nroCalle
+            
+            ); 
+  
+   };
+   
+    
    this.createDuenio = function()
    {
-      /* self.cliente.tipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;*/
-       console.log(self.tiposDoc.selectedOption.IdTipoDoc);
-       console.log(self.provincias.selectedProv.IdProvincia);
-       console.log(self.localidades.selectedOption.IdLocalidad);
+     
+     
        
        /*
        ClientesService.createCliente(self.cliente.usuario, self.cliente.contrasenia, self.cliente.nombre,
