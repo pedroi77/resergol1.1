@@ -14,5 +14,7 @@ app.service("DueniosService", function($http, $resource){
                 isArray: true
                 }
     });
+    
+    
 	
 });
