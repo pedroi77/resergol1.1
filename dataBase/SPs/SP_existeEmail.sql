@@ -8,7 +8,7 @@ CREATE PROCEDURE SP_existeEmail(
 BEGIN 
 
     /*Recibe mail devuelve 1 si ya existe caso contrario 0*/
-    /*call SP_existeEmail('pepe@gmail.com', @res);
+    /*call SP_existeEmail('fula2@gmail.com', @res);
     select @res;*/
     
     DECLARE Aux   INT;
