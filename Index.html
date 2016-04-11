@@ -18,26 +18,24 @@
                         <a href="Index.html" class="menuLink" role="application"><h4><b>RESERGOL</b></h4></a>
                     </div>
 
-                      <ul class="nav navbar-nav navbar-right">
-                         <li>
-                             <a href="#loginModal" role="button" data-toggle="modal">Iniciar Sesión</a>
-                         </li>
-                         <li>
-                             <a href="#registracionModal" role="button" data-toggle="modal">¡Registrate!</a>
-                         </li>
-                         <li>
-                             <a href="#registracionDuenioModal" role="button" data-toggle="modal">Registra tu cancha!</a>                               </li>
-                         <li><a href="#aboutModal" role="button" data-toggle="modal">Acerca de</a></li>
-
-                      </ul>
-
-
-
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#loginModal" role="button" data-toggle="modal">Iniciar Sesión</a>
+                        </li>
+                        <li>
+                            <a href="#registracionModal" role="button" data-toggle="modal">¡Registrate!</a>
+                        </li>
+                        <li>
+                            <a href="#registracionDuenioModal" role="button" data-toggle="modal">Registra tu cancha!</a>                                                       </li>
+                        <li>
+                            <a href="#aboutModal" role="button" data-toggle="modal">Acerca de</a>
+                        </li>
+                    </ul>
                 </div>	
-             </div>	
+            </div>	
         </div>
-        
-       
+
+
 
         <!--main-->
         <div class="container" id="main">
@@ -55,7 +53,8 @@
   <div class="modal-content">
       <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h2 class="text-center"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"><br>Ingresar</h2>
+          <h2 class="text-center"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"                                            class="img-circle">
+          <br>Ingresar</h2>
       </div>
       <div class="modal-body">
           <form class="form col-md-12 center-block">
@@ -110,7 +109,8 @@
                     <input type="email" id="email" class="form-control input-md" placeholder="E-mail" ng-model="cli.cliente.eMail">
                 </div> 
                 <div class="form-group">
-                    <input type="password" id="contraseñaRepetida" class="form-control input-md" placeholder="Repita contraseña" ng-model="cli.cliente.contrasenia2">
+                    <input type="password" id="contraseñaRepetida" class="form-control input-md" placeholder="Repita contraseña" 
+                           ng-model="cli.cliente.contrasenia2">
                 </div>  
              </div>    
           </fieldset>
@@ -127,7 +127,7 @@
                                 <div class="form-group" >
                                   
                                     <select class="form-control" ng-model="cli.tiposDoc.selectedOption" 
-                                                                 ng-options="tipoDoc.Descripcion for tipoDoc in cli.tiposDoc.tipos track by tipoDoc.IdTipoDoc" >
+                                                                 ng-options="tipoDoc.Descripcion for tipoDoc in cli.tiposDoc.tipos track by                                                                                             tipoDoc.IdTipoDoc" >
                                                             
                                     </select>
                                     
@@ -136,10 +136,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" id="apellido" class="form-control input-md" placeholder="Apellido" ng-model="cli.cliente.apellido">
+                                    <input type="text" id="apellido" class="form-control input-md" placeholder="Apellido" 
+                                                                                                ng-model="cli.cliente.apellido">
                                 </div> 
                                 <div class="form-group">
-                                    <input type="text" id="nroDocumento" class="form-control input-md" placeholder="N° Documento" ng-model="cli.cliente.nroDoc">
+                                    <input type="text" id="nroDocumento" class="form-control input-md" placeholder="N° Documento" 
+                                           ng-model="cli.cliente.nroDoc">
                                 </div>  
                             </div>    
             </fieldset>
@@ -271,7 +273,8 @@
                                         
                                         
                                         <select class="form-control" ng-model="due.provincias.selectedProv" 
-                                            ng-options="provincia.Nombre for provincia in due.provincias.prov track by          provincia.IdProvincia" ng-click="due.getLocalidades()">
+                                            ng-options="provincia.Nombre for provincia in due.provincias.prov track by
+                                                        provincia.IdProvincia" ng-click="due.getLocalidades()">
                                           </select>         
                                         
                                      </div>

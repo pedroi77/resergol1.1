@@ -4,11 +4,7 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 //resergolApp.config(function($stateProvider){
 
 	$stateProvider
-		.state("Clientes.buscarCanchas",{
-			url : "/Canchas",
-			templateUrl : "app/Clientes/Templates/BuscarCanchas.html",
-			controllerAs : "cli"
-		})
+	
 		.state("Clientes.buscarComplejos",{
 			url : "/Complejo",
 			templateUrl : "app/Clientes/Templates/BuscarComplejos.html",
@@ -41,10 +37,15 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
                 templateUrl : "app/Clientes/Templates/MisReservas.html",
                 controllerAs : "cli"
             })
-		
-        
+        .state("Clientes.buscarCanchas",{
+			url : "/Canchas",
+			templateUrl : "app/Clientes/Templates/BuscarCanchas.html",
+            controller : "ClientesController",	
+            controllerAs : "cli"
+		});
     
-		$urlRouterProvider.otherwise("/clientes");
+    
+		$urlRouterProvider.otherwise("/clientes/Canchas");
     
 });
 

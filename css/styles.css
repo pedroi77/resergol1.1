@@ -19,12 +19,29 @@ body {
   
 }
 */
+ ;
+
+nav.navbar ul.nav li {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: red;
+}
+
+.navbar-default2  {background-color: skyblue; margin-top:-30px;border-width:0;z-index:5;}
+
+.navbar-default2 .navbar-nav > .active > a,.navbar-default .navbar-nav > li:hover > a {border:0 solid #4285f4;border-bottom-width:2px;font-weight:800;background-color:transparent; }
+
+nav.navbar {
+    color: #f8f8f8;
+    background: rgba(51, 51, 51, 0.2);
+    /*background-color: #CC1414;*/
+}
+
+
 
 .navbar-default {background-color:#f4f4f4;margin-top:0px;border-width:0;z-index:5;}
 .navbar-default .navbar-nav > .active > a,.navbar-default .navbar-nav > li:hover > a {border:0 solid #4285f4;border-bottom-width:2px;font-weight:800;background-color:transparent;}
 .navbar-default .dropdown-menu {background-color:#ffffff;}
 .navbar-default .dropdown-menu li > a {padding-left:30px;}
-
 .header {background-color:#ffffff;border-width:0;}
 .header .navbar-collapse {background-color:#ffffff;}
 /*.btn,.form-control,.panel,.list-group,.well {border-radius:1px;box-shadow:0 0 0;}*//*<PI>*/
