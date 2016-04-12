@@ -19,11 +19,36 @@ body {
   
 }
 */
+ ;
 
-.navbar-default {background-color:#f4f4f4;margin-top:0px;border-width:0;z-index:5;}
-.navbar-default .navbar-nav > .active > a,.navbar-default .navbar-nav > li:hover > a {border:0 solid #4285f4;border-bottom-width:2px;font-weight:800;background-color:transparent;}
+
+.navbar-default2  {background-color: skyblue; margin-top:0px;border-width:0;z-index:5;}
+.navbar-default2 .navbar-nav > .active > a,.navbar-default .navbar-nav > li:hover > a {border:0 solid #4285f4;border-bottom-width:0px;font-weight:750;background-color:rgba(51, 51, 51, 0.3); }
+.navbar-default2 .navbar-nav :hover { background-color: rgba(51, 51, 51, 0.2);;}
+
+nav.navbar {
+    color: #f8f8f8;
+    background: rgba(51, 51, 51, 0.2);
+}
+
+.nav>li>a {
+    color:white;
+}
+  
+
+/*.navbar-default {background-color:#f4f4f4;margin-top:0px;border-width:0;z-index:5;}*/
+.navbar-default >.navbar-nav :hover { background-color: rgba(51, 51, 51, 0.2); color: #f8f8f8;}
+.navbar-default {background-color:rgba(51, 51, 51, 0.3);margin-top:0px;border-width:0;z-index:5;}
+.navbar-default .navbar-nav > .active > a,.navbar-default .navbar-nav > li:hover > a {border-bottom-width:2px;font-weight:750; color:white;}
+.navbar-default .navbar-nav > a {color:white;}
 .navbar-default .dropdown-menu {background-color:#ffffff;}
 .navbar-default .dropdown-menu li > a {padding-left:30px;}
+
+.navbar-default .nav>li>a {
+    color:white;
+}
+  
+
 
 .header {background-color:#ffffff;border-width:0;}
 .header .navbar-collapse {background-color:#ffffff;}

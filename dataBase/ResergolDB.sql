@@ -25,7 +25,7 @@ Nombre	    VARCHAR(60)   NOT NULL,
 Apellido	  VARCHAR(60)   NOT NULL,
 IdTipoDoc	  INT           NOT NULL,
 NroDoc	    INT           NOT NULL UNIQUE,   
-Email	      VARCHAR(60)   NOT NULL,
+Email	      VARCHAR(60)   NOT NULL UNIQUE,
 FOREIGN KEY (IdTipoDoc)
 REFERENCES TiposDoc(IdTipoDoc) );
 
@@ -33,7 +33,10 @@ CREATE TABLE DueniosEstados(
 IdEstado    INT           NOT NULL PRIMARY KEY AUTO_INCREMENT,  
 Descripcion	VARCHAR(30)   NOT NULL );
 
-
+CREATE TABLE Administradores(	 
+Usuario	    VARCHAR(25) NOT NULL UNIQUE,
+id          INT NOT NULL  PRIMARY KEY      AUTO_INCREMENT, 
+Contrasenia   BLOB        NOT NULL);
 
 CREATE TABLE ClientesEstados(	
 IdEstado    INT           NOT NULL PRIMARY KEY AUTO_INCREMENT,  
@@ -43,8 +46,8 @@ Descripcion	VARCHAR(30)   NOT NULL );
 CREATE TABLE Duenios(	
 IdDuenio	    INT         NOT NULL PRIMARY KEY AUTO_INCREMENT,  
 IdPersona	    INT         NOT NULL,
-Usuario	    VARCHAR(25) NOT NULL,
-Contrasenia   BLOB        NOT NULL,
+Usuario	        VARCHAR(25) NOT NULL UNIQUE,
+Contrasenia     BLOB        NOT NULL,
 IdEstado	    INT         NOT NULL,
 FechaAlta	    DATE        NOT NULL,
 FechaBaja	    DATE        NULL,
@@ -65,7 +68,7 @@ PRIMARY KEY (IdEstado)
 CREATE TABLE Clientes (	
 IdCliente	INT			NOT NULL AUTO_INCREMENT,
 IdPersona	INT			NOT NULL,
-Usuario	VARCHAR(25) NOT NULL,
+Usuario	VARCHAR(25) NOT NULL UNIQUE,
 Contrasenia	BLOB(30)	NOT NULL,
 IdEstado	INT			NOT NULL,
 FechaAlta	DATE		NOT NULL,	

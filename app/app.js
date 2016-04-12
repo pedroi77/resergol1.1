@@ -11,7 +11,7 @@ var resergolApp = angular.module("resergolApp",
 resergolApp.config(function($stateProvider, $urlRouterProvider){
 
 	$stateProvider
-		.state("Duenios", {
+        .state("Duenios", {
 			url : "/duenios",
 			templateUrl : "app/Duenios/Templates/DuenioPrincipal.html",
 			controller : "DueniosController",
@@ -23,10 +23,11 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			controller : "ClientesController",
 			controllerAs : "CLI"
 		});
-	
+	  
         //Aca falta la parte de administradores
 	$urlRouterProvider.otherwise("/duenios");
-    $urlRouterProvider.otherwise("/clientes");
+    $urlRouterProvider.otherwise("/clientes/Canchas");
+    
 	
 });
 
