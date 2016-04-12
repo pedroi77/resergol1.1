@@ -17,8 +17,7 @@
                 Buffet				bool			NOT NULL,
                 Duchas				bool			NOT NULL,
                 Parrillas			bool			NOT NULL,
-                WiFi				bool			NOT NULL,
-
+                WiFi				bool			NOT NULL
             -->
     
     <div class="container">
@@ -30,27 +29,27 @@
                     <div class="body">
                         <form id="user-form" class="form-horizontal form-label-left">
                             <fieldset>
-                                <legend class="section legend-mod">Datos de la cancha</legend></legend>
+                                <legend class="section-buscar legend-mod">Datos de la cancha</legend></legend>
                                 
-                                <label for="provincias" class="control-label col-sm-2">Provincia</label>
-                                <div class="col-sm-4">
+                                
+                                <label for="provincias" class="control-label col-sm-2">Provincia</label>    
+                          
+                                <div class=" col-sm-4 ">
                                     <select id="provincias" required="required"
                                             data-placeholder="Seleccione una provincia" 
-                                            class="select2 form-control" 
+                                            class="form-control" 
                                             name="provincias" style="margin-bottom:5px;">
                                         <option value=""></option>
                                         <option value="1">Buenos Aires</option>
                                         <option value="2">Capital Federal</option>
                                         <option value="3">Córdoba</option>
                                         <option value="4" selected="selected">Mendoza</option>
-                                        <option value="6">Neuquen</option>
-                                        <option value="5">San Luis</option>
-                                        <option value="7">Santa Cruz</option>
                                     </select>
                                 </div>    
                           
                                 <label for="localidades" class="control-label col-sm-2">Localidad</label>
-                                <div class="col-sm-4">    
+                                <div class=" col-sm-4">    
+                               
                                     <select id="localidades" required="required"
                                             data-placeholder="Seleccione una localidad" 
                                             class=" form-control" 
@@ -60,9 +59,6 @@
                                         <option value="2">Capital Federal</option>
                                         <option value="3">Lomas de zamora</option>
                                         <option value="4" selected="selected">Avellaneda</option>
-                                        <option value="6">Lanus</option>
-                                        <option value="5">Tigre</option>
-                                        <option value="7">Moreno</option>
                                     </select>
                                 </div>
                             
@@ -94,18 +90,63 @@
                                     </select>
                                 </div>
                              
-                                <label for="sel2" class="control-label col-sm-2" >Fecha</label>
-                                <div class='input-group date col-sm-4'>
-                                    <input type='text'  class="form-control col-sm-3" id="fecha" style="height:31px;"/>
-                                    <span class="input-group-addon"  style="height:30px;"  id="fecha" onclick="mostrarCalendario()" >
-                                    <span class="glyphicon glyphicon-calendar"  ></span>
-                                    </span>
+                               <label for="sel2" class="control-label col-sm-2" >Fecha</label>
+                               <div class="col-sm-4">    
+                                    <select id="fecha" required="required"
+                                            data-placeholder="Seleccione una localidad" 
+                                            class="form-control" 
+                                            name="localidades" style="margin-bottom:5px;">
+                                        <option value="1" selected="selected">lunes 15</option>
+                                        <OPTION>martes</OPTION> 
+                                        <OPTION>Miercoles</OPTION> 
+                                        <OPTION>Jueves</OPTION> 
+                                        <OPTION>Viernes</OPTION> 
+                                    </select>
+                                </div>
+                            
+                            
+                                <label for="horas" class="control-label col-sm-2">Hora</label>
+                                <div class="col-sm-4">    
+                                    <select id="superficie" required="required"
+                                            data-placeholder="Seleccione una localidad" 
+                                            class="select2 form-control" 
+                                            name="localidades" style="margin-bottom:5px;">
+                                        <option value="1" selected="selected">18 Hs</option>
+                                        <OPTION>18 Hs</OPTION> 
+                                        <OPTION>19 Hs</OPTION> 
+                                        <OPTION>19 Hs</OPTION> 
+                                        <OPTION>20 Hs</OPTION> 
+                                        <OPTION>21 Hs</OPTION> 
+                                        <OPTION>22 Hs</OPTION> 
+                                    </select>
+                                </div>
+                              
+                                <br>
+                            
+                                
+                                
+                                <label for="precio" class="control-label col-sm-3">Precio máximo</label>
+                                <div class="col-sm-3">       
+                                    <input  type="number" id="precio" class="input-sm col-sm-3 form-control">
                                 </div>
                                 
+                                <div class="form-group col-sm-6">
+                                    <div class="col-sm-12"> 
+                                        <label class="checkbox-inline"><input type="checkbox" value="">Techada</label>
+                                        <label class="checkbox-inline"><input type="checkbox" value="">Con Luz</label>
+                                    </div>
+                                    
+                                </div>
+                                
+                             
+                                           
+                            
+                                
+                                
                                 <!----------------------------------------------------------------------------------------->
-                                <legend class="section legend-mod">Datos del complejo</legend>    
+                                <legend class="section-buscar legend-mod">Datos del complejo</legend>    
                                         
-                                <div class="form-group" >
+                                <div class="form-group " >
                                     <div class="col-sm-12">
                                         <label class="checkbox-inline"><input type="checkbox" value="">Estacionamiento</label>
                                         <label class="checkbox-inline"><input type="checkbox" value="">Duchas</label>
@@ -117,19 +158,11 @@
                                 
                                <br>
                                 
-                                    <div class="col-sm-12">
-                                        <button class="btn btn-md btn-success btn-block"><i class="fa fa-plus glyphicon glyphicon-search"></i>Buscar</button>
-                                    </div>
-                                        
-                            
-                                
-                              
+                                <div class="col-sm-12">
+                                    <button class="btn btn-md btn-success btn-block"><i class="fa fa-plus glyphicon
+                                                            glyphicon-search"></i>Buscar</button>
+                                </div>
                             </fieldset>
-                            
-                         
-                            
-                            
-
                         </form>
                     </div>
                 </section>
@@ -137,12 +170,11 @@
             </div>    
          
 
-                <div class="col-md-6">
-
+            <div class="col-md-6">
                     <div class="col-md-6 carousel-container anchoCarousel ">
                         <div id="carouselComplejos" class="carousel slide carousel-fade">
                             <!-- Carousel items -->
-                            <div class="carousel-inner anchoCarousel">
+                            <div class="carousel-inner carousel-altoBusqueda">
                                 <div data-slide-no="0" class="item carousel-item active">
                                     <img src="/../resergol1.1/images/complejos/complejo1.jpeg" alt="">
                                     <div class="carousel-caption">
@@ -165,8 +197,8 @@
                         </div>
 
                     </div>
-
-                </div> 
+                
+            </div> 
 
             </div>
             <!-- /.row -->
@@ -175,10 +207,40 @@
             <div class ="principal row filtro-Complejos">
                 <div class="col-md-3 portfolio-item">
                     <a href="#">
-                        <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                        <img class="img-responsive" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
                     </a>
                     <h3>
-                        <p href="#"><strong>Nombre del complejo</strong></p>
+                        <p href="#"><strong>La Fortaleza</strong></p>
+                    </h3>
+                    <p>Descripcion Sencilla</p>
+                </div>
+                
+                 <div class="col-md-3 portfolio-item">
+                    <a href="#">
+                        <img class="img-responsive" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
+                    </a>
+                    <h3>
+                        <p href="#"><strong>Maracana</strong></p>
+                    </h3>
+                    <p>Descripcion Sencilla</p>
+                </div>
+                
+                 <div class="col-md-3 portfolio-item">
+                    <a href="#">
+                        <img class="img-responsive" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
+                    </a>
+                    <h3>
+                        <p href="#"><strong>El monumental</strong></p>
+                    </h3>
+                    <p>Descripcion Sencilla</p>
+                </div>
+                
+                 <div class="col-md-3 portfolio-item">
+                    <a href="#">
+                        <img class="img-responsive" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
+                    </a>
+                    <h3>
+                        <p href="#"><strong>El Fortin</strong></p>
                     </h3>
                     <p>Descripcion Sencilla</p>
                 </div>
