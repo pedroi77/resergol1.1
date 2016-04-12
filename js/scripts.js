@@ -1,6 +1,8 @@
 
 $(document).ready(function(){  /* jQuery toggle layout */
     
+    
+    
   $('#idTourDateDetails').datepicker({
      dateFormat: 'dd-mm-yy',
      minDate: '+5d',
@@ -127,6 +129,11 @@ window.onload = function(){
 } 
     */
 /*Fin metodos de Maty*/    
+
+
+
+    
+    
 
 
 /*IVAN-TOOLTIP*/

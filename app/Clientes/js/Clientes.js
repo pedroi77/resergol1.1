@@ -30,11 +30,12 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
                 controllerAs : "cli"
             })
     
+        
         .state("Clientes.verCancha.Reservar",{
-                        url : "/Reservar",
-                        templateUrl : "app/Clientes/Templates/ReservarCancha.html",
-                        controllerAs : "cli"
-                    })
+                            url : "/Reservar",
+                            templateUrl : "app/Clientes/Templates/ReservarCancha.html",
+                            controllerAs : "cli"
+                        })
     
         .state("Clientes.misReservas",{
                 url : "/misReservas",
@@ -45,6 +46,7 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
         
     
 		$urlRouterProvider.otherwise("/clientes");
+    
     
 });
 
