@@ -27,6 +27,12 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
             controller : "ClientesController",	
             controllerAs : "cli"
 		})
+        .state("Clientes.verTorneoLiga.inscripcionTorneo",{
+			url : "/Inscripcion",
+			templateUrl : "app/Clientes/Templates/InscripcionTorneo.html",
+            controller : "ClientesController",	
+            controllerAs : "cli"
+		})
         .state("Clientes.verComplejo",{
                 url : "/VerComplejo",
                 templateUrl : "app/Clientes/Templates/VerComplejo.html",

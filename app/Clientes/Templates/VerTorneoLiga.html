@@ -31,17 +31,19 @@
                     <li>Otros</li>
                 </ul>
                 
-                <div class="col-sm-12">
-                <button class="btn btn-md btn-primary btn-block">
-                    Inscribite! <i class="glyphicon glyphicon-hand-right"></i>
-                </button>
-            </div>
+                <div class="col-sm-12" ng-controller= "ClientesController as cli">
+                    <button class="btn btn-md btn-primary btn-block" ng-click= "cli.inscripcionTorneo()">
+                        Inscribite! <i class="glyphicon glyphicon-hand-right"></i>
+                    </button>
+                </div>
             </div>
             
             
 
         </div>
         <!-- /.row -->
+        
+       <div class="container" ui-view></div>
 
       
         <hr>
@@ -195,3 +197,4 @@
         </div>
         <!-- /.row -->
     
+         
