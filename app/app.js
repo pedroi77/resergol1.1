@@ -22,6 +22,12 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			templateUrl : "app/Clientes/Templates/ClientePrincipal.html",
 			controller : "ClientesController",
 			controllerAs : "CLI"
+		})
+        .state("Admin", {
+			url : "/admin",
+			templateUrl : "app/Admin/Templates/AdminPrincipal.html",
+			controller : "AdminController",
+			controllerAs : "admin"
 		});
 	  
         //Aca falta la parte de administradores

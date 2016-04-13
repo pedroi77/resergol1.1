@@ -16,6 +16,9 @@ resergolApp.controller("MainController", function($state){
              $state.go('Duenios');
          };
        
+        if(this.usuario.usuario == "admin" && this.usuario.contrasenia == "admin"){
+             $state.go('Admin');
+        };
     };
 
  
