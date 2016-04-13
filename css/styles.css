@@ -337,6 +337,10 @@ h3,h4,h5 {
     max-height: 100%;   
      }
 
+.carousel-altoTorneos> .item > img{
+    max-height: 312px;  
+     }
+
 
 .busqueda
 {
