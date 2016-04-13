@@ -50,7 +50,7 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
     
     this.irTorneoLiga = function(){
              $state.go('Clientes.verTorneoLiga');
-    };
+    }; 
     
     this.inscripcionTorneoLiga = function(){  //Toque esto
         $state.go('Clientes.verTorneoLiga.inscripcionTorneoLiga');
