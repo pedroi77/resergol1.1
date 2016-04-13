@@ -52,9 +52,13 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
              $state.go('Clientes.verTorneoLiga');
     };
     
-    this.inscripcionTorneo = function(){
-        $state.go('Clientes.verTorneoLiga.inscripcionTorneo');
+    this.inscripcionTorneoLiga = function(){  //Toque esto
+        $state.go('Clientes.verTorneoLiga.inscripcionTorneoLiga');
     };
+    
+    this.inscripcionTorneoCopa = function(){
+        $state.go('Clientes.verTorneoCopa.inscripcionTorneoCopa');
+    }; 
     
     this.irCancha = function(){
              $state.go('Clientes.verCancha');
