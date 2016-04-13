@@ -1,6 +1,6 @@
 var app = angular.module("resergolApp");
 
-app.controller("ClientesController", function(ClientesService, DocumentosService){
+app.controller("ClientesController", function(ClientesService, DocumentosService, $state){
     
     var self = this;
     this.tiposDoc =[];
@@ -44,5 +44,16 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
     
    };
   
+    this.irTorneo = function(){
+             $state.go('Clientes.verTorneo');
+    };
+    
+    this.irCancha = function(){
+             $state.go('Clientes.verCancha');
+    };
+    
+    this.irComplejo = function(){
+             $state.go('Clientes.verComplejo');
+    };
    
 });
