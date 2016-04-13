@@ -10,12 +10,12 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
         selectedOption: {idTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
     };    
     
-    
+    /*
     DocumentosService.query().$promise.then(function(data) {
         self.tiposDoc.tipos = data;
         self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
     });
-    
+    */
 	
     this.cliente = { 
                     usuario: '', 
@@ -44,8 +44,12 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
     
    };
   
-    this.irTorneo = function(){
-             $state.go('Clientes.verTorneo');
+    this.irTorneoCopa = function(){
+             $state.go('Clientes.verTorneoCopa');
+    };
+    
+    this.irTorneoLiga = function(){
+             $state.go('Clientes.verTorneoLiga');
     };
     
     this.irCancha = function(){

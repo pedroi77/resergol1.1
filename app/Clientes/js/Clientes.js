@@ -15,9 +15,15 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			templateUrl : "app/Clientes/Templates/BuscarTorneos.html",
 			controllerAs : "cli"
 		})
-        .state("Clientes.verTorneo",{
-			url : "/Torneo",
+        .state("Clientes.verTorneoLiga",{
+			url : "/Torneo/Liga",
 			templateUrl : "app/Clientes/Templates/VerTorneoLiga.html",
+            controller : "ClientesController",	
+            controllerAs : "cli"
+		})
+        .state("Clientes.verTorneoCopa",{
+			url : "/Torneo/Copa",
+			templateUrl : "app/Clientes/Templates/VerTorneoCopa.html",
             controller : "ClientesController",	
             controllerAs : "cli"
 		})
