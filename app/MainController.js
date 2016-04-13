@@ -9,7 +9,7 @@ resergolApp.controller("MainController", function($state){
                     usuario: '', 
                     contrasenia: ''
                     };
-    
+     
                        
     this.validaLogin = function(){
          if(this.usuario.usuario == "dueño" && this.usuario.contrasenia == "dueño"){
