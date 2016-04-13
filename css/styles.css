@@ -26,6 +26,8 @@ body {
 .navbar-default2 .navbar-nav > .active > a,.navbar-default .navbar-nav > li:hover > a {border:0 solid #4285f4;border-bottom-width:0px;font-weight:750;background-color:rgba(51, 51, 51, 0.3); }
 .navbar-default2 .navbar-nav :hover { background-color: rgba(51, 51, 51, 0.2);;}
 
+.navbar-default2 .navbar-nav > .prueba > a,.navbar-default .navbar-nav > li:hover > a {border:0 solid #4225f4;border-bottom-width:0px;font-weight:750;background-color:rgba(51, 51, 51, 0.3); }
+
 nav.navbar {
     color: #f8f8f8;
     background: rgba(51, 51, 51, 0.2);
@@ -48,7 +50,6 @@ nav.navbar {
     color:white;
 }
   
-
 
 .header {background-color:#ffffff;border-width:0;}
 .header .navbar-collapse {background-color:#ffffff;}
@@ -1098,3 +1099,10 @@ background: #333333;
 
 /*********FIN BOTONES FECHAS DE FIXTURE**********/
 
+#logoMediano {
+    border:0;
+     display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}

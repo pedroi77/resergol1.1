@@ -12,6 +12,7 @@ $(document).ready(function(){  /* jQuery toggle layout */
      altFormat: "yy-mm-dd"
  });   
 */
+    
 $('#btnToggle').click(function(){
   if ($(this).hasClass('on')) {
     $('#main .col-md-6').addClass('col-md-4').removeClass('col-md-6');
@@ -23,6 +24,7 @@ $('#btnToggle').click(function(){
   }
 });
 });
+
 
 $(window).bind("load resize slid.bs.carousel", function() {
   var imageHeight = $(".active .holder").height();
