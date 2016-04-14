@@ -579,6 +579,14 @@ legend-mod {
     padding: 10px 0 0;
 }
 
+.section-Inscripcion {
+    font-size: 24px;
+    color: #d2d2d2;
+    vertical-align: middle;
+    line-height: 30px;
+    padding: 10px 0 0;
+}
+
 
 label,
 input,

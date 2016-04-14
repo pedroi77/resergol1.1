@@ -3,43 +3,43 @@
         <div id="container" ng-controller="MainController as main">
             <!-- <Menu> -->
             
-            <nav class="navbar navbar-default navbar-fixed-top">
-              <div class="container">
-                <div class="collapse navbar-collapse">
-                  <div class="navbar-header">
-                    <a class="navbar-brand" href="#">
-                        {{main.brand}}
-                    </a>
-                  </div>
-                    
-                  <ul class="nav navbar-nav">
-                        <li ui-sref-active="Duenios">
-                            <a ui-sref="Duenios.reserva">Reservas</a>
-                        </li>
-                        <li ui-sref-active="Duenios">
-                            <a ui-sref="Duenios.torneo">Torneos</a>
-                        </li>
-                        <li ui-sref-active="Duenios">
-                            <a ui-sref="Duenios.complejo">Complejo</a>
-                        </li>
-                        <li ui-sref-active="Duenios">
-                            <a ui-sref="Duenios.cancha">Canchas</a>
-                        </li>
-                        <li ui-sref-active="Duenios">
-                            <a ui-sref="Duenios.listaNegra">Lista Negra</a>
-                        </li>
-                  </ul>
-                  
-                  <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#loginModal" role="button" data-toggle="modal">Ayuda</a></li>
-                    <li><a href="#registracionModal" role="button" data-toggle="modal">Configuración de la cuenta</a></li>
-                    <li><a href="#aboutModal" role="button" data-toggle="modal">Salir</a></li>
-                  </ul>
-                    
-                </div>
-              </div>
+              <!-- <Menu> -->
+            <nav class="navbar navbar-default2" style="margin-top: 0px">    
+                <div class="col-md-12" >
+                    <div class="collapse navbar-collapse" id="navbar-collapse">
+                        <!--<div class="pull-left">
+                            <a href="" class="" role="application"><h4>Qué vas a buscar?</h4></a>
+                        </div>-->
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">
+                                {{main.brand}}
+                            </a>
+                        </div>
+
+                       <ul class="nav navbar-nav">
+                            <li ui-sref-active="Duenios">
+                                <a ui-sref="Duenios.reserva">Reservas</a>
+                            </li>
+                            <li ui-sref-active="Duenios">
+                                <a ui-sref="Duenios.torneo">Torneos</a>
+                            </li>
+                            <li ui-sref-active="Duenios">
+                                <a ui-sref="Duenios.complejo">Complejo</a>
+                            </li>
+                            <li ui-sref-active="Duenios">
+                                <a ui-sref="Duenios.cancha">Canchas</a>
+                            </li>
+                            <li ui-sref-active="Duenios">
+                                <a ui-sref="Duenios.listaNegra">Lista Negra</a>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>    
             </nav>
             
+            
+           
             <!-- </Menu> -->
             
         <div class="container" ui-view></div>
