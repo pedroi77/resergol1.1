@@ -2,6 +2,7 @@ var resergolApp = angular.module("resergolApp",
 [
 "resergolApp.Duenios",
 "resergolApp.Clientes",
+"resergolApp.Admin",
 "resergolApp.Common",
 "ui.router",
 "ngResource"
@@ -30,11 +31,10 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			controllerAs : "admin"
 		});
 	  
-        //Aca falta la parte de administradores
+    $urlRouterProvider.otherwise("/admin");
 	$urlRouterProvider.otherwise("/duenios");
     $urlRouterProvider.otherwise("/clientes/Canchas");
     
-	
 });
 
 

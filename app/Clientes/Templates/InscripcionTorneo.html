@@ -2,32 +2,85 @@
     <section class="widget">
         <fieldset>
         <div class="body">
-             
-            <legend class="section-buscar legend-mod">Inscripción</legend></legend>
-                                              
-            <label for="precio" class="control-label col-sm-2">Nombre del equipo</label>
-            <div class="col-sm-3">       
-                <input  type="text" id="precio" class="input-sm col-sm-3 form-control" 
-                       style="margin-bottom:9px;">
-            </div>
-            <label for="precio" class="control-label col-sm-2">Foto del equipo</label>
-             <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
-                </a>
-               <div class="form-group">
-                    <button class="btn  btn-md btn-info btn-block" style="border-radius: 7px;">
-                         <i class="glyphicon glyphicon-folder-open"></i>
-                         Seleccionar
-                    </button>   
+            <div class ="principal row col-md-12">
+                <legend class="section-Inscripcion legend-mod ">Inscripción</legend></legend>
+            
+                <div class="col-md-6"> 
+            
+                    <label for="precio" class="control-label col-sm-4">Nombre del equipo</label>
+                    <div class="col-sm-6">       
+                        <input  type="text" id="precio" class="input-sm form-control" 
+                               style="margin-bottom:9px;">
+                    </div>
+                    
+                    <label for="precio" class="control-label col-sm-4">Foto del equipo</label>
+                    <div class="col-sm-6">
+                        <a href="#">
+                            <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
+                        </a>
+                       <div class="form-group">
+                            <button class="btn  btn-md btn-info btn-block" style="border-radius: 7px; margin-top:5px;">
+                                 <i class="glyphicon glyphicon-folder-open"></i>
+                                 Seleccionar
+                            </button>   
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6"> 
+                    <div class="col-xs-12 col-md-12">
+
+                        <div class="panel panel-default">
+
+
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><img class="pull-right" src="http://i76.imgup.net/accepted_c22e0.png"></h3>
+                            </div>
+                            <div class="panel-body">
+                                <form role="form" id="payment-form">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group" style="color:black;">
+                                                <label for="cardNumber">N° DE TARJETA</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="cardNumber" placeholder="Número de tarjeta" required autofocus data-stripe="number" />
+                                                    <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                                </div>
+                                            </div>                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-7 col-md-7"  style="color:black;">
+                                            <div class="form-group">
+                                                <label for="expMonth" style={color:black};>FECHA DE EXPIRACIÓN</label>
+                                                <div class="col-xs-6 col-lg-6 pl-ziro">
+                                                    <input type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
+                                                </div>
+                                                <div class="col-xs-6 col-lg-6 pl-ziro">
+                                                    <input type="text" class="form-control" name="expYear" placeholder="YY" required data-stripe="exp_year" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-5 col-md-5 pull-right"  style="color:black;">
+                                            <div class="form-group">
+                                                <label for="cvCode">CÓDIGO</label>
+                                                <input type="password" class="form-control" name="cvCode" placeholder="" required data-stripe="cvc" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
+            
  
 
-            <div class="form-group">
-                
-            </div>
-
+          
             <br>
             <br>
             <br>
@@ -37,22 +90,22 @@
                    
                     <hr>
                     <div class="row">
-                    <div class="col-md-4">
-                        <span class="uneditable-input h3">A pagar: $380</span>
-                    </div>
-                    <div class="col-md-2">
-                        <button id="activate-step-2" class="btn btn-primary btn-md">Realizar Pago</button>
-                    </div>
                         <div class="col-md-6">
-                        <button id="" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-md">CANCELAR / VOLVER</button>
-                    </div>
+                            <span class="uneditable-input h2">Precio a pagar: $380</span>
+                        </div>
+                        <div class="col-md-4">
+                            <button id="activate-step-2" class="btn btn-primary btn-lg btn-block"  style="border-radius: 7px">Confirmar y Pagar</button>
+                        </div>
+                            <div class="col-md-2">
+                            <button id="" ui-sref="Clientes.verTorneoLiga" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-lg btn-block" style="border-radius: 7px">Cancelar/Volver</button>
+                            </div>
 
                     </div>
                     <hr>
                 </div>
                
             </div>
-        </form>
+        
 
     </div>
 </div>
