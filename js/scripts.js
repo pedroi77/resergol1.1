@@ -1,5 +1,8 @@
 
 $(document).ready(function(){  /* jQuery toggle layout */
+   
+    
+    
     /*
     
     
@@ -145,5 +148,4 @@ $(document).ready(function(){
 /*FIN IVAN TOOLTIP*/
 
 
-  
 
