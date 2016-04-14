@@ -32,8 +32,9 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 		});
 	  
         //Aca falta la parte de administradores
-	$urlRouterProvider.otherwise("/duenios");
+	
     $urlRouterProvider.otherwise("/clientes/Canchas");
+    $urlRouterProvider.otherwise("/duenios/Reservas");
     
 	
 });
