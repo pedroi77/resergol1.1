@@ -3,6 +3,7 @@ var resergolApp = angular.module("resergolApp",
 "resergolApp.Duenios",
 "resergolApp.Clientes",
 "resergolApp.Common",
+"resergolApp.Admin",
 "ui.router",
 "ngResource"
 ]);

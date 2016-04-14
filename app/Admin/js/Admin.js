@@ -8,7 +8,7 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 	$stateProvider
 		.state("Admin.administracion",{
 			url : "/admin/Administracion",
-			templateUrl : "app/Admin/Templates/AdminListaComplejo.html",
+			templateUrl : "app/Admin/Templates/AdminListaComplejos.html",
 			controllerAs : "admin"
 		});
 		$urlRouterProvider.otherwise("/admin");
