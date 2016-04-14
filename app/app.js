@@ -10,7 +10,7 @@ var resergolApp = angular.module("resergolApp",
 
 
 resergolApp.config(function($stateProvider, $urlRouterProvider){
-
+ 
 	$stateProvider
         .state("Duenios", {
 			url : "/duenios",

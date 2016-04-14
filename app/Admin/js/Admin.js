@@ -13,4 +13,4 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 		});
 		$urlRouterProvider.otherwise("/admin");
     
-});
+}); 

@@ -6,4 +6,4 @@ app.controller("AdminController", function(){
    
     this.mensajePrincipal = 'Listado de los usuario que se registraron como dueños de un complejo!';
     
-});
+}); 
