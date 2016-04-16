@@ -3,7 +3,7 @@
         
         <header class="row widget" >
             <div style = "color: white" class="container">
-                <h6  style=" font-size: 30px; text-align:center;  font-style:italic;" ></span>Mis Reservas</h6>
+                <h6  style=" font-size: 30px; text-align:center;  font-style:italic;" ></span>Mis Torneos</h6>
             </div>
         </header>
         
@@ -12,76 +12,81 @@
                     <section class="widget">
                         <table  class="table table-bordered table-striped tabla-listaNegra table-hover text-center " style= "table-layout: fixed; vertical-align:center;">
                             <tr>
-                                <th class="col-md-2 " style="text-align:center;">Realizada</th>
-                                <th class="col-md-3 " style="text-align:center;">Día del partido</th>
+                                <th class="col-md-2 " style="text-align:center;">Inscripto</th>
+                                <th class="col-md-2 " style="text-align:center;">Inicio</th>
+                                <th class="col-md-2 " style="text-align:center;">Finalización</th>
+                                <th class="col-md-3 " style="text-align:center;">Nombre del Torneo</th>
+                                <th class="col-md-2 " style="text-align:center;">Tipo</th>
                                 <th class="col-md-2 " style="text-align:center;">Complejo</th>
-                                <th class="col-md-2 " style="text-align:center;">Dirección</th>
-                                <th class="col-md-2 " style="text-align:center;">Cancha</th>
-                                <th class="col-md-1 " style="text-align:center;">Señado</th>
-                                <th class="col-md-1 " style="text-align:center;">Pagado</th>
+                                <th class="col-md-3 " style="text-align:center;">Dirección</th>
+                                <th class="col-md-2 " style="text-align:center;">Pagado</th>
                                 <th class="col-md-2 " style="text-align:center;"></th><!--COMPROBANTE-->
-                                <th class="col-md-2 " style="text-align:center;"></th> <!--CANCELAR RESERVA-->
+                                <th class="col-md-1 " style="text-align:center;"></th> <!--CANCELAR RESERVA-->
                             </tr>
                             
                             <tr style="font-size: 13px;">
                                 <td>10/04/2016 12:49</td>
-                                <td>16/04/2016 (20hs a 21hs)</td>
+                                <td>16/04/2016</td>
+                                <td>28/05/2016</td>
+                                <td><a ui-sref="Clientes.verTorneoCopa"
+                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Libertadores</a></td>
+                                <td>PlayOffs</td>
                                 <td><a ui-sref="Clientes.verComplejo"
                                     onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Todo Fútbol</a></td>
                                 <td>Laprida 952, Lomas de Zamora</td>
-                                <td><a ui-sref="Clientes.verCancha"
-                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Cancha N° 1</a></td>
-                                <td>-</td>
-                                <td>$550.00</td>
+                                <td>$1100</td>
                                 <td><a class="btn btn-primary btn-xs view-pdf" href="https://www.polyu.edu.hk/iaee/files/pdf-sample.pdf">Comprobante</a></td>
-                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la reserva? Se le reembolsará la suma de $550.00');">Cancelar Reserva</button></td>
+                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la inscripción? Se le reembolsará la suma de $1100.00');">Baja</button></td>
                             </tr>
                             
                             <tr style="font-size: 13px;">
                                 <td>10/04/2016 12:49</td>
-                                <td>16/04/2016 (20hs a 21hs)</td>
+                                <td>16/04/2016</td>
+                                <td>28/05/2016</td>
+                                <td><a ui-sref="Clientes.verTorneoCopa"
+                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Libertadores</a></td>
+                                <td>PlayOffs</td>
                                 <td><a ui-sref="Clientes.verComplejo"
                                     onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Todo Fútbol</a></td>
                                 <td>Laprida 952, Lomas de Zamora</td>
-                                <td><a ui-sref="Clientes.verCancha"
-                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Cancha N° 1</a></td>
-                                <td>-</td>
-                                <td>$550.00</td>
+                                <td>$1100</td>
                                 <td><a class="btn btn-primary btn-xs view-pdf" href="https://www.polyu.edu.hk/iaee/files/pdf-sample.pdf">Comprobante</a></td>
-                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la reserva? Se le reembolsará la suma de $550.00');">Cancelar Reserva</button></td>
+                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la inscripción? Se le reembolsará la suma de $1100.00');">Baja</button></td>
                             </tr>
                             
                             <tr style="font-size: 13px;">
                                 <td>10/04/2016 12:49</td>
-                                <td>16/04/2016 (20hs a 21hs)</td>
+                                <td>16/04/2016</td>
+                                <td>28/05/2016</td>
+                                <td><a ui-sref="Clientes.verTorneoCopa"
+                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Libertadores</a></td>
+                                <td>PlayOffs</td>
                                 <td><a ui-sref="Clientes.verComplejo"
                                     onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Todo Fútbol</a></td>
                                 <td>Laprida 952, Lomas de Zamora</td>
-                                <td><a ui-sref="Clientes.verCancha"
-                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Cancha N° 1</a></td>
-                                <td>-</td>
-                                <td>$550.00</td>
+                                <td>$1100</td>
                                 <td><a class="btn btn-primary btn-xs view-pdf" href="https://www.polyu.edu.hk/iaee/files/pdf-sample.pdf">Comprobante</a></td>
-                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la reserva? Se le reembolsará la suma de $550.00');">Cancelar Reserva</button></td>
+                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la inscripción? Se le reembolsará la suma de $1100.00');">Baja</button></td>
                             <tr>
                                 
                             <tr style="font-size: 13px;">
                                 <td>10/04/2016 12:49</td>
-                                <td>16/04/2016 (20hs a 21hs)</td>
+                                <td>16/04/2016</td>
+                                <td>28/05/2016</td>
+                                <td><a ui-sref="Clientes.verTorneoCopa"
+                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Libertadores</a></td>
+                                <td>PlayOffs</td>
                                 <td><a ui-sref="Clientes.verComplejo"
                                     onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Todo Fútbol</a></td>
                                 <td>Laprida 952, Lomas de Zamora</td>
-                                <td><a ui-sref="Clientes.verCancha"
-                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Cancha N° 1</a></td>
-                                <td>-</td>
-                                <td>$550.00</td>
+                                <td>$1100</td>
                                 <td><a class="btn btn-primary btn-xs view-pdf" href="https://www.polyu.edu.hk/iaee/files/pdf-sample.pdf">Comprobante</a></td>
-                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la reserva? Se le reembolsará la suma de $550.00');">Cancelar Reserva</button></td>
+                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la inscripción? Se le reembolsará la suma de $1100.00');">Baja</button></td>
 
                             <tr>
                             
                         </table>
-                          
+   
                     </section>    
         </div>
         

@@ -67,8 +67,19 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			templateUrl : "app/Clientes/Templates/BuscarCanchas.html",
             controller : "ClientesController",	
             controllerAs : "cli"
+		})
+        .state("Clientes.misTorneos",{
+			url : "/MisTorneos",
+			templateUrl : "app/Clientes/Templates/MisTorneos.html",
+            controller : "ClientesController",	
+            controllerAs : "cli"
+		})
+        .state("Clientes.miCuenta",{
+			url : "/MiCuenta",
+			templateUrl : "app/Clientes/Templates/MiCuenta.html",
+            controller : "ClientesController",	
+            controllerAs : "cli"
 		});
-        
     
     
 		$urlRouterProvider.otherwise("/clientes/Canchas");
