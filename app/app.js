@@ -5,7 +5,8 @@ var resergolApp = angular.module("resergolApp",
 "resergolApp.Admin",
 "resergolApp.Common",
 "ui.router",
-"ngResource"
+"ngResource",
+"ngGrid"
 ]);
 
 
