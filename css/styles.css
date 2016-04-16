@@ -378,6 +378,11 @@ h3,h4,h5 {
     <PI> agrego unos estilos de prueba para dueños. Inicio
     http://www.w3schools.com/jsref/event_onmousemove.asp
 ========================================================  */
+.altoDuenioImg{
+     min-height: 365px;   
+     max-height: 400px;   
+     }
+
 .div-opciones{
     border-style: solid;
     border-width:2px;
