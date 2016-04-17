@@ -19,10 +19,12 @@ resergolApp.controller("MainController", function($state){
         
          if(this.usuario.usuario == "dueño" && this.usuario.contrasenia == "dueño"){
              $state.go('Duenios');
+             $('#loginModal').modal('hide');
          };
        
         if(this.usuario.usuario == "admin" && this.usuario.contrasenia == "admin"){
              $state.go('Admin');
+             $('#loginModal').modal('hide');
         };
     };
 
