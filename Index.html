@@ -28,7 +28,7 @@
                             <a href="#registracionModal" role="button" data-toggle="modal">¡Registrate!</a>
                         </li>
                         <li>
-                            <a href="#registracionDuenioModal" role="button" data-toggle="modal">Registra tu cancha!</a>                                                       </li>
+                            <a href="#registracionDuenioModal" role="button" data-toggle="modal">Registra tu cancha!</a>           </li>
                         <li>
                             <a href="#aboutModal" role="button" data-toggle="modal">Acerca de</a>
                         </li>
@@ -128,10 +128,10 @@
                                 </div>
                                 <div class="form-group" >
                                   
-                                    <select class="form-control" ng-model="cli.tiposDoc.selectedOption" 
-                                                                 ng-options="tipoDoc.Descripcion for tipoDoc in cli.tiposDoc.tipos track by                                                                                             tipoDoc.IdTipoDoc" >
-                                                            
-                                    </select>
+                                   <select class="form-control" ng-model="cli.tiposDoc.selectedOption" 
+                                                                 ng-options="tipoDoc.Descripcion for tipoDoc in cli.tiposDoc.tipos 
+                                                                             track by tipoDoc.IdTipoDoc" >
+                                            </select>
                                     
                                       
                                 </div>
@@ -368,6 +368,7 @@
     
         <script src="app/Clientes/js/ClientesController.js"></script>
         <script src="app/Clientes/js/VerCanchaController.js"></script>
+        <script src="app/Clientes/js/ClientesService.js"></script>
     
         <script src="app/Admin/js/Admin.js"></script>    
         <script src="app/Admin/js/AdminController.js"></script>
@@ -376,7 +377,7 @@
 		<script src="app/Common/services/DocumentosService.js"></script>
         <script src="app/Common/services/ProvinciasService.js"></script>
         <script src="app/Common/services/LocalidadesService.js"></script>
-		<script src="app/Common/services/ClientesService.js"></script>
+		<!--<script src="app/Common/services/ClientesService.js"></script>-->
     
 		<!--<PI> agrego dependencias FIN-->
 	

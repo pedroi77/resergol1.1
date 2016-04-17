@@ -12,6 +12,11 @@ resergolApp.controller("MainController", function($state){
      
                        
     this.validaLogin = function(){
+        
+        if(this.usuario.usuario == "cliente" && this.usuario.contrasenia == "cliente"){
+             $state.go('Clientes');
+         };
+        
          if(this.usuario.usuario == "dueño" && this.usuario.contrasenia == "dueño"){
              $state.go('Duenios');
          };

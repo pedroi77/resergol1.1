@@ -8,15 +8,20 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
     this.tiposDoc = {
         tipos: [],
         selectedOption: {idTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
-    };    
+    };
     
-    /*
+    this.tiposDoc = {
+        tipos: [],
+        selectedOption: {IdTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
+    };
+    
+    
     DocumentosService.query().$promise.then(function(data) {
         self.tiposDoc.tipos = data;
-        self.tiposDoc.tipos.push({idTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+        self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
     });
-    */
 	
+    
     this.cliente = { 
                     usuario: '', 
                     eMail: '',
