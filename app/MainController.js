@@ -22,6 +22,18 @@ resergolApp.controller("MainController", function($state){
              $('#loginModal').modal('hide');
         };
     };
+    
+    //Para JWT modificar
+    /*this.login = function(user)
+    {
+        authFactory.login(user).then(function(res)
+        {
+            if(res.data && res.data.code == 0)
+            {
+                store.set('token', res.data.response.token);
+                $location.path("/home");
+            }
+        });*/
 
  
 	

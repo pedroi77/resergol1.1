@@ -5,12 +5,16 @@ var resergolApp = angular.module("resergolApp",
 "resergolApp.Admin",
 "resergolApp.Common",
 "ui.router",
-"ngResource"
+"ngResource",
+"angular-jwt",
+"angular-storage"    
 ]);
 
 
-resergolApp.config(function($stateProvider, $urlRouterProvider){
- 
+resergolApp.config(function($stateProvider,$httpProvider, $urlRouterProvider){
+    
+   $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+    
 	$stateProvider
         .state("Duenios", {
 			url : "/duenios",
