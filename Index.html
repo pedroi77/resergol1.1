@@ -53,31 +53,31 @@
 <!--login modal-->
 <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" ng-controller="MainController as main">
   <div class="modal-dialog">
-  <div class="modal-content">
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h2 class="text-center"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"                                            class="img-circle">
-          <br>Ingresar</h2>
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h2 class="text-center "><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"                                            class="img-circle">
+              <br>Ingresar</h2>
+          </div>
+          <div class="modal-body">
+              <form class="form col-md-12 center-block">
+                <div class="form-group">
+                  <input id="usuario" type="text" class="form-control input-lg" placeholder="Usuario" ng-model="main.usuario.usuario">
+                </div>
+                <div class="form-group">
+                  <input  type="password" class="form-control input-lg" placeholder="Contraseña" placeholder="Usuario" ng-model="main.usuario.contrasenia">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary btn-lg btn-block btn-custom"  ng-click="main.validaLogin()">Iniciar Sesión</button>
+
+                  <span class="pull-right"></span><span><a href="#">¿Olvidaste tu contraseña?</a></span>
+                </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+
+          </div>
       </div>
-      <div class="modal-body">
-          <form class="form col-md-12 center-block">
-            <div class="form-group">
-              <input id="usuario" type="text" class="form-control input-lg" placeholder="Usuario" ng-model="main.usuario.usuario">
-            </div>
-            <div class="form-group">
-              <input  type="password" class="form-control input-lg" placeholder="Contraseña" placeholder="Usuario" ng-model="main.usuario.contrasenia">
-            </div>
-            <div class="form-group">
-              <button class="btn btn-primary btn-lg btn-block btn-custom" ng-click="main.validaLogin()">Iniciar Sesión</button>
-               
-              <span class="pull-right"></span><span><a href="#">¿Olvidaste tu contraseña?</a></span>
-            </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-          
-      </div>
-  </div>
   </div>
 </div>
         
@@ -355,6 +355,8 @@
 		<script src="bower_components/angular/angular.min.js"></script>
 		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 	    <script src="bower_components/angular-resource.min.js"></script>
+        <script src="bower_components/angular-jwt-master/dist/angular-jwt.js"></script>
+        <script src="bower_components/angular-storage-master/dist/angular-storage.js"></script>
 
     
 		<script src="app/app.js"></script>
