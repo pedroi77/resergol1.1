@@ -15,11 +15,11 @@
         <!-- Portfolio Item Row -->
         <div class="row">
 
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <img class="img-responsive" src="/../resergol1.1/images/torneos/torneo1.jpg" alt="">
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <h3>Descripcion del torneo</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
                 <h3>Caracteristicas del torneo</h3>
@@ -43,34 +43,72 @@
         </div>
         <!-- /.row -->
         
-        <div class="container" ui-view>
-        
-        </div>
+       <div class="container" ui-view></div>
  
       
         <hr>
          
-        <!-- /.row -->   
+        <!-- /.row -->
 
-        <div id="save">
+        <div id="save" class="row">
             <div class="demo">
-                <div class="jQBracket lr" style="height: 104px; width: 180px;">
+                <div class="jQBracket lr" style="height: 168px; width: 320px;">
                     <div class="tools">
                         <span class="increment">+</span>
+                        <span class="decrement">-</span>
+                        <span class="doubleElimination">de</span>
                     </div>
-                    <div class="bracket" style="height: 64px;">
+                    <div class="bracket" style="height: 128px;">
                         <div class="round">
                             <div class="match" style="height: 64px;">
-                                <div class="teamContainer" style="position: absolute; bottom: -22.5px;">
-                                    <div class="team win highlightWinner" data-resultid="team-0" data-teamid="0">
-                                        <div class="label editable">Team 1</div>
-                                        <div class="score editable" data-resultid="result-0">1</div>
-                                        <div class="bubble">1st</div>
-                                    </div>
-                                    <div class="team lose highlightLoser" data-resultid="team-1" data-teamid="1">
+                                <div class="teamContainer" style="top: 5.5px;"><div class="team win" data-resultid="team-0" data-teamid="0"><div class="label editable">Team 1</div><div class="score editable" data-resultid="result-0">1</div></div>
+                                    <div class="team lose" data-resultid="team-1" data-teamid="1">
                                         <div class="label editable">Team 2</div>
                                         <div class="score editable" data-resultid="result-1">0</div>
-                                        <div class="bubble">2nd</div>
+                                    </div>
+                                    <div class="connector" style="height: 32px; width: 20px; right: -22px; top: 13.25px; border-bottom-style: none;">
+                                        <div class="connector" style="width: 20px; right: -20px; bottom: 0px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="match" style="height: 64px;">
+                                <div class="teamContainer" style="top: 5.5px;">
+                                    <div class="team lose" data-resultid="team-2" data-teamid="2">
+                                        <div class="label editable">Team 3</div>
+                                        <div class="score editable" data-resultid="result-2">2</div>
+                                    </div>
+                                    <div class="team win" data-resultid="team-3" data-teamid="3">
+                                        <div class="label editable">Team 4</div>
+                                        <div class="score editable" data-resultid="result-3">7</div>
+                                    </div>
+                                    <div class="connector" style="height: 32px; width: 20px; right: -22px; bottom: 13.25px; border-top-style: none;">
+                                        <div class="connector" style="width: 20px; right: -20px; top: 0px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="round">
+                            <div class="match" style="height: 64px;">
+                                <div class="teamContainer np" style="position: absolute; bottom: -26.5px;">
+                                    <div class="team" data-teamid="0">
+                                        <div class="label editable">Team 1</div>
+                                        <div class="score editable" data-resultid="result-4">--</div>
+                                    </div>
+                                    <div class="team" data-teamid="3">
+                                        <div class="label editable">Team 4</div>
+                                        <div class="score editable" data-resultid="result-5">--</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="match" style="height: 64px;">
+                                <div class="teamContainer np" style="top: 53px;">
+                                    <div class="team" data-teamid="1">
+                                        <div class="label editable">Team 2</div>
+                                        <div class="score editable" data-resultid="result-6">--</div>
+                                    </div>
+                                    <div class="team" data-teamid="2">
+                                        <div class="label editable">Team 3</div>
+                                        <div class="score editable" data-resultid="result-7">--</div>
                                     </div>
                                 </div>
                             </div>
@@ -79,10 +117,11 @@
                 </div>
             </div>
         </div>
-        <!-- /.row -->
+        
+    
         
       <!-- Related Projects Row -->
-        <div class="row">
+        <div class ="principal row filtro-Complejos" ng-controller="ClientesController as cli">
 
             <div class="col-lg-12">
                 <h3 class="page-header">En estas canchas se juegan este torneo!!</h3>
@@ -90,39 +129,36 @@
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
+                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
                 </a>
                 <h5>Titulo o nombre de la cancha</h5>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
+                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
                 </a>
                 <h5>Titulo o nombre de la cancha</h5>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
+                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
                 </a>
                 <h5>Titulo o nombre de la cancha</h5>
             </div>
 
             <div class="col-sm-3 col-xs-6">
                 <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
+                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
                 </a>
                 <h5>Titulo o nombre de la cancha</h5>
             </div>
 
         </div>
         <!-- /.row -->
-        
-        
+        <hr>
 
-        
-        
 <script type="text/javascript">
     
 var singleElimination = {
@@ -222,4 +258,6 @@ $(function() {
       var data = container.bracket('data')
       $('#dataOutput').text(jQuery.toJSON(data))
     })
-  </script>
+</script>
+        
+        
