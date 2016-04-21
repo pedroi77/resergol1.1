@@ -2,7 +2,9 @@ var app = angular.module("resergolApp");
 
 app.controller("ClientesController", function(ClientesService, DocumentosService, $state){
     
+    
     var self = this;
+    this.brand = "¿Qué buscás?";
     this.tiposDoc =[];
     //this.someScopeVariable ='Contraseña Test',
     this.tiposDoc = {
@@ -72,5 +74,7 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
     this.irComplejo = function(){
              $state.go('Clientes.verComplejo');
     };
+    
+    
    
 });

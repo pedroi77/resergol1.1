@@ -3,11 +3,13 @@ var resergolApp = angular.module("resergolApp");
 
 resergolApp.controller("MainController", function($state){
 	
+    var self = this;
 	this.brand = "Open Gallo";
+    this.IniciarSesion = "Iniciar Sesion";
      
     this.usuario = { 
                     usuario: '', 
-                    contrasenia: ''
+                    contrasenia: '',
                     };
      
                        
@@ -15,17 +17,20 @@ resergolApp.controller("MainController", function($state){
         
         if(this.usuario.usuario == "cliente" && this.usuario.contrasenia == "cliente"){
              $state.go('Clientes');
-         };
-        
-         if(this.usuario.usuario == "dueño" && this.usuario.contrasenia == "dueño"){
+             $('#loginModal').modal('hide');
+         }
+         else if(this.usuario.usuario == "dueño" && this.usuario.contrasenia == "dueño"){
              $state.go('Duenios');
              $('#loginModal').modal('hide');
-         };
-       
-        if(this.usuario.usuario == "admin" && this.usuario.contrasenia == "admin"){
+         }
+        else if(this.usuario.usuario == "admin" && this.usuario.contrasenia == "admin"){
              $state.go('Admin');
              $('#loginModal').modal('hide');
-        };
+        }
+        else
+            {   
+                this.bEsCliente = false;
+            }
     };
 
  

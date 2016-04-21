@@ -1,6 +1,6 @@
 
 
-        <div id="container" ng-controller="MainController as main">
+        <div id="container" ng-controller="ClientesController as cli">
             <!-- <Menu> -->
             <nav class="navbar navbar-default2" style="margin-top: 0px">    
                 <div class="col-md-12" >
@@ -8,8 +8,12 @@
                         <!--<div class="pull-left">
                             <a href="" class="" role="application"><h4>Qué vas a buscar?</h4></a>
                         </div>-->
-
-                        <ul class="nav navbar-nav">
+                    </div>
+                        
+                        <div class="pull-left navbar-brand">
+                                 {{cli.brand}}
+                        </div>
+                        <ul class="nav navbar-nav" ng-controller="MainController as main">
                             <li ui-sref-active="active">
                                 <a ui-sref="Clientes.buscarCanchas">Canchas</a>
                             </li>
@@ -28,7 +32,7 @@
                             <li ui-sref-active="active">
                                 <a ui-sref="Clientes.misReservas">Mis Reservas</a>
                             </li>
-                            <li ui-sref-active="active">
+                            <li ui-sref-active="active" ng-hide="main.usuario.usuario == 'cliente'">
                                 <a ui-sref="Clientes.misTorneos">Mis Torneos</a>
                             </li>
                             <li ui-sref-active="active">

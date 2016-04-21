@@ -12,7 +12,7 @@
     
 	<body class="background-dark" >
 
-        <div class="navbar navbar-default" id="navbar">
+        <div class="navbar navbar-default" id="navbar" ng-controller="MainController as main">
             <div class="col-md-12">
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <div class="pull-left">
@@ -22,7 +22,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#loginModal" role="button" data-toggle="modal">Iniciar Sesión</a>
+                            <a href="#loginModal" id="btnIniciarSesion" role="button" data-toggle="modal" ng-model="main.IniciarSesion">{{main.IniciarSesion}}</a>
                         </li>
                         <li>
                             <a href="#registracionModal" role="button" data-toggle="modal">¡Registrate!</a>
