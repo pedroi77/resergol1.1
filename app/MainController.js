@@ -6,18 +6,23 @@ resergolApp.controller("MainController", function($state){
     var self = this;
 	this.brand = "Open Gallo";
     this.IniciarSesion = "Iniciar Sesion";
+
      
-    this.usuario = { 
+    this.Usuario = { 
                     usuario: '', 
                     contrasenia: '',
+                    tipo : '',
+                    iscliente : false,
                     };
      
                        
     this.validaLogin = function(){
         
         if(this.usuario.usuario == "cliente" && this.usuario.contrasenia == "cliente"){
-             $state.go('Clientes');
-             $('#loginModal').modal('hide');
+            self.Usuario.tipo = 'C'; //esto podria ser otra opcion
+            self.Usuario.iscliente = true; 
+            self.IniciarSesion = 'PEPE';
+            $('#loginModal').modal('hide');
          }
          else if(this.usuario.usuario == "dueño" && this.usuario.contrasenia == "dueño"){
              $state.go('Duenios');
@@ -32,6 +37,10 @@ resergolApp.controller("MainController", function($state){
                 this.bEsCliente = false;
             }
     };
+    
+
+    
+    
     
     //Para JWT modificar
     /*this.login = function(user)

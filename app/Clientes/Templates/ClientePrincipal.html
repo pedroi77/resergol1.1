@@ -1,6 +1,6 @@
 
 
-        <div id="container" ng-controller="ClientesController as cli">
+        <div id="container">
             <!-- <Menu> -->
             <nav class="navbar navbar-default2" style="margin-top: 0px">    
                 <div class="col-md-12" >
@@ -11,13 +11,13 @@
                     </div>
                         
                         <div class="pull-left navbar-brand">
-                                 {{cli.brand}}
+                                 {{main.brand2}}
                         </div>
-                        <ul class="nav navbar-nav" ng-controller="MainController as main">
-                            <li ui-sref-active="active">
-                                <a ui-sref="Clientes.buscarCanchas">Canchas</a>
+                        <ul class="nav navbar-nav" >
+                            <li ui-sref-active="active" >
+                                <a  ui-sref="Clientes.buscarCanchas">Canchas</a>
                             </li>
-                            <li ui-sref-active="active">
+                            <li ui-sref-active="active" >
                                 <a ui-sref="Clientes.buscarComplejos">Complejos</a>
                             </li>
                             <li ui-sref-active="active">
@@ -29,13 +29,13 @@
                             <li ui-sref-active="active">
                                 <a ui-sref="Clientes.verCancha">Ver Cancha</a>
                             </li>
-                            <li ui-sref-active="active">
-                                <a ui-sref="Clientes.misReservas">Mis Reservas</a>
+                            <li ui-sref-active="active" ng-show="main.Usuario.iscliente">
+                                <a ui-sref="Clientes.misReservas" >Mis Reservas</a>
                             </li>
-                            <li ui-sref-active="active" ng-hide="main.usuario.usuario == 'cliente'">
+                            <li ui-sref-active="active" ng-show="main.Usuario.iscliente">
                                 <a ui-sref="Clientes.misTorneos">Mis Torneos</a>
                             </li>
-                            <li ui-sref-active="active">
+                            <li ui-sref-active="active" ng-show="main.Usuario.iscliente">
                                 <a ui-sref="Clientes.miCuenta">Mi Cuenta</a>
                             </li>
                         </ul>
