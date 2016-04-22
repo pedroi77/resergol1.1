@@ -1,6 +1,6 @@
 
 
-        <div id="container">
+        <div id="container" ng-controller="ClientesController as cli" >
             <!-- <Menu> -->
             <nav class="navbar navbar-default2" style="margin-top: 0px">    
                 <div class="col-md-12" >
@@ -11,7 +11,7 @@
                     </div>
                         
                         <div class="pull-left navbar-brand">
-                                 {{main.brand2}}
+                                 {{cli.brand}}
                         </div>
                         <ul class="nav navbar-nav" >
                             <li ui-sref-active="active" >
