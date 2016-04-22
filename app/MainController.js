@@ -38,6 +38,14 @@ resergolApp.controller("MainController", function($state){
             }
     };
     
+    this.desloguearse = function(){
+        if(confirm('Seguro desea cerrar sesión?'))
+        {
+            self.Usuario.tipo = '';
+            self.Usuario.iscliente = false; 
+            self.IniciarSesion = 'Iniciar Sesion';
+        }
+    };
 
     
     
