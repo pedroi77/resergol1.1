@@ -18,6 +18,10 @@ INSERT INTO DueniosEstados(Descripcion) VALUES('Activo');
 INSERT INTO DueniosEstados(Descripcion) VALUES('Inactivo');
 /*select * from DueniosEstados;*/
 
+/*Estados del cliente*/
+INSERT INTO clientesestados(Descripcion) VALUES('Activo');
+INSERT INTO clientesestados(Descripcion) VALUES('Inactivo');
+
 
 
 

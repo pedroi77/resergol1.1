@@ -1,26 +1,54 @@
 <?php
-//Hay que cambiar esto para que funcione con SLIM
 require_once("connection.php");
 
+class Cliente
+{
+   
+    private $connection;
+    
+    public function __construct(){
+        $this->connection = Connection::getInstance();
+    }
+    
+    public function getCliente($cliente){
+        $usuario = $this->connection->real_escape_string($cliente['usuario']);
+        $contrasenia = $this->connection->real_escape_string($cliente['contrasenia']);
+        
+        $stmt = $this->connection->prepare('SET @usuario := ?');
+        $stmt->bind_param('s', $usuario);
+        $stmt->execute(); 
+         
+        
+        $stmt = $this->connection->prepare('SET @contrasenia := ?');
+        $stmt->bind_param('s', $contrasenia);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getCliente(@usuario, @contrasenia );";
+        
+        $cliente;
+        if( $result = $this->connection->query($query) ){
+            $cliente = $result->fetch_assoc();
+            $result->free();
+        }
+        return $cliente;
+    }
 
-
-
+    /*
+     public function get($categoriaId){
+        $id = (int) $this->connection->real_escape_string($categoriaId);
+        $query = "SELECT categoria_id, categoria_desc FROM categorias WHERE categoria_id = $categoriaId";
+        $r = $this->connection->query($query);
+        return $r->fetch_assoc();
+    }
+    */
+    
+/* <PI> IVAN TODO ESTO ANDABA ANTES DE SLIM. LO COMENTO PORQUE CAPAZ TE SIRVE.
 if(isset($_GET["action"])){
     $action = $_GET["action"];
     switch ($action) {
-        /*case "list":
-            listTiposDoc();
-            break;*/
         case "create":
             createCliente();
             break;
-        /*
-        case "update":
-            updateCategoria();
-            break;
-        case "delete":
-            deleteCategoria();
-            break;            */
         default:
             sendError("La accion especificada es invalida");
             break;            
@@ -29,10 +57,9 @@ if(isset($_GET["action"])){
     sendError("No se especifico ninguna acción");
 }
 
-
 function createCliente(){
     
-    /*--------------------------------------------------------------------------*/
+
     $c= Connection::getInstance();
     
     $usuario =  $c->real_escape_string(request('usuario'));
@@ -95,21 +122,6 @@ function createCliente(){
     }
    
 }
-
-
-/*
-function listTiposDoc(){
-    $c = getConnection();
-    $query = "CALL SP_getTiposDoc()";
-    $TiposDocs = array();
-    if ($resultado = $c->query($query)) {
-        while ($fila = $resultado->fetch_assoc()) {
-            $TiposDocs[] = $fila;
-        }
-        $resultado->free();
-        sendResult(array("TiposDoc" => $TiposDocs), "Ok");
-    }else{
-        sendError("No se encontraron resultados");
-    }
-}
 */
+
+}
