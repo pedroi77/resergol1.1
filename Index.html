@@ -64,7 +64,7 @@
       <div class="modal-content">
           <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              <h2 class="text-center "><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"                                            class="img-circle">
+              <h2 class="text-center "><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle">
               <br>Ingresar</h2>
           </div>
           <div class="modal-body">
@@ -113,7 +113,9 @@
              </div>
              <div class="col-md-6">
                 <div class="form-group">
-                    <input type="email" id="email" class="form-control input-md" placeholder="E-mail" ng-model="cli.cliente.eMail">
+                    <input type="email" class="form-control" placeholder="example@email.com" name="email" ng-model="cli.cliente.eMail" 
+                           required ng-class="{ error: exampleForm.email.$error.required && !exampleForm.$pristine, warning: exampleForm.email.$error.email }">
+                    
                 </div> 
                 <div class="form-group">
                     <input type="password" id="contraseñaRepetida" class="form-control input-md" placeholder="Repita contraseña" 
@@ -156,8 +158,10 @@
                         </div>
                 
                 <div class="form-group" >
+                    <!--input type="submit" class="btn btn-success pull-right" ng-click="submitForm(formData)" /-->
                     <button class="btn btn-primary btn-lg btn-block btn-custom"  ng-click="cli.createCliente()">Terminado</button>
                 </div>
+                
             </fieldset> 
             </div>
                               </form>
@@ -202,26 +206,23 @@
                         <legend>Datos de usuario</legend>
 
                         <div class="control-group">
-                            <form class="form center-block">
+                            <form class="form center-block" name="frmDatosUsuario">
                                 <div class="col-md-6">    
                                     <div class="form-group">
-                                        <input type="text" id="usuario" class="form-control input-md" placeholder="Usuario" 
-                                               ng-maxlength="25" ng-model="due.duenio.usuario">
+                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="usuario" ng-maxlength="25" name="usuario" ng-model="due.duenio.usuario" required ng-class="{ error: frmDatosUsuario.usuario.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.usuario.$error.email }">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" id="contraseña" class="form-control input-md" placeholder="Contraseña"
-                                               ng-maxlength="12"  ng-model="due.duenio.contrasenia">
+                                        <input id="contraseña" type="password" class="form-control ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" placeholder="Contraseña" ng-maxlength="12" name="contraseña" ng-model="due.duenio.contrasenia" required ng-class="{ error: frmDatosUsuario.contraseña.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.contraseña.$error }">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="email" id="email" class="form-control input-md" placeholder="E-Mail" 
-                                               ng-model="due.duenio.email">
+                                        <input type="email" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="example@email.com" name="email" ng-model="cli.cliente.eMail" 
+                                            required ng-class="{ error: frmDatosUsuario.email.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.email.$error.email }">
                                     </div> 
                                     <div class="form-group">
-                                        <input type="password" id="contraseñaRepetida" class="form-control input-md" placeholder="Repita contraseña"
-                                               ng-maxlength="12"  ng-model = "due.duenio.contrasenia2">
+                                        <input id="password" type="password" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="Repita contraseña" ng-maxlength="12" name="password" ng-model="due.duenio.contrasenia2" required ng-class="{ error: frmDatosUsuario.password.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.password.$error }">
                                     </div>  
                                 </div>    
                             </form>
@@ -311,8 +312,9 @@
                 </div>
                 
                 <div class="form-group">
-                    <!--<button class="btn btn-primary btn-lg btn-block btn-custom "  ng-click="due.createDuenio()" >Terminado</button> -->
-                    <button class="btn btn-primary btn-lg btn-block btn-custom "  ng-click="due.mostrarDatos()" >Terminado</button>
+                    <button class="btn btn-primary btn-lg btn-block btn-custom "  ng-click="due.validarDatosDuenio()" ng-disabled="!frmDatosUsuario.$valid">Terminado</button> 
+                    <!--button class="btn btn-primary btn-lg btn-block btn-custom "  ng-click="due.mostrarDatos()" >Terminado</button> -->
+                    <!--input type="submit" class="btn btn-success pull-right" ng-click="due.validarDatosDuenio()" / -->
                 </div>
             
             </div>

@@ -1,13 +1,19 @@
 var app = angular.module("resergolApp");
 
-app.controller("DueniosController", function(DueniosService, DocumentosService, ProvinciasService, LocalidadesService){
+app.controller("DueniosController", function(DueniosService, DocumentosService, ProvinciasService, LocalidadesService, $scope){
     
     var self = this;
     this.tiposDoc =[];
     this.provincias = [];
     this.localidades = [];
+    $scope.formData = {};
    
     this.mensajeBienvenida = 'En Resergol te damos la posibilidad de llegar a todos los jugadores del fútbol amateur de manera gratuita. Sólo tenés que completar los siguientes datos y te mandaremos un  e-mail como aviso para que puedas registrar tu complejo!';
+    
+    /* scope que controla las restricciones del formulario del registro de dueño */
+    $scope.submitForm = function (formData) {
+    alert('Form submitted with' + JSON.stringify(formData));
+    };
     
     this.tiposDoc = {
         tipos: [],
@@ -116,6 +122,112 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
             ); 
   
    };
+    
+    this.validarDatosDuenio = function()
+    {
+        var mensaje = 'Se han encontrado los siguientes errores: \n\n';
+        var codeMessage = 0;
+        
+        if(self.duenio.usuario.length == 0)
+        {
+            mensaje += "No se ha especificado el usuario! \n";
+            codeMessage = 1;
+        }
+            
+        
+        if(self.duenio.email.length == 0)
+        {
+            mensaje += "No se ha especificado el mail! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.contrasenia.length == 0)
+        {
+            mensaje += "No se ha especificado la contraseña! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.contrasenia2.length == 0)
+        {
+            mensaje += "No se introdujo nuevamente la contraseña! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.nombre.length == 0)
+        {
+            mensaje += "No se ha especificado el nombre! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.apellido.length == 0)
+        {
+            mensaje += "No se ha especificado el apellido! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.tiposDoc.selectedOption.IdTipoDoc <= 0)
+        {
+            mensaje += "No se ha especificado el Tipo de Documento! \n";
+            codeMessage = 1;
+        }
+        
+        
+        if(self.duenio.nroDoc.length == 0)
+        {
+            mensaje += "No se ha especificado su número de documento! \n";
+            codeMessage = 1;
+        }
+        
+        
+        if(self.duenio.nombreComplejo.length == 0)
+        {
+            mensaje += "No se ha especificado el nombre de complejo! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.NroTelef.length == 0)
+        {
+            mensaje += "No se ha especificado el nombre de complejo! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.provincias.selectedProv.IdProvincia <= 0)
+        {
+            mensaje += "No se ha especificado la provincia! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.localidades.selectedOption.IdLocalidad <= 0)
+        {
+            mensaje += "No se ha especificado la localidad! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.direccion == 0)
+        {
+            mensaje += "No se ha especificado la dirección del complejo! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.nroCalle == 0)
+        {
+            mensaje += "No se ha especificado la calle del complejo! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.contrasenia.length > 0 && self.duenio.contrasenia2.length > 0)
+        {
+            
+            if(self.duenio.contrasenia != self.duenio.contrasenia2)
+            {
+                mensaje += "las contraseñas no cohinciden! \n";
+                codeMessage = 1;
+            }
+        }
+        
+        if(codeMessage == 1)
+            alert(mensaje);
+    };
    
     
    this.createDuenio = function()
@@ -139,3 +251,4 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
   
    
 });
+

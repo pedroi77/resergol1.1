@@ -1144,3 +1144,11 @@ background: #333333;
 .modal.in .modal-dialog {
   transform: none; /*translate(0px, 0px);*/
 }
+
+.error {
+  border-color: red;
+}
+ 
+.warning {
+  border-color: yellow;
+}
