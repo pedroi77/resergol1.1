@@ -125,12 +125,18 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
     
     this.validarDatosDuenio = function()
     {
-        var mensaje = 'Se han encontrado los siguientes errores: \n\n';
+var mensaje = 'Se han encontrado los siguientes errores: \n\n';
         var codeMessage = 0;
         
         if(self.duenio.usuario.length == 0)
         {
             mensaje += "No se ha especificado el usuario! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.usuario.length > 25)
+        {
+            mensaje += "El usuario no puede tener mas de 25 caracteres! \n";
             codeMessage = 1;
         }
             
@@ -147,9 +153,21 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
             codeMessage = 1;
         }
         
+        if(self.duenio.contrasenia.length > 12)
+        {
+            mensaje += "La contraseña no puede tener mas de 12 caracteres! \n";
+            codeMessage = 1;
+        }
+        
         if(self.duenio.contrasenia2.length == 0)
         {
             mensaje += "No se introdujo nuevamente la contraseña! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.contrasenia2.length > 12)
+        {
+            mensaje += "La contraseña no puede tener mas de 12 caracteres! \n";
             codeMessage = 1;
         }
         
@@ -159,9 +177,21 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
             codeMessage = 1;
         }
         
+        if(self.duenio.nombre.length > 60)
+        {
+            mensaje += "El nombre no puede tener mas de 60 caracteres! \n";
+            codeMessage = 1;
+        }
+        
         if(self.duenio.apellido.length == 0)
         {
             mensaje += "No se ha especificado el apellido! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.apellido.length > 60)
+        {
+            mensaje += "El apellido no puede tener mas de 60 caracteres! \n";
             codeMessage = 1;
         }
         
@@ -178,6 +208,12 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
             codeMessage = 1;
         }
         
+        if(self.duenio.nroDoc.length == 0)
+        {
+            mensaje += "El número de documento no puede tener mas de 10 caracteres! \n";
+            codeMessage = 1;
+        }
+        
         
         if(self.duenio.nombreComplejo.length == 0)
         {
@@ -185,9 +221,21 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
             codeMessage = 1;
         }
         
+        if(self.duenio.nombreComplejo.length > 60)
+        {
+            mensaje += "El nombre del complejo no puede tener mas de 60 caracteres! \n";
+            codeMessage = 1;
+        }
+        
         if(self.duenio.NroTelef.length == 0)
         {
             mensaje += "No se ha especificado el nombre de complejo! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.NroTelef.length == 0)
+        {
+            mensaje += "El numero de telefono no puede tener mas de 15 caracteres! \n";
             codeMessage = 1;
         }
         
@@ -209,9 +257,21 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
             codeMessage = 1;
         }
         
+        if(self.duenio.direccion > 40)
+        {
+            mensaje += "La dirección no puede tener mas de 40 caracteres! \n";
+            codeMessage = 1;
+        }
+        
         if(self.duenio.nroCalle == 0)
         {
             mensaje += "No se ha especificado la calle del complejo! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.duenio.nroCalle > 5)
+        {
+            mensaje += "El numero de calle no puede tener mas de 5 caracteres! \n";
             codeMessage = 1;
         }
         
@@ -220,7 +280,7 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
             
             if(self.duenio.contrasenia != self.duenio.contrasenia2)
             {
-                mensaje += "las contraseñas no cohinciden! \n";
+                mensaje += "Las contraseñas no coinciden! \n";
                 codeMessage = 1;
             }
         }
