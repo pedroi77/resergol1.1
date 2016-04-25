@@ -82,7 +82,7 @@ class Common
         $usuario= array();
         
         if( $result = $this->connection->query($query) ){
-            $r = $this->connection->query('SELECT @id, @tipo');
+            $r = $this->connection->query('SELECT @id as id, @tipo as tipo');
             $usuario[] = $r->fetch_assoc();               
         }
         return $usuario;

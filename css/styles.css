@@ -1152,3 +1152,7 @@ background: #333333;
 .warning {
   border-color: yellow;
 }
+
+.msjError{
+    color:red;
+}

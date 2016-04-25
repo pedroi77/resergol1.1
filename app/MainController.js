@@ -8,8 +8,9 @@ resergolApp.controller("MainController", function($state, UsuarioService){
     this.IniciarSesion = "Iniciar Sesion";
 
      
-    this.Usuario = { 
+    this.usuario = { 
                     usuario: '', 
+                    id:0,
                     contrasenia: '',
                     tipo : '',
                     iscliente : false,
@@ -21,8 +22,8 @@ resergolApp.controller("MainController", function($state, UsuarioService){
         self.existeUsuario();
         
         if(this.usuario.usuario == "cliente" && this.usuario.contrasenia == "cliente"){
-            self.Usuario.tipo = 'C'; //esto podria ser otra opcion
-            self.Usuario.iscliente = true; 
+            self.usuario.tipo = 'C'; //esto podria ser otra opcion
+            self.usuario.iscliente = true; 
             self.IniciarSesion = 'PEPE';
             $('#loginModal').modal('hide');
          }
@@ -50,10 +51,15 @@ resergolApp.controller("MainController", function($state, UsuarioService){
     };
     
     this.existeUsuario = function(){
+        //console.log(self.Usuario.usuario);
         
-        UsuarioService.query({user:'HOMERO'}).$promise.then(function(data){
-               console.log(data);                                                         
-            });
+        UsuarioService.query({user:self.usuario.usuario}).$promise.then(function(data){
+            self.usuario.id =  data[0].id;                                                         
+            self.usuario.tipo  = data[0].tipo;                             
+            
+            console.log(self.usuario.id);
+            console.log(self.usuario.tipo);
+        });
         
     };
 

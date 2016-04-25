@@ -64,19 +64,27 @@
       <div class="modal-content">
           <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              <h2 class="text-center "><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle">
-              <br>Ingresar</h2>
+              <h2 class="text-center "><img src="images/logo/logoMediano.png" class="">
           </div>
           <div class="modal-body">
-              <form class="form col-md-12 center-block">
+              <form class="form col-md-12 center-block" name="loginForm">
                 <div class="form-group">
-                  <input id="usuario" type="text" class="form-control input-lg" placeholder="Usuario" ng-model="main.usuario.usuario">
+                    <input id="usuario" name="loginUsuario" type="text"  ng-maxlength="25" class="form-control input-lg"                                     placeholder="Usuario" ng-model="main.usuario.usuario" 
+                          required ng-class="{ error: loginForm.loginUsuario.$error.required && !loginForm.$pristine, warning:                                                 loginForm.loginUsuario.$error.loginUsuario }" ng-blur="main.existeUsuario()" >
+                    <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.required" class= "msjError">
+                        Ingrese el usuario
+                    </span>
                 </div>
                 <div class="form-group">
-                  <input  type="password" class="form-control input-lg" placeholder="Contraseña" placeholder="Usuario" ng-model="main.usuario.contrasenia">
+                    <input  type="password"  ng-maxlength="12" name="loginPass" class="form-control input-lg"                                                 placeholder="Contraseña" placeholder="Usuario" ng-model="main.usuario.contrasenia" 
+                         required ng-class="{ error: loginForm.loginPass.$error.required && !loginForm.$pristine, warning:                                                   loginForm.loginPass.$error.loginPass }">
+                    <span ng-show="!loginForm.$pristine && loginForm.loginPass.$error.required" class= "msjError">
+                        Ingrese la contraseña
+                    </span>
                 </div>
                 <div class="form-group">
-                  <button class="btn btn-primary btn-lg btn-block btn-custom"  ng-click="main.validaLogin()">Iniciar Sesión</button>
+                  <button class="btn btn-primary btn-lg btn-block btn-custom"  ng-click="main.validaLogin()" 
+                          ng-disabled="!loginForm.$valid">Iniciar Sesión</button>
 
                   <span class="pull-right"></span><span><a href="#">¿Olvidaste tu contraseña?</a></span>
                 </div>
@@ -88,6 +96,7 @@
       </div>
   </div>
 </div>
+
 
 
         
