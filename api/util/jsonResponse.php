@@ -1,9 +1,11 @@
 <?php
 
-function sendResult($data){
+function sendResult($data, $jwt){
 	header('Content-Type: application/json; charset=utf-8');
+    
     $result['error'] = false;
     $result['data'] = $data;
+    $result['token'] = $jwt;
     die(json_encode($result));
 }
 

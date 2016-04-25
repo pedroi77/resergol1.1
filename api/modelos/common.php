@@ -43,6 +43,7 @@ class Common
         $stmt->bind_param('i', $IdProv);
         $stmt->execute(); 
          
+              
         $query = "CALL SP_getLocalidadesByProvincia(@idProv);";
         $localidades= array();
         
@@ -54,6 +55,39 @@ class Common
         }
         return $localidades;
     }
+    
+    //Existe Usuario
+    public function existeUsuario($user){  
+        //http://localhost:8080/resergol1.1/api/usuario/HOMERO
+        $id='';
+        $tipo='';
+        
+        $stmt = $this->connection->prepare('SET @usuario := ?');
+        $stmt->bind_param('s', $user);
+        $stmt->execute(); 
+        
+        
+        $stmt = $this->connection->prepare('SET @id := ?');
+        $stmt->bind_param('i', $id);
+        $stmt->execute(); 
+        
+        
+        $stmt = $this->connection->prepare('SET @tipo := ?');
+        $stmt->bind_param('s', $tipo);
+        $stmt->execute(); 
+         
+              
+        $query = "CALL SP_existeUsuario(@usuario, @id, @tipo);";
+    
+        $usuario= array();
+        
+        if( $result = $this->connection->query($query) ){
+            $r = $this->connection->query('SELECT @id, @tipo');
+            $usuario[] = $r->fetch_assoc();               
+        }
+        return $usuario;
+    }
+    
     
     
 }

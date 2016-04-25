@@ -10,37 +10,28 @@ class Cliente
         $this->connection = Connection::getInstance();
     }
     
-    public function getCliente($cliente){
-        $usuario = $this->connection->real_escape_string($cliente['usuario']);
-        $contrasenia = $this->connection->real_escape_string($cliente['contrasenia']);
-        
+    public function getCliente($usuario,$contrasenia ){
         $stmt = $this->connection->prepare('SET @usuario := ?');
         $stmt->bind_param('s', $usuario);
         $stmt->execute(); 
-         
-        
+    
         $stmt = $this->connection->prepare('SET @contrasenia := ?');
         $stmt->bind_param('s', $contrasenia);
         $stmt->execute(); 
         
         $query = "CALL SP_getCliente(@usuario, @contrasenia );";
         
-        $cliente;
+        $cliente= array();
+        
         if( $result = $this->connection->query($query) ){
-            $cliente = $result->fetch_assoc();
+            while($fila = $result->fetch_assoc()){
+                $cliente[] = $fila;
+            }
             $result->free();
         }
         return $cliente;
     }
 
-    /*
-     public function get($categoriaId){
-        $id = (int) $this->connection->real_escape_string($categoriaId);
-        $query = "SELECT categoria_id, categoria_desc FROM categorias WHERE categoria_id = $categoriaId";
-        $r = $this->connection->query($query);
-        return $r->fetch_assoc();
-    }
-    */
     
 /* <PI> IVAN TODO ESTO ANDABA ANTES DE SLIM. LO COMENTO PORQUE CAPAZ TE SIRVE.
 if(isset($_GET["action"])){

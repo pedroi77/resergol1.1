@@ -1,7 +1,7 @@
 /*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("MainController", function($state){
+resergolApp.controller("MainController", function($state, UsuarioService){
 	
     var self = this;
 	this.brand = "Open Gallo";
@@ -17,6 +17,8 @@ resergolApp.controller("MainController", function($state){
      
                        
     this.validaLogin = function(){
+        
+        self.existeUsuario();
         
         if(this.usuario.usuario == "cliente" && this.usuario.contrasenia == "cliente"){
             self.Usuario.tipo = 'C'; //esto podria ser otra opcion
@@ -45,6 +47,14 @@ resergolApp.controller("MainController", function($state){
             self.Usuario.iscliente = false; 
             self.IniciarSesion = 'Iniciar Sesion';
         }
+    };
+    
+    this.existeUsuario = function(){
+        
+        UsuarioService.query({user:'HOMERO'}).$promise.then(function(data){
+               console.log(data);                                                         
+            });
+        
     };
 
     

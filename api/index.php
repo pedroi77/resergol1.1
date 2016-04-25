@@ -38,21 +38,21 @@ $app->get('/tiposDocs', function(){
     
     $tiposDocs = new Common();
     $data = $tiposDocs->getAllDocumentos();
-	sendResult($data);
+	sendResult($data,null);
 });
 
 //Provincias
 $app->get('/provincias', function(){
     $provincias = new Common();
     $data = $provincias->getAllProvincias();
-	sendResult($data);
+	sendResult($data,null);
 });
 
 //Localidades
 $app->get('/localidades/:id', function($id){
     $localidades = new Common();
     $data = $localidades->getAllLocalidadesByProvincia($id);
-	sendResult($data);
+	sendResult($data,null);
 });
 
 
@@ -66,20 +66,45 @@ $app->post('/duenios', function(){
     $result = $duenio->create($data);
 	
 	if($result){
-		sendResult($result);
+		sendResult($result,null);
 	}else{
 		sendError("Error al crear el producto");
 	}
 });
 
+
+//existe usuario
+$app->get('/usuario/:user', function($user){
+    $usuario = new Common();
+    $data = $usuario->existeUsuario($user);
+	sendResult($data,null);
+});
+
+
 //Clientes
-$app->get('/clientes/:usuario/:contrasenia', function(){
-    $request = Slim\Slim::getInstance()->request();
-    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
-    
+$app->get('/clientes/:user&:pass', function($usuario,$contrasenia){
+    //asi funciona
+    //http://localhost:8080/resergol1.1/api/clientes/HOMERO&1111
     $cliente = new Cliente();
-    $result = $cliente->getCliente($data);
-	sendResult($result);
+    $result = $cliente->getCliente($usuario,$contrasenia);
+    
+    if(count($result)>0){
+        //Creo el token
+        $key = 'mi-secret-key';
+        $token = array(
+                "id" => "1",
+                "name" => "unodepiera",
+                "iat" => 1356999524,
+                "nbf" => 1357000000
+                );
+    
+        $jwt = \Firebase\JWT\JWT::encode($token, $key);
+    
+        
+        sendResult($result, $jwt);
+    }else{
+        sendError("No hay datos.");
+    }
 });
 
 
