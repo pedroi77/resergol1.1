@@ -8,7 +8,7 @@ resergolApp.controller("MainController", function($state, UsuarioService){
     this.IniciarSesion = "Iniciar Sesion";
 
      
-    this.usuario = { 
+    this.Usuario = { 
                     usuario: '', 
                     id:0,
                     contrasenia: '',
@@ -19,19 +19,19 @@ resergolApp.controller("MainController", function($state, UsuarioService){
                        
     this.validaLogin = function(){
         
-        self.existeUsuario();
+        //self.existeUsuario();
         
-        if(this.usuario.usuario == "cliente" && this.usuario.contrasenia == "cliente"){
-            self.usuario.tipo = 'C'; //esto podria ser otra opcion
-            self.usuario.iscliente = true; 
+        if(this.Usuario.usuario == "cliente" && this.Usuario.contrasenia == "cliente"){
+            self.Usuario.tipo = 'C'; //esto podria ser otra opcion
+            self.Usuario.iscliente = true; 
             self.IniciarSesion = 'PEPE';
             $('#loginModal').modal('hide');
          }
-         else if(this.usuario.usuario == "dueño" && this.usuario.contrasenia == "dueño"){
+         else if(this.Usuario.usuario == "dueño" && this.Usuario.contrasenia == "dueño"){
              $state.go('Duenios');
              $('#loginModal').modal('hide');
          }
-        else if(this.usuario.usuario == "admin" && this.usuario.contrasenia == "admin"){
+        else if(this.Usuario.usuario == "admin" && this.Usuario.contrasenia == "admin"){
              $state.go('Admin');
              $('#loginModal').modal('hide');
         }
@@ -51,14 +51,14 @@ resergolApp.controller("MainController", function($state, UsuarioService){
     };
     
     this.existeUsuario = function(){
-        //console.log(self.Usuario.usuario);
+        console.log(self.Usuario.usuario);
         
-        UsuarioService.query({user:self.usuario.usuario}).$promise.then(function(data){
-            self.usuario.id =  data[0].id;                                                         
-            self.usuario.tipo  = data[0].tipo;                             
+        UsuarioService.query({user:self.Usuario.usuario}).$promise.then(function(data){
+            self.Usuario.id =  data[0].id;                                                         
+            self.Usuario.tipo  = data[0].tipo;                             
             
-            console.log(self.usuario.id);
-            console.log(self.usuario.tipo);
+            console.log(self.Usuario.id);
+            console.log(self.Usuario.tipo);
         });
         
     };

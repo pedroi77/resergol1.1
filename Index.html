@@ -69,17 +69,25 @@
           <div class="modal-body">
               <form class="form col-md-12 center-block" name="loginForm">
                 <div class="form-group">
-                    <input id="usuario" name="loginUsuario" type="text"  ng-maxlength="25" class="form-control input-lg"                                     placeholder="Usuario" ng-model="main.usuario.usuario" 
-                          required ng-class="{ error: loginForm.loginUsuario.$error.required && !loginForm.$pristine, warning:                                                 loginForm.loginUsuario.$error.loginUsuario }" ng-blur="main.existeUsuario()" >
+                    <input id="usuario" name="loginUsuario" type="text" ng-maxlength="6" ng-model="main.Usuario.usuario" 
+                           class="form-control input-lg" placeholder="Usuario" required ng-class="{ error:                                                  loginForm.loginUsuario.$error.required && !loginForm.$pristine,                                                                   warning:loginForm.loginUsuario.$error.loginUsuario }"
+                            ng-blur="main.existeUsuario()"
+                           >
                     <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.required" class= "msjError">
-                        Ingrese el usuario
+                        Ingrese el usuario.
                     </span>
+                    <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.maxlength" class= "msjError">
+                        La cantidad máxima de caracteres es 6.
+                    </span>
+                    
+                    
+                    
                 </div>
                 <div class="form-group">
-                    <input  type="password"  ng-maxlength="12" name="loginPass" class="form-control input-lg"                                                 placeholder="Contraseña" placeholder="Usuario" ng-model="main.usuario.contrasenia" 
+                    <input  type="password"  ng-maxlength="12" name="loginPass" class="form-control input-lg"                                                 placeholder="Contraseña" placeholder="Usuario" ng-model="main.Usuario.contrasenia" 
                          required ng-class="{ error: loginForm.loginPass.$error.required && !loginForm.$pristine, warning:                                                   loginForm.loginPass.$error.loginPass }">
                     <span ng-show="!loginForm.$pristine && loginForm.loginPass.$error.required" class= "msjError">
-                        Ingrese la contraseña
+                        Ingrese la contraseña.
                     </span>
                 </div>
                 <div class="form-group">
