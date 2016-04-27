@@ -3,9 +3,8 @@ var app = angular.module("resergolApp");
 
 app.service("ClientesService", function($http, $resource){
 
-var TIPOSDOCS_URI = "http://localhost/resergol1.1/api/clientes";
 //var CLIENTES_URI = "http://localhost:8080/resergol1.1/api/clientes";  //<PI>En mi casa es asi... 
-var CLIENTES_URI = "http://localhost/resergol1.1/api/clientes";  //<PI>En mi casa es asi... 
+var CLIENTES_URI = "http://localhost/resergol1.1/api/clientes/:user&:pass";  
 
     
 return $resource(CLIENTES_URI, {}, {
@@ -18,7 +17,7 @@ return $resource(CLIENTES_URI, {}, {
     });
     
     
-
+/*
 this.createCliente = function(usuario, contrasenia, nombre,apellido,tipoDoc,nroDoc,eMail){
      data = 
     {
@@ -42,9 +41,9 @@ this.createCliente = function(usuario, contrasenia, nombre,apellido,tipoDoc,nroD
     return promise.then(function(response){
         return response.data.data.TiposDoc;
     })
-    */
+    
 };
-	
+	*/
 	
     
 });

@@ -69,7 +69,7 @@
           <div class="modal-body">
               <form class="form col-md-12 center-block" name="loginForm">
                 <div class="form-group">
-                    <input id="usuario" name="loginUsuario" type="text" ng-maxlength="6" ng-model="main.Usuario.usuario" 
+                    <input id="usuario" name="loginUsuario" type="text" ng-maxlength="25" ng-model="main.Usuario.usuario" 
                            class="form-control input-lg" placeholder="Usuario" required ng-class="{ error:                                                  loginForm.loginUsuario.$error.required && !loginForm.$pristine,                                                                   warning:loginForm.loginUsuario.$error.loginUsuario }"
                             ng-blur="main.existeUsuario()"
                            >
@@ -77,7 +77,10 @@
                         Ingrese el usuario.
                     </span>
                     <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.maxlength" class= "msjError">
-                        La cantidad máxima de caracteres es 6.
+                        Supero la cantidad máxima de caracteres.
+                    </span>
+                    <span ng-show="!loginForm.$pristine && !main.Usuario.existe" class= "msjError">
+                        Usuario inexistente.
                     </span>
                     
                     
@@ -89,10 +92,13 @@
                     <span ng-show="!loginForm.$pristine && loginForm.loginPass.$error.required" class= "msjError">
                         Ingrese la contraseña.
                     </span>
+                     <span ng-show="!loginForm.$pristine && loginForm.loginPass.$error.maxlength" class= "msjError">
+                        Supero la cantidad máxima de caracteres.
+                    </span>
                 </div>
                 <div class="form-group">
                   <button class="btn btn-primary btn-lg btn-block btn-custom"  ng-click="main.validaLogin()" 
-                          ng-disabled="!loginForm.$valid">Iniciar Sesión</button>
+                          ng-disabled="!loginForm.$valid || !main.Usuario.existe">Iniciar Sesión</button>
 
                   <span class="pull-right"></span><span><a href="#">¿Olvidaste tu contraseña?</a></span>
                 </div>

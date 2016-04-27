@@ -1,7 +1,7 @@
 /*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("MainController", function($state, UsuarioService){
+resergolApp.controller("MainController", function($state, UsuarioService, ClientesService){
 	
     var self = this;
 	this.brand = "Open Gallo";
@@ -14,13 +14,23 @@ resergolApp.controller("MainController", function($state, UsuarioService){
                     contrasenia: '',
                     tipo : '',
                     iscliente : false,
+                    existe: true
                     };
      
                        
     this.validaLogin = function(){
         
-        //self.existeUsuario();
+        switch(self.Usuario.tipo){
+            case 'C':
+                ClientesService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
+                    console.log(data);
+                });
+            case 'D':
+            case 'A':
+        }
         
+        
+        /*
         if(this.Usuario.usuario == "cliente" && this.Usuario.contrasenia == "cliente"){
             self.Usuario.tipo = 'C'; //esto podria ser otra opcion
             self.Usuario.iscliente = true; 
@@ -39,9 +49,31 @@ resergolApp.controller("MainController", function($state, UsuarioService){
             {   
                 this.bEsCliente = false;
             }
+            */
     };
     
-    this.desloguearse = function(){
+   
+    
+    this.existeUsuario = function(){
+        
+        if(self.Usuario.usuario!=undefined){
+            UsuarioService.query({user:self.Usuario.usuario}).$promise.then(function(data){
+                self.Usuario.id =  data[0].id;                                                         
+                self.Usuario.tipo  = data[0].tipo;                             
+
+                if(self.Usuario.id > -1){
+                    self.Usuario.existe = true;
+                }
+                else{
+                    self.Usuario.existe = false;
+                }
+            });
+        }
+        
+    };
+
+    
+     this.desloguearse = function(){
         if(confirm('Seguro desea cerrar sesión?'))
         {
             self.Usuario.tipo = '';
@@ -49,22 +81,6 @@ resergolApp.controller("MainController", function($state, UsuarioService){
             self.IniciarSesion = 'Iniciar Sesion';
         }
     };
-    
-    this.existeUsuario = function(){
-        console.log(self.Usuario.usuario);
-        
-        UsuarioService.query({user:self.Usuario.usuario}).$promise.then(function(data){
-            self.Usuario.id =  data[0].id;                                                         
-            self.Usuario.tipo  = data[0].tipo;                             
-            
-            console.log(self.Usuario.id);
-            console.log(self.Usuario.tipo);
-        });
-        
-    };
-
-    
-    
     
     //Para JWT modificar
     /*this.login = function(user)

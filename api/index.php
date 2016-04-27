@@ -20,22 +20,6 @@ $app = new Slim\Slim();
 
 //Documentos
 $app->get('/tiposDocs', function(){
-    //Probando token - Inicio
-    /*$key = 'mi-secret-key';
-    $token = array(
-            "id" => "1",
-        "name" => "unodepiera",
-        "iat" => 1356999524,
-        "nbf" => 1357000000
-    );
-    
-    $jwt = \Firebase\JWT\JWT::encode($token, $key);
-    
-    $decoded = \Firebase\JWT\JWT::decode($jwt,  'mi-secret-key');
-    print_r($decoded);*/
-    //Probando token - Fin
-    
-    
     $tiposDocs = new Common();
     $data = $tiposDocs->getAllDocumentos();
 	sendResult($data,null);
