@@ -64,6 +64,14 @@ $app->get('/usuario/:user', function($user){
 	sendResult($data,null);
 });
 
+//existe documento
+$app->get('/clientes/:tipoDoc&:nroDoc&:tipoUsu', function($tipoDocumento,$nroDocumento,$tipoUsuario){
+    $usuario = new Common();
+    $result = $usuario->existeDocumento($tipoDocumento,$nroDocumento,$tipoUsuario);
+    
+    sendResult($result,null);
+});
+
 
 //Clientes
 $app->get('/clientes/:user&:pass', function($usuario,$contrasenia){

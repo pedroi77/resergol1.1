@@ -88,6 +88,40 @@ class Common
         return $usuario;
     }
     
+    //Existe Documento
+    public function existeDocumento($tipoDocumento,$nroDocumento,$tipoUsuario){
+        $stmt = $this->connection->prepare('SET @pIdTipoDoc := ?');
+        $stmt->bind_param('i', $tipoDocumento);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pNroDoc := ?');
+        $stmt->bind_param('i', $nroDocumento);
+        $stmt->execute(); 
+    
+        $stmt = $this->connection->prepare('SET @pTipo := ?');
+        $stmt->bind_param('s', $tipoUsuario);
+        $stmt->execute(); 
+        
+         //Salida
+        $stmt = $this->connection->prepare('SET @valor := ?');
+        $stmt->bind_param('i', $valor);
+        $stmt->execute();
+        
+        $query = "CALL SP_existeDocumento(@pIdTipoDoc, @pNroDoc, @pTipo, @valor);";
+        
+        //esto es para saber si las variables llegan con los datos correctos
+        //$query = "select @pIdTipoDoc, @pNroDoc, @pTipo;";
+        
+        $cliente= array();
+        
+        if( $result = $this->connection->query($query) ){
+            $r = $this->connection->query('SELECT @valor as duenio');
+            //$r = $this->connection->query('SELECT @id as id, @tipo as tipo');
+            $cliente[] = $r->fetch_assoc();               
+        }
+        
+        return $cliente;
+    }
     
     
 }
