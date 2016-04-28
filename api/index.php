@@ -22,21 +22,21 @@ $app = new Slim\Slim();
 $app->get('/tiposDocs', function(){
     $tiposDocs = new Common();
     $data = $tiposDocs->getAllDocumentos();
-	sendResult($data,null);
+	sendResult($data);
 });
 
 //Provincias
 $app->get('/provincias', function(){
     $provincias = new Common();
     $data = $provincias->getAllProvincias();
-	sendResult($data,null);
+	sendResult($data);
 });
 
 //Localidades
 $app->get('/localidades/:id', function($id){
     $localidades = new Common();
     $data = $localidades->getAllLocalidadesByProvincia($id);
-	sendResult($data,null);
+	sendResult($data);
 });
 
 
@@ -50,7 +50,7 @@ $app->post('/duenios', function(){
     $result = $duenio->create($data);
 	
 	if($result){
-		sendResult($result,null);
+		sendResult($result);
 	}else{
 		sendError("Error al crear el producto");
 	}
@@ -61,7 +61,7 @@ $app->post('/duenios', function(){
 $app->get('/usuario/:user', function($user){
     $usuario = new Common();
     $data = $usuario->existeUsuario($user);
-	sendResult($data,null);
+	sendResult($data);
 });
 
 //existe documento
@@ -69,7 +69,7 @@ $app->get('/clientes/:tipoDoc&:nroDoc&:tipoUsu', function($tipoDocumento,$nroDoc
     $usuario = new Common();
     $result = $usuario->existeDocumento($tipoDocumento,$nroDocumento,$tipoUsuario);
     
-    sendResult($result,null);
+    sendResult($result);
 });
 
 
@@ -94,11 +94,12 @@ $app->get('/clientes/:user&:pass', function($usuario,$contrasenia){
         
         array_push($result, "token:" . $jwt);
         //$result[] = $jwt;    
-        sendResult($result, $jwt);
+        sendResult($result);
         
         
     }else{
-        sendError("No hay datos.");
+        $result[] = "-1";
+        sendResult($result);
     }
 });
 

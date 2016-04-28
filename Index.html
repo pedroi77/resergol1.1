@@ -92,8 +92,11 @@
                     <span ng-show="!loginForm.$pristine && loginForm.loginPass.$error.required" class= "msjError">
                         Ingrese la contraseña.
                     </span>
-                     <span ng-show="!loginForm.$pristine && loginForm.loginPass.$error.maxlength" class= "msjError">
+                    <span ng-show="!loginForm.$pristine && loginForm.loginPass.$error.maxlength" class= "msjError">
                         Supero la cantidad máxima de caracteres.
+                    </span>
+                    <span ng-show="main.Usuario.passInvalida" class= "msjError">
+                        Contraseña incorrecta.
                     </span>
                 </div>
                 <div class="form-group">

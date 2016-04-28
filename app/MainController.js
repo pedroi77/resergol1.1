@@ -14,20 +14,21 @@ resergolApp.controller("MainController", function($state, UsuarioService, Client
                     contrasenia: '',
                     tipo : '',
                     iscliente : false,
-                    existe: true
+                    existe: true,
+                    passInvalida:false
                     };
+    
+    this.cliente = {};
      
                        
     this.validaLogin = function(){
         
         switch(self.Usuario.tipo){
             case 'C':
-                ClientesService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
-                    console.log(data);
-                });
+                self.getCliente();
             case 'D':
             case 'A':
-        }
+        };
         
         
         /*
@@ -52,7 +53,24 @@ resergolApp.controller("MainController", function($state, UsuarioService, Client
             */
     };
     
-   
+   this.getCliente = function(){
+         ClientesService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
+                    self.cliente = data;
+                    //console.log(self.cliente[0]);
+                    //console.log(self.cliente[1]);
+            if(self.cliente[0] != '-1'){
+                console.log(self.cliente[0]);
+                console.log('OK');
+                self.Usuario.passInvalida = false;
+            }
+            else{
+                console.log('NO');
+                //self.Usuario.contrasenia = '';
+                self.Usuario.passInvalida = true;
+            }
+         });
+    };
+                                                                                                  
     
     this.existeUsuario = function(){
         
