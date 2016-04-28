@@ -27,6 +27,7 @@ class Cliente
             while($fila = $result->fetch_assoc()){
                 $cliente[] = $fila;
             }
+              
             $result->free();
         }
         return $cliente;

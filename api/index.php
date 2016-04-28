@@ -83,9 +83,12 @@ $app->get('/clientes/:user&:pass', function($usuario,$contrasenia){
                 );
     
         $jwt = \Firebase\JWT\JWT::encode($token, $key);
-    
         
+        array_push($result, "token:" . $jwt);
+        //$result[] = $jwt;    
         sendResult($result, $jwt);
+        
+        
     }else{
         sendError("No hay datos.");
     }
