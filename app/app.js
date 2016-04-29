@@ -6,7 +6,9 @@ var resergolApp = angular.module("resergolApp",
 "resergolApp.Common",
 "ui.router",
 "ngResource",
-"ngGrid"
+"ngGrid",
+"angular-jwt", 
+"angular-storage"
 ]);
 
 

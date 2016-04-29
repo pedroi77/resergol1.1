@@ -1,7 +1,7 @@
 /*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("MainController", function($state, UsuarioService, ClientesService){
+resergolApp.controller("MainController", function($state,store, UsuarioService, ClientesService){
 	
     var self = this;
 	this.brand = "Open Gallo";
@@ -13,9 +13,9 @@ resergolApp.controller("MainController", function($state, UsuarioService, Client
                     id:0,
                     contrasenia: '',
                     tipo : '',
-                    iscliente : false,
-                    existe: true,
-                    passInvalida:false
+                    existe: true, 
+                    passInvalida:false,
+                    login: false
                     };
     
     this.cliente = {};
@@ -32,40 +32,26 @@ resergolApp.controller("MainController", function($state, UsuarioService, Client
         
         
         /*
-        if(this.Usuario.usuario == "cliente" && this.Usuario.contrasenia == "cliente"){
-            self.Usuario.tipo = 'C'; //esto podria ser otra opcion
-            self.Usuario.iscliente = true; 
-            self.IniciarSesion = 'PEPE';
-            $('#loginModal').modal('hide');
-         }
-         else if(this.Usuario.usuario == "dueño" && this.Usuario.contrasenia == "dueño"){
              $state.go('Duenios');
-             $('#loginModal').modal('hide');
-         }
-        else if(this.Usuario.usuario == "admin" && this.Usuario.contrasenia == "admin"){
              $state.go('Admin');
-             $('#loginModal').modal('hide');
-        }
-        else
-            {   
-                this.bEsCliente = false;
-            }
             */
     };
     
    this.getCliente = function(){
          ClientesService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
-                    self.cliente = data;
-                    //console.log(self.cliente[0]);
-                    //console.log(self.cliente[1]);
+            
+            self.cliente = data;       
+                   
             if(self.cliente[0] != '-1'){
-                console.log(self.cliente[0]);
-                console.log('OK');
+                //console.log(self.cliente[1]);
                 self.Usuario.passInvalida = false;
+                self.Usuario.login = true;
+                self.IniciarSesion = self.cliente[0].Usuario;
+                store.set('token',  self.cliente[1]); //guardo el token
+                $('#loginModal').modal('hide');
             }
             else{
-                console.log('NO');
-                //self.Usuario.contrasenia = '';
+                self.Usuario.login = false;
                 self.Usuario.passInvalida = true;
             }
          });
@@ -94,12 +80,18 @@ resergolApp.controller("MainController", function($state, UsuarioService, Client
      this.desloguearse = function(){
         if(confirm('Seguro desea cerrar sesión?'))
         {
-            self.Usuario.tipo = '';
-            self.Usuario.iscliente = false; 
-            self.IniciarSesion = 'Iniciar Sesion';
+            store.set('token', undefined);     
+            self.init();
+            $state.go('Clientes.buscarCanchas');
         }
     };
     
+    this.init = function(){
+        self.Usuario.tipo = '';
+        self.Usuario.existe = true;
+        self.Usuario.login = false;
+        self.IniciarSesion = 'Iniciar Sesion';
+    };
     //Para JWT modificar
     /*this.login = function(user)
     {

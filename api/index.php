@@ -91,11 +91,11 @@ $app->get('/clientes/:user&:pass', function($usuario,$contrasenia){
                 );
     
         $jwt = \Firebase\JWT\JWT::encode($token, $key);
-        
-        array_push($result, "token:" . $jwt);
-        //$result[] = $jwt;    
+    
+        $miToken['token'] = $jwt;
+        array_push($result,$miToken);
+
         sendResult($result);
-        
         
     }else{
         $result[] = "-1";
