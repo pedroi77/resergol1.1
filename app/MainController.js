@@ -1,7 +1,7 @@
 /*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("MainController", function($state,store, UsuarioService, ClientesService){
+resergolApp.controller("MainController", function($state,store, UsuarioService, ClientesService,DueniosService,AdminService){
 	
     var self = this;
 	this.brand = "Open Gallo";
@@ -17,37 +17,74 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                     passInvalida:false,
                     login: false
                     };
-    
-    this.cliente = {};
      
                        
     this.validaLogin = function(){
-        
         switch(self.Usuario.tipo){
             case 'C':
                 self.getCliente();
+                break;
             case 'D':
+                console.log('pepe');
+                self.getDuenio();
+                break;
             case 'A':
+                console.log('pep2e');
+                self.getAdministrador();
+                break;
         };
-        
-        
-        /*
-             $state.go('Duenios');
-             $state.go('Admin');
-            */
     };
     
    this.getCliente = function(){
          ClientesService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
-            
-            self.cliente = data;       
+            cliente = {};
+            cliente = data;       
                    
-            if(self.cliente[0] != '-1'){
-                //console.log(self.cliente[1]);
+            if(cliente[0] != '-1'){
                 self.Usuario.passInvalida = false;
                 self.Usuario.login = true;
-                self.IniciarSesion = self.cliente[0].Usuario;
-                store.set('token',  self.cliente[1]); //guardo el token
+                self.IniciarSesion = cliente[0].Usuario;
+                store.set('token',  cliente[1]); //guardo el token
+                $('#loginModal').modal('hide');
+            }
+            else{
+                self.Usuario.login = false;
+                self.Usuario.passInvalida = true;
+            }
+         });
+    };
+    
+     this.getDuenio = function(){
+         DueniosService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
+            duenio = {};
+            duenio = data;       
+                   
+            if(duenio[0] != '-1'){
+                self.Usuario.passInvalida = false;
+                self.Usuario.login = true;
+                self.IniciarSesion = duenio[0].Usuario;
+                store.set('token',  duenio[1]); //guardo el token
+                $state.go('Duenios.reserva');
+                $('#loginModal').modal('hide');
+            }
+            else{
+                self.Usuario.login = false;
+                self.Usuario.passInvalida = true;
+            }
+         });
+    };
+    
+    this.getAdministrador = function(){
+         AdminService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
+            admin = {};
+            admin = data;       
+                   
+            if(admin[0] != '-1'){
+                self.Usuario.passInvalida = false;
+                self.Usuario.login = true;
+                self.IniciarSesion = admin[0].Usuario;
+                store.set('token',  admin[1]); //guardo el token
+                $state.go('Admin.administracion');
                 $('#loginModal').modal('hide');
             }
             else{
@@ -77,7 +114,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
     };
 
     
-     this.desloguearse = function(){
+    this.desloguearse = function(){
         if(confirm('Seguro desea cerrar sesión?'))
         {
             store.set('token', undefined);     
@@ -92,19 +129,6 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
         self.Usuario.login = false;
         self.IniciarSesion = 'Iniciar Sesion';
     };
-    //Para JWT modificar
-    /*this.login = function(user)
-    {
-        authFactory.login(user).then(function(res)
-        {
-            if(res.data && res.data.code == 0)
-            {
-                store.set('token', res.data.response.token);
-                $location.path("/home");
-            }
-        });*/
-
- 
 	
 });
 

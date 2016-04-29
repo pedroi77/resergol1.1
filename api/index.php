@@ -7,9 +7,9 @@ require_once("php-jwt-master/src/JWT.php");
 require_once("modelos/common.php");
 require_once("modelos/duenios.php");
 require_once("modelos/clientes.php");
+require_once("modelos/administradores.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
-//require 'JWT.php';
 
 Slim\Slim::registerAutoloader();
  
@@ -41,7 +41,8 @@ $app->get('/localidades/:id', function($id){
 
 
 
-//Duenios
+/*************************************************DUENIOS*************************************************/
+//Alta
 $app->post('/duenios', function(){
     $request = Slim\Slim::getInstance()->request();
     $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
@@ -55,6 +56,68 @@ $app->post('/duenios', function(){
 		sendError("Error al crear el producto");
 	}
 });
+
+//Get
+$app->get('/duenios/:user&:pass', function($usuario,$contrasenia){
+    //http://localhost:8080/resergol1.1/api/clientes/HOMERO&1111
+    $duenio = new Duenio();
+    $result = $duenio->getDuenio($usuario,$contrasenia);
+    
+    if(count($result)>0){
+        //Creo el token
+        $key = 'mi-secret-key';
+        $token = array(
+                "id" => "1",
+                "name" => "unodepiera",
+                "iat" => 1356999524,
+                "nbf" => 1357000000
+                );
+    
+        $jwt = \Firebase\JWT\JWT::encode($token, $key);
+    
+        $miToken['token'] = $jwt;
+        array_push($result,$miToken);
+
+        sendResult($result);
+    }else{
+        $result[] = "-1";
+        sendResult($result);
+    }
+});
+
+
+/*************************************************DUENIOS*************************************************/
+
+/*************************************************ADMINISTRADORES*************************************************/
+
+//Get
+$app->get('/admin/:user&:pass', function($usuario,$contrasenia){
+    $admin = new Administrador();
+    $result = $admin->getAdministrador($usuario,$contrasenia);
+    
+    if(count($result)>0){
+        //Creo el token
+        $key = 'mi-secret-key';
+        $token = array(
+                "id" => "1",
+                "name" => "unodepiera",
+                "iat" => 1356999524,
+                "nbf" => 1357000000
+                );
+    
+        $jwt = \Firebase\JWT\JWT::encode($token, $key);
+    
+        $miToken['token'] = $jwt;
+        array_push($result,$miToken);
+
+        sendResult($result);
+    }else{
+        $result[] = "-1";
+        sendResult($result);
+    }
+});
+
+/*************************************************ADMINISTRADORES*************************************************/
 
 
 //existe usuario

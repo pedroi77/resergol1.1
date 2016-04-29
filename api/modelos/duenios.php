@@ -8,6 +8,31 @@ class Duenio
     public function __construct(){
         $this->connection = Connection::getInstance();
     }
+    
+    
+    public function getDuenio($usuario,$contrasenia ){
+        $stmt = $this->connection->prepare('SET @usuario := ?');
+        $stmt->bind_param('s', $usuario);
+        $stmt->execute(); 
+    
+        $stmt = $this->connection->prepare('SET @contrasenia := ?');
+        $stmt->bind_param('s', $contrasenia);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getDuenio(@usuario, @contrasenia );";
+        
+        $duenio= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $duenio[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $duenio;
+    }
+
  
     public function create($duenio){
         $usuario = $this->connection->real_escape_string($duenio['usuario']);
@@ -92,7 +117,8 @@ class Duenio
        
         
          // execute the stored Procedure         SP_insertDuenios
-        $result = $this->connection->query('CALL SP_insertDuenios( @usuario, @contrasenia, @nombre, @apellido, @tipoDoc, @nroDoc, @eMail, @nomComplejo,                                                                    @nroTelef,  @idProv, @idLoc, @direccion, @nroCalle,  @valor)');
+        $result = $this->connection->query('CALL SP_insertDuenios( @usuario, @contrasenia, @nombre, @apellido, @tipoDoc, @nroDoc,                                                                    @eMail, @nomComplejo, @nroTelef,  @idProv, 
+                                                                   @idLoc, @direccion, @nroCalle,  @valor)');
 
         // getting the value of the OUT parameter
         $r = $this->connection->query('SELECT @valor as duenio');
