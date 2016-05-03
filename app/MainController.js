@@ -4,33 +4,21 @@ var resergolApp = angular.module("resergolApp");
 resergolApp.controller("MainController", function($state,store, UsuarioService, ClientesService,DueniosService,AdminService){
 	
     var self = this;
-	this.brand = "Open Gallo";
-    this.IniciarSesion = "Iniciar Sesion";
-
-     
-    this.Usuario = { 
-                    usuario: '', 
-                    id:0,
-                    contrasenia: '',
-                    tipo : '',
-                    existe: true, 
-                    passInvalida:false,
-                    login: false
-                    };
-     
+    this.brand;
+    this.IniciarSesion;
+  
                        
     this.validaLogin = function(form){
+        
         switch(self.Usuario.tipo){
             case 'C':
                 self.getCliente(form);
                 break;
             case 'D':
-                console.log('pepe');
-                self.getDuenio();
+                self.getDuenio(form);
                 break;
             case 'A':
-                console.log('pep2e');
-                self.getAdministrador();
+                self.getAdministrador(form);
                 break;
         };
     };
@@ -45,8 +33,13 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                 self.Usuario.login = true;
                 self.IniciarSesion = cliente[0].Usuario;
                 store.set('token',  cliente[1]); //guardo el token
-                $('#loginModal').modal('hide');
-                form.$setPristine();
+                store.set('tipo',  self.Usuario.tipo)
+                store.set('usuario',  self.Usuario.usuario)
+                store.set('pass',  btoa(self.Usuario.contrasenia))
+                if(!(form == null)){
+                    $('#loginModal').modal('hide');
+                    form.$setPristine();
+                }
             }
             else{
                 self.Usuario.login = false;
@@ -64,10 +57,15 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                 self.Usuario.passInvalida = false;
                 self.Usuario.login = true;
                 self.IniciarSesion = duenio[0].Usuario;
-                store.set('token',  duenio[1]); //guardo el token
+                store.set('token',  duenio[1]);
+                store.set('tipo',  self.Usuario.tipo)
+                store.set('usuario',  self.Usuario.usuario)
+                store.set('pass',  btoa(self.Usuario.contrasenia))
                 $state.go('Duenios.reserva');
-                $('#loginModal').modal('hide');
-                form.$setPristine();
+                if(!(form == null)){
+                    $('#loginModal').modal('hide');
+                    form.$setPristine();
+                }
             }
             else{
                 self.Usuario.login = false;
@@ -86,9 +84,14 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                 self.Usuario.login = true;
                 self.IniciarSesion = admin[0].Usuario;
                 store.set('token',  admin[1]); //guardo el token
+                store.set('tipo',  self.Usuario.tipo)
+                store.set('usuario',  self.Usuario.usuario)
+                store.set('pass',  btoa(self.Usuario.contrasenia))
                 $state.go('Admin.administracion');
-                $('#loginModal').modal('hide');
-                form.$setPristine();
+                if(!(form == null)){
+                    $('#loginModal').modal('hide');
+                    form.$setPristine();
+                }
             }
             else{
                 self.Usuario.login = false;
@@ -120,23 +123,41 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
     this.desloguearse = function(){
         if(confirm('Seguro desea cerrar sesión?'))
         {
-            store.set('token', undefined);     
+            store.set('token', undefined);    
+            store.set('tipo', undefined);    
+            store.set('usuario', undefined);    
+            store.set('pass', undefined);    
             self.init();
-            $state.go('Clientes.buscarCanchas');
+            $state.go('Clientes.buscarCanchas');   
         }
     };
     
     this.init = function(){
-        self.Usuario.tipo = '';
-        self.Usuario.existe = true;
-        self.Usuario.login = false;
-        self.IniciarSesion = 'Iniciar Sesion';
-        self.Usuario.usuario= '', 
-        self.Usuario.id=0,
-        self.Usuario.contrasenia= '',            
-        self.Usuario.passInvalida=false;
+        self.Usuario = { 
+                            usuario: '', 
+                            id:0,
+                            contrasenia: '',
+                            tipo : '',
+                            existe: true, 
+                            passInvalida:false,
+                            login: false
+                            };
+        
+        var token = store.get("token") || null;
+        if(!token){
+            self.IniciarSesion = 'Iniciar Sesion';
+            self.brand = "Open Gallo"; //???
+        }    
+        else{
+            self.Usuario.tipo=  store.get("tipo");
+            self.Usuario.usuario= store.get("usuario"); 
+            self.Usuario.contrasenia= atob(store.get("pass"));
+            self.validaLogin(null);
+        }            
     };
     
+    
+    self.init();
 });
 
 

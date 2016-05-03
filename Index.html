@@ -121,7 +121,7 @@
 <!--<div  id="registracionModal" ng-controller="CommonController as common" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">-->
 <div  id="registracionModal" ng-controller="ClientesController as cli" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-registracion">
-  <form class="modal-content" name="frmDatosUsuario">
+  <div class="modal-content"  >
       <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <div class="modal-body"  > <!--ng-controller="ClientesController as cli"-->
@@ -131,22 +131,21 @@
           <div class="control-group">
               <div class="col-md-6">    
               <div class="form-group">
-                  
-                <input type="text" id="usuario" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Usuario" ng-maxlength="25" name="usuario" ng-model="cli.cliente.usuario" required ng-class="{ error: frmDatosUsuario.usuario.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.usuario.$error.usuario}" >
+                <input type="text" id="usuario" class="form-control input-md" placeholder="Usuario"  ng-model="cli.cliente.usuario" required >
               </div>
               <div class="form-group">
-                <input id="contrasenia" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Contraseña" ng-maxlength="12" name="contrasenia" ng-model="cli.cliente.contrasenia" required ng-class="{ error: frmDatosUsuario.contrasenia.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.contrasenia.$error.contrasenia }">
+                <input type="password" id="contraseña" class="form-control input-md" placeholder="Contraseña" ng-model="cli.cliente.contrasenia">
               </div>
-                  
-                
              </div>
              <div class="col-md-6">
                 <div class="form-group">
-                     <input id="email" type="email" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="example@email.com" name="email" ng-model="cli.cliente.eMail" 
-                                            required ng-class="{ error: frmDatosUsuario.email.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.email.$error.email }">
+                    <input type="email" class="form-control" placeholder="example@email.com" name="email" ng-model="cli.cliente.eMail" 
+                           required ng-class="{ error: exampleForm.email.$error.required && !exampleForm.$pristine, warning: exampleForm.email.$error.email }">
+                    
                 </div> 
                 <div class="form-group">
-                    <input id="contraseñaRepetida" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Repita Contraseña" ng-maxlength="12" name="contraseniaRepetida" ng-model="cli.cliente.contrasenia2" required ng-class="{ error: frmDatosUsuario.contraseniaRepetida.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.contraseniaRepetida.$error.contraseniaRepetida }">
+                    <input type="password" id="contraseñaRepetida" class="form-control input-md" placeholder="Repita contraseña" 
+                           ng-model="cli.cliente.contrasenia2">
                 </div>  
              </div>    
           </fieldset>
@@ -158,29 +157,26 @@
                         <form class="form center-block">
                             <div class="col-md-6">    
                                 <div class="form-group">
-                                    <input id="nombre" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre" ng-maxlength="60" name="nombre" ng-model="cli.cliente.nombre" required ng-class="{ error: frmDatosUsuario.nombre.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.nombre.$error.nombre }">
+                                    <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre" ng-model="cli.cliente.nombre">
                                 </div>
                                 <div class="form-group" >
                                   
                                    <select class="form-control" ng-model="cli.tiposDoc.selectedOption" 
                                                                  ng-options="tipoDoc.Descripcion for tipoDoc in cli.tiposDoc.tipos 
                                                                              track by tipoDoc.IdTipoDoc" >
-                                   </select>  
+                                            </select>
+                                    
+                                      
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                
-                                
-                                
-                                
                                 <div class="form-group">
-                                    <input id="apellido" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Apellido" ng-maxlength="60" name="apellido" ng-model="cli.cliente.apellido" required ng-class="{ error: frmDatosUsuario.apellido.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.apellido.$error.apellido }">
+                                    <input type="text" id="apellido" class="form-control input-md" placeholder="Apellido" 
+                                                                                                ng-model="cli.cliente.apellido">
                                 </div> 
-                                
-                                
-                                
                                 <div class="form-group">
-                                    <input id="nroDoc" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="N° documento" ng-maxlength="10" name="nroDoc" ng-model="cli.cliente.nroDoc" required ng-class="{ error: frmDatosUsuario.nroDoc.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.nroDoc.$error.nroDoc }">
+                                    <input type="text" id="nroDocumento" class="form-control input-md" placeholder="N° Documento" 
+                                           ng-model="cli.cliente.nroDoc">
                                 </div>  
                             </div>    
             </fieldset>
@@ -189,13 +185,12 @@
                 
                 <div class="form-group" >
                     <!--input type="submit" class="btn btn-success pull-right" ng-click="submitForm(formData)" /-->
-                    <button class="btn btn-primary btn-lg btn-block btn-custom"  ng-click="cli.validarDatosCliente()">Terminado</button>
-                    <!--<button class="btn btn-primary btn-lg btn-block btn-custom"  ng-click="cli.validarDatosCliente()" disabled="!frmDatosUsuario.$valid">Terminado</button>-->
+                    <button class="btn btn-primary btn-lg btn-block btn-custom"  ng-click="cli.createCliente()">Terminado</button>
                 </div>
                 
             </fieldset> 
             </div>
-                  </form>
+                              </form>
           </div>
 
             
@@ -207,7 +202,7 @@
           
           
       
-  </form>
+  </div>
   </div>
 </div>
     
@@ -422,8 +417,8 @@
 	
         <!--<IF> agrego dependencias INI-->
         <!--<script src="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
-        <link rel="stylesheet" href="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.css">-->
-
+        <link rel="stylesheet" href="http://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.css">
+        -->
         <script src="bower_components/jquery-bracket-master/dist/jquery.bracket.min.js"></script>
         <script src="bower_components/angular-ui-ui-grid-1c766f0/ng-grid-2.0.14.min.js"></script>
         <link href="bower_components/jquery-bracket-master/dist/jquery.bracket.min.css" rel="stylesheet">
