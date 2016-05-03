@@ -19,10 +19,10 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                     };
      
                        
-    this.validaLogin = function(){
+    this.validaLogin = function(form){
         switch(self.Usuario.tipo){
             case 'C':
-                self.getCliente();
+                self.getCliente(form);
                 break;
             case 'D':
                 console.log('pepe');
@@ -35,7 +35,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
         };
     };
     
-   this.getCliente = function(){
+   this.getCliente = function(form){
          ClientesService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
             cliente = {};
             cliente = data;       
@@ -46,6 +46,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                 self.IniciarSesion = cliente[0].Usuario;
                 store.set('token',  cliente[1]); //guardo el token
                 $('#loginModal').modal('hide');
+                form.$setPristine();
             }
             else{
                 self.Usuario.login = false;
@@ -54,7 +55,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
          });
     };
     
-     this.getDuenio = function(){
+     this.getDuenio = function(form){
          DueniosService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
             duenio = {};
             duenio = data;       
@@ -66,6 +67,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                 store.set('token',  duenio[1]); //guardo el token
                 $state.go('Duenios.reserva');
                 $('#loginModal').modal('hide');
+                form.$setPristine();
             }
             else{
                 self.Usuario.login = false;
@@ -74,7 +76,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
          });
     };
     
-    this.getAdministrador = function(){
+    this.getAdministrador = function(form){
          AdminService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
             admin = {};
             admin = data;       
@@ -86,6 +88,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                 store.set('token',  admin[1]); //guardo el token
                 $state.go('Admin.administracion');
                 $('#loginModal').modal('hide');
+                form.$setPristine();
             }
             else{
                 self.Usuario.login = false;
@@ -128,8 +131,12 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
         self.Usuario.existe = true;
         self.Usuario.login = false;
         self.IniciarSesion = 'Iniciar Sesion';
+        self.Usuario.usuario= '', 
+        self.Usuario.id=0,
+        self.Usuario.contrasenia= '',            
+        self.Usuario.passInvalida=false;
     };
-	
+    
 });
 
 
