@@ -35,3 +35,6 @@ insert into Localidades values(2,1, 'La falda');
 insert into Localidades values(2,2, 'La cumbresita');
 
 insert into administradores(Usuario, Contrasenia) values('ADMIN', '454545');
+
+
+/*select CAST(contrasenia AS CHAR(10000) CHARACTER SET utf8)  from duenios;*/
