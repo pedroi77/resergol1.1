@@ -18,7 +18,7 @@ return $resource(CLIENTES_URI, {}, {
     });
     
     
-/*
+
 this.createCliente = function(usuario, contrasenia, nombre,apellido,tipoDoc,nroDoc,eMail){
      data = 
     {
@@ -31,6 +31,7 @@ this.createCliente = function(usuario, contrasenia, nombre,apellido,tipoDoc,nroD
         'eMail' :eMail
     };
 
+};
 
     /*var promise = $http.post('https://resergol-pedro77.c9.io/api/modelos/clientes.php?action=create', data);
     return promise.then(function(response){
@@ -41,10 +42,11 @@ this.createCliente = function(usuario, contrasenia, nombre,apellido,tipoDoc,nroD
 
     return promise.then(function(response){
         return response.data.data.TiposDoc;
-    })
+    })*/
     
-};
-	*/
+//};
+	
 	
     
 });
+

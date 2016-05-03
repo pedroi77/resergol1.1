@@ -19,12 +19,16 @@ CREATE PROCEDURE SP_insertClientes
 
 BEGIN 
     DECLARE Error INT DEFAULT 0;
+    DECLARE idPersonaAux INT DEFAULT 0;
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
     
     
-
-     /*primero creo la persona*/
-    CALL SP_insertPersonas (pNombre, pApellido, pIdTipoDoc, pNroDoc,pEmail, @idPersona);
+	SELECT IFNULL(idPersona, 0) INTO idPersonaAux FROM personas WHERE  idTipoDoc = pIdTipoDoc and nroDoc = pNroDoc;
+    
+    
+    IF (idPersonaAux = 0) THEN  
+    	CALL SP_insertPersonas (pNombre, pApellido, pIdTipoDoc, 			pNroDoc,pEmail, @idPersona);
+    END IF;
      
     IF Error = 0 THEN
         
@@ -38,21 +42,25 @@ BEGIN
                 pUsuario, 
                 pContrasenia, 
                 1,
-                now(),
+                CURDATE(),
                 null );
         
     ELSE
-        SET pIdCliente = -1; /*Devuelve -1 en caso de error*/
+        SET pIdCliente = -1; 
     END IF;
     
     
     IF Error=-1 THEN
-        SET pIdCliente = -1; /*Devuelve -1 en caso de error*/
+        SET pIdCliente = -1; 
     ELSE
         SET pIdCliente = (SELECT MAX(idCliente) FROM Clientes); 
     END IF;
 
-END 
+END
 
 // 
 DELIMITER ; 
+
+
+
+

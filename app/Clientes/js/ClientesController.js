@@ -1,6 +1,6 @@
 var app = angular.module("resergolApp");
 
-app.controller("ClientesController", function(ClientesService, DocumentosService, $state){
+app.controller("ClientesController", function(ClientesService, DocumentosService, $state, $scope, $resource){ //AGREGO RESOURCE IVAN
     
     
     var self = this;
@@ -12,12 +12,7 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
         selectedOption: {idTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
     };
     
-    this.tiposDoc = {
-        tipos: [],
-        selectedOption: {IdTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
-    };
-    
-    
+
     DocumentosService.query().$promise.then(function(data) {
         self.tiposDoc.tipos = data;
         self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
@@ -35,21 +30,7 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
                     nroDoc:''
                   };
    
-   this.createCliente = function()
-   {
-       self.cliente.tipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
-       
-       ClientesService.createCliente(self.cliente.usuario, self.cliente.contrasenia, self.cliente.nombre,                               self.cliente.apellido,self.cliente.tipoDoc,self.cliente.nroDoc,self.cliente.eMail).then(function(response){
-            if(response.data.error){
-                alert(response.data.message);
-                return;
-            }
-            alert("El registro se realizo correctamente! " + response.data.data.cliente);
-            //self.getCategorias();
-            //self.cat_desc = '';
-        });
-    
-   };
+   
   
     this.irTorneoCopa = function(){
              $state.go('Clientes.verTorneoCopa');
@@ -75,6 +56,135 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
              $state.go('Clientes.verComplejo');
     };
     
+    
+    
+    
+    
+    this.validarDatosCliente = function()
+    {
+        var mensaje = 'Se han encontrado los siguientes errores: \n\n';
+        var codeMessage = 0;
+        
+        if(self.cliente.usuario.length == 0)
+        {
+            mensaje += "No se ha especificado el usuario! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.cliente.usuario.length > 25)
+        {
+            mensaje += "El usuario no puede tener mas de 25 caracteres! \n";
+            codeMessage = 1;
+        }
+            
+        
+        if(self.cliente.eMail.length == 0)
+        {
+            mensaje += "No se ha especificado el mail! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.cliente.contrasenia.length == 0)
+        {
+            mensaje += "No se ha especificado la contraseña! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.cliente.contrasenia.length > 12)
+        {
+            mensaje += "La contraseña no puede tener mas de 12 caracteres! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.cliente.contrasenia2.length == 0)
+        {
+            mensaje += "No se introdujo nuevamente la contraseña! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.cliente.contrasenia2.length > 12)
+        {
+            mensaje += "La contraseña no puede tener mas de 12 caracteres! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.cliente.nombre.length == 0)
+        {
+            mensaje += "No se ha especificado el nombre! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.cliente.nombre.length > 60)
+        {
+            mensaje += "El nombre no puede tener mas de 60 caracteres! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.cliente.apellido.length == 0)
+        {
+            mensaje += "No se ha especificado el apellido! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.cliente.apellido.length > 60)
+        {
+            mensaje += "El apellido no puede tener mas de 60 caracteres! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.tiposDoc.selectedOption.IdTipoDoc <= 0)
+        {
+            mensaje += "No se ha especificado el Tipo de Documento! \n";
+            codeMessage = 1;
+        }
+        
+        
+        if(self.cliente.nroDoc.length == 0)
+        {
+            mensaje += "No se ha especificado su número de documento! \n";
+            codeMessage = 1;
+        }
+        
+        if(self.cliente.nroDoc.length == 0)
+        {
+            mensaje += "El número de documento no puede tener mas de 10 caracteres! \n";
+            codeMessage = 1;
+        }
+        
+        
+        if(self.cliente.contrasenia.length > 0 && self.cliente.contrasenia2.length > 0)
+        {
+            
+            if(self.cliente.contrasenia != self.cliente.contrasenia2)
+            {
+                mensaje += "Las contraseñas no coinciden! \n";
+                codeMessage = 1;
+            }
+        }
+        
+        if(codeMessage == 1)
+            alert(mensaje);
+        else
+            {
+              this.createCliente();
+            }
+    };
+   
+    
+    
+    
+    this.createCliente = function()
+    {
+        self.cliente.tipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
+        var connection = $resource("http://localhost/resergol1.1/api/clientes/", {}, {save: {method: 'POST'}})
+        var params = {'usuario': self.cliente.usuario, 'contrasenia': self.cliente.contrasenia, 'nombre': self.cliente.nombre,
+                  'apellido': self.cliente.apellido, 'idTipoDoc': self.cliente.tipoDoc, 'nroDoc': self.cliente.nroDoc,
+                    'email': self.cliente.eMail};
+        
+        var results = connection.save(params);
+        
+        
+    }
     
    
 });
