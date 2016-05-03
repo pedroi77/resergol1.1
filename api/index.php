@@ -58,7 +58,7 @@ $app->post('/duenios', function(){
 });
 
 //Get
-$app->get('/duenios/:user&:pass', function($usuario,$contrasenia){
+$app->get('/duenios/:user/:pass', function($usuario,$contrasenia){
     //http://localhost:8080/resergol1.1/api/clientes/HOMERO&1111
     $duenio = new Duenio();
     $result = $duenio->getDuenio($usuario,$contrasenia);

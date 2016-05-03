@@ -348,18 +348,18 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
           
  
         duenioNuevo.data = {
-                        "usuario": "pipa",
+                        "usuario": "pipa6",
                         "contrasenia": "nn",
                         "nombre": "diego",
                         "apellido": "forlan",
                         "idTipoDoc": 1,
-                        "nroDoc": 31222333,
-                        "email": "locoo6o@gmail.com",
-                        "nombreComplejo": "amigos2",
-                        "NroTelef": "42852221",
+                        "nroDoc": 23232221,
+                        "email": "loffdso@gmail.com",
+                        "nombreComplejo": "amigarcha",
+                        "NroTelef": "428221",
                         "idProv": 1,
                         "idLoc": 2,
-                        "direccion": "lavalle",
+                        "direccion": "lalle",
                         "nroCalle": 1544,
                         "valor": -5
   	       };    
