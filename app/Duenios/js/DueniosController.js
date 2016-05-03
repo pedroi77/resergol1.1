@@ -24,7 +24,7 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
         prov: [],
         selectedProv:{IdProvincia: '-1', Nombre: 'Provincia'} 
     }; 
-    
+     
      self.localidades = {
         loc: [],
         selectedOption:{IdLocalidad: '-1', Nombre: 'Localidad'} 
@@ -125,7 +125,7 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
     
     this.validarDatosDuenio = function()
     {
-        var mensaje = 'Se han encontrado los siguientes errores: \n\n';
+        /*var mensaje = 'Se han encontrado los siguientes errores: \n\n';
         var codeMessage = 0;
         
         if(self.duenio.usuario.length == 0)
@@ -283,15 +283,17 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
                 mensaje += "Las contraseñas no coinciden! \n";
                 codeMessage = 1;
             }
-        }
+        }*/
         
-        if(codeMessage == 1)
+        /*if(codeMessage == 1)
             alert(mensaje);
         else
         {
-            //aca guarda el dueño
-            this.createDuenio();
-        }
+            
+        }*/
+        
+        //aca guarda el dueño
+        this.createDuenio();
     };
    
     
@@ -303,15 +305,36 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
         self.duenio.idLoc = self.localidades.selectedOption.IdLocalidad;
         var connection = $resource("http://localhost/resergol1.1/api/duenios/", {}, {save: {method: 'POST'}})
         
-        var params = {'usuario': self.duenio.usuario, 'contrasenia': self.duenio.contrasenia, 'nombre': self.duenio.nombre,
+        /*var params = {'usuario': self.duenio.usuario, 'contrasenia': self.duenio.contrasenia, 'nombre': self.duenio.nombre,
                   'apellido': self.duenio.apellido, 'idTipoDoc': self.duenio.IdTipoDoc, 'nroDoc': self.duenio.nroDoc,
-                    'email': self.duenio.email, 'nombreComplejo': self.duenio.nombreComplejo, 'NroTelef': self.duenio.NroTelef, 'idProv': self.duenio.idProv, 'idLoc': self.duenio.idLoc, 'direccion': self.duenio.direccion, 'nroCalle': self.duenio.nroCalle};
+                    'email': self.duenio.email, 'nombreComplejo': self.duenio.nombreComplejo, 'NroTelef': self.duenio.NroTelef, 'idProv': self.duenio.idProv, 'idLoc': self.duenio.idLoc, 'direccion': self.duenio.direccion, 'nroCalle': self.duenio.nroCalle};*/
         
-        var results = connection.save(params);
+        var params = {"usuario": "TANQUE",
+                        "contrasenia": "7444",
+                        "nombre": "diego",
+                        "apellido": "forlan",
+                        "idTipoDoc": 1,
+                        "nroDoc": 64422212,
+                        "email": "44234@gmail.com",
+                        "nombreComplejo": "amigos",
+                        "NroTelef": "42852221",
+                        "idProv": 1,
+                        "idLoc": 2,
+                        "direccion": "lavalle",
+                        "nroCalle": 1544,
+                        "valor": -5};
        
-        alert("Se dio de alta el dueño con exito!");
-        //alert(results.promise);
-        //alert("El registro se realizo correctamente! " + response.data.data.duenio);
+        $scope.entry = new DueniosService(); //You can instantiate resource class
+
+        $scope.entry.data = params;
+
+        DueniosService.save($scope.entry, function() {
+        });
+        
+        //var results = connection.save(params);
+       
+        //var results = DueniosService.save(params);
+       
 
    };
   
