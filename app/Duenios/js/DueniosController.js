@@ -1,6 +1,6 @@
 var app = angular.module("resergolApp");
 
-app.controller("DueniosController", function(DueniosService, DocumentosService, ProvinciasService, LocalidadesService, $scope){
+app.controller("DueniosController", function(DueniosService, DocumentosService, ProvinciasService, LocalidadesService, $scope, $resource){
     
     var self = this;
     this.tiposDoc =[];
@@ -125,7 +125,7 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
     
     this.validarDatosDuenio = function()
     {
-var mensaje = 'Se han encontrado los siguientes errores: \n\n';
+        var mensaje = 'Se han encontrado los siguientes errores: \n\n';
         var codeMessage = 0;
         
         if(self.duenio.usuario.length == 0)
@@ -251,25 +251,25 @@ var mensaje = 'Se han encontrado los siguientes errores: \n\n';
             codeMessage = 1;
         }
         
-        if(self.duenio.direccion == 0)
+        if(self.duenio.direccion.length == 0)
         {
             mensaje += "No se ha especificado la dirección del complejo! \n";
             codeMessage = 1;
         }
         
-        if(self.duenio.direccion > 40)
+        if(self.duenio.direccion.length > 40)
         {
             mensaje += "La dirección no puede tener mas de 40 caracteres! \n";
             codeMessage = 1;
         }
         
-        if(self.duenio.nroCalle == 0)
+        if(self.duenio.nroCalle.length == 0)
         {
             mensaje += "No se ha especificado la calle del complejo! \n";
             codeMessage = 1;
         }
         
-        if(self.duenio.nroCalle > 5)
+        if(self.duenio.nroCalle.length > 5)
         {
             mensaje += "El numero de calle no puede tener mas de 5 caracteres! \n";
             codeMessage = 1;
@@ -287,26 +287,32 @@ var mensaje = 'Se han encontrado los siguientes errores: \n\n';
         
         if(codeMessage == 1)
             alert(mensaje);
+        else
+        {
+            //aca guarda el dueño
+            this.createDuenio();
+        }
     };
    
     
    this.createDuenio = function()
    {
      
-     
+        self.duenio.IdTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
+        self.duenio.idProv = self.provincias.selectedProv.IdProvincia;
+        self.duenio.idLoc = self.localidades.selectedOption.IdLocalidad;
+        var connection = $resource("http://localhost/resergol1.1/api/duenios/", {}, {save: {method: 'POST'}})
+        
+        var params = {'usuario': self.duenio.usuario, 'contrasenia': self.duenio.contrasenia, 'nombre': self.duenio.nombre,
+                  'apellido': self.duenio.apellido, 'idTipoDoc': self.duenio.IdTipoDoc, 'nroDoc': self.duenio.nroDoc,
+                    'email': self.duenio.email, 'nombreComplejo': self.duenio.nombreComplejo, 'NroTelef': self.duenio.NroTelef, 'idProv': self.duenio.idProv, 'idLoc': self.duenio.idLoc, 'direccion': self.duenio.direccion, 'nroCalle': self.duenio.nroCalle};
+        
+        var results = connection.save(params);
        
-       /*
-       ClientesService.createCliente(self.cliente.usuario, self.cliente.contrasenia, self.cliente.nombre,
-                                    self.cliente.apellido,self.cliente.tipoDoc,self.cliente.nroDoc,self.cliente.eMail).then(function(response){
-            if(response.data.error){
-                alert(response.data.message);
-                return;
-            }
-            alert("El registro se realizo correctamente! " + response.data.data.cliente);
-            //self.getCategorias();
-            //self.cat_desc = '';
-        });
-    */
+        alert("Se dio de alta el dueño con exito!");
+        //alert(results.promise);
+        //alert("El registro se realizo correctamente! " + response.data.data.duenio);
+
    };
   
    

@@ -219,7 +219,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             
-            <div class="modal-body">
+            <form class="modal-body" name="frmDatosUsuario">
                <label class="text-center">
                    {{due.mensajeBienvenida}}
                </label>
@@ -232,26 +232,40 @@
                         <legend>Datos de usuario</legend>
 
                         <div class="control-group">
-                            <form class="form center-block" name="frmDatosUsuario">
-                                <div class="col-md-6">    
-                                    <div class="form-group">
-                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="usuario" ng-maxlength="25" name="usuario" ng-model="due.duenio.usuario" required ng-class="{ error: frmDatosUsuario.usuario.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.usuario.$error.usuario }">
+                            <div class="form center-block" >
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="usuario" ng-maxlength="25" name="usuario" ng-model="due.duenio.usuario" required ng-class="{ error: frmDatosUsuario.usuario.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.usuario.$error.usuario }" ng-blur="main.existeUsuario()">
+                                        <!--<span ng-show="!loginForm.$pristine && main.Usuario.existe" class= "msjError">
+                                            Este usuario ya existe.
+                                        </span>-->
+                                        <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.maxlength" class= "msjError">
+                                            Supero la cantidad máxima de caracteres.
+                                        </span>
                                     </div>
-                                    <div class="form-group">
-                                        <input id="contrasenia" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Contraseña" ng-maxlength="12" name="contrasenia" ng-model="due.duenio.contrasenia" required ng-class="{ error: frmDatosUsuario.contrasenia.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.contrasenia.$error.contrasenia }">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="example@email.com" name="email" ng-model="cli.cliente.eMail" 
+                                    <div class="col-md-6">
+                                        <input id="email" type="email" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="example@email.com" name="email" ng-model="due.duenio.email" 
                                             required ng-class="{ error: frmDatosUsuario.email.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.email.$error.email }">
                                     </div> 
-                                    <div class="form-group">
+                                </div> 
+                                
+                                <br>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input id="contrasenia" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Contraseña" ng-maxlength="12" name="contrasenia" ng-model="due.duenio.contrasenia" required ng-class="{ error: frmDatosUsuario.contrasenia.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.contrasenia.$error.contrasenia }">
+                                        <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.maxlength" class= "msjError">
+                                            Supero la cantidad máxima de caracteres.
+                                        </span>
+                                    </div>
+                                    <div class="col-md-6">
                                         <input id="password" type="password" class="form-control ng-dirty ng-touched ng-valid-password ng-valid ng-valid-required" placeholder="Repita contraseña" ng-maxlength="12" name="password" ng-model="due.duenio.contrasenia2" required ng-class="{ error: frmDatosUsuario.password.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.password.$error.contrasenia2 }">
+                                        <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.maxlength" class= "msjError">
+                                            Supero la cantidad máxima de caracteres.
+                                        </span>
                                     </div>  
-                                </div>    
-                            </form>
+                                </div>
+                            </div>
                          </div>
                     </fieldset>
                 </div>
@@ -261,28 +275,36 @@
                         <legend>Datos personales</legend>    
                         
                         <div class="control-group">
-                            <form class="form center-block" name="frmDatosPersonales">
-                                    <div class="col-md-6">    
-                                        <div class="form-group">
-                                            <input id="nombre" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre" ng-maxlength="60" name="nombre" ng-model="due.duenio.nombre" required ng-class="{ error: frmDatosPersonales.nombre.$error.required && !frmDatosPersonales.$pristine, warning: frmDatosUsuario.nombre.$error.nombre }">
-                                        </div>
-                                        <div class="form-group">
-                                           <select class="form-control" ng-model="due.tiposDoc.selectedOption" 
-                                                                 ng-options="tipoDoc.Descripcion for tipoDoc in due.tiposDoc.tipos 
-                                                                             track by tipoDoc.IdTipoDoc" >
-                                            </select>
-                                        </div>
+                            <div class="form center-block">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input id="nombre" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre" ng-maxlength="60" name="nombre" ng-model="due.duenio.nombre" required ng-class="{ error: frmDatosUsuario.nombre.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.nombre.$error.nombre }">
                                     </div>
                                     
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input id="apellido" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Apellido" ng-maxlength="60" name="apellido" ng-model="due.duenio.apellido" required ng-class="{ error: frmDatosPersonales.apellido.$error.required && !frmDatosPersonales.$pristine, warning: frmDatosUsuario.apellido.$error.apellido }">
-                                        </div> 
-                                        <div class="form-group">
-                                            <input id="nroDoc" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="N° documento" ng-maxlength="10" name="nroDoc" ng-model="due.duenio.nroDoc" required ng-class="{ error: frmDatosPersonales.nroDoc.$error.required && !frmDatosPersonales.$pristine, warning: frmDatosUsuario.nroDoc.$error.nroDoc }">
-                                        </div>  
-                                    </div>    
-                            </form>
+                                        <input id="apellido" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Apellido" ng-maxlength="60" name="apellido" ng-model="due.duenio.apellido" required ng-class="{ error: frmDatosUsuario.apellido.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.apellido.$error.apellido }">
+                                        <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.maxlength" class= "msjError">
+                                            Supero la cantidad máxima de caracteres.
+                                        </span>
+                                    </div> 
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                       <select class="form-control" ng-model="due.tiposDoc.selectedOption" 
+                                                             ng-options="tipoDoc.Descripcion for tipoDoc in due.tiposDoc.tipos 
+                                                                         track by tipoDoc.IdTipoDoc" >
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <input id="nroDoc" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="N° documento" ng-maxlength="10" name="nroDoc" ng-model="due.duenio.nroDoc" required ng-class="{ error: frmDatosUsuario.nroDoc.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.nroDoc.$error.nroDoc }">
+                                        <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.maxlength" class= "msjError">
+                                            Supero la cantidad máxima de caracteres.
+                                        </span>
+                                    </div> 
+                                </div>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
@@ -293,39 +315,60 @@
                         <legend>Datos del Complejo</legend>    
                         
                         <div class="control-group">
-                            <form class="form center-block" name="frmDatosComplejo">
-                                <div class="col-md-6">    
-                                    <div class="form-group">
-                                        <input id="nombreComplejo" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre" ng-maxlength="60" name="nombreComplejo" ng-model="due.duenio.nombreComplejo" required ng-class="{ error: frmDatosComplejo.nombreComplejo.$error.required && !frmDatosComplejo.$pristine, warning: frmDatosComplejo.nombreComplejo.$error.nombreComplejo }">
+                            <div class="form center-block">
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input id="nombreComplejo" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre" ng-maxlength="60" name="nombreComplejo" ng-model="due.duenio.nombreComplejo" required ng-class="{ error: frmDatosUsuario.nombreComplejo.$error.required && !frmDatosUsuario.$pristine, warning: frmDatosUsuario.nombreComplejo.$error.nombreComplejo }">
+                                        <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.maxlength" class= "msjError">
+                                            Supero la cantidad máxima de caracteres.
+                                        </span>
                                     </div>
                                     
-                                    <div class="form-group">
-                                        
-                                        
+                                    <div class="col-md-6">
+                                        <input id="telefono" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Teléfono" ng-maxlength="15" name="telefono" ng-model="due.duenio.NroTelef" required ng-class="{ error: frmDatosComplejo.telefono.$error.required && !frmDatosComplejo.$pristine, warning: frmDatosComplejo.telefono.$error.telefono }">
+                                        <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.maxlength" class= "msjError">
+                                            Supero la cantidad máxima de caracteres.
+                                        </span>
+                                    </div> 
+                                </div>
+                                
+                                <br>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <select class="form-control" ng-model="due.provincias.selectedProv" 
                                             ng-options="provincia.Nombre for provincia in due.provincias.prov track by
                                                         provincia.IdProvincia" ng-click="due.getLocalidades()">
-                                          </select>         
-                                        
-                                     </div>
-                                    <div class="form-group">
-                                        <input id="direccion" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Dirección (calle)" ng-maxlength="40" name="direccion" ng-model="due.duenio.direccion" required ng-class="{ error: frmDatosComplejo.direccion.$error.required && !frmDatosComplejo.$pristine, warning: frmDatosComplejo.direccion.$error.direccion }">
+                                        </select> 
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                     <div class="form-group">
-                                        <input id="telefono" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Teléfono" ng-maxlength="15" name="telefono" ng-model="due.duenio.NroTelef" required ng-class="{ error: frmDatosComplejo.telefono.$error.required && !frmDatosComplejo.$pristine, warning: frmDatosComplejo.telefono.$error.telefono }">
-                                    </div> 
-                                    <div class="form-group">
-                                       <select class="form-control" ng-model="due.localidades.selectedOption" 
+                                    
+                                    <div class="col-md-6">
+                                        <select class="form-control" ng-model="due.localidades.selectedOption" 
                                                 ng-options="localidad.Nombre for localidad in due.localidades.loc track by                                                                                                                                        localidad.Nombre" >
-                                       </select>
-                                    </div>
-                                    <div class="form-group">                             
-                                        <input id="numeroDireccion" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Teléfono" ng-maxlength="5" name="numeroDireccion" ng-model="due.duenio.nroCalle" required ng-class="{ error: frmDatosComplejo.numeroDireccion.$error.required && !frmDatosComplejo.$pristine, warning: frmDatosComplejo.numeroDireccion.$error.numeroDireccion }">
+                                        </select>
                                     </div> 
-                                </div> 
-                            </form>
+                                </div>
+                                
+                                <br>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input id="direccion" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Dirección (calle)" ng-maxlength="40" name="direccion" ng-model="due.duenio.direccion" required ng-class="{ error: frmDatosComplejo.direccion.$error.required && !frmDatosComplejo.$pristine, warning: frmDatosComplejo.direccion.$error.direccion }">
+                                        <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.maxlength" class= "msjError">
+                                            Supero la cantidad máxima de caracteres.
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <input id="numeroDireccion" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Teléfono" ng-maxlength="5" name="numeroDireccion" ng-model="due.duenio.nroCalle" required ng-class="{ error: frmDatosComplejo.numeroDireccion.$error.required && !frmDatosComplejo.$pristine, warning: frmDatosComplejo.numeroDireccion.$error.numeroDireccion }">
+                                        <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.maxlength" class= "msjError">
+                                            Supero la cantidad máxima de caracteres.
+                                        </span>
+                                    </div> 
+                                </div>
+                                
+                            </div>
                         </div>
                     </fieldset>      
                 </div>
@@ -336,7 +379,7 @@
                     <!--input type="submit" class="btn btn-success pull-right" ng-click="due.validarDatosDuenio()" / -->
                 </div>
             
-            </div>
+            </form>
                               
           </div>    
   </div>

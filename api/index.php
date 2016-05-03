@@ -53,7 +53,7 @@ $app->post('/duenios', function(){
 	if($result){
 		sendResult($result);
 	}else{
-		sendError("Error al crear el producto");
+		sendError("Error al dar de alta el dueño");
 	}
 });
 

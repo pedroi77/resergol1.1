@@ -17,6 +17,14 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                     passInvalida:false,
                     login: false
                     };
+    
+    this.Duenio = {
+        
+        duenio:'',
+        dni:0,
+        existeDni:false
+        
+    }
      
                        
     this.validaLogin = function(){
@@ -112,6 +120,27 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
         }
         
     };
+    
+    
+    //Preguntar si esto se hace asi
+    this.existeDni = function(){
+        
+        if(self.Duenio.duenio!=undefined){
+            DocumentosService.query({user:self.Duenio.duenio}).$promise.then(function(data){
+                self.Duenio.id =  data[0].id;                                                         
+                self.Duenio.tipo  = data[0].tipo; 
+                self.Duenio.dni  = data[0].dni;
+
+                if(self.Duenio.id > -1){
+                    self.Duenio.existeDni = true;
+                }
+                else{
+                    self.Duenio.existeDni = false;
+                }
+            });
+        }
+        
+    };
 
     
     this.desloguearse = function(){
@@ -122,6 +151,8 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
             $state.go('Clientes.buscarCanchas');
         }
     };
+    
+    
     
     this.init = function(){
         self.Usuario.tipo = '';
