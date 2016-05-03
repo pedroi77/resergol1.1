@@ -167,4 +167,19 @@ $app->get('/clientes/:user&:pass', function($usuario,$contrasenia){
 });
 
 
+$app->post('/clientes', function(){
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+	
+	$cliente = new Cliente();
+    $result = $cliente->create($data);
+	
+	if($result){
+		sendResult($result);
+	}else{
+		sendError("Error al crear el cliente");
+	}
+});
+
+
 $app->run();

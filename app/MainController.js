@@ -39,7 +39,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
          ClientesService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
             cliente = {};
             cliente = data;       
-                   
+             
             if(cliente[0] != '-1'){
                 self.Usuario.passInvalida = false;
                 self.Usuario.login = true;
