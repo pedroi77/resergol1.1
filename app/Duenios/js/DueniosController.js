@@ -296,7 +296,7 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
         this.createDuenio();
     };
    
-    
+    /*De mati
    this.createDuenio = function()
    {
      
@@ -307,15 +307,16 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
         
         /*var params = {'usuario': self.duenio.usuario, 'contrasenia': self.duenio.contrasenia, 'nombre': self.duenio.nombre,
                   'apellido': self.duenio.apellido, 'idTipoDoc': self.duenio.IdTipoDoc, 'nroDoc': self.duenio.nroDoc,
-                    'email': self.duenio.email, 'nombreComplejo': self.duenio.nombreComplejo, 'NroTelef': self.duenio.NroTelef, 'idProv': self.duenio.idProv, 'idLoc': self.duenio.idLoc, 'direccion': self.duenio.direccion, 'nroCalle': self.duenio.nroCalle};*/
+                    'email': self.duenio.email, 'nombreComplejo': self.duenio.nombreComplejo, 'NroTelef': self.duenio.NroTelef, 'idProv': self.duenio.idProv, 'idLoc': self.duenio.idLoc, 'direccion': self.duenio.direccion, 'nroCalle': self.duenio.nroCalle};
+                    /*
         
-        var params = {"usuario": "TANQUE",
+        var params = {"usuario": "TANQUE77",
                         "contrasenia": "7444",
                         "nombre": "diego",
                         "apellido": "forlan",
                         "idTipoDoc": 1,
-                        "nroDoc": 64422212,
-                        "email": "44234@gmail.com",
+                        "nroDoc": 34525121,
+                        "email": "4114234@gmail.com",
                         "nombreComplejo": "amigos",
                         "NroTelef": "42852221",
                         "idProv": 1,
@@ -324,11 +325,12 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
                         "nroCalle": 1544,
                         "valor": -5};
        
-        $scope.entry = new DueniosService(); //You can instantiate resource class
-
-        $scope.entry.data = params;
-
-        DueniosService.save($scope.entry, function() {
+        
+        entry = new DueniosService(); //You can instantiate resource class
+       
+        entry.data = params;
+        console.log(entry.data);
+        DueniosService.save(entry, function() {
         });
         
         //var results = connection.save(params);
@@ -337,7 +339,40 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
        
 
    };
-  
+  */
+               
+    this.createDuenio = function(){
+       
+ 
+        var duenioNuevo = new DueniosService();
+          
+ 
+        duenioNuevo.data = {
+                        "usuario": "pipa",
+                        "contrasenia": "nn",
+                        "nombre": "diego",
+                        "apellido": "forlan",
+                        "idTipoDoc": 1,
+                        "nroDoc": 31222333,
+                        "email": "locoo6o@gmail.com",
+                        "nombreComplejo": "amigos2",
+                        "NroTelef": "42852221",
+                        "idProv": 1,
+                        "idLoc": 2,
+                        "direccion": "lavalle",
+                        "nroCalle": 1544,
+                        "valor": -5
+  	       };    
+ 
+        //console.log(duenioNuevo.data);
+
+         DueniosService.save(duenioNuevo.data, function(reponse){
+            alert("El registro se realizo correctamente! " + reponse.data);  //Quitar el id
+          },function(errorResponse){
+              console.log(errorResponse.data.message);  
+         });
+       
+     };
    
 });
 

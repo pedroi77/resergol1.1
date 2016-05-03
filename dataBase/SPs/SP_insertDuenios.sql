@@ -53,7 +53,8 @@ BEGIN
          SET pIdDuenio = (SELECT MAX(idDuenio) FROM Duenios);        
         
         /*Grabo el registro en DueniosPendientes*/    
-        INSERT INTO DueniosPendientes(IdDuenio,
+       /*
+       INSERT INTO DueniosPendientes(IdDuenio,
                                       nombreComplejo,    
                                       NroTelef,          
                                       Calle,	          
@@ -67,7 +68,7 @@ BEGIN
                 pNroCalle,
                 pIdLoc,
                 pIdProv);
-    
+    */
 				
     ELSE
         SET pIdDuenio = -1; /*Devuelve -1 en caso de error*/
