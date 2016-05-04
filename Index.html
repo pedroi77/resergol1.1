@@ -17,23 +17,26 @@
             <div class="col-md-12">
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <div class="pull-left">
-                        <a href="Index.html" class="menuLink" role="application"><h4><b>RESERGOL</b></h4></a>
+                        <a href=""  class="menuLink" role="button" ng-click="main.home()"><h4><b>RESERGOL</b></h4></a>
                         <!--<img src="images/iconos/logo.png" href="Index.html" role="application" >-->
                     </div>
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#loginModal" id="btnIniciarSesion" role="button" data-toggle="modal" ng-model="main.IniciarSesion">{{main.IniciarSesion}}</a>
+                            <a  id="btnUsuario" ng-show="main.Usuario.login" >{{main.Usuario.usuario}}</a>
+                        </li>
+                        <li>
+                            <a href="#loginModal" id="btnIniciarSesion"  ng-show="!main.Usuario.login" role="button" data-toggle="modal" ng-model="main.IniciarSesion">{{main.IniciarSesion}}</a>
                         </li>
                         <li>
                             <a id="btnCerrarSesion" role="button" data-toggle="modal" ng-click="main.desloguearse()" 
                                ng-show="main.Usuario.login">Salir</a>
                         </li>
                         <li>
-                            <a href="#registracionModal" role="button" data-toggle="modal">¡Registrate!</a>
+                            <a href="#registracionModal" ng-show="!main.Usuario.login" role="button"  data-toggle="modal">¡Registrate!</a>
                         </li>
                         <li>
-                            <a href="#registracionDuenioModal" role="button" data-toggle="modal">Registra tu cancha!</a>           </li>
+                            <a href="#registracionDuenioModal" ng-show="!main.Usuario.login" role="button" data-toggle="modal">Registra tu cancha!</a>           </li>
                         <li>
                             <a href="#aboutModal" role="button" data-toggle="modal">Acerca de</a>
                         </li>
@@ -70,7 +73,7 @@
               <form class="form col-md-12 center-block" name="loginForm">
                 <div class="form-group">
                     <input id="usuario" name="loginUsuario" type="text" ng-maxlength="25" ng-model="main.Usuario.usuario" 
-                           class="form-control input-lg" placeholder="Usuario" required ng-class="{ error:                                                  loginForm.loginUsuario.$error.required && !loginForm.$pristine,                                                                   warning:loginForm.loginUsuario.$error.loginUsuario }"
+                           class="form-control input-lg" placeholder="Usuario"   ng-change="main.mayusculas()" required ng-class="{ error:                                                  loginForm.loginUsuario.$error.required && !loginForm.$pristine,                                                                   warning:loginForm.loginUsuario.$error.loginUsuario }"
                             ng-blur="main.existeUsuario()"
                            >
                     <span ng-show="!loginForm.$pristine && loginForm.loginUsuario.$error.required" class= "msjError">

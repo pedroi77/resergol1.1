@@ -91,7 +91,7 @@ $app->get('/duenios/:user/:pass', function($usuario,$contrasenia){
 /*************************************************ADMINISTRADORES*************************************************/
 
 //Get
-$app->get('/admin/:user&:pass', function($usuario,$contrasenia){
+$app->get('/admin/:user/:pass', function($usuario,$contrasenia){
     $admin = new Administrador();
     $result = $admin->getAdministrador($usuario,$contrasenia);
     
@@ -137,7 +137,7 @@ $app->get('/clientes/:tipoDoc&:nroDoc&:tipoUsu', function($tipoDocumento,$nroDoc
 
 
 //Clientes
-$app->get('/clientes/:user&:pass', function($usuario,$contrasenia){
+$app->get('/clientes/:user/:pass', function($usuario,$contrasenia){
     //asi funciona
     //http://localhost:8080/resergol1.1/api/clientes/HOMERO&1111
     $cliente = new Cliente();

@@ -14,7 +14,14 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
         existeDni:false
     }
      
-                       
+    this.mayusculas = function(){
+        self.Usuario.usuario = self.Usuario.usuario.toUpperCase();
+    };
+    
+    this.home = function(){
+         $state.go('Clientes.buscarCanchas');
+    };
+    
     this.validaLogin = function(form){
         switch(self.Usuario.tipo){
             case 'C':
@@ -37,11 +44,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
             if(cliente[0] != '-1'){
                 self.Usuario.passInvalida = false;
                 self.Usuario.login = true;
-                self.IniciarSesion = cliente[0].Usuario;
                 store.set('token',  cliente[1]); //guardo el token
-                /*store.set('tipo',  self.Usuario.tipo)
-                store.set('usuario',  self.Usuario.usuario)
-                store.set('pass',  btoa(self.Usuario.contrasenia))*/
                 self.guardarSession();
                 if(!(form == null)){
                       $('#loginModal').modal('hide');
@@ -63,7 +66,6 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
             if(duenio[0] != '-1'){
                 self.Usuario.passInvalida = false;
                 self.Usuario.login = true;
-                self.IniciarSesion = duenio[0].Usuario;
                 store.set('token',  duenio[1]);
                 self.guardarSession();
                 $state.go('Duenios.reserva');
@@ -87,7 +89,6 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
             if(admin[0] != '-1'){
                 self.Usuario.passInvalida = false;
                 self.Usuario.login = true;
-                self.IniciarSesion = admin[0].Usuario;
                 store.set('token',  admin[1]); //guardo el token
                 self.guardarSession();
                 $state.go('Admin.administracion');
