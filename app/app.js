@@ -8,7 +8,8 @@ var resergolApp = angular.module("resergolApp",
 "ngResource",
 "ngGrid",
 "angular-jwt", 
-"angular-storage"
+"angular-storage",
+"ngTable"
 ]);
 
 
