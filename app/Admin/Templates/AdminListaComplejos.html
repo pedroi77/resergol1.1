@@ -8,71 +8,16 @@
         </header>
         
          
-        <div class="table-responsive col-md-12 ">     
-                    <section class="widget">
-                        <table  class="table table-bordered table-striped tabla-listaNegra table-hover text-center " style= "table-layout: fixed; vertical-align:center;">
-                            <tr>
-                                <th class="col-sm-1 ">Usuario </th>
-                                <th class="col-sm-1 ">Cliente </th>
-                                <th class="col-sm-1 ">Nombre Complejo</th>
-                                <th class="col-sm-1 ">Localidad </th>
-                                <th class="col-sm-1 ">Dirección </th>
-                                <th class="col-sm-1 ">Teléfono </th>
-                                <th class="col-sm-1 ">Fecha Solicitud</th>
-                                <th class="col-sm-1 ">Aprobar Solicitud</th>
-                                <th class="col-sm-1 ">Rechazar Solicitud</th>
-                                <th class="col-sm-3 " style="text-align: center;">Motivo de Rechazo</th>
-                            </tr>
-                            
-                            <tr>
-                                <td>Juan77</td>
-                                <td>Juan Gomez</td>
-                                <td>Nou Camp</td>
-                                <td>Avellaneda</td>
-                                <td>Mitre 1100</td>
-                                <td>4299-2122</td>
-                                <td>11/04/2016</td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                                <td></td>
-                            </tr>
-                            
-                            <tr>
-                                <td>Esteban88</td>
-                                <td>Jorge Esteban</td>
-                                <td>Soccer</td>
-                                <td>Montevideo</td>
-                                <td>Fafafa 54</td>
-                                <td>4554-1112</td>
-                                <td>30/03/2016  </td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                                <td></td>
-                            </tr>
-                            
-                            <tr>
-                                <td>Marcos99</td>
-                                <td>Marcos Luis</td>
-                                <td>4 Amarilla</td>
-                                <td>Quilmes</td>
-                                <td>Calcachi 4300</td>
-                                <td>4144-0909</td>
-                                <td>11/04/2015  </td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                                <td></td>
-                            </tr>
-                        </table>
-                        
-                        <div class="row">
-                            <button type="button" class="btn btn-primary  btn-lg btn-block" style="border-radius: 8px;">
-                                               
-                                <i class="glyphicon glyphicon-edit"></i>
-                                Confirmar
-                            </button>
-                        </div>    
-                    </section>    
-        </div>
+        <table ng-table="vm.tableParams" class="table" show-filter="true">
+            <tr ng-repeat="user in $data">
+                <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+                    {{user.name}}
+                </td>
+                <td title="'Age'" filter="{ age: 'number'}" sortable="'age'">
+                    {{user.age}}
+                </td>
+            </tr>
+        </table>
         
         
       
