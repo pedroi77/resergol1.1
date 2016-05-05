@@ -6,6 +6,7 @@ app.service("ClientesService", function($http, $resource){
 
 var CLIENTES_URI = "http://localhost/resergol1.1/api/clientes/:user/:pass";  
 //var CLIENTES_URI = "http://localhost:8080/resergol1.1/api/clientes/:user/:pass";  
+    
 
     
 return $resource(CLIENTES_URI, { user: '@_user', pass: '@_pass' }, {
@@ -16,6 +17,7 @@ return $resource(CLIENTES_URI, { user: '@_user', pass: '@_pass' }, {
                 isArray: true
                 }
     });
+    
     
     
 
