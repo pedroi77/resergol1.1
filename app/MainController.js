@@ -182,7 +182,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
          else{
              self.Usuario.tipo=  sessionStorage.tipo;
              self.Usuario.usuario= sessionStorage.usuario; 
-             //self.Usuario.contrasenia= atob(sessionStorage.pass);
+             self.Usuario.contrasenia= atob(sessionStorage.pass);
              self.validaLogin(null);
          }         
     };

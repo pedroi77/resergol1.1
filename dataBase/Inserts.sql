@@ -38,3 +38,20 @@ insert into administradores(Usuario, Contrasenia) values('ADMIN', '454545');
 
 
 /*select CAST(contrasenia AS CHAR(10000) CHARACTER SET utf8)  from duenios;*/
+
+/*Tipos de torneos*/
+insert into tipotorneos (nombre) values ('Liga');
+insert into tipotorneos (nombre) values ('Torneo');
+ 
+/*Tipos de superficies*/
+insert into TiposSuperficie(Descripcion) values('Alfombra');
+insert into TiposSuperficie(Descripcion) values('Baldosa');
+insert into TiposSuperficie(Descripcion) values('Cemento');
+insert into TiposSuperficie(Descripcion) values('Césped');
+insert into TiposSuperficie(Descripcion) values('Cesped sintético');
+insert into TiposSuperficie(Descripcion) values('Tierra');
+
+/*Torneos estados*/
+insert into TorneosEstados(Descripcion) values ('Activo');
+insert into TorneosEstados(Descripcion) values ('Inscripción');
+insert into TorneosEstados(Descripcion) values ('Finalizado');
