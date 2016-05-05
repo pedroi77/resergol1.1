@@ -175,15 +175,35 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
     
     this.createCliente = function()
     {
-        self.cliente.tipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
+        /*self.cliente.tipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
         var connection = $resource("http://localhost/resergol1.1/api/clientes/", {}, {save: {method: 'POST'}})
         var params = {'usuario': self.cliente.usuario, 'contrasenia': self.cliente.contrasenia, 'nombre': self.cliente.nombre,
                   'apellido': self.cliente.apellido, 'idTipoDoc': self.cliente.tipoDoc, 'nroDoc': self.cliente.nroDoc,
                     'email': self.cliente.eMail};
         
-        var results = connection.save(params);
+        var results = connection.save(params);*/
         
+        var clienteNuevo = new ClientesService();
+          
+ 
+        clienteNuevo.data = {
+                        "usuario": self.cliente.usuario,
+                        "contrasenia": self.cliente.contrasenia,
+                        "nombre": self.cliente.nombre,
+                        "apellido": self.cliente.apellido,
+                        "idTipoDoc": self.cliente.tipoDoc,
+                        "nroDoc": self.cliente.nroDoc,
+                        "email": self.cliente.eMail,
+                        "valor": -5
+  	       };   
         
+        ClientesService.save(clienteNuevo.data, function(reponse){
+            alert("El registro se realizo correctamente! " + reponse.data);  //Quitar el id
+          },function(errorResponse){
+              console.log(errorResponse.data.message);  
+         });
+        
+        $('#registracionModal').modal('hide');
     }
     
    

@@ -135,20 +135,20 @@
           <div class="control-group">
               <div class="col-md-6">    
               <div class="form-group">
-                <input type="text" id="usuario" class="form-control input-md" placeholder="Usuario"  ng-model="cli.cliente.usuario" required >
+                <input type="text" id="usuario" tabindex="1" class="form-control input-md" placeholder="Usuario"  ng-model="cli.cliente.usuario" required >
               </div>
               <div class="form-group">
-                <input type="password" id="contraseña" class="form-control input-md" placeholder="Contraseña" ng-model="cli.cliente.contrasenia">
+                <input type="password" id="contraseña"tabindex="3" class="form-control input-md" placeholder="Contraseña" ng-model="cli.cliente.contrasenia">
               </div>
              </div>
              <div class="col-md-6">
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="example@email.com" name="email" ng-model="cli.cliente.eMail" 
+                    <input type="email" class="form-control" tabindex="2" placeholder="example@email.com" name="email" ng-model="cli.cliente.eMail" 
                            required ng-class="{ error: exampleForm.email.$error.required && !exampleForm.$pristine, warning: exampleForm.email.$error.email }">
                     
                 </div> 
                 <div class="form-group">
-                    <input type="password" id="contraseñaRepetida" class="form-control input-md" placeholder="Repita contraseña" 
+                    <input type="password" id="contraseñaRepetida" tabindex="4" class="form-control input-md" placeholder="Repita contraseña" 
                            ng-model="cli.cliente.contrasenia2">
                 </div>  
              </div>    
@@ -161,11 +161,11 @@
                         <form class="form center-block">
                             <div class="col-md-6">    
                                 <div class="form-group">
-                                    <input type="text" id="nombre" class="form-control input-md" placeholder="Nombre" ng-model="cli.cliente.nombre">
+                                    <input type="text" id="nombre" tabindex="5" class="form-control input-md" placeholder="Nombre" ng-model="cli.cliente.nombre">
                                 </div>
                                 <div class="form-group" >
                                   
-                                   <select class="form-control" ng-model="cli.tiposDoc.selectedOption" 
+                                   <select class="form-control" tabindex="7" ng-model="cli.tiposDoc.selectedOption" 
                                                                  ng-options="tipoDoc.Descripcion for tipoDoc in cli.tiposDoc.tipos 
                                                                              track by tipoDoc.IdTipoDoc" >
                                             </select>
@@ -175,11 +175,11 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" id="apellido" class="form-control input-md" placeholder="Apellido" 
+                                    <input type="text" id="apellido" tabindex="6" class="form-control input-md" placeholder="Apellido" 
                                                                                                 ng-model="cli.cliente.apellido">
                                 </div> 
                                 <div class="form-group">
-                                    <input type="text" id="nroDocumento" class="form-control input-md" placeholder="N° Documento" 
+                                    <input type="text" id="nroDocumento" tabindex="8" class="form-control input-md" placeholder="N° Documento" 
                                            ng-model="cli.cliente.nroDoc">
                                 </div>  
                             </div>    
