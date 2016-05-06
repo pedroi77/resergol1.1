@@ -11,11 +11,11 @@ CREATE PROCEDURE SP_insertTorneos
 	pIdSuperficie	    INT          ,
 	pIdaYvuelta	      	BOOL         ,
 	pPrecioInscripcion	DOUBLE(6,2)  ,
-	pFecIniInscripcion	DATE         ,
-	pFecFinInscripcion	DATE         ,
+	pFecIniInscripcion	VARCHAR(10)  ,
+	pFecFinInscripcion	VARCHAR(10)  ,
 	pHorasCancelacion	INT          ,
-	pFechaInicio	    DATE         ,
-	pFechaFin	        DATE         ,
+	pFechaInicio	    VARCHAR(10)  ,
+	pFechaFin	        VARCHAR(10)  ,
 	pDescripcion	    VARCHAR(300) ,
 	pReglas	          	VARCHAR(300) ,
 	pIdEstado	        INT          ,
@@ -24,7 +24,9 @@ CREATE PROCEDURE SP_insertTorneos
 
 BEGIN 
 	
-    /*call SP_insertTorneos ('pepe', 'nn', 'cosme', 'fulanito', 1, 37444111,'fula@gmail.com','Open', '44442222',1,2,'lavalle',1450    ,@du);*/
+    /*call SP_insertTorneos(1, 2, 'Libertadores',16,11,3, false,200.00,'20/05/2016', '30/05/2016', 24,'05/06/2016','05/09/2016','Este es el primer torneo', 'Reglas: las de un torneo de 11',3,  @du);
+
+select @du;*/
     DECLARE Error INT DEFAULT 0;
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
   
@@ -53,11 +55,11 @@ BEGIN
 			pIdSuperficie	    ,
 			pIdaYvuelta	      	,
 			pPrecioInscripcion	,
-			pFecIniInscripcion	,
-			pFecFinInscripcion	,
+			STR_TO_DATE(pFecIniInscripcion, '%d/%m/%Y'),
+            STR_TO_DATE(pFecFinInscripcion, '%d/%m/%Y'),
 			pHorasCancelacion	,
-			pFechaInicio	    ,
-			pFechaFin	        ,
+            STR_TO_DATE(pFechaInicio, '%d/%m/%Y'),
+            STR_TO_DATE(pFechaFin, '%d/%m/%Y'),
 			pDescripcion	    ,
 			pReglas	          	,
 			pIdEstado	        

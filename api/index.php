@@ -3,11 +3,11 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 require_once("php-jwt-master/src/JWT.php");
-//require_once("util/JWT.php");
 require_once("modelos/common.php");
 require_once("modelos/duenios.php");
 require_once("modelos/clientes.php");
 require_once("modelos/administradores.php");
+require_once("modelos/torneos.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -180,6 +180,26 @@ $app->post('/clientes', function(){
 		sendError("Error al crear el cliente");
 	}
 });
+
+
+/*****************************************TORNEOS****************************************************************************/
+//alta
+$app->post('/duenios/torneos', function(){
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+	
+	$torneo = new Torneo();
+    $result = $torneo->create($data);
+	
+	if($result){
+		sendResult($result);
+	}else{
+		sendError("Error al dar de alta el dueño");
+	}
+});
+
+
+
 
 
 $app->run();
