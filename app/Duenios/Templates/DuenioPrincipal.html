@@ -20,9 +20,14 @@
                             <li ui-sref-active="Duenios">
                                 <a ui-sref="Duenios.reserva">Reservas</a>
                             </li>
-                            <li ui-sref-active="Duenios">
-                                <a ui-sref="Duenios.torneo">Torneos</a>
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">Torneos<b class="caret"></b></a>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li><a ui-sref="Duenios.torneoNuevo">Buscar torneo</a></li>
+                                    <li><a ui-sref="Duenios.torneoNuevo">Nuevo torneo</a></li>
+                                </ul>
                             </li>
+                                        
                             <li ui-sref-active="Duenios">
                                 <a ui-sref="Duenios.complejo">Complejo</a>
                             </li>

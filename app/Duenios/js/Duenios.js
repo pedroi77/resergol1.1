@@ -6,14 +6,20 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 //resergolApp.config(function($stateProvider){
 
 	$stateProvider
-		.state("Duenios.complejo",{
-			url : "/Complejo",
-			templateUrl : "app/Duenios/Templates/DuenioComplejo.html",
-			controllerAs : "due"
-		})
+		/*
 		.state("Duenios.torneo",{
 			url : "/Torneos",
 			templateUrl : "app/Duenios/Templates/DuenioTorneos.html",
+			controllerAs : "due"
+		})*/
+        .state("Duenios.torneoNuevo",{
+			url : "/Torneos/Nuevo",
+			templateUrl : "app/Duenios/Templates/DuenioTorneoNuevo.html",
+			controllerAs : "due"
+		})
+        .state("Duenios.complejo",{
+			url : "/Complejo",
+			templateUrl : "app/Duenios/Templates/DuenioComplejo.html",
 			controllerAs : "due"
 		})
 		.state("Duenios.cancha",{
