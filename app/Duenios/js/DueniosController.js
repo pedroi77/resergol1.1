@@ -1,12 +1,34 @@
 var app = angular.module("resergolApp");
 
-app.controller("DueniosController", function(DueniosService, DocumentosService, ProvinciasService, LocalidadesService, $scope, $resource){
+app.controller("DueniosController", function(UsuarioService, DueniosService, DocumentosService, ProvinciasService, LocalidadesService, $scope, $resource){
     
     var self = this;
     this.tiposDoc =[];
     this.provincias = [];
     this.localidades = [];
     $scope.formData = {};
+    
+    this.Duenio = { 
+            
+            id: -3,
+            tipo: '',
+            usuario: '', 
+            email: '',
+            contrasenia: '', 
+            contrasenia2: '' ,
+            nombre: '',
+            apellido: '',
+            idTipoDoc:0,
+            nroDoc:'',
+            nombreComplejo: '',
+            NroTelef:'',
+            idProv:0,
+            idLoc:0,
+            direccion:'',
+            nroCalle:'',
+            existeDni:false,
+            existe:false
+      };
    
     this.mensajeBienvenida = 'En Resergol te damos la posibilidad de llegar a todos los jugadores del fútbol amateur de manera gratuita. Sólo tenés que completar los siguientes datos y te mandaremos un  e-mail como aviso para que puedas registrar tu complejo!';
     
@@ -62,24 +84,6 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
         };
         
     };
-	
-   
-    this.duenio = { 
-                    usuario: '', 
-                    email: '',
-                    contrasenia: '', 
-                    contrasenia2: '' ,
-                    nombre: '',
-                    apellido: '',
-                    idTipoDoc:0,
-                    nroDoc:'',
-                    nombreComplejo: '',
-                    NroTelef:'',
-                    idProv:0,
-                    idLoc:0,
-                    direccion:'',
-                    nroCalle:''
-                  };
     
     /* ejemplo para post
     {
@@ -122,6 +126,29 @@ app.controller("DueniosController", function(DueniosService, DocumentosService, 
             ); 
   
    };
+    
+    this.existeUsuario = function(){
+        if(self.Duenio.usuario!=undefined){
+            
+            UsuarioService.query({user:self.Duenio.usuario}).$promise.then(function(data){
+                self.Duenio.id =  data[0].id;                                                         
+                self.Duenio.tipo  = data[0].tipo;    
+                
+                if(self.Duenio.id > -1 && self.Duenio.tipo == 'D'){
+                    self.Duenio.existe = true;
+                    console.log(self.Duenio.existe + " - "  + self.Duenio.tipo + " - " + self.Duenio.usuario);
+                    
+                }
+                else{
+                    self.Duenio.existe = false;
+                    console.log(self.Duenio.existe + " - "  + self.Duenio.tipo + " - " + self.Duenio.usuario);
+                }
+            });
+            
+            
+        }
+
+    };
     
     this.validarDatosDuenio = function()
     {

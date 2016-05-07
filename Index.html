@@ -239,8 +239,8 @@
                             <div class="form center-block" >
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Usuario" ng-maxlength="25" name="usuario" ng-model="due.duenio.usuario" required ng-class="{ error:frmDatosUsuario.usuario.$error.required && frmDatosUsuario.usuario.$dirty, warning:frmDatosUsuario.usuario.$error.usuario }" ng-blur="main.existeUsuario()">
-                                        <span ng-show="!loginForm.$pristine && main.Usuario.existe" class= "msjError">
+                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Usuario" ng-maxlength="25" name="usuarioDuenio" ng-model="due.Duenio.usuario" required ng-class="{ error:frmDatosUsuario.usuario.$error.required && frmDatosUsuario.usuario.$dirty, warning:frmDatosUsuario.usuario.$error.usuario }" ng-blur="due.existeUsuario()">
+                                        <span ng-show="!frmDatosUsuario.$pristine && due.Duenio.existe" class= "msjError">
                                             Este usuario ya existe.
                                         </span>
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.usuario.$error.maxlength" class= "msjError">
@@ -283,7 +283,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         
-                                        <input id="nombre" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre" ng-maxlength="60" name="nombre" ng-model="due.duenio.nombre" required ng-class="{ error:frmDatosUsuario.nombre.$error.required && frmDatosUsuario.nombre.$dirty">
+                                        <input id="nombre" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre" ng-maxlength="60" name="nombre" ng-model="due.duenio.nombre" required ng-class="{ error:frmDatosUsuario.nombre.$error.required && frmDatosUsuario.nombre.$dirty, warning:frmDatosUsuario.nombre.$error.nombre}">
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.nombre.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
                                         </span>
@@ -291,7 +291,7 @@
                                     
                                     <div class="col-md-6">
                                         
-                                        <input id="apellido" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Apellido" ng-maxlength="60" name="apellido" ng-model="due.duenio.apellido" required ng-class="{ error:frmDatosUsuario.apellido.$error.required && frmDatosUsuario.apellido.$dirty">
+                                        <input id="apellido" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Apellido" ng-maxlength="60" name="apellido" ng-model="due.duenio.apellido" required ng-class="{ error:frmDatosUsuario.apellido.$error.required && frmDatosUsuario.apellido.$dirty, warning:frmDatosUsuario.apellido.$error.apellido}">
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.apellido.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
                                         </span>
@@ -308,9 +308,12 @@
                                     
                                     <div class="col-md-6">
                                         
-                                        <input id="nroDoc" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="due.duenio.nroDoc" required ng-class="{ error:frmDatosUsuario.nroDoc.$error.required && frmDatosUsuario.nroDoc.$dirty">
+                                        <input id="nroDoc" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="due.duenio.nroDoc" required ng-class="{ error:frmDatosUsuario.nroDoc.$error.required && frmDatosUsuario.nroDoc.$dirty, warning:frmDatosUsuario.nroDoc.$error.nroDoc}" ng-blur="main.existeDni()">
                                         <span ng-show="!frmDatosUsuario.$pristine && loginForm.frmDatosUsuario.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
+                                        </span>
+                                        <span ng-show="!frmDatosUsuario.$pristine && !main.Duenio.existeDni" class= "msjError">
+                                            Este Dni ya existe.
                                         </span>
                                     </div> 
                                 </div>
@@ -330,7 +333,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         
-                                        <input id="nombreComplejo" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre de Complejo" ng-maxlength="60" name="nombreComplejo" ng-model="due.duenio.nombreComplejo" required ng-class="{ error:frmDatosUsuario.nombreComplejo.$error.required && frmDatosUsuario.nombreComplejo.$dirty">
+                                        <input id="nombreComplejo" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre de Complejo" ng-maxlength="60" name="nombreComplejo" ng-model="due.duenio.nombreComplejo" required ng-class="{ error:frmDatosUsuario.nombreComplejo.$error.required && frmDatosUsuario.nombreComplejo.$dirty, warning:frmDatosUsuario.nombreComplejo.$error.nombreComplejo}">
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.nombreComplejo.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
                                         </span>
@@ -338,7 +341,7 @@
                                     
                                     <div class="col-md-6">
                                         
-                                        <input id="NroTelef" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Telefono" ng-maxlength="15" name="NroTelef" ng-model="due.duenio.NroTelef" required ng-class="{ error:frmDatosUsuario.NroTelef.$error.required && frmDatosUsuario.NroTelef.$dirty">
+                                        <input id="NroTelef" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Telefono" ng-maxlength="15" name="NroTelef" ng-model="due.duenio.NroTelef" required ng-class="{ error:frmDatosUsuario.NroTelef.$error.required && frmDatosUsuario.NroTelef.$dirty, warning:frmDatosUsuario.NroTelef.$error.NroTelef}">
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.telefono.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
                                         </span>
@@ -367,7 +370,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         
-                                        <input id="direccion" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Dirección" ng-maxlength="60" name="direccion" ng-model="due.duenio.direccion" required ng-class="{ error:frmDatosUsuario.direccion.$error.required && frmDatosUsuario.direccion.$dirty">
+                                        <input id="direccion" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Dirección" ng-maxlength="60" name="direccion" ng-model="due.duenio.direccion" required ng-class="{ error:frmDatosUsuario.direccion.$error.required && frmDatosUsuario.direccion.$dirty, warning:frmDatosUsuario.direccion.$error.direccion}">
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.direccion.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
                                         </span>
@@ -375,7 +378,7 @@
                                     
                                     <div class="col-md-6">
                                         
-                                        <input id="numeroDireccion" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Calle" ng-maxlength="5" name="numeroDireccion" ng-model="due.duenio.numeroDireccion" required ng-class="{ error:frmDatosUsuario.numeroDireccion.$error.required && frmDatosUsuario.numeroDireccion.$dirty">
+                                        <input id="numeroDireccion" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Calle" ng-maxlength="5" name="numeroDireccion" ng-model="due.duenio.numeroDireccion" required ng-class="{ error:frmDatosUsuario.numeroDireccion.$error.required && frmDatosUsuario.numeroDireccion.$dirty, warning:frmDatosUsuario.numeroDireccion.$error.numeroDireccion}">
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.numeroDireccion.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
                                         </span>

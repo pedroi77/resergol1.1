@@ -5,14 +5,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
 	
     var self = this;
 	this.brand;
-    this.IniciarSesion; 
-
-     
-    this.Duenio = {
-        duenio:'',
-        dni:0,
-        existeDni:false
-    }
+    this.IniciarSesion;
      
     this.mayusculas = function(){
         self.Usuario.usuario = self.Usuario.usuario.toUpperCase();
