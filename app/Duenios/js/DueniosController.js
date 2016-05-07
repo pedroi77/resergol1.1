@@ -134,7 +134,7 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
                 self.Duenio.id =  data[0].id;                                                         
                 self.Duenio.tipo  = data[0].tipo;    
                 
-                if(self.Duenio.id > -1 && self.Duenio.tipo == 'D'){
+                if(self.Duenio.id > -1){
                     self.Duenio.existe = true;
                     console.log(self.Duenio.existe + " - "  + self.Duenio.tipo + " - " + self.Duenio.usuario);
                     

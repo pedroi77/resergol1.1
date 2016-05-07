@@ -47,6 +47,9 @@ this.createCliente = function(usuario, contrasenia, nombre,apellido,tipoDoc,nroD
     })*/
     
 //};
+    
+    
+    
 	
 	
     

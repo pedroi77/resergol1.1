@@ -62,6 +62,7 @@ class Common
         $id='';
         $tipo='';
         
+    
         $stmt = $this->connection->prepare('SET @usuario := ?');
         $stmt->bind_param('s', $user);
         $stmt->execute(); 
@@ -121,6 +122,32 @@ class Common
         }
         
         return $cliente;
+    }
+    
+    
+    //Existe Email
+    public function existeMail($email){  
+        $resultado='';
+        
+        $stmt = $this->connection->prepare('SET @pEmail := ?');
+        $stmt->bind_param('s', $email);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @resultado := ?');
+        $stmt->bind_param('i', $resultado);
+        $stmt->execute(); 
+        
+         
+        $query = "CALL SP_existeEmail(@pEmail, @resultado);";
+    
+        $res = array();
+        
+        if( $result = $this->connection->query($query) ){
+            $r = $this->connection->query('SELECT @resultado as resultado');
+            $res[] = $r->fetch_assoc();               
+        }
+        
+        return $res;
     }
     
     

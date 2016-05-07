@@ -127,6 +127,13 @@ $app->get('/usuario/:user', function($user){
 	sendResult($data);
 });
 
+$app->get('/usuario/:email', function($email){
+    $usuario = new Common();
+    $data = $usuario->existeEmail($email);
+	sendResult($data);
+});
+
+
 //existe documento
 $app->get('/clientes/:tipoDoc&:nroDoc&:tipoUsu', function($tipoDocumento,$nroDocumento,$tipoUsuario){
     $usuario = new Common();
@@ -199,6 +206,14 @@ $app->post('/duenios/torneos', function(){
 });
 
 
+/****************************************USUARIOS (USADO PARA CLIENTES Y DUEÑOS)***********************************************/
+//existe EMAIL
+
+/*$app->get('/usuario/:email', function($email){
+    $usuario = new Common();
+    $data = $usuario->existeEmail($email);
+	sendResult($data);
+});*/
 
 
 

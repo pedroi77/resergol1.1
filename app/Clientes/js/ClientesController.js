@@ -1,6 +1,6 @@
 var app = angular.module("resergolApp");
 
-app.controller("ClientesController", function(ClientesService, DocumentosService, $state, $scope, $resource){ //AGREGO RESOURCE IVAN
+app.controller("ClientesController", function(ClientesService, UsuarioService, DocumentosService, $state, $scope, $resource){ 
     
     
     var self = this;
@@ -9,17 +9,24 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
     //this.someScopeVariable ='Contraseña Test',
     this.tiposDoc = {
         tipos: [],
-        selectedOption: {idTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
+        selectedOption: {TipoDoc: '-3', Descripcion: '-Tipo doc.-'} //This sets the default value of the select in the ui
     };
     
 
     DocumentosService.query().$promise.then(function(data) {
         self.tiposDoc.tipos = data;
-        self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+        //self.tiposDoc.tipos.push({TipoDoc: '-3', Descripcion: '-Tipo doc.-'});
+        self.tiposDoc.tipos.splice(0, 0, {TipoDoc: '-3', Descripcion: '-Tipo doc.-'});
     });
 	
     
+
     this.cliente = { 
+                    id: -3,
+                    tipo: '',
+                    existeDni:false,
+                    existe:false,
+                    existeMail:false,
                     usuario: '', 
                     eMail: '',
                     contrasenia: '', 
@@ -30,8 +37,7 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
                     nroDoc:''
                   };
    
-   
-  
+    
     this.irTorneoCopa = function(){
              $state.go('Clientes.verTorneoCopa');
     };
@@ -58,7 +64,51 @@ app.controller("ClientesController", function(ClientesService, DocumentosService
     
     
     
+    this.existeUsuario = function(){
+        if(self.cliente.usuario!=undefined){
+            
+            UsuarioService.query({user:self.cliente.usuario}).$promise.then(function(data){
+                self.cliente.id =  data[0].id;                                                         
+                self.cliente.tipo  = data[0].tipo;    
+                
+                if(self.cliente.id > -1 && self.cliente.tipo == 'C'){
+                    self.cliente.existe = true;
+                    console.log(self.cliente.existe + " - "  + self.cliente.tipo + " - " + self.cliente.usuario);
+                    
+                }
+                else{
+                    self.cliente.existe = false;
+                    console.log(self.cliente.existe + " - "  + self.cliente.tipo + " - " + self.cliente.usuario);
+                }
+            });
+            
+            
+        }
+
+    };
     
+    
+    this.existeMail = function(){
+        if(self.cliente.eMail!=undefined){
+            UsuarioService.query({email:self.cliente.eMail}).$promise.then(function(data){
+                //self.cliente.id =  data[0].id;   
+                alert(data[0].resultado);
+                var bExisteMail = data[0].resultado;                                                             
+                if(bExisteMail == 1){
+                    self.cliente.existeMail = true;
+                    console.log(self.cliente.existeMail);
+                    
+                }
+                else{
+                    self.cliente.existeMail = false;
+                    console.log(self.cliente.existeMail);
+                }
+            });
+            
+            
+        }
+
+    };
     
     this.validarDatosCliente = function()
     {
