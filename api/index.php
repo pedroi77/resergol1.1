@@ -128,16 +128,15 @@ $app->get('/usuario/:user', function($user){
 	sendResult($data);
 });
 
-
+//Existe Email
 $app->get('/email/:email', function($email){
     $usuario = new Common();
     $data = $usuario->existeEmail($email);
 	sendResult($data);
 });
 
-
-//existe documento
-$app->get('/clientes/:tipoDoc&:nroDoc&:tipoUsu', function($tipoDocumento,$nroDocumento,$tipoUsuario){
+//Existe Documento
+$app->get('/tipoydoc/:tipoDoc/:nroDoc/:tipoUsu', function($tipoDocumento,$nroDocumento,$tipoUsuario){
     $usuario = new Common();
     $result = $usuario->existeDocumento($tipoDocumento,$nroDocumento,$tipoUsuario);
     

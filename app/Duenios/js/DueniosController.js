@@ -1,6 +1,6 @@
 var app = angular.module("resergolApp");
 
-app.controller("DueniosController", function(UsuarioService, DueniosService, DocumentosService, ProvinciasService, LocalidadesService, $scope, $resource){
+app.controller("DueniosController", function(UsuarioService, DueniosService, DocumentosService, ProvinciasService, LocalidadesService, EmailService, TipoYDocumentosService, $scope, $resource){
     
     var self = this;
     this.tiposDoc =[];
@@ -27,7 +27,8 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
             direccion:'',
             nroCalle:'',
             existeDni:false,
-            existe:false
+            existe:false,
+            existeMail: false
       };
    
     this.mensajeBienvenida = 'En Resergol te damos la posibilidad de llegar a todos los jugadores del fútbol amateur de manera gratuita. Sólo tenés que completar los siguientes datos y te mandaremos un  e-mail como aviso para que puedas registrar tu complejo!';
@@ -56,8 +57,8 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
     DocumentosService.query().$promise.then(function(data) {
         self.tiposDoc.tipos = data;
         //self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
-        self.tiposDoc.tipos.splice(0, 0, {TipoDoc: '-3', Descripcion: '-Tipo doc.-'});
-    });
+        self.tiposDoc.tipos.splice(0, 0, {IdTipoDoc: '-3', Descripcion: '-Tipo doc.-'});
+    });  
     
     ProvinciasService.query().$promise.then(function(data) {
         self.provincias.prov = data;
@@ -153,19 +154,18 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
     
     //Preguntar si esto se hace asi
     this.existeDni = function(){
+        
         console.log(self.Duenio.nroDoc);
         self.Duenio.idTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
         
         if(self.Duenio.nroDoc!=undefined){
-            DocumentosService.query({tipoDoc:self.Duenio.idTipoDoc, nroDoc:self.Duenio.nroDoc, tipoUsu:self.Duenio.tipo}).$promise.then(function(data){
+            TipoYDocumentosService.query({tipoDoc:self.Duenio.idTipoDoc, nroDoc:self.Duenio.nroDoc, tipoUsu:self.Duenio.tipo}).$promise.then(function(data){
 
-                var valor = data[0].valor;
-
-                console.log('nroDoc: ' +self.Duenio.nroDoc + ' tipoDoc: ' + self.Duenio.idTipoDoc + ' tipo: ' +self.Duenio.tipo );
+                var valor = data[0].duenio;
                 
                 console.log('valor: ' + valor);
                 
-                if(self.Duenio.id > -1){
+                if(valor == 1){
                     self.Duenio.existeDni = true;
                     console.log(self.Duenio.existeDni);
                 }
@@ -176,6 +176,28 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
             });
         }
         
+    };
+    
+        this.existeEmail = function(){
+        
+        if(self.Duenio.email!=undefined){
+            EmailService.query({email:self.Duenio.email}).$promise.then(function(data){
+                  
+                alert(data[0].resultado);
+                var bExisteEmail = data[0].resultado;                                                             
+                if(bExisteEmail == 1){
+                    self.Duenio.existeMail = true;
+                    console.log(self.Duenio.existeMail);
+                    
+                }
+                else{
+                    self.Duenio.existeMail = false;
+                    console.log(self.Duenio.existeMail);
+                }
+            });
+            
+        }
+
     };
     
     this.validarDatosDuenio = function()
@@ -338,9 +360,9 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
                 mensaje += "Las contraseñas no coinciden! \n";
                 codeMessage = 1;
             }
-        }*/
+        }
         
-        /*if(codeMessage == 1)
+        if(codeMessage == 1)
             alert(mensaje);
         else
         {
@@ -348,7 +370,7 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
         }*/
         
         //aca guarda el dueño
-        this.createDuenio();
+            this.createDuenio();
     };
    
     /*De mati

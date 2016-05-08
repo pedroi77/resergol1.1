@@ -89,24 +89,6 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
     
     
     this.existeEmail = function(){
-        /*if(self.cliente.eMail!=undefined){
-            UsuarioService.query({email:self.cliente.eMail}).$promise.then(function(data){
-                //self.cliente.id =  data[0].id;   
-                alert(data[0].resultado);
-                var bExisteEmail = data[0].resultado;                                                             
-                if(bExisteEmail == 1){
-                    self.cliente.existeEmail = true;
-                    console.log(self.cliente.existeEmail);
-                    
-                }
-                else{
-                    self.cliente.existeEmail = false;
-                    console.log(self.cliente.existeEmail);
-                }
-            });
-            
-        }*/
-        
         
         if(self.cliente.eMail!=undefined){
             EmailService.query({email:self.cliente.eMail}).$promise.then(function(data){
