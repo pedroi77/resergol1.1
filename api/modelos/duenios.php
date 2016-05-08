@@ -110,8 +110,8 @@ class Duenio
         
         //Salida
         $stmt = $this->connection->prepare('SET @valor := ?');
-        //$stmt->bind_param('i', $valor);
-        $stmt->bind_param('s', $valor);
+        $stmt->bind_param('i', $valor);
+        //$stmt->bind_param('s', $valor);
         $stmt->execute();
         
        

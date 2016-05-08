@@ -11,7 +11,7 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
     this.Duenio = { 
             
             id: -3,
-            tipo: '',
+            tipo: 'D',
             usuario: '', 
             email: '',
             contrasenia: '', 
@@ -39,7 +39,7 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
     
     this.tiposDoc = {
         tipos: [],
-        selectedOption: {IdTipoDoc: '-3', Descripcion: 'Tipo doc.'} //This sets the default value of the select in the ui
+        selectedOption: {IdTipoDoc: '-3', Descripcion: '-Tipo doc.-'} //This sets the default value of the select in the ui
     };    
     
     this.provincias = {
@@ -55,7 +55,8 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
     
     DocumentosService.query().$promise.then(function(data) {
         self.tiposDoc.tipos = data;
-        self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+        //self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+        self.tiposDoc.tipos.splice(0, 0, {TipoDoc: '-3', Descripcion: '-Tipo doc.-'});
     });
     
     ProvinciasService.query().$promise.then(function(data) {
@@ -108,20 +109,20 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
     
    this.mostrarDatos = function()
    {
-       alert("usuario: " + self.duenio.usuario
-             + '\n' + "eMail: " + self.duenio.email
-             + '\n'+ "contrasenia: " + self.duenio.contrasenia
-             + '\n'+ "contrasenia2: " + self.duenio.contrasenia2
-             + '\n'+ "nombre: " + self.duenio.nombre
-             + '\n'+ "apellido: " + self.duenio.apellido
+       alert("usuario: " + self.Duenio.usuario
+             + '\n' + "email: " + self.Duenio.email
+             + '\n'+ "contrasenia: " + self.Duenio.contrasenia
+             + '\n'+ "contrasenia2: " + self.Duenio.contrasenia2
+             + '\n'+ "nombre: " + self.Duenio.nombre
+             + '\n'+ "apellido: " + self.Duenio.apellido
              + '\n'+ "tipoDoc: " + self.tiposDoc.selectedOption.IdTipoDoc
-             + '\n'+ "nroDoc: " + self.duenio.nroDoc
-             + '\n'+ "nombreComplejo: " + self.duenio.nombreComplejo
-             + '\n'+ "NroTelef: " + self.duenio.NroTelef
+             + '\n'+ "nroDoc: " + self.Duenio.nroDoc
+             + '\n'+ "nombreComplejo: " + self.Duenio.nombreComplejo
+             + '\n'+ "NroTelef: " + self.Duenio.NroTelef
              + '\n'+ "prov: " + self.provincias.selectedProv.IdProvincia
              + '\n'+ "loc: " + self.localidades.selectedOption.IdLocalidad
-             + '\n'+ "direccion: " + self.duenio.direccion
-             + '\n'+ "nroCalle: " + self.duenio.nroCalle
+             + '\n'+ "direccion: " + self.Duenio.direccion
+             + '\n'+ "nroCalle: " + self.Duenio.nroCalle
             
             ); 
   
@@ -148,6 +149,33 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
             
         }
 
+    };
+    
+    //Preguntar si esto se hace asi
+    this.existeDni = function(){
+        console.log(self.Duenio.nroDoc);
+        self.Duenio.idTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
+        
+        if(self.Duenio.nroDoc!=undefined){
+            DocumentosService.query({tipoDoc:self.Duenio.idTipoDoc, nroDoc:self.Duenio.nroDoc, tipoUsu:self.Duenio.tipo}).$promise.then(function(data){
+
+                var valor = data[0].valor;
+
+                console.log('nroDoc: ' +self.Duenio.nroDoc + ' tipoDoc: ' + self.Duenio.idTipoDoc + ' tipo: ' +self.Duenio.tipo );
+                
+                console.log('valor: ' + valor);
+                
+                if(self.Duenio.id > -1){
+                    self.Duenio.existeDni = true;
+                    console.log(self.Duenio.existeDni);
+                }
+                else{
+                    self.Duenio.existeDni = false;
+                    console.log(self.Duenio.existeDni);
+                }
+            });
+        }
+        
     };
     
     this.validarDatosDuenio = function()
@@ -370,24 +398,26 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
                
     this.createDuenio = function(){
        
- 
+        self.mostrarDatos();
         var duenioNuevo = new DueniosService();
-          
- 
+        self.Duenio.idProv = self.provincias.selectedProv.IdProvincia;
+        self.Duenio.idTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
+        self.Duenio.idLoc = self.localidades.selectedOption.IdLocalidad;
+        
         duenioNuevo.data = {
-                        "usuario": "pipa6",
-                        "contrasenia": "nn",
-                        "nombre": "diego",
-                        "apellido": "forlan",
-                        "idTipoDoc": 1,
-                        "nroDoc": 23232221,
-                        "email": "loffdso@gmail.com",
-                        "nombreComplejo": "amigarcha",
-                        "NroTelef": "428221",
-                        "idProv": 1,
-                        "idLoc": 2,
-                        "direccion": "lalle",
-                        "nroCalle": 1544,
+                        "usuario": self.Duenio.usuario,
+                        "contrasenia": self.Duenio.contrasenia,
+                        "nombre": self.Duenio.nombre,
+                        "apellido": self.Duenio.apellido,
+                        "idTipoDoc": self.Duenio.idTipoDoc,
+                        "nroDoc": self.Duenio.nroDoc,
+                        "email": self.Duenio.email,
+                        "nombreComplejo": self.Duenio.nombreComplejo,
+                        "NroTelef": self.Duenio.NroTelef,
+                        "idProv": self.Duenio.idProv,
+                        "idLoc": self.Duenio.idLoc,
+                        "direccion": self.Duenio.direccion,
+                        "nroCalle": self.Duenio.nroCalle,
                         "valor": -5
   	       };    
  
@@ -399,6 +429,7 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
               console.log(errorResponse.data.message);  
          });
        
+        $('#registracionDuenioModal').modal('hide');
      };
    
 });
