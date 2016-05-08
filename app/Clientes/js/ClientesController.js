@@ -1,6 +1,6 @@
 var app = angular.module("resergolApp");
 
-app.controller("ClientesController", function(ClientesService, UsuarioService, DocumentosService, EmailService, $state, $scope, $resource){ 
+app.controller("ClientesController", function(ClientesService, UsuarioService, DocumentosService, EmailService, TipoYDocumentosService, $state, $scope, $resource){ 
     
     
     var self = this;
@@ -23,7 +23,7 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
 
     this.cliente = { 
                     id: -3,
-                    tipo: '',
+                    tipo: 'C',
                     existeDni:false,
                     existe:false,
                     existeEmail:false,
@@ -33,7 +33,7 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
                     contrasenia2: '' ,
                     nombre: '',
                     apellido: '',
-                    tipoDoc:1,
+                    tipoDoc:-1,
                     nroDoc:''
                   };
    
@@ -109,6 +109,35 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
         }
 
     };
+    
+    
+    
+    this.existeDni = function(){
+        
+        //console.log(self.cliente.nroDoc);
+        self.cliente.tipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
+        
+        if(self.cliente.nroDoc!=undefined){
+            console.log(self.cliente.tipoDoc + self.cliente.nroDoc + self.cliente.tipo);
+            TipoYDocumentosService.query({tipoDoc:self.cliente.tipoDoc, nroDoc:self.cliente.nroDoc, tipoUsu:self.cliente.tipo}).$promise.then(function(data){
+
+                var valor = data[0].duenio;
+                
+                console.log('valor: ' + valor);
+                
+                if(valor == 1){
+                    self.cliente.existeDni = true;
+                    console.log(self.cliente.existeDni);
+                }
+                else{
+                    self.cliente.existeDni = false;
+                    console.log(self.cliente.existeDni);
+                }
+            });
+        }
+        
+    };
+    
     
     this.validarDatosCliente = function()
     {

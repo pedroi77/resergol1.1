@@ -213,18 +213,26 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-6">
-                                       <select class="form-control" ng-model="cli.tiposDoc.selectedOption" 
+                                       <select class="form-control" ng-change="cli.existeDni()" ng-model="cli.tiposDoc.selectedOption" 
                                                              ng-options="tipoDoc.Descripcion for tipoDoc in cli.tiposDoc.tipos 
                                                                          track by tipoDoc.IdTipoDoc" >
                                         </select>
+                                        <!--<span ng-show="!frmDatosUsuario.$pristine && cli.cliente.existeDni" class= "msjError">
+                                            Este Dni ya existe.
+                                        </span>-->
                                     </div>
                                     
                                     <div class="col-md-6">
                                         
-                                        <input id="nroDoc" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="cli.cliente.nroDoc" required ng-class="{ error:frmDatosUsuario.nroDoc.$error.required && frmDatosUsuario.nroDoc.$dirty }">
-                                        <span ng-show="!frmDatosUsuario.$pristine && loginForm.frmDatosUsuario.$error.maxlength" class= "msjError">
+                                        <input id="nroDoc" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="cli.cliente.nroDoc" required ng-class="{ error:frmDatosUsuario.nroDoc.$error.required && frmDatosUsuario.nroDoc.$dirty }" ng-blur="cli.existeDni()">
+                                        <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.nroDoc.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
                                         </span>
+                                        <span ng-show="!frmDatosUsuario.$pristine && cli.cliente.existeDni" class= "msjError">
+                                            Este Dni ya existe.
+                                        </span>
+                                      
+                                        
                                     </div> 
                                 </div>
                             </div>
