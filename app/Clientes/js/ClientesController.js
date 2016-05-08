@@ -1,6 +1,6 @@
 var app = angular.module("resergolApp");
 
-app.controller("ClientesController", function(ClientesService, UsuarioService, DocumentosService, $state, $scope, $resource){ 
+app.controller("ClientesController", function(ClientesService, UsuarioService, DocumentosService, EmailService, $state, $scope, $resource){ 
     
     
     var self = this;
@@ -26,7 +26,7 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
                     tipo: '',
                     existeDni:false,
                     existe:false,
-                    existeMail:false,
+                    existeEmail:false,
                     usuario: '', 
                     eMail: '',
                     contrasenia: '', 
@@ -88,23 +88,41 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
     };
     
     
-    this.existeMail = function(){
-        if(self.cliente.eMail!=undefined){
+    this.existeEmail = function(){
+        /*if(self.cliente.eMail!=undefined){
             UsuarioService.query({email:self.cliente.eMail}).$promise.then(function(data){
                 //self.cliente.id =  data[0].id;   
                 alert(data[0].resultado);
-                var bExisteMail = data[0].resultado;                                                             
-                if(bExisteMail == 1){
-                    self.cliente.existeMail = true;
-                    console.log(self.cliente.existeMail);
+                var bExisteEmail = data[0].resultado;                                                             
+                if(bExisteEmail == 1){
+                    self.cliente.existeEmail = true;
+                    console.log(self.cliente.existeEmail);
                     
                 }
                 else{
-                    self.cliente.existeMail = false;
-                    console.log(self.cliente.existeMail);
+                    self.cliente.existeEmail = false;
+                    console.log(self.cliente.existeEmail);
                 }
             });
             
+        }*/
+        
+        
+        if(self.cliente.eMail!=undefined){
+            EmailService.query({email:self.cliente.eMail}).$promise.then(function(data){
+                //self.cliente.id =  data[0].id;   
+                alert(data[0].resultado);
+                var bExisteEmail = data[0].resultado;                                                             
+                if(bExisteEmail == 1){
+                    self.cliente.existeEmail = true;
+                    console.log(self.cliente.existeEmail);
+                    
+                }
+                else{
+                    self.cliente.existeEmail = false;
+                    console.log(self.cliente.existeEmail);
+                }
+            });
             
         }
 

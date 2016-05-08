@@ -120,6 +120,7 @@ $app->get('/admin/:user/:pass', function($usuario,$contrasenia){
 /*************************************************ADMINISTRADORES*************************************************/
 
 
+
 //existe usuario
 $app->get('/usuario/:user', function($user){
     $usuario = new Common();
@@ -127,7 +128,8 @@ $app->get('/usuario/:user', function($user){
 	sendResult($data);
 });
 
-$app->get('/usuario/:email', function($email){
+
+$app->get('/email/:email', function($email){
     $usuario = new Common();
     $data = $usuario->existeEmail($email);
 	sendResult($data);

@@ -158,11 +158,12 @@
                                     <div class="col-md-6">
                                         <input id="email" type="email" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="example@email.com" name="email" ng-model="cli.cliente.eMail" 
                                         required ng-class="{ error:frmDatosUsuario.email.$error.required && frmDatosUsuario.email.$dirty, warning:frmDatosUsuario.email.$error.email }"
-                                        ng-blur="cli.existeMail()">
-                                    </div>
-                                    <span ng-show="!frmDatosUsuario.$pristine && cli.cliente.existeMail" class= "msjError">
+                                        ng-blur="cli.existeEmail()">
+                                        <span ng-show="!frmDatosUsuario.$pristine && cli.cliente.existeEmail" class= "msjError">
                                             Email ya existente.
                                         </span>
+                                    </div>
+                                    
                                 </div> 
                                 
                                 <br>
@@ -508,6 +509,7 @@
         <script src="app/Common/services/ProvinciasService.js"></script>
         <script src="app/Common/services/LocalidadesService.js"></script>
         <script src="app/Common/services/UsuarioService.js"></script>
+        <script src="app/Common/services/EmailService.js"></script>
     
         <script src="bower_components/ng-table-master/dist/ng-table.js"></script>
         
