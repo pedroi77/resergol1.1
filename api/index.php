@@ -86,8 +86,6 @@ $app->get('/duenios/:user/:pass', function($usuario,$contrasenia){
 });
 
 
-/*************************************************DUENIOS*************************************************/
-
 /*************************************************ADMINISTRADORES*************************************************/
 
 //Get
@@ -116,8 +114,6 @@ $app->get('/admin/:user/:pass', function($usuario,$contrasenia){
         sendResult($result);
     }
 });
-
-/*************************************************ADMINISTRADORES*************************************************/
 
 
 
@@ -205,6 +201,17 @@ $app->post('/duenios/torneos', function(){
 		sendError("Error al dar de alta el dueño");
 	}
 });
+
+
+//get
+//$app->get('/duenios/torneos/tipos/:idTorneo', function($idTorneo){
+$app->get('/tiposTorneos/:idTorneo', function($idTorneo){
+    /*http://localhost:8080/resergol1.1/api/duenios/torneos/tipos/-1*/
+    $tiposTorneos = new Torneo();
+    $data = $tiposTorneos->getTipoTorneo($idTorneo);
+	sendResult($data);
+});
+
 
 
 /****************************************USUARIOS (USADO PARA CLIENTES Y DUEÑOS)***********************************************/

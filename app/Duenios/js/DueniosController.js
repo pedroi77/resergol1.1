@@ -454,7 +454,7 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
        
         $('#registracionDuenioModal').modal('hide');
         //self.blanquearDatos();
-        document.getElementById("registracionDuenioModal").();
+        //document.getElementById("registracionDuenioModal").();
      };
     
         this.blanquearDatos = function(){

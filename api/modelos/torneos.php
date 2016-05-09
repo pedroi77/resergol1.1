@@ -134,6 +134,31 @@ class Torneo
         }
         
     }
+    
+    
+    public function getTipoTorneo($IdTipoTorneo){  
+        if($IdTipoTorneo == -1){
+            $IdTipoTorneo = null;
+        };
+            
+        $stmt = $this->connection->prepare('SET @IdTipoTorneo := ?');
+        $stmt->bind_param('i', $IdTipoTorneo);
+        $stmt->execute(); 
+        
+        
+              
+        $query = "CALL SP_getTipoTorneos(@IdTipoTorneo);";
+        $tipoTorneos= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $tipoTorneos[] = $fila;
+            }
+            $result->free();
+        }
+        return $tipoTorneos;
+    }
+    
 }
 
 /*Ejemplo para el POST
