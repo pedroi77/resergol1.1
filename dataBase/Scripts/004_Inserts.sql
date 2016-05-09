@@ -1,10 +1,10 @@
 INSERT INTO `complejosestados`( `Descripcion`) VALUES ('Activo');
 INSERT INTO `complejosestados`( `Descripcion`) VALUES ('Baja');
 
-
+alter table complejos add column IdDuenio	    	INT 			NOT NULL;
 
 INSERT INTO `complejos`( `Nombre`, `Descripcion`, `Estacionamiento`, `Buffet`, `Duchas`, `Parrillas`, `WiFi`, `HoraCobroLuz`, `PorcentajeSeña`, `HorasCancelacion`, `TiempoReserva`, `Email`, `IdEstado`, `IdDuenio` ) 
-VALUES ('Open Gallo', 'primer complejo',1,1,1,1,1,80,50,24,5,'open@gmail.com',1, 2)
+VALUES ('Open Gallo', 'primer complejo',1,1,1,1,1,80,50,24,5,'open@gmail.com',1, 2);
 
 
 INSERT INTO `canchasestados`( `Descripcion`) VALUES ('Activo');
@@ -32,4 +32,4 @@ INSERT INTO `canchas`(`IdComplejo`, `IdCancha`, `nombre`, `CantJugadores`, `IdSu
 VALUES (1,5, 'Fortaleza',11,4,1,1,200,1);
 
 
-alter table complejos add column IdDuenio	    	INT 			NOT NULL;
+
