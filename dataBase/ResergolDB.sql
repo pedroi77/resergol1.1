@@ -98,6 +98,7 @@ CONSTRAINT pagos_marca_fk FOREIGN KEY (IdMarca) REFERENCES MarcasTarjetas (IdMar
 
 CREATE TABLE Complejos(	
 IdComplejo			INT				NOT NULL AUTO_INCREMENT,
+IdDuenio	    	INT 			NOT NULL,
 Nombre				VARCHAR(60)		NOT NULL,
 Descripcion			VARCHAR(200)	NOT NULL,
 Estacionamiento		bool			NOT NULL,
@@ -112,7 +113,8 @@ TiempoReserva		time			NOT NULL,
 Email				VARCHAR(60)		NOT NULL,
 IdEstado			INT				NOT NULL,
 PRIMARY KEY (IdComplejo),
-CONSTRAINT complejos_estados_fk FOREIGN KEY (IdEstado) REFERENCES  ComplejosEstados(IdEstado)
+CONSTRAINT complejos_estados_fk FOREIGN KEY (IdEstado) REFERENCES  ComplejosEstados(IdEstado),
+CONSTRAINT duenio_com_fk FOREIGN KEY (IdDuenio) REFERENCES  duenios(IdDuenio)
 );
 
 CREATE TABLE ListaNegra(	
