@@ -28,7 +28,8 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
             nroCalle:'',
             existeDni:false,
             existe:false,
-            existeMail: false
+            existeMail: false,
+            contraseniasIguales: true
       };
    
     this.mensajeBienvenida = 'En Resergol te damos la posibilidad de llegar a todos los jugadores del fútbol amateur de manera gratuita. Sólo tenés que completar los siguientes datos y te mandaremos un  e-mail como aviso para que puedas registrar tu complejo!';
@@ -452,7 +453,51 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
          });
        
         $('#registracionDuenioModal').modal('hide');
+        //self.blanquearDatos();
+        document.getElementById("registracionDuenioModal").();
      };
+    
+        this.blanquearDatos = function(){
+        
+            /*self.Duenio.id: -3,
+            self.Duenio.tipo: 'D',
+            self.Duenio.usuario: '', 
+            self.Duenio.email: '',
+            self.Duenio.contrasenia: '', 
+            self.Duenio.contrasenia2: '' ,
+            self.Duenio.nombre: '',
+            self.Duenio.apellido: '',
+            self.Duenio.idTipoDoc:0,
+            self.Duenio.nroDoc:'',
+            self.Duenio.nombreComplejo: '',
+            self.Duenio.NroTelef:'',
+            self.Duenio.idProv:0,
+            self.Duenio.idLoc:0,
+            self.Duenio.direccion:'',
+            self.Duenio.nroCalle:'',
+            self.Duenio.existeDni:false,
+            self.Duenio.existe:false,
+            self.Duenio.existeMail: false*/
+        
+    };
+    
+    this.validarContrasenias = function(){
+        
+        console.log("1:" + self.Duenio.contrasenia + "2:" + self.Duenio.contrasenia2);
+        
+        if(self.Duenio.contrasenia.length > 0 && self.Duenio.contrasenia2.length > 0)
+        {
+            console.log("1:" + self.Duenio.contrasenia + "2:" + self.Duenio.contrasenia2);
+            if(self.Duenio.contrasenia == self.Duenio.contrasenia2)
+            {
+                self.Duenio.contraseniasIguales = true;
+            }
+            else
+            {
+                self.Duenio.contraseniasIguales = false;
+            }   
+        }
+    };
    
 });
 

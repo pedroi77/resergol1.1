@@ -305,15 +305,18 @@
                                 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input id="contrasenia" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Contraseña" ng-maxlength="12" name="contrasenia" ng-model="due.Duenio.contrasenia" required ng-class="{ error: frmDatosUsuario.contrasenia.$error.required && frmDatosUsuario.contrasenia.$dirty, warning: frmDatosUsuario.contrasenia.$error.contrasenia }">
+                                        <input id="contrasenia" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Contraseña" ng-maxlength="12" name="contrasenia" ng-model="due.Duenio.contrasenia" required ng-class="{ error: frmDatosUsuario.contrasenia.$error.required && frmDatosUsuario.contrasenia.$dirty, warning: frmDatosUsuario.contrasenia.$error.contrasenia }" ng-blur="due.validarContrasenias()">
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.contrasenia.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
                                         </span>
                                     </div>
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control ng-dirty ng-touched ng-valid-password ng-valid ng-valid-required" placeholder="Repita contraseña" ng-maxlength="12" name="password" ng-model="due.Duenio.contrasenia2" required ng-class="{ error: frmDatosUsuario.password.$error.required && frmDatosUsuario.password.$dirty, warning: frmDatosUsuario.password.$error.contrasenia2 }">
+                                        <input id="password" type="password" class="form-control ng-dirty ng-touched ng-valid-password ng-valid ng-valid-required" placeholder="Repita contraseña" ng-maxlength="12" name="password" ng-model="due.Duenio.contrasenia2" required ng-class="{ error: frmDatosUsuario.password.$error.required && frmDatosUsuario.password.$dirty, warning: frmDatosUsuario.password.$error.contrasenia2 }" ng-blur="due.validarContrasenias()">
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.password.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
+                                        </span>
+                                        <span ng-show="!frmDatosUsuario.$pristine && !due.Duenio.contraseniasIguales" class= "msjError">
+                                            Las contraseñas no coinciden.
                                         </span>
                                     </div>  
                                 </div>
