@@ -126,7 +126,7 @@
     <div class="modal-dialog modal-registracion">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" ng-click="cli.limpiarForm(frmDatosUsuario)" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             
             <form class="modal-body" name="frmDatosUsuario">
@@ -156,11 +156,14 @@
                                     
                                     
                                     <div class="col-md-6">
-                                        <input id="email" type="email" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="example@email.com" name="email" ng-model="cli.cliente.eMail" 
+                                        <input id="email" type="email" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="example@email.com" name="email" ng-maxlength="40" ng-model="cli.cliente.eMail" 
                                         required ng-class="{ error:frmDatosUsuario.email.$error.required && frmDatosUsuario.email.$dirty, warning:frmDatosUsuario.email.$error.email }"
                                         ng-blur="cli.existeEmail()">
                                         <span ng-show="!frmDatosUsuario.$pristine && cli.cliente.existeEmail" class= "msjError">
                                             Email ya existente.
+                                        </span>
+                                        <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.email.$error.maxlength" class= "msjError">
+                                            Supero la cantidad máxima de caracteres.
                                         </span>
                                     </div>
                                     
@@ -170,15 +173,19 @@
                                 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input id="contrasenia" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Contraseña" ng-maxlength="12" name="contrasenia" ng-model="cli.cliente.contrasenia" required ng-class="{ error: frmDatosUsuario.contrasenia.$error.required && frmDatosUsuario.contrasenia.$dirty, warning: frmDatosUsuario.contrasenia.$error.contrasenia }">
-                                        <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.contrasenia.$error.maxlength" class= "msjError">
-                                            Supero la cantidad máxima de caracteres.
+                                        <input id="contrasenia" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Contraseña" ng-maxlength="12" name="contrasenia" ng-model="cli.cliente.contrasenia" required ng-class="{ error: frmDatosUsuario.contrasenia.$error.required && frmDatosUsuario.contrasenia.$dirty, warning: frmDatosUsuario.contrasenia.$error.contrasenia }" ng-minlength="6" ng-maxlength="25" ng-blur="cli.compararContrasenias()">
+                                        <span ng-show="!frmDatosUsuario.$pristine && (frmDatosUsuario.contrasenia.$error.maxlength || frmDatosUsuario.contrasenia.$error.minlength )" class= "msjError">
+                                            Debe tener entre 6 y 25 caracteres.
                                         </span>
                                     </div>
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control ng-dirty ng-touched ng-valid-password ng-valid ng-valid-required" placeholder="Repita contraseña" ng-maxlength="12" name="password" ng-model="cli.cliente.contrasenia2" required ng-class="{ error: frmDatosUsuario.password.$error.required && frmDatosUsuario.password.$dirty, warning: frmDatosUsuario.password.$error.contrasenia2 }">
-                                        <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.password.$error.maxlength" class= "msjError">
-                                            Supero la cantidad máxima de caracteres.
+                                        <input id="password" type="password" class="form-control ng-dirty ng-touched ng-valid-password ng-valid ng-valid-required" placeholder="Repita contraseña" ng-maxlength="12" name="password" ng-model="cli.cliente.contrasenia2" required ng-class="{ error: frmDatosUsuario.password.$error.required && frmDatosUsuario.password.$dirty, warning: frmDatosUsuario.password.$error.contrasenia2 !&& cli.cliente.contraseniasIguales }"
+                                        ng-minlength="6" ng-maxlength="25" ng-blur="cli.compararContrasenias()">
+                                        <span ng-show="!frmDatosUsuario.$pristine && (frmDatosUsuario.password.$error.maxlength || frmDatosUsuario.password.$error.minlength )" class= "msjError">
+                                           Debe tener entre 6 y 25 caracteres.
+                                        </span>
+                                        <span ng-show="!frmDatosUsuario.$pristine && !cli.cliente.contraseniasIguales" class= "msjError">
+                                            Las contraseñas no coinciden.
                                         </span>
                                     </div>  
                                 </div>
@@ -196,7 +203,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         
-                                        <input id="nombre" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre" ng-maxlength="60" name="nombre" ng-model="cli.cliente.nombre" required ng-class="{ error:frmDatosUsuario.nombre.$error.required && frmDatosUsuario.nombre.$dirty }">
+                                        <input id="nombre" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre" ng-pattern ="/^[a-zA-Z\s]*$/" ng-maxlength="30" name="nombre" ng-model="cli.cliente.nombre" required ng-class="{ error:frmDatosUsuario.nombre.$error.required && frmDatosUsuario.nombre.$dirty }">
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.nombre.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
                                         </span>
@@ -204,7 +211,7 @@
                                     
                                     <div class="col-md-6">
                                         
-                                        <input id="apellido" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Apellido" ng-maxlength="60" name="apellido" ng-model="cli.cliente.apellido" required ng-class="{ error:frmDatosUsuario.apellido.$error.required && frmDatosUsuario.apellido.$dirty }">
+                                        <input id="apellido" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Apellido" ng-maxlength="25" name="apellido" ng-model="cli.cliente.apellido" required ng-class="{ error:frmDatosUsuario.apellido.$error.required && frmDatosUsuario.apellido.$dirty }">
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.apellido.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
                                         </span>
@@ -243,7 +250,7 @@
                 
                 <div class="form-group">
                     <button class="btn btn-primary btn-lg btn-block btn-custom "  ng-click="cli.validarDatosCliente()"
-                    ng-disabled="!frmDatosUsuario.$valid">Terminado</button>
+                    ng-disabled="!frmDatosUsuario.$valid || !cli.clienteValido()">Terminado</button>
                     
                     <!--button class="btn btn-primary btn-lg btn-block btn-custom "  ng-click="due.mostrarDatos()" >Terminado</button> -->
                     <!--input type="submit" class="btn btn-success pull-right" ng-click="due.validarDatosDuenio()" / -->

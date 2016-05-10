@@ -27,6 +27,7 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
                     existeDni:false,
                     existe:false,
                     existeEmail:false,
+                    contraseniasIguales: true,
                     usuario: '', 
                     eMail: '',
                     contrasenia: '', 
@@ -34,7 +35,8 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
                     nombre: '',
                     apellido: '',
                     tipoDoc:-1,
-                    nroDoc:''
+                    nroDoc:'',
+                    clienteValido: true
                   };
    
     
@@ -60,6 +62,26 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
     
     this.irComplejo = function(){
              $state.go('Clientes.verComplejo');
+    };
+    
+    
+    
+    this.clienteValido = function(){
+      
+        //console.log('tipo doc-->' + self.cliente.tipoDoc);
+        if(!self.cliente.existe && !self.cliente.existeDni && !self.cliente.existeEmail
+          && self.cliente.contraseniasIguales && self.cliente.tipoDoc > 0)
+        {
+            //console.log('cliente valido');
+            return true;
+        }
+        else
+            {
+                //console.log('cliente INVALIDOOOOOO');
+                return false;
+            }
+            
+
     };
     
     
@@ -93,10 +115,11 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
         if(self.cliente.eMail!=undefined){
             EmailService.query({email:self.cliente.eMail}).$promise.then(function(data){
                 //self.cliente.id =  data[0].id;   
-                alert(data[0].resultado);
+                //alert(data[0].resultado);
                 var bExisteEmail = data[0].resultado;                                                             
                 if(bExisteEmail == 1){
                     self.cliente.existeEmail = true;
+                    console.log(self.cliente.existeEmail);
                     console.log(self.cliente.existeEmail);
                     
                 }
@@ -248,23 +271,56 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
               this.createCliente();
             }
     };
+    
+    
+    this.compararContrasenias = function(){
+        
+        //console.log("1:" + self.Duenio.contrasenia + "2:" + self.Duenio.contrasenia2);
+        
+        if(self.cliente.contrasenia.length > 0 && self.cliente.contrasenia2.length > 0)
+        {
+            //console.log("1:" + self.Duenio.contrasenia + "2:" + self.Duenio.contrasenia2);
+            if(self.cliente.contrasenia == self.cliente.contrasenia2)
+            {
+                self.cliente.contraseniasIguales = true;
+            }
+            else
+            {
+                self.cliente.contraseniasIguales = false;
+            }   
+        }
+    };
    
     
+    this.limpiarForm = function(form)
+    {
+        form.$setPristine();
+        //form.$setPristine();
+        //form = $('#registracionModal');
+                    self.cliente.id = -3;
+                    self.cliente.tipo= 'C';
+                    self.cliente.existeDni=false;
+                    self.cliente.existe=false;
+                    self.cliente.existeEmail=false;
+                    self.cliente.contraseniasIguales= true;
+                    self.cliente.usuario= ''; 
+                    self.cliente.eMail= '';
+                    self.cliente.contrasenia= ''; 
+                    self.cliente.contrasenia2= '';
+                    self.cliente.nombre= '';
+                    self.cliente.apellido= '';
+                    self.cliente.tipoDoc=-1;
+                    self.cliente.nroDoc='';
+                    self.cliente.clienteValido= true;
+                    this.tiposDoc.selectedOption = 0;
+        
+    }
     
     
     this.createCliente = function()
     {
-        /*self.cliente.tipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
-        var connection = $resource("http://localhost/resergol1.1/api/clientes/", {}, {save: {method: 'POST'}})
-        var params = {'usuario': self.cliente.usuario, 'contrasenia': self.cliente.contrasenia, 'nombre': self.cliente.nombre,
-                  'apellido': self.cliente.apellido, 'idTipoDoc': self.cliente.tipoDoc, 'nroDoc': self.cliente.nroDoc,
-                    'email': self.cliente.eMail};
-        
-        var results = connection.save(params);*/
-        
         var clienteNuevo = new ClientesService();
-          
- 
+     
         clienteNuevo.data = {
                         "usuario": self.cliente.usuario,
                         "contrasenia": self.cliente.contrasenia,
@@ -282,6 +338,25 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
               console.log(errorResponse.data.message);  
          });
         
+        
+        //Limpio el objeto.
+        /*self.cliente = { 
+                    id: -3,
+                    tipo: 'C',
+                    existeDni:false,
+                    existe:false,
+                    existeEmail:false,
+                    usuario: '', 
+                    eMail: '',
+                    contrasenia: '', 
+                    contrasenia2: '' ,
+                    nombre: '',
+                    apellido: '',
+                    tipoDoc:-1,
+                    nroDoc:''
+                  };*/
+        
+        //self.limpiarForm(document.getElementsByName('frmDatosUsuario'));
         $('#registracionModal').modal('hide');
     }
     
