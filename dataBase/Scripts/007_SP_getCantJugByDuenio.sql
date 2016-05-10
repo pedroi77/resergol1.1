@@ -15,7 +15,7 @@ BEGIN
 	WHERE   C.idEstado = 1
 		AND CO.idestado = 1 
 		AND CO.idDuenio = pIdDuenio
-    ORDER BY 1;;
+    ORDER BY 1;
 		
 END 
 
