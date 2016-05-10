@@ -31,7 +31,7 @@
                                      <div class="form-group">
                                         <label for="nombre" class="control-label col-sm-4">Nombre</label>
                                         <div class="col-xs-12 col-sm-8">    
-                                           <input placeholder="Ingrese un nombre" id="nombreD" class="form-control input-transparent" style="margin-bottom:5px;" type="text" name="nombre" value="Sudamericana">
+                                           <input placeholder="Ingrese un nombre" id="nombreD" class="form-control input-transparent" style="margin-bottom:5px;" type="text" name="nombre">
                                         </div>
                                     </div>
                                     
@@ -52,19 +52,14 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label for="cantJugadores" class="control-label col-sm-4">Jugadores</label>
+                                        <label for="cantJugadores" class="control-label col-sm-4">Jugadores en cancha</label>
                                         <div class="col-xs-12 col-sm-8">    
                                             <select id="cantJugadores" required="required"
                                                     data-placeholder="" 
                                                     class="select2 form-control" 
-                                                    name="cantJugadores" style="margin-bottom:5px;">
-                                                <option value="1" selected="selected">5 vs 5</option>
-                                                <option value="2">6 vs 6</option>
-                                                <option value="3">7 vs 7</option>
-                                                <option value="1">8 vs 8</option>
-                                                <option value="6">9 vs 9</option>
-                                                <option value="5">10 vs 10</option>
-                                                <option value="7">11 vs 11</option>
+                                                    name="cantJugadores" style="margin-bottom:5px;"
+                                                    ng-model="tor.cantJugadores.selectedOption"
+                                                    ng-options="cantidad.CantJugadores for cantidad in tor.cantJugadores.tipos track                                                                    by cantidad.CantJugadores">
                                             </select>
                                         </div>
                                     </div>
@@ -76,11 +71,10 @@
                                             <select id="superficie" required="required"
                                                     data-placeholder="" 
                                                     class="select2 form-control" 
-                                                    name="superficie" style="margin-bottom:5px;">
-                                                <option value="1" selected="selected">Sintetico</option>
-                                                <option>Tierra</option>
-                                                <option>Cesped</option>
-                                                <option>Baldoza</option> 
+                                                    name="superficie" style="margin-bottom:5px;"
+                                                    ng-model="tor.superficies.selectedOption"
+                                                    ng-options="superficie.Descripcion for superficie in tor.superficies.tipos track                                                                    by superficie.Descripcion">
+                                              
                                             </select>
                                         </div>    
                                     </div>        
@@ -102,7 +96,7 @@
                                     <div class="form-group">
                                         <label for="precio" class="control-label col-sm-4">Precio de inscripción</label>
                                         <div class="col-xs-12 col-sm-8">    
-                                            <input id="precio" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder="$ 300"  name="precio" />
+                                            <input id="precio" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder=""  name="precio" />
                                         </div>    
                                     </div>  
                                     
@@ -111,9 +105,9 @@
                                         
                                          <div class="form-group">
                                             <div class="col-xs-12 col-sm-4">  
-                                                 <div class='input-group date'>
-                                                    <input type='text'  class="form-control" id="fecha" placeholder="Desde" style="height:31px;"/>
-                                                    <span class="input-group-addon"  style="height:30px;"  onclick="mostrarCalendario()" >
+                                                 <div class='input-group date' id= "PEPE">
+                                                    <input type='text'  class="form-control" name="fech" id="fecha1" placeholder="Desde" style="height:31px;"/>
+                                                    <span class="input-group-addon"  style="height:30px;"  ng-click="tor.mostrarCalendario2(fech)"  >
                                                     <span class="glyphicon glyphicon-calendar"  ></span>
                                                     </span>
                                                 </div>
@@ -122,8 +116,8 @@
                                             
                                             <div class="col-xs-12 col-sm-4" style="margin-bottom:5px;">  
                                               <div class='input-group date'>
-                                                    <input type='text'  class="form-control" id="fecha" placeholder="Hasta" style="height:31px;"/>
-                                                    <span class="input-group-addon"  style="height:30px;"  onclick="mostrarCalendario()" >
+                                                    <input type='text'  class="form-control" id="fecha2" placeholder="Hasta" style="height:31px;"/>
+                                                    <span class="input-group-addon"  style="height:30px;"   ng-click="tor.mostrarCalendario2()" >
                                                     <span class="glyphicon glyphicon-calendar"  ></span>
                                                     </span>
                                                 </div>
@@ -138,7 +132,7 @@
                                         <div class="form-group">
                                             <div class="col-xs-12 col-sm-4">  
                                                  <div class='input-group date'>
-                                                    <input type='text'  class="form-control" id="fecha" placeholder="Desde" style="height:31px;"/>
+                                                    <input type='text'  class="form-control" id="fecha3" placeholder="Desde" style="height:31px;"/>
                                                     <span class="input-group-addon"  style="height:30px;"  onclick="mostrarCalendario()" >
                                                     <span class="glyphicon glyphicon-calendar"  ></span>
                                                     </span>
@@ -147,9 +141,9 @@
                                                 
                                             
                                             <div class="col-xs-12 col-sm-4">  
-                                                <div class='input-group date'  style="margin-bottom:5px;">
-                                                    <input type='text'  class="form-control" id="fecha" placeholder="Hasta" style="height:31px;"/>
-                                                    <span class="input-group-addon"  style="height:30px;"  onclick="mostrarCalendario()" >
+                                                <div class='input-group date' id="misfechas" style="margin-bottom:5px;">
+                                                    <input type='text'  class="form-control" id="fecha4" placeholder="Hasta" style="height:31px;"/>
+                                                    <span class="input-group-addon"  style="height:30px;"  ng-click="tor.mostrarCalendario2()" >
                                                     <span class="glyphicon glyphicon-calendar"  ></span>
                                                     </span>
                                                 </div>

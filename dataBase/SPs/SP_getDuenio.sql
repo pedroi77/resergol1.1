@@ -16,7 +16,7 @@ BEGIN
     INNER JOIN duenios as D ON P.idPersona = D.idPersona
     WHERE D.usuario = pUsuario 
     AND D.contrasenia = pContrasenia
-    AND D.idEstado = 1; /*Activo*/
+    AND D.idEstado = 2; /*Aceptado*/
     
    
 END

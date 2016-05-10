@@ -159,6 +159,46 @@ class Torneo
         return $tipoTorneos;
     }
     
+    public function getSuperficiesByDuenio($IdDuenio){  
+
+        $stmt = $this->connection->prepare('SET @IdDuenio := ?');
+        $stmt->bind_param('i', $IdDuenio);
+        $stmt->execute(); 
+        
+        
+              
+        $query = "CALL SP_getSuperficiesByIdDuenio(@IdDuenio);";
+        $superficies= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $superficies[] = $fila;
+            }
+            $result->free();
+        }
+        return $superficies;
+    }
+    
+    public function getCantJugByDuenio($IdDuenio){  
+
+        $stmt = $this->connection->prepare('SET @IdDuenio := ?');
+        $stmt->bind_param('i', $IdDuenio);
+        $stmt->execute(); 
+        
+        
+              
+        $query = "CALL SP_getCantJugByDuenio(@IdDuenio);";
+        $jugadores= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $jugadores[] = $fila;
+            }
+            $result->free();
+        }
+        return $jugadores;
+    }
+    
 }
 
 /*Ejemplo para el POST

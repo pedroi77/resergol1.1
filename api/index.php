@@ -203,12 +203,27 @@ $app->post('/duenios/torneos', function(){
 });
 
 
-//get
+//get tipo de torneo
 //$app->get('/duenios/torneos/tipos/:idTorneo', function($idTorneo){
 $app->get('/tiposTorneos/:idTorneo', function($idTorneo){
-    /*http://localhost:8080/resergol1.1/api/duenios/torneos/tipos/-1*/
+    //http://localhost:8080/resergol1.1/api/duenios/torneos/tipos/-1
     $tiposTorneos = new Torneo();
     $data = $tiposTorneos->getTipoTorneo($idTorneo);
+	sendResult($data);
+});
+
+
+//get superficies del duenio
+$app->get('/superficies/:idDuenio', function($idDuenio){
+    $superficiesTorneos = new Torneo();
+    $data = $superficiesTorneos->getSuperficiesByDuenio($idDuenio);
+	sendResult($data);
+});
+
+//get cantidad de jugadores por duenio
+$app->get('/jugadores/:idDuenio', function($idDuenio){
+    $jugadores = new Torneo();
+    $data = $jugadores->getCantJugByDuenio($idDuenio);
 	sendResult($data);
 });
 

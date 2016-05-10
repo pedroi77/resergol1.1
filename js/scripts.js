@@ -90,11 +90,11 @@ function init_map() {
     }
   }
  
-  
+  /*
   function mostrarCalendario(){
       $('#fecha').datepicker("show");
   }
-
+*/
 
 
  /*<pi> FIN*/
