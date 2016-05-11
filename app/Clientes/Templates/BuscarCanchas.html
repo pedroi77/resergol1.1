@@ -20,7 +20,7 @@
                 WiFi				bool			NOT NULL
             -->
     
-    <div class="container">
+    <div class="container" ng-controller="BuscarCanchasController as bus">
         <div class ="principal row">
             <!-- Comienza la clase  row -->
            
@@ -35,7 +35,7 @@
                                 <label for="provincias" class="control-label col-sm-2">Provincia</label>    
                           
                                 <div class=" col-sm-4 ">
-                                    <select id="provincias" required="required"
+                                    <!--<select id="provincias" required="required"
                                             data-placeholder="Seleccione una provincia" 
                                             class="form-control" 
                                             name="provincias" style="margin-bottom:5px;">
@@ -44,13 +44,19 @@
                                         <option value="2">Capital Federal</option>
                                         <option value="3">Córdoba</option>
                                         <option value="4" selected="selected">Mendoza</option>
-                                    </select>
+                                    </select>-->
+                                    
+                                    <select  data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="bus.provincias.selectedProv" 
+                                            ng-options="provincia.Nombre for provincia in bus.provincias.prov track by
+                                                        provincia.IdProvincia" ng-change="bus.getLocalidades()">
+                                    </select> 
+                                    
                                 </div>    
                           
                                 <label for="localidades" class="control-label col-sm-2">Localidad</label>
                                 <div class=" col-sm-4">    
                                
-                                    <select id="localidades" required="required"
+                                    <!--<select id="localidades" required="required"
                                             data-placeholder="Seleccione una localidad" 
                                             class=" form-control" 
                                             name="localidades" style="margin-bottom:5px;">
@@ -59,7 +65,12 @@
                                         <option value="2">Capital Federal</option>
                                         <option value="3">Lomas de zamora</option>
                                         <option value="4" selected="selected">Avellaneda</option>
+                                    </select>-->
+                                    
+                                    <select data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="bus.localidades.selectedOption" 
+                                                ng-options="localidad.Nombre for localidad in bus.localidades.loc track by               localidad.Nombre" >
                                     </select>
+                                    
                                 </div>
                             
                                 <label for="jugadores" class="control-label col-sm-2">Jugadores</label>

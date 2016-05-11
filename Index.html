@@ -179,7 +179,7 @@
                                         </span>
                                     </div>
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control ng-dirty ng-touched ng-valid-password ng-valid ng-valid-required" placeholder="Repita contraseña" ng-maxlength="12" name="password" ng-model="cli.cliente.contrasenia2" required ng-class="{ error: frmDatosUsuario.password.$error.required && frmDatosUsuario.password.$dirty, warning: frmDatosUsuario.password.$error.contrasenia2 !&& cli.cliente.contraseniasIguales }"
+                                        <input id="password" type="password" class="form-control ng-dirty ng-touched ng-valid-password ng-valid ng-valid-required" placeholder="Repita contraseña" ng-maxlength="12" name="password" ng-model="cli.cliente.contrasenia2" required ng-class="{ error: frmDatosUsuario.password.$error.required && frmDatosUsuario.password.$dirty, warning: frmDatosUsuario.password.$error.contrasenia2 && cli.cliente.contraseniasIguales }"
                                         ng-minlength="6" ng-maxlength="25" ng-blur="cli.compararContrasenias()">
                                         <span ng-show="!frmDatosUsuario.$pristine && (frmDatosUsuario.password.$error.maxlength || frmDatosUsuario.password.$error.minlength )" class= "msjError">
                                            Debe tener entre 6 y 25 caracteres.
@@ -516,6 +516,7 @@
         <script src="app/Clientes/js/ClientesController.js"></script>
         <script src="app/Clientes/js/VerCanchaController.js"></script>
         <script src="app/Clientes/js/ClientesService.js"></script>
+        <script src="app/Clientes/js/BuscarCanchasController.js"></script>
     
         <script src="app/Admin/js/Admin.js"></script>    
         <script src="app/Admin/js/AdminController.js"></script>

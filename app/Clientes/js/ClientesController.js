@@ -256,7 +256,6 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
         
         if(self.cliente.contrasenia.length > 0 && self.cliente.contrasenia2.length > 0)
         {
-            
             if(self.cliente.contrasenia != self.cliente.contrasenia2)
             {
                 mensaje += "Las contraseñas no coinciden! \n";
@@ -277,18 +276,19 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
         
         //console.log("1:" + self.Duenio.contrasenia + "2:" + self.Duenio.contrasenia2);
         
-        if(self.cliente.contrasenia.length > 0 && self.cliente.contrasenia2.length > 0)
-        {
-            //console.log("1:" + self.Duenio.contrasenia + "2:" + self.Duenio.contrasenia2);
-            if(self.cliente.contrasenia == self.cliente.contrasenia2)
+        if(self.cliente.contrasenia != undefined && self.cliente.contrasenia2 != undefined)
+            if(self.cliente.contrasenia.length > 0 && self.cliente.contrasenia2.length > 0)
             {
-                self.cliente.contraseniasIguales = true;
+                //console.log("1:" + self.Duenio.contrasenia + "2:" + self.Duenio.contrasenia2);
+                if(self.cliente.contrasenia == self.cliente.contrasenia2)
+                {
+                    self.cliente.contraseniasIguales = true;
+                }
+                else
+                {
+                    self.cliente.contraseniasIguales = false;
+                }   
             }
-            else
-            {
-                self.cliente.contraseniasIguales = false;
-            }   
-        }
     };
    
     
