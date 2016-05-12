@@ -39,6 +39,12 @@ $app->get('/localidades/:id', function($id){
 	sendResult($data);
 });
 
+//Superficies
+$app->get('/tiposSuperficies', function(){
+    $superficies = new Common();
+    $data = $superficies->getAllTiposSuperficies();
+	sendResult($data);
+});
 
 
 /*************************************************DUENIOS*************************************************/

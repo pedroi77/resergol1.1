@@ -90,20 +90,15 @@
                           
                                 <label for="superficie" class="control-label col-sm-2">Superficie</label>
                                 <div class="col-sm-4">    
-                                    <select id="superficie" required="required"
-                                            data-placeholder="Seleccione una localidad" 
-                                            class="select2 form-control" 
-                                            name="localidades" style="margin-bottom:5px;">
-                                        <option value="1" selected="selected">Sintetico</option>
-                                        <option>Tierra</option>
-                                        <option>Cesped</option>
-                                        <option>Baldoza</option> 
-                                    </select>
+                                    <select  data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="bus.superficies.selectedOption" 
+                                            ng-options="superficie.Descripcion for superficie in bus.superficies.sup track by
+                                                        superficie.IdSuperficie">
+                                    </select> 
                                 </div>
                              
                                <label for="sel2" class="control-label col-sm-2" >Fecha</label>
                                <div class="col-sm-4">    
-                                    <select id="fecha" required="required"
+                                    <!--<select id="fecha" required="required"
                                             data-placeholder="Seleccione una localidad" 
                                             class="form-control" 
                                             name="localidades" style="margin-bottom:5px;">
@@ -112,7 +107,13 @@
                                         <OPTION>Miercoles</OPTION> 
                                         <OPTION>Jueves</OPTION> 
                                         <OPTION>Viernes</OPTION> 
-                                    </select>
+                                    </select>-->
+                                    <p class="input-group">
+                                                      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Cerrar" alt-input-formats="altInputFormats" />
+                                                      <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                      </span>
+                                   </p>
                                 </div>
                             
                             

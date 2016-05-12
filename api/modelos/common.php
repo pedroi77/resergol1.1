@@ -154,6 +154,21 @@ class Common
     }
     
     
+    //Tipos Superficies
+    public function getAllTiposSuperficies(){
+        $query = "CALL SP_getSuperficies();";
+        $superficies = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $superficies[] = $fila;
+            }
+            $result->free();
+        }
+        return $superficies;
+    }
+    
+    
    
     
     
