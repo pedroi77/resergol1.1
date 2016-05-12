@@ -10,8 +10,8 @@ var resergolApp = angular.module("resergolApp",
 "angular-jwt", 
 "angular-storage",
 "ngTable",
-"ui.bootstrap",
-"ngLocale"
+"ngAnimate",
+"ui.bootstrap"
 ]);
 
 

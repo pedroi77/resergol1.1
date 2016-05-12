@@ -43,10 +43,10 @@ $provide.value("$locale", {
       "dom.",
       "lun.",
       "mar.",
-      "mi\u00e9.",
+      "mie.",
       "jue.",
       "vie.",
-      "s\u00e1b."
+      "sab."
     ],
     "SHORTMONTH": [
       "ene.",

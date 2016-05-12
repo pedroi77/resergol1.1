@@ -107,18 +107,37 @@
   
                                                   <div class="col-sm-4">
                                                     <p class="input-group">
-                                                      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Cerrar" alt-input-formats="altInputFormats" />
+                                                      <input type="text" class="form-control "  
+                                                             uib-datepicker-popup="{{format}}" 
+                                                             ng-model="tor.FecInscDesde" 
+                                                             min-date="dateOptionsInscDesde.minDate"    
+                                                             is-open="FecInscripcionDesde.opened" 
+                                                             datepicker-options="dateOptionsInscDesde" 
+                                                             date-disabled="tor.disabled(date)" 
+                                                             ng-required="true"  
+                                                             close-text="Cerrar"
+                                                             alt-input-formats="altInputFormats" 
+                                                              ng-blur="tor.setearDesdeInsc()"/>
                                                       <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                        <button type="button" class="btn btn-default" ng-click="OpenFecInscDesde()"><i class="glyphicon glyphicon-calendar"></i></button>
                                                       </span>
                                                     </p>
                                                 </div>
                                                   
                                                  <div class="col-sm-4">
                                                     <p class="input-group">
-                                                      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                      <input type="text" 
+                                                             class="form-control" 
+                                                             uib-datepicker-popup="{{format}}" 
+                                                             ng-model="tor.FecInscHasta" 
+                                                             is-open="FecInscripcionHasta.opened" 
+                                                             min-date="dateOptionsInscHasta.minDate"    
+                                                             datepicker-options="dateOptionsInscHasta"  
+                                                             date-disabled="tor.disabled(date)"  
+                                                             ng-required="true" close-text="Cerrar" 
+                                                             alt-input-formats="altInputFormats" />
                                                       <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-default" ng-click=""><i class="glyphicon glyphicon-calendar"></i></button>
+                                                        <button type="button" class="btn btn-default" ng-click="OpenFecInscHasta()"><i class="glyphicon glyphicon-calendar"></i></button>
                                                       </span>
                                                     </p>
                                                 </div>  
@@ -134,18 +153,35 @@
   
                                                   <div class="col-sm-4">
                                                     <p class="input-group">
-                                                      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                      <input type="text" 
+                                                              format-day-header="EEE"
+                                                             class="form-control" 
+                                                             uib-datepicker-popup="{{format}}" 
+                                                             ng-model="tor.TorneoDesde" 
+                                                             is-open="FecDesde.opened" 
+                                                             datepicker-options="dateOptions" 
+                                                             ng-required="true" 
+                                                             close-text="Close" 
+                                                             alt-input-formats="altInputFormats" />
                                                       <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-default" ng-click=""><i class="glyphicon glyphicon-calendar"></i></button>
+                                                        <button type="button" class="btn btn-default" ng-click="OpenFecDesde()"><i class="glyphicon glyphicon-calendar"></i></button>
                                                       </span>
                                                     </p>
                                                 </div>
                                                   
                                                  <div class="col-sm-4">
                                                     <p class="input-group">
-                                                      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                      <input type="text" 
+                                                             class="form-control" 
+                                                             uib-datepicker-popup="{{format}}" 
+                                                             ng-model="tor.TorneoHasta" 
+                                                             is-open="FecHasta.opened" 
+                                                             datepicker-options="dateOptions" 
+                                                             ng-required="true" 
+                                                             close-text="Close" 
+                                                             alt-input-formats="altInputFormats" />
                                                       <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-default" ng-click=""><i class="glyphicon glyphicon-calendar"></i></button>
+                                                        <button type="button" class="btn btn-default" ng-click="OpenFecHasta()"><i class="glyphicon glyphicon-calendar"></i></button>
                                                       </span>
                                                     </p>
                                                 </div>  
@@ -211,7 +247,7 @@
                                         
                                         <div class="col-md-4"> 
                                             <div class="form-group">
-                                                <button class="btn  btn-md btn-success btn-block" style="border-radius: 7px;">
+                                                <button class="btn  btn-md btn-success btn-block" ng-click="tor.fecha()" style="border-radius: 7px;">
                                                  <i class="glyphicon glyphicon-floppy-save"></i>
                                                     Guardar
                                                 </button>
