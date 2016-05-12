@@ -21,9 +21,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         selectedOption: {CantJugadores: '1'} 
     };   
     
-    this.mostrarCalendario2 = function(control){
-        $('#PEPE').datepicker("show");
-    };   
+      
 
     
     
@@ -44,34 +42,59 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
             self.cantJugadores.selectedOption = self.cantJugadores.tipos[0];
         }); 
         
+        $scope.toggleMin();
+        
     };
     
-    /*PARA FECHAS*/
+    this.fecha= function(){
+        console.log(self.FecInscDesde);
+        console.log($scope.dateOptionsInscHasta.minDate);
+        
+        console.log($scope.dateOptionsInscHasta.minDate);
+    };
+    
+    this.setearDesdeInsc= function(){
+        self.FecInscHasta = self.FecInscDesde;
+        $scope.dateOptionsInscHasta.minDate= self.FecInscDesde;
+    };
+    
+    /*****************************PARA FECHAS*********************************/
      $scope.today = function() {
         $scope.dt = new Date();
       };
+    
       $scope.today();
 
       $scope.clear = function() {
         $scope.dt = null;
       };
 
-      $scope.inlineOptions = {
-        customClass: getDayClass,
-        minDate: new Date(),
-        showWeeks: true
-      };
-
-      $scope.dateOptions = {
+     
+      this.FecInscDesde = new Date();
+      this.FecInscHasta = new Date();
+      this.TorneoDesde = new Date();
+      this.TorneoHasta = new Date();
+    
+      $scope.dateOptionsInscDesde = {
         dateDisabled: disabled,
         language: 'es-es',  
         formatYear: 'yy',
-        maxDate: new Date(2020, 5, 22),
+        maxDate: new Date(2018, 1, 1),
         minDate: new Date(),
         startingDay: 1
       };
+    
+       $scope.dateOptionsInscHasta = {
+        dateDisabled: disabled,
+        language: 'es-es',  
+        formatYear: 'yy',
+        maxDate: new Date(2018, 1, 1),
+        //minDate: self.FecInscDesde,
+        minDate: new Date(2016, 4, 18),
+        startingDay: 1
+      };
 
-      // Disable weekend selection
+ 
       function disabled(data) {
         var date = data.date,
           mode = data.mode;
@@ -79,20 +102,28 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
       }
 
       $scope.toggleMin = function() {
-        $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
-        $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+        $scope.dateOptionsInscDesde.minDate = new Date();
       };
 
-      $scope.toggleMin();
+      
 
-      $scope.open1 = function() {
-        $scope.popup1.opened = true;
+      $scope.OpenFecInscDesde = function() {
+        $scope.FecInscripcionDesde.opened = true;
       };
 
-      $scope.open2 = function() {
-        $scope.popup2.opened = true;
+      $scope.OpenFecInscHasta = function() {
+        $scope.FecInscripcionHasta.opened = true;
+      };
+        
+      $scope.OpenFecDesde = function() {
+        $scope.FecDesde.opened = true;
       };
 
+      $scope.OpenFecHasta = function() {
+        $scope.FecHasta.opened = true;
+      };
+    
+    
       $scope.setDate = function(year, month, day) {
         $scope.dt = new Date(year, month, day);
       };
@@ -101,11 +132,19 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
       $scope.format = $scope.formats[0];
       $scope.altInputFormats = ['M!/d!/yyyy'];
 
-      $scope.popup1 = {
+      $scope.FecInscripcionDesde = {
         opened: false
       };
 
-      $scope.popup2 = {
+      $scope.FecInscripcionHasta = {
+        opened: false
+      };
+    
+     $scope.FecDesde = {
+        opened: false
+      };
+
+      $scope.FecHasta = {
         opened: false
       };
 

@@ -168,7 +168,9 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                      };
          
          var token = store.get("token") || null;
-         if(!token){
+         var sesion = sessionStorage.usuario  || null;
+        
+         if(!token || !sesion ){
              self.IniciarSesion = 'Iniciar Sesion';
              self.brand = "Open Gallo"; //???
          }    
