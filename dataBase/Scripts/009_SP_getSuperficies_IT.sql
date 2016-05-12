@@ -13,4 +13,3 @@ CREATE PROCEDURE SP_getSuperficies()
     ORDER BY Descripcion;
   END
 
-// 

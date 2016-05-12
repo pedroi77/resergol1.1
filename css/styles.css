@@ -500,6 +500,11 @@ body.background-dark {
     position: relative;
 }
 
+
+
+.uib-datepicker-popup.dropdown-menu{display:block;float:none;margin:0;color:black;}.
+
+
 .widget-controls > a, .widget-controls > span {
     padding: 1px 4px;
     border-radius: 4px;
