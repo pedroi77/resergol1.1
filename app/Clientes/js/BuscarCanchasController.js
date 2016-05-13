@@ -1,15 +1,30 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("BuscarCanchasController", function($scope, ProvinciasService, LocalidadesService, TiposSuperficiesService){
+resergolApp.controller("BuscarCanchasController", function($scope, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService){
 
 var self = this;
 this.tiposDoc = [];
 this.provincias = [];
 this.localidades = [];
 this.superficies = [];
-//$scope.formData = {};
+this.canchas = []; 
 
     
+ /*this.cancha = { 
+                    idCancha: -1,
+                    idComplejo: -1,
+                    nombreCancha: '',
+                    nombreComplejo: '',
+                    provincia: -1,
+                    localidad: -1,
+                    cantJugadores: '',
+                    Techada: '',
+                    Luz: '',
+                    Precio: ''
+                  }; */
+
+
+
 self.provincias = {
         prov: [],
         //selectedOption:{IdProvincia: '-1', Nombre: '-Provincia-'} 
@@ -32,7 +47,12 @@ ProvinciasService.query().$promise.then(function(data) {
         self.provincias.prov = data;
         //self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
         self.provincias.prov.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Provincia-'});
-    });      
+    }); 
+
+    
+/*self.canchas = {
+    cancha: []
+};*/
     
     
 this.getLocalidades = function(){
@@ -63,7 +83,27 @@ TiposSuperficiesService.query().$promise.then(function(data) {
         self.superficies.sup = data;
         //self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
         self.superficies.sup.splice(0, 0, {IdSuperficie: '-1', Descripcion: '-Superficie-'});
-    });       
+    });
+    
+    
+/***************************CANCHAS************************************************************/
+    this.getCanchas = function(){
+			CanchasService.query().$promise.then(function(data){
+				
+                //self.canchas.cancha = data;
+                self.canchas = data;
+			});
+		
+	};
+/*********************************************************************************************/
+
+    
+    
+    
+    
+    
+    
+    
     
     /*INICIO FECHAS*/
     /*PARA FECHAS*/

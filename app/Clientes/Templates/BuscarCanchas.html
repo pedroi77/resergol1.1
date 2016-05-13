@@ -30,54 +30,28 @@
                         <form id="user-form" class="form-horizontal form-label-left">
                             <fieldset>
                                 <legend class="section-buscar legend-mod">Datos de la cancha</legend></legend>
-                                
-                                
                                 <label for="provincias" class="control-label col-sm-2">Provincia</label>    
                           
                                 <div class=" col-sm-4 ">
-                                    <!--<select id="provincias" required="required"
-                                            data-placeholder="Seleccione una provincia" 
-                                            class="form-control" 
-                                            name="provincias" style="margin-bottom:5px;">
-                                        <option value=""></option>
-                                        <option value="1">Buenos Aires</option>
-                                        <option value="2">Capital Federal</option>
-                                        <option value="3">Córdoba</option>
-                                        <option value="4" selected="selected">Mendoza</option>
-                                    </select>-->
-                                    
-                                    <select  data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="bus.provincias.selectedProv" 
+                                  
+                                    <select style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="bus.provincias.selectedProv" 
                                             ng-options="provincia.Nombre for provincia in bus.provincias.prov track by
                                                         provincia.IdProvincia" ng-change="bus.getLocalidades()">
                                     </select> 
-                                    
                                 </div>    
                           
                                 <label for="localidades" class="control-label col-sm-2">Localidad</label>
                                 <div class=" col-sm-4">    
-                               
-                                    <!--<select id="localidades" required="required"
-                                            data-placeholder="Seleccione una localidad" 
-                                            class=" form-control" 
-                                            name="localidades" style="margin-bottom:5px;">
-                                        <option value=""></option>
-                                        <option value="1">Morón</option>
-                                        <option value="2">Capital Federal</option>
-                                        <option value="3">Lomas de zamora</option>
-                                        <option value="4" selected="selected">Avellaneda</option>
-                                    </select>-->
-                                    
                                     <select data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="bus.localidades.selectedOption" 
                                                 ng-options="localidad.Nombre for localidad in bus.localidades.loc track by               localidad.Nombre" >
                                     </select>
-                                    
                                 </div>
                             
                                 <label for="jugadores" class="control-label col-sm-2">Jugadores</label>
                                 <div class="col-sm-4">
-                                    <select id="provincias" required="required"
+                                    <select id="jugadores" required="required"
                                             class=" form-control" 
-                                            name="provincias" style="margin-bottom:5px;">
+                                            name="jugadores" style="margin-bottom:5px;">
                                         <option value="1" selected="selected">5 vs 5</option>
                                         <option value="2">6 vs 6</option>
                                         <option value="3">7 vs 7</option>
@@ -98,16 +72,6 @@
                              
                                <label for="sel2" class="control-label col-sm-2" >Fecha</label>
                                <div class="col-sm-4">    
-                                    <!--<select id="fecha" required="required"
-                                            data-placeholder="Seleccione una localidad" 
-                                            class="form-control" 
-                                            name="localidades" style="margin-bottom:5px;">
-                                        <option value="1" selected="selected">lunes 15</option>
-                                        <OPTION>martes</OPTION> 
-                                        <OPTION>Miercoles</OPTION> 
-                                        <OPTION>Jueves</OPTION> 
-                                        <OPTION>Viernes</OPTION> 
-                                    </select>-->
                                     <p class="input-group">
                                                       <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Cerrar" alt-input-formats="altInputFormats" />
                                                       <span class="input-group-btn">
@@ -136,10 +100,10 @@
                                 <br>
                             
                                 
-                                
-                                <label for="precio" class="control-label col-sm-3">Precio máximo</label>
+                            
+                            <label for="precio" class="control-label col-sm-3 ">Precio máximo</label>
                                 <div class="col-sm-3">       
-                                    <input  type="number" id="precio" class="input-sm col-sm-3 form-control">
+                                    <input   type="number" id="precio" class="input-sm col-sm-3 form-control">
                                 </div>
                                 
                                 <div class="form-group col-sm-6">
@@ -171,8 +135,7 @@
                                <br>
                                 
                                 <div class="col-sm-12">
-                                    <button class="btn btn-md btn-success btn-block"><i class="fa fa-plus glyphicon
-                                                            glyphicon-search"></i>Buscar</button>
+                                    <button class="btn btn-md btn-success btn-block" ng-click="bus.getCanchas()"><i class="fa fa-plus glyphicon glyphicon-search"></i>Buscar</button>
                                 </div>
                             </fieldset>
                         </form>
@@ -217,7 +180,22 @@
             <hr>
             <!-- aca dejar un unico cuadro y crear en con ng-repeat los cuadros necesarios -->
             <div class ="principal row filtro-Complejos" ng-controller="ClientesController as cli">
-                <div class="col-md-3 portfolio-item">
+ 
+                <div class="col-md-3 portfolio-item" ng-repeat="cancha in bus.canchas">
+                    <a href="#">
+                        <img class="img-responsive" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
+                    </a>
+                    <h4>
+                        <p href="#"><strong>{{cancha.NombreCancha}}</strong></p>
+                        <p>en {{cancha.NombreComplejo}}</p>
+                    </h4>
+                        <p>({{cancha.Calle}} {{cancha.Altura}})</p>
+                        <p>Precio:<strong> {{cancha.Precio | currency:"$" }}</strong></p>
+                    
+                    
+                </div>
+                
+                <!--<div class="col-md-3 portfolio-item">
                     <a href="#">
                         <img class="img-responsive" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
                     </a>
@@ -259,7 +237,7 @@
                     </h3>
                     <p>Descripcion Sencilla</p>
                 </div>
-            </div> 
+            </div>-->
     </div>
 </div>     
 <hr>

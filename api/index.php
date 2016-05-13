@@ -8,6 +8,7 @@ require_once("modelos/duenios.php");
 require_once("modelos/clientes.php");
 require_once("modelos/administradores.php");
 require_once("modelos/torneos.php");
+require_once("modelos/canchas.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -234,15 +235,14 @@ $app->get('/jugadores/:idDuenio', function($idDuenio){
 });
 
 
+/*****************************************CANCHAS****************************************************************************/
 
-/****************************************USUARIOS (USADO PARA CLIENTES Y DUEÑOS)***********************************************/
-//existe EMAIL
-
-/*$app->get('/usuario/:email', function($email){
-    $usuario = new Common();
-    $data = $usuario->existeEmail($email);
+//Get canchas con filtros.
+$app->get('/canchas', function(){
+    $canchas = new Cancha();
+    $data = $canchas->getCanchas();
 	sendResult($data);
-});*/
+});
 
 
 
