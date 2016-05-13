@@ -107,13 +107,13 @@
   
                                                   <div class="col-sm-4">
                                                     <p class="input-group">
+                                                        <!--date-disabled="tor.disabled(date)"-->
                                                       <input type="text" class="form-control "  
                                                              uib-datepicker-popup="{{format}}" 
                                                              ng-model="tor.FecInscDesde" 
                                                              min-date="dateOptionsInscDesde.minDate"    
                                                              is-open="FecInscripcionDesde.opened" 
                                                              datepicker-options="dateOptionsInscDesde" 
-                                                             date-disabled="tor.disabled(date)" 
                                                              ng-required="true"  
                                                              close-text="Cerrar"
                                                              alt-input-formats="altInputFormats" 
@@ -133,8 +133,8 @@
                                                              is-open="FecInscripcionHasta.opened" 
                                                              min-date="dateOptionsInscHasta.minDate"    
                                                              datepicker-options="dateOptionsInscHasta"  
-                                                             date-disabled="tor.disabled(date)"  
                                                              ng-required="true" close-text="Cerrar" 
+                                                             ng-blur="tor.setearTorneoDesde()"
                                                              alt-input-formats="altInputFormats" />
                                                       <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default" ng-click="OpenFecInscHasta()"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -161,7 +161,8 @@
                                                              is-open="FecDesde.opened" 
                                                              datepicker-options="dateOptions" 
                                                              ng-required="true" 
-                                                             close-text="Close" 
+                                                             ng-blur= "tor.setearTorneoHasta()"
+                                                             close-text="Cerrar" 
                                                              alt-input-formats="altInputFormats" />
                                                       <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default" ng-click="OpenFecDesde()"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -178,7 +179,7 @@
                                                              is-open="FecHasta.opened" 
                                                              datepicker-options="dateOptions" 
                                                              ng-required="true" 
-                                                             close-text="Close" 
+                                                             close-text="Cerrar" 
                                                              alt-input-formats="altInputFormats" />
                                                       <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default" ng-click="OpenFecHasta()"><i class="glyphicon glyphicon-calendar"></i></button>

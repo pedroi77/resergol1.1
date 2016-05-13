@@ -55,3 +55,12 @@ insert into TiposSuperficie(Descripcion) values('Tierra');
 insert into TorneosEstados(Descripcion) values ('Activo');
 insert into TorneosEstados(Descripcion) values ('Inscripción');
 insert into TorneosEstados(Descripcion) values ('Finalizado');
+
+/*Dias*/
+insert dias(Nombre) values ('Lunes');
+insert dias(Nombre) values ('Martes');
+insert dias(Nombre) values ('Miercoles');
+insert dias(Nombre) values ('Jueves');
+insert dias(Nombre) values ('Viernes');
+insert dias(Nombre) values ('Sabado');
+insert dias(Nombre) values ('Domingo');

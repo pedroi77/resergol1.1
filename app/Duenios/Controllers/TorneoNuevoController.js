@@ -75,6 +75,24 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
       this.TorneoDesde = new Date();
       this.TorneoHasta = new Date();
     
+      this.setearDesdeInsc= function(){
+        self.FecInscHasta = self.FecInscDesde;
+        $scope.dateOptionsInscHasta.minDate= self.FecInscDesde;
+        self.setearTorneoDesde();  
+      };
+    
+     this.setearTorneoDesde= function(){
+        self.TorneoDesde = self.FecInscHasta;
+        self.TorneoHasta = self.FecInscHasta;
+        $scope.dateOptionsTorneoDesde.minDate= self.TorneoDesde;
+        $scope.dateOptionsTorneoHasta.minDate= self.TorneoHasta;
+      };
+ 
+     this.setearTorneoHasta = function(){
+        self.TorneoHasta = self.TorneoDesde;
+        $scope.dateOptionsTorneoHasta.minDate= self.TorneoHasta;
+     };
+    
       $scope.dateOptionsInscDesde = {
         dateDisabled: disabled,
         language: 'es-es',  
@@ -89,12 +107,30 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         language: 'es-es',  
         formatYear: 'yy',
         maxDate: new Date(2018, 1, 1),
-        //minDate: self.FecInscDesde,
-        minDate: new Date(2016, 4, 18),
+        minDate: new Date(),
+        startingDay: 1
+      };
+    
+      $scope.dateOptionsTorneoDesde = {
+        dateDisabled: disabled,
+        language: 'es-es',  
+        formatYear: 'yy',
+        maxDate: new Date(2018, 1, 1),
+        minDate: new Date(),
+        startingDay: 1
+      };
+    
+       $scope.dateOptionsTorneoHasta = {
+        dateDisabled: disabled,
+        language: 'es-es',  
+        formatYear: 'yy',
+        maxDate: new Date(2018, 1, 1),
+        minDate: new Date(),
         startingDay: 1
       };
 
- 
+
+        //Deshabilita x eje el dom 0 o el sab 6
       function disabled(data) {
         var date = data.date,
           mode = data.mode;
@@ -123,7 +159,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         $scope.FecHasta.opened = true;
       };
     
-    
+     
       $scope.setDate = function(year, month, day) {
         $scope.dt = new Date(year, month, day);
       };
