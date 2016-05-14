@@ -64,10 +64,11 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
     ProvinciasService.query().$promise.then(function(data) {
         self.provincias.prov = data;
         self.provincias.prov.push({IdProvincia: '-1', Nombre: 'Provincia'}); //Valor por defecto
+        //self.provincias.prov.splice(0, 0, {IdProvincia: '-1', Nombre: '-Provincia-'});
     });
  
-    self.localidades.loc.push({IdLocalidad: '-1', Nombre: 'Localidad'}); 
-    
+    //self.localidades.loc.push({IdLocalidad: '-1', Nombre: 'Localidad'}); 
+    self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
     
     this.getLocalidades = function(){
         var idProv = self.provincias.selectedProv.IdProvincia;
@@ -181,7 +182,7 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
                
     this.createDuenio = function(){
        
-        self.mostrarDatos();
+        //self.mostrarDatos();
         var duenioNuevo = new DueniosService();
         self.Duenio.idProv = self.provincias.selectedProv.IdProvincia;
         self.Duenio.idTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
@@ -207,19 +208,21 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
         //console.log(duenioNuevo.data);
 
          DueniosService.save(duenioNuevo.data, function(reponse){
-            alert("El registro se realizo correctamente! " + reponse.data);  //Quitar el id
+            //console.("El registro se realizo correctamente! " + reponse.data);  //Quitar el id
+             $('#registracionDuenioModal').modal('hide');
+             $('#mensajeBienvenida').modal('show');
           },function(errorResponse){
               console.log(errorResponse.data.message);  
          });
-       
-        $('#registracionDuenioModal').modal('hide');
+        
         //self.blanquearDatos();
         //document.getElementById("registracionDuenioModal").();
      };
     
-        this.blanquearDatos = function(){
+    this.limpiarForm = function(form){
         
-            /*self.Duenio.id: -3,
+            /*form.$setPristine();
+            self.Duenio.id: -3,
             self.Duenio.tipo: 'D',
             self.Duenio.usuario: '', 
             self.Duenio.email: '',
@@ -258,6 +261,45 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
             }   
         }
     };
+    
+    this.duenioValido = function(){
+      
+        //console.log('tipo doc-->' + self.cliente.tipoDoc);
+        if(!self.Duenio.existe && !self.Duenio.existeDni && !self.Duenio.existeMail
+          && self.Duenio.contraseniasIguales && self.Duenio.tipoDoc > 0 && self.Duenio.idProv > 0 && self.Duenio.idLoc > 0)
+        {
+            return true;
+        }
+        else
+        {
+                return false;
+        }
+    };
+    
+    this.enviarMail = function(){
+        
+        var emailFrom = "reserGol@localhost.com";
+        var emailTo = "matiasfumacoo@gmail.com";
+        var mensaje = "Se ha registrado un nuevo dueño!. \nUsuario" + "usuario: " + self.Duenio.usuario
+             + '\n' + "email: " + self.Duenio.email
+             + '\n'+ "contrasenia: " + self.Duenio.contrasenia
+             + '\n'+ "contrasenia2: " + self.Duenio.contrasenia2
+             + '\n'+ "nombre: " + self.Duenio.nombre
+             + '\n'+ "apellido: " + self.Duenio.apellido
+             + '\n'+ "tipoDoc: " + self.tiposDoc.selectedOption.IdTipoDoc
+             + '\n'+ "nroDoc: " + self.Duenio.nroDoc
+             + '\n'+ "nombreComplejo: " + self.Duenio.nombreComplejo
+             + '\n'+ "NroTelef: " + self.Duenio.NroTelef
+             + '\n'+ "prov: " + self.provincias.selectedProv.IdProvincia
+             + '\n'+ "loc: " + self.localidades.selectedOption.IdLocalidad
+             + '\n'+ "direccion: " + self.Duenio.direccion
+             + '\n'+ "nroCalle: " + self.Duenio.nroCalle;
+        
+        
+        
+    };
    
 });
+
+
 
