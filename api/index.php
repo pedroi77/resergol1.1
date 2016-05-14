@@ -234,6 +234,12 @@ $app->get('/jugadores/:idDuenio', function($idDuenio){
 	sendResult($data);
 });
 
+//get dias y horarios por duenio
+$app->get('/dias/:idDuenio', function($idDuenio){
+    $dias = new Torneo();
+    $data = $dias->getDiasByDuenio($idDuenio);
+	sendResult($data);
+});
 
 /*****************************************CANCHAS****************************************************************************/
 

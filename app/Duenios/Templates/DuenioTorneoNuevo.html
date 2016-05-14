@@ -277,27 +277,25 @@
                             <div class="col-md-12">
                                 <label for="diaDesde" class="control-label  col-sm-1">De</label>
                                 <div class="col-xs-12 col-md-5">  
+                                    
                                   <select   id="diaDesde" required="required"
-                                            data-placeholder="Dia" 
+                                            data-placeholder="" 
                                             class="select2 form-control col-sm-8" 
-                                            name="diaDesde" >
-                                      <option ng-repeat="Dias in main.filteredList" value="1" selected="selected"> {{Dias.Nombre}}</option>
-
-                                    </select>
+                                            name="diaDesde" 
+                                            ng-model="tor.diasDesde.selectedOption"
+                                            ng-options="dia.nombre for dia in tor.diasDesde.tipos track by dia.nombre">
+                                   </select>
                                 </div>
+                                
                                 <label for="diaHasta" class="control-label  col-sm-1">A</label>
                                 <div class="col-xs-12 col-md-5">  
                                   <select id="diaHasta" required="required"
-                                            data-placeholder="Dia" 
+                                            data-placeholder="" 
                                             class="select2 form-control col-sm-8" 
-                                            name="diaDdiaHastaesde" >
-                                        <option value="1" >Lunes</option>
-                                        <option value="2">Martes</option>
-                                        <option value="3">Miercoles</option>
-                                        <option value="4">Jueves</option>
-                                        <option value="6">Viernes</option>
-                                        <option value="5">sábado</option>
-                                        <option value="7" selected="selected">Domingo</option>
+                                            name="diaDdiaHastaesde" 
+                                            ng-model="tor.diasHasta.selectedOption"
+                                            ng-options="dia.nombre for dia in tor.diasHasta.tipos track by dia.nombre">>
+                                    
                                     </select>
                                 </div>
                             </div>
@@ -306,46 +304,21 @@
                          <div class="col-md-12">
                                     <label id="horaIni" for="sel2" class="  col-sm-1">De</label>
                                     <div class="col-xs-12 col-md-5">  
-                                        <SELECT id="horaIni" name="cboHoraInicial" data-placeholder="Hora"  class="select2 form-control  col-sm-3" > 
-                                            <OPTION value = "1" selected="selected"> 08 Hs</OPTION>
-                                            <OPTION value = "2">09 Hs</OPTION>
-                                            <OPTION value = "3">10 Hs</OPTION>
-                                            <OPTION value = "4">11 Hs</OPTION> 
-                                            <OPTION value = "5">12 Hs</OPTION> 
-                                            <OPTION value = "6">13 Hs</OPTION> 
-                                            <OPTION value = "7">14 Hs</OPTION> 
-                                            <OPTION value = "8">15 Hs</OPTION>
-                                            <OPTION value = "9">16 Hs</OPTION> 
-                                            <OPTION value = "10">17 Hs</OPTION> 
-                                            <OPTION value = "11">18 Hs</OPTION> 
-                                            <OPTION value = "12">19 Hs</OPTION> 
-                                            <OPTION value = "13">19 Hs</OPTION> 
-                                            <OPTION value = "14">20 Hs</OPTION> 
-                                            <OPTION value = "15">21 Hs</OPTION> 
-                                            <OPTION value = "16">22 Hs</OPTION> 
-                                            <OPTION value = "17">23 Hs</OPTION> 
+                                        <SELECT id="horaIni" name="cboHoraInicial" 
+                                                data-placeholder=""  
+                                                class="select2 form-control  col-sm-3" 
+                                                ng-model="tor.diasDesde.selectedOption"
+                                                ng-options="dia.HoraDesde for dia in tor.diasDesde.tipos track by dia.HoraDesde">> 
                                         </SELECT> 
                                     </div>
                                     <label for="sel2" class=" col-sm-1">A</label>
                                     <div class="col-xs-12 col-md-5">  
-                                            <SELECT NAME="cboHoraFin" SIZE=1 class="select2 form-control col-sm-3"> 
-                                            <OPTION >08 Hs</OPTION>
-                                            <OPTION>09 Hs</OPTION>
-                                            <OPTION>10 Hs</OPTION>
-                                            <OPTION>11 Hs</OPTION> 
-                                            <OPTION>12 Hs</OPTION> 
-                                            <OPTION>13 Hs</OPTION> 
-                                            <OPTION>14 Hs</OPTION> 
-                                            <OPTION>15 Hs</OPTION>
-                                            <OPTION>16 Hs</OPTION> 
-                                            <OPTION>17 Hs</OPTION> 
-                                            <OPTION>18 Hs</OPTION> 
-                                            <OPTION>19 Hs</OPTION> 
-                                            <OPTION>19 Hs</OPTION> 
-                                            <OPTION>20 Hs</OPTION> 
-                                            <OPTION>21 Hs</OPTION> 
-                                            <OPTION>22 Hs</OPTION> 
-                                            <OPTION  selected="selected">23 HS</OPTION> 
+                                        <SELECT NAME="cboHoraFin" SIZE=1 
+                                                class="select2 form-control col-sm-3"
+                                                ng-model="tor.diasHasta.selectedOption"
+                                                ng-options=" dia.HoraHasta for dia in tor.diasHasta.tipos track by dia.HoraHasta"> 
+                                           
+                                            
                                         </SELECT> 
                                     </div>    
                                     <div class="col-sm-12" style="margin-top:10px;">

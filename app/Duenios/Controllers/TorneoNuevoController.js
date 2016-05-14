@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService){
+resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService){
 
     var self = this;
     this.tiposTorneos =[];
@@ -21,26 +21,45 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         selectedOption: {CantJugadores: '1'} 
     };   
     
+    this.diasDesde = {
+        tipos: [],
+        selectedOption: {iddia: '1',nombre:'', HoraDesde:'', HoraHasta:''} 
+    };  
+    
+    this.diasHasta = {
+        tipos: [],
+        selectedOption: {iddia: '1',nombre:'', HoraDesde:'', HoraHasta:''} 
+    };  
+    
       
 
     
     
     this.init = function(){
-        //LEER sacar el 2 HARCODE
+        //LEER sacar el 1 HARCODE
         TipoTorneosService.query({idTorneo:-1}).$promise.then(function(data) {
             self.tiposTorneos.tipos = data;
             self.tiposTorneos.selectedOption = self.tiposTorneos.tipos[0];
         }); 
     
-        DueniosSuperficiesService.query({idDuenio:2}).$promise.then(function(data) {
+        DueniosSuperficiesService.query({idDuenio:1}).$promise.then(function(data) {
             self.superficies.tipos = data;
             self.superficies.selectedOption = self.superficies.tipos[0];
         }); 
         
-        DueniosJugadoresService.query({idDuenio:2}).$promise.then(function(data) {
+        DueniosJugadoresService.query({idDuenio:1}).$promise.then(function(data) {
             self.cantJugadores.tipos = data;
             self.cantJugadores.selectedOption = self.cantJugadores.tipos[0];
         }); 
+        
+        
+        DuenioDiasService.query({idDuenio:1}).$promise.then(function(data) {
+            self.diasDesde.tipos = data;
+            self.diasDesde.selectedOption = self.diasDesde.tipos[0];
+            self.diasHasta.tipos = data;
+            self.diasHasta.selectedOption = self.diasDesde.tipos[0];
+        }); 
+        
         
         $scope.toggleMin();
         

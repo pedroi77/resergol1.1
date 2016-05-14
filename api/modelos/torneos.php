@@ -199,6 +199,26 @@ class Torneo
         return $jugadores;
     }
     
+    public function getDiasByDuenio($IdDuenio){  
+
+        $stmt = $this->connection->prepare('SET @IdDuenio := ?');
+        $stmt->bind_param('i', $IdDuenio);
+        $stmt->execute(); 
+        
+        
+              
+        $query = "CALL SP_getDiasByDuenio(@IdDuenio);";
+        $dias= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $dias[] = $fila;
+            }
+            $result->free();
+        }
+        return $dias;
+    }
+    
 }
 
 /*Ejemplo para el POST
