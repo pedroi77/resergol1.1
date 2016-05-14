@@ -23,18 +23,11 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
     
     this.diasDesde = {
         tipos: [],
-        selectedOption: {iddia: '1',nombre:'', HoraDesde:'', HoraHasta:''} 
-    };  
+        selectedOption: {iddia: '1',nombre:'', HoraDesde:'', HoraHasta:'', juega:0} 
+    };    
     
-    this.diasHasta = {
-        tipos: [],
-        selectedOption: {iddia: '1',nombre:'', HoraDesde:'', HoraHasta:''} 
-    };  
-    
-      
-
-    
-    
+   
+   
     this.init = function(){
         //LEER sacar el 1 HARCODE
         TipoTorneosService.query({idTorneo:-1}).$promise.then(function(data) {
@@ -55,12 +48,11 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         
         DuenioDiasService.query({idDuenio:1}).$promise.then(function(data) {
             self.diasDesde.tipos = data;
-            self.diasDesde.selectedOption = self.diasDesde.tipos[0];
-            self.diasHasta.tipos = data;
-            self.diasHasta.selectedOption = self.diasDesde.tipos[0];
+            //self.diasDesde.selectedOption = self.diasDesde.tipos[0];
         }); 
         
-        
+       
+    
         $scope.toggleMin();
         
     };

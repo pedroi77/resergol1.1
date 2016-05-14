@@ -9,7 +9,7 @@ CREATE PROCEDURE SP_getDiasByDuenio
 ) 
 /*CALL SP_getDiasByDuenio (2);*/
 BEGIN 
-    SELECT d.iddia, d.nombre , cd.HoraDesde, cd.HoraHasta
+    SELECT d.iddia, d.nombre , cd.HoraDesde, cd.HoraHasta, 0 as juega
     FROM complejosdias      AS cd
     INNER JOIN complejos    AS c ON (c.idcomplejo = cd.idcomplejo)
     INNER JOIN dias         AS d ON (d.iddia between cd.iddiadesde and cd.iddiahasta)
