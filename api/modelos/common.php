@@ -168,7 +168,12 @@ class Common
         return $superficies;
     }
     
-    
+    public function enviarMail($destino, $asunto, $mensaje)
+    {
+        $opcional= "Login de dueño";
+        
+        mail($destino, $asunto, $mensaje, $opcional);
+    }
    
     
     
