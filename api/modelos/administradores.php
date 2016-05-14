@@ -32,4 +32,52 @@ class Administrador
         }
         return $administrador;
     }
+    
+    public function getDueniosPendientes(){
+        
+        $query = "CALL SP_getDueniosPendientes();";
+        
+        $dueniosPendientes= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $dueniosPendientes[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $dueniosPendientes;
+        
+    }
+    
+    public function aceptarDuenio($IdDuenio, $acepta){
+        
+        $resultado = 0;
+        
+        $stmt = $this->connection->prepare('SET @IdDuenio := ?');
+        $stmt->bind_param('i', $IdDuenio);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @acepta := ?');
+        $stmt->bind_param('i', $acepta);
+        $stmt->execute(); 
+        
+        //salida
+        $stmt = $this->connection->prepare('SET @resultado := ?');
+        $stmt->bind_param('i', $resultado);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_administrarDuePendiente(@IdDuenio, @acepta, @resultado);";
+        
+        $duenioAceptar= array();
+        
+        if( $result = $this->connection->query($query) ){
+            $r = $this->connection->query('SELECT @resultado as result');
+            //$r = $this->connection->query('SELECT @id as id, @tipo as tipo');
+            $cliente[] = $r->fetch_assoc();               
+        }
+        
+        return $duenioAceptar;
+        
+    }
 }

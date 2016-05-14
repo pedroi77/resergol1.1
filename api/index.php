@@ -122,7 +122,21 @@ $app->get('/admin/:user/:pass', function($usuario,$contrasenia){
     }
 });
 
+//Get de dueños pendientes.
+$app->get('/dueniosPendientes', function(){
+    $duePendientes = new Administrador();
+    $data = $duePendientes->getDueniosPendientes();
+	sendResult($data);
+});
 
+//Cambia de estado a los dueños pendientes.
+$app->put('/administrarDuenio/:IdDuenio/:acepta', function($IdDuenio, $acepta){
+    $aceptarDuenio = new Administrador();
+    $data = $aceptarDuenio->aceptarDuenio($IdDuenio, $acepta);
+	sendResult($data);
+});
+
+/*************************************************FIN ADMINISTRADORES*************************************************/
 
 //existe usuario
 $app->get('/usuario/:user', function($user){

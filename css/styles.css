@@ -1106,6 +1106,12 @@ background: #333333;
     color: white;
 
 }
+
+.tableStyle {
+    border: 1px solid rgb(212,212,212);
+    width: 400px; 
+    height: 300px;
+}
 /*****Fin TABLA*******/
 
 /*********BOTONES FECHAS DE FIXTURE**********/

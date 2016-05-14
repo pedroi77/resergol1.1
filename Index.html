@@ -312,18 +312,18 @@
                                 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input id="contrasenia" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Contraseña" ng-maxlength="12" name="contrasenia" ng-model="due.Duenio.contrasenia" required ng-class="{ error: frmDatosUsuario.contrasenia.$error.required && frmDatosUsuario.contrasenia.$dirty, warning: frmDatosUsuario.contrasenia.$error.contrasenia }" ng-blur="due.validarContrasenias()">
-                                        <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.contrasenia.$error.maxlength" class= "msjError">
-                                            Supero la cantidad máxima de caracteres.
+                                        <input id="contrasenia" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Contraseña" ng-minlength="6" ng-maxlength="25" name="contrasenia" ng-model="due.Duenio.contrasenia" required ng-class="{ error: frmDatosUsuario.contrasenia.$error.required && frmDatosUsuario.contrasenia.$dirty, warning: frmDatosUsuario.contrasenia.$error.contrasenia }" ng-blur="due.validarContrasenias()">
+                                        <span ng-show="!frmDatosUsuario.$pristine && (frmDatosUsuario.contrasenia.$error.maxlength || frmDatosUsuario.contrasenia.$error.minlength )" class= "msjError">
+                                           Debe tener entre 6 y 25 caracteres.
                                         </span>
                                     </div>
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control ng-dirty ng-touched ng-valid-password ng-valid ng-valid-required" placeholder="Repita contraseña" ng-maxlength="12" name="password" ng-model="due.Duenio.contrasenia2" required ng-class="{ error: frmDatosUsuario.password.$error.required && frmDatosUsuario.password.$dirty, warning: frmDatosUsuario.password.$error.contrasenia2 }" ng-blur="due.validarContrasenias()">
-                                        <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.password.$error.maxlength" class= "msjError">
-                                            Supero la cantidad máxima de caracteres.
-                                        </span>
+                                        <input id="password" type="password" class="form-control ng-dirty ng-touched ng-valid-password ng-valid ng-valid-required" placeholder="Repita contraseña" ng-minlength="6" ng-maxlength="25" name="password" ng-model="due.Duenio.contrasenia2" required ng-class="{ error: frmDatosUsuario.password.$error.required && frmDatosUsuario.password.$dirty, warning: frmDatosUsuario.password.$error.password}" ng-blur="due.validarContrasenias()">
                                         <span ng-show="!frmDatosUsuario.$pristine && !due.Duenio.contraseniasIguales" class= "msjError">
                                             Las contraseñas no coinciden.
+                                        </span>
+                                        <span ng-show="!frmDatosUsuario.$pristine && (frmDatosUsuario.password.$error.maxlength || frmDatosUsuario.password.$error.minlength )" class= "msjError">
+                                           Debe tener entre 6 y 25 caracteres.
                                         </span>
                                     </div>  
                                 </div>
@@ -461,6 +461,26 @@
           </div>    
   </div>
 </div>
+    
+<div id="mensajeBienvenida" ng-controller="DueniosController as due" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="text-center">ReserGol</h2>
+            </div>
+            <div class="modal-body">
+                <h2 class="text-center "><img src="images/logo/logoMediano.png" class=""></h2>
+                <div class="col-md-12 text-center">
+                Muchas gracias por elegirnos! Se te enviara un mail de confirmación de cuenta a tu email para que puedas administrar tu complejo, cargar tus canchas y crear tus torneos!.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" ng-click="due.enviarMail()" data-dismiss="modal" aria-hidden="true">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--about modal-->
 <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -532,6 +552,8 @@
         <script src="app/Admin/js/Admin.js"></script>    
         <script src="app/Admin/js/AdminController.js"></script>
         <script src="app/Admin/js/AdminService.js"></script>
+        <script src="app/Admin/Services/DueniosPendientesService.js"></script>
+        <script src="app/Admin/Services/AceptarDueniosService.js"></script>
     
 		<script src="app/Common/CommonController.js"></script>
 		<script src="app/Common/services/DocumentosService.js"></script>

@@ -3,21 +3,38 @@
         
         <header class="row widget" >
             <div style = "color: white" class="container">
-                <h3  style=" font-size: 50px; text-align:center;  font-style:italic;" ></span>Solicitudes de Complejos</h3>
+                <h3  style=" font-size: 50px; text-align:center;  font-style:italic;" >Solicitudes de Complejos</h3>
             </div>
         </header>
         
          
-        <table ng-table="vm.tableParams" class="table" show-filter="true">
-            <tr ng-repeat="user in $data">
-                <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
-                    {{user.name}}
-                </td>
-                <td title="'Age'" filter="{ age: 'number'}" sortable="'age'">
-                    {{user.age}}
-                </td>
+    <div class="col-md-12" ng-controller="AdminController as adm" style="background-color:white;">
+        <table ng-table="adm.table" class="table" style="background-color:lightgrey;">
+            <tr ng-repeat="due in adm.duePendientes" style="background-color:white;">
+                <td title="'ID'" filter="{ID: 'number'}" sortable="'ID'" ng-show="false">{{due.IdDuenio}}</td>
+                <td title="'Usuario'" filter="{Usuario: 'text'}" sortable="'Usuario'">{{due.Usuario}}</td>
+                <td title="'F. Alta'" filter="{FechaAlta: 'text'}" sortable="'FechaAlta'">{{due.FechaAlta}}</td>
+                <td title="'Complejo'" filter="{nombreComplejo: 'text'}" sortable="'nombreComplejo'">{{due.nombreComplejo}}</td>
+                <td title="'Tel.'" filter="{NroTelef: 'number'}" sortable="'NroTelef'">{{due.NroTelef}}</td>
+                <td title="'Calle'" filter="{Calle: 'text'}" sortable="'Calle'">{{due.Calle}}</td>
+                <td title="'Altura'" filter="{Altura: 'number'}" sortable="'Altura'">{{due.Altura}}</td>
+                <td title="'Provincia'" filter="{Provincia: 'text'}" sortable="'Provincia'">{{due.Provincia}}</td>
+                <td title="'Localidad'" filter="{Localidad: 'text'}" sortable="'Localidad'">{{due.Localidad}}</td>
+                <td>
+                    <button type="button" ng-click="adm.aceptarDuenio(due.IdDuenio, 0)" class="btn btn-sm btn-danger">
+                        <i class="glyphicon glyphicon-remove-circle">
+                        </i>
+                    </button>
+				</td>
+                <td>
+                    <button type="button" ng-click="adm.aceptarDuenio(due.IdDuenio, 1)" class="btn btn-sm btn-success">
+                        <i class="glyphicon glyphicon glyphicon-ok">
+                        </i>
+                    </button>
+				</td>
             </tr>
         </table>
+    </div>
         
         
       
