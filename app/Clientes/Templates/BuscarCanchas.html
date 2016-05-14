@@ -174,14 +174,56 @@
                     </div>
                 
             </div> 
-
             </div>
+            <div ng-show="bus.canchas.length > 0">
+                <p>Mostrando {{bus.canchas.length}} canchas.</p>
+            </div>
+            <!--<div ng-show="bus.canchas.length == 0">
+                <p>No se encontraron canchas.</p>
+            </div>-->
+            
             <!-- /.row -->
             <hr>
             <!-- aca dejar un unico cuadro y crear en con ng-repeat los cuadros necesarios -->
             <div class ="principal row filtro-Complejos" ng-controller="ClientesController as cli">
- 
-                <div class="col-md-3 portfolio-item" ng-repeat="cancha in bus.canchas">
+                
+                
+                <div class="col-lg-3" style="height:250px;" ng-repeat="cancha in bus.canchas">
+    				<div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
+						<p>
+							<img src="/../resergol1.1/images/canchas/cancha1.jpg" class="img-thumbnail" style="height:250px;" alt="">
+						</p>
+						<div class="caption">
+							<div class="blur"></div>
+							<div class="caption-text">
+								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:1px;">                       {{cancha.NombreCancha}}
+                                    <button class="btn-xs btn-primary" id="cuatro">"Muy buena!"</button>
+                                </h3>
+                                <h4 class="fa fa-user titul" style="padding:1px;">
+                                    en <a style="color:orange;" ui-sref="Clientes.verComplejo">{{cancha.NombreComplejo}}</a>             
+                                </h4>
+                                <h6 style="border-bottom:1px solid white; padding:3px;">
+                                {{cancha.Calle}} {{cancha.Altura}}
+                                </h6>
+								<ul>
+                                    <!--<li>Dirección: {{cancha.Calle}} {{cancha.Altura}}</li>-->
+                                    <li>Tamaño: {{cancha.CantJugadores}} vs. {{cancha.CantJugadores}} </li>
+                                    <li>Superficie: {{cancha.Superficie}}</li>
+                                    <li>Techada: {{cancha.Techada == 1 ? "SI" : "NO"}} </li>
+                                    <li>Luz: {{cancha.Luz == 1 ? "SI" : "NO"}}</li>
+                                    <li>Precio p/Hora: ${{cancha.Precio}} </li>
+                                </ul>
+								<!--<a class=" btn btn-default" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:0},'fast');return false;">
+                                <span class="glyphicon glyphicon-eye-open">VER</span></a>-->
+                                <div class="col-md-12 text-center">
+								<a href="#" class="btn btn-success"><span class="glyphicon glyphicon-eye-open"></span> VER</a>
+                                </div>
+							</div>
+						</div>
+					</div>
+	           </div>
+                
+                <!--<div class="col-md-3 portfolio-item" ng-repeat="cancha in bus.canchas">
                     <a href="#">
                         <img class="img-responsive" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
                     </a>
@@ -193,7 +235,35 @@
                         <p>Precio:<strong> {{cancha.Precio | currency:"$" }}</strong></p>
                     
                     
-                </div>
+                </div>-->
+                
+				<!--<div class="col-md-3 thumbnail" ng-repeat="cancha in bus.canchas">
+					<h4 class="text-center"><span class="label label-success">{{cancha.NombreCancha}}</span></h4>
+					<img alt="algo" src="/../resergol1.1/images/complejos/complejo2.jpg" class="img-thumbnail" ng-click="cli.irCancha()">
+					<div class="caption">
+						<div class="row">
+							<div class="col-md-12 col-xs-12 text-center">
+								<h5><strong>en "{{cancha.NombreComplejo}}"</strong> ({{cancha.Calle}} {{cancha.Altura}})</h5>
+							</div>
+						</div>
+                        <div class="row">
+							<div class="col-md-4 col-xs-4 price">
+								<h5>
+								<label>$649.99</label></h5>
+							</div>
+						</div>
+                        
+                        
+						<p>32GB, 2GB Ram, 1080HD, 5.1 inches, Android</p>
+						<div class="row">
+							<div class="col-md-12 text-center">
+								<a href="#" class="btn btn-success"><span class="glyphicon glyphicon-eye-open"></span> Ver Cancha</a></div>
+						</div>
+
+						<p> </p>
+					</div>
+				</div>-->
+                
                 
                 <!--<div class="col-md-3 portfolio-item">
                     <a href="#">
