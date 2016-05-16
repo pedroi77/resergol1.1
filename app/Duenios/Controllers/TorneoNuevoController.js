@@ -48,13 +48,34 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         
         DuenioDiasService.query({idDuenio:1}).$promise.then(function(data) {
             self.diasDesde.tipos = data;
-            //self.diasDesde.selectedOption = self.diasDesde.tipos[0];
+            var i;
+            for(i=0; i<self.diasDesde.tipos.length; i++){
+                self.diasDesde.tipos[i]['HoraDesde'] =new Date(1970, 0, 1, parseInt(self.diasDesde.tipos[i]['HoraDesde'].substring(0,2)), 00, 0);
+                self.diasDesde.tipos[i]['HoraHasta'] =new Date(1970, 0, 1, parseInt(self.diasDesde.tipos[i]['HoraHasta'].substring(0,2)), 00, 0);
+                self.diasDesde.tipos[i]['juega'] = '1';
+                self.diasDesde.tipos[i]['siNo'] = 'SI';
+                self.diasDesde.tipos[i]['desdeMin'] =  self.diasDesde.tipos[i]['HoraDesde'].getHours().toString() + ':0' +
+                                                       self.diasDesde.tipos[i]['HoraDesde'].getMinutes().toString();
+                
+                self.diasDesde.tipos[i]['hastaMax'] =  self.diasDesde.tipos[i]['HoraHasta'].getHours().toString() + ':0' +
+                                                       self.diasDesde.tipos[i]['HoraHasta'].getMinutes().toString();
+            };
         }); 
         
        
     
         $scope.toggleMin();
         
+    };
+    
+    this.juegaSiNo = function(indice, valor){
+        self.diasDesde.tipos[indice]["juega"]=valor;
+        if(valor==1){
+            self.diasDesde.tipos[indice]["siNo"]='SI';
+        }
+        else{
+            self.diasDesde.tipos[indice]["siNo"]='NO';
+        };
     };
     
     this.fecha= function(){

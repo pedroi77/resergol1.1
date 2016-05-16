@@ -1,5 +1,4 @@
 
-
 use resergol;
 
 CREATE TABLE DocEstados(	
@@ -916,8 +915,6 @@ CREATE TABLE TorneosCanchas(
 IdTorneo   	INT   NOT NULL, 
 IdComplejo	INT   NOT NULL,
 IdCancha	  INT   NOT NULL,
-HoraDesde	  TIME  NOT NULL,
-HoraHasta	  TIME  NOT NULL,
 PRIMARY KEY(IdTorneo,IdComplejo,IdCancha),
 CONSTRAINT canchas_Torneos_fk   FOREIGN KEY (IdTorneo) REFERENCES  Torneos(IdTorneo),
 CONSTRAINT com_Torneos_fk   FOREIGN KEY (IdComplejo,IdCancha) REFERENCES  Canchas(IdComplejo,IdCancha)

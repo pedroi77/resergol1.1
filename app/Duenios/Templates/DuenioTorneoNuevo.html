@@ -269,103 +269,54 @@
                     
                     <section class="widget">
                         <header>
-                            <h4 class="mensajeExplicacion"><i class="fa fa-user"></i>Días en los que se juega el torneo</h4>
+                            <h4 class="mensajeExplicacion"><i class="fa fa-user"></i>Días y horarios en los que se juega el torneo</h4>
                         </header>
                         <fieldset>
                         
                         <div  class="row col-md-12">
                             <div class="col-md-12">
-                                 <table ng-table="tor.table" class="table" style="background-color:lightgrey;">
+                                 <table ng-table="tor.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
                                     <tr ng-repeat="dia in tor.diasDesde.tipos" style="background-color:white;">
                                         <td title=""  ng-if="false">{{dia.iddia}}</td>
                                         <td title="'Dia'"  >{{dia.nombre}}</td>
-                                        <td title="'Desde'" ng-switch="true">
+                                        <td title="'Desde'" ng-switch="true" style="width:25%">
                                              <span ng-switch-default class="editable-text">{{dia.HoraDesde}}</span>
                                             <div class="controls" ng-class="" ng-switch-when="true">
-                                                <input type="number" name="age" ng-model="dia.Desde" class="editable-input form-control input-sm" required/>
+                                                <input type="time" 
+                                                       name="HoraDesde" 
+                                                       ng-model="dia.HoraDesde" 
+                                                       class="editable-input form-control "
+                                                       min={{dia.desdeMin}} max={{dia.hastaMax}}
+                                                       required/>
                                             </div>
                                         </td>
-                                        <td title="'Hasta'" >{{dia.HoraHasta}}</td>
-                                        <td title="'Juega'"><input type="checkbox" ng-model="dia.juega" /></td>
+                                        <td title="'Hasta'" ng-switch="true" style="width:25%">
+                                            <span ng-switch-default class="editable-text">{{dia.HoraHasta}}</span>
+                                            <div class="controls" ng-class="" ng-switch-when="true">
+                                                <input type="time" 
+                                                       name="HoraDesde" 
+                                                       ng-model="dia.HoraHasta" 
+                                                       min={{dia.desdeMin}} max={{dia.hastaMax}}
+                                                       class="editable-input form-control" required/>
+                                            </div>
+                                        </td>
+                                        <td title="'Juega'">
+                                            <button type="button" ng-click="tor.juegaSiNo($index,1)" ng-disabled="dia.juega" class="btn btn-sm btn-success">
+                                                <i class="glyphicon glyphicon glyphicon-ok">
+                                                </i>
+                                            </button>
+                                            
+                                            <button type="button" ng-click="tor.juegaSiNo($index,0)" ng-disabled="!dia.juega" class="btn btn-sm btn-danger">
+                                                <i class="glyphicon glyphicon-remove-circle">
+                                                </i>
+                                            </button>
+                                            <label>{{dia.siNo}}</label>
+                             
+                                        </td>
                                         
                                     </tr>
                                 </table>
-                                 <!--
-                                <label for="diaDesde" class="control-label  col-sm-1">De</label>
-                                <div class="col-xs-12 col-md-5">  
-                                    
-                                  <select   id="diaDesde" required="required"
-                                            data-placeholder="" 
-                                            class="select2 form-control col-sm-8" 
-                                            name="diaDesde" 
-                                            ng-model="tor.diasDesde.selectedOption"
-                                            ng-options="dia.nombre for dia in tor.diasDesde.tipos track by dia.nombre">
-                                   </select>
-                                </div>
-                                
-                                <label for="diaHasta" class="control-label  col-sm-1">A</label>
-                                <div class="col-xs-12 col-md-5">  
-                                  <select id="diaHasta" required="required"
-                                            data-placeholder="" 
-                                            class="select2 form-control col-sm-8" 
-                                            name="diaDdiaHastaesde" 
-                                            ng-model="tor.diasHasta.selectedOption"
-                                            ng-options="dia.nombre for dia in tor.diasHasta.tipos track by dia.nombre">>
-                                    
-                                    </select>
-                                </div>
-                            </div>
-                        </div>  
-                        <div  class="row col-md-12" style="margin-top:10px;">    
-                         <div class="col-md-12">
-                                    <label id="horaIni" for="sel2" class="  col-sm-1">De</label>
-                                    <div class="col-xs-12 col-md-5">  
-                                        <SELECT id="horaIni" name="cboHoraInicial" 
-                                                data-placeholder=""  
-                                                class="select2 form-control  col-sm-3" 
-                                                ng-model="tor.diasDesde.selectedOption"
-                                                ng-options="dia.HoraDesde for dia in tor.diasDesde.tipos track by dia.HoraDesde">> 
-                                        </SELECT> 
-                                    </div>
-                                    <label for="sel2" class=" col-sm-1">A</label>
-                                    <div class="col-xs-12 col-md-5">  
-                                        <SELECT NAME="cboHoraFin" SIZE=1 
-                                                class="select2 form-control col-sm-3"
-                                                ng-model="tor.diasHasta.selectedOption"
-                                                ng-options=" dia.HoraHasta for dia in tor.diasHasta.tipos track by dia.HoraHasta"> 
-                                           
-                                            
-                                        </SELECT> 
-                                    </div>    
-                                    <div class="col-sm-12" style="margin-top:10px;">
-                                        <button class="btn btn-md btn-success"><i class="fa fa-plus glyphicon glyphicon-plus"></i> Agregar</button>
-                                    </div>
-                                </div>  
-                            </div>
-                                
                                
-                                     
-                             
-                                <div class="table-responsive col-md-12" style="margin-top:10px;">          
-                                    
-                                    <table class="table table-striped table-bordered table-hover" style= "background-color:white;">
-                                        <thead>
-                                            <tr>
-                                                <th style="color:black;">Cargados</th>
-                                            </tr>
-                                        </thead>
-                                        
-                                          <tr>
-                                            <td style="color:black;">De lunes a viernes de 17Hs a 23Hs</td>
-                                          </tr>
-                                          <tr>
-                                            <td style="color:black;">De Sábados a domingos de 08Hs a 21Hs</td>
-                                          </tr>
-                                        
-                                    </table>
-                                </div>
-                                -->
-                            
                         </fieldset>
                     </section>
                     
