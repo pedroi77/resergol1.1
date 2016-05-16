@@ -273,50 +273,50 @@
                         </header>
                         <fieldset>
                         
-                        <div  class="row col-md-12">
-                            <div class="col-md-12">
-                                 <table ng-table="tor.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
-                                    <tr ng-repeat="dia in tor.diasDesde.tipos" style="background-color:white;">
-                                        <td title=""  ng-if="false">{{dia.iddia}}</td>
-                                        <td title="'Dia'"  >{{dia.nombre}}</td>
-                                        <td title="'Desde'" ng-switch="true" style="width:25%">
-                                             <span ng-switch-default class="editable-text">{{dia.HoraDesde}}</span>
-                                            <div class="controls" ng-class="" ng-switch-when="true">
-                                                <input type="time" 
-                                                       name="HoraDesde" 
-                                                       ng-model="dia.HoraDesde" 
-                                                       class="editable-input form-control "
-                                                       min={{dia.desdeMin}} max={{dia.hastaMax}}
-                                                       required/>
-                                            </div>
-                                        </td>
-                                        <td title="'Hasta'" ng-switch="true" style="width:25%">
-                                            <span ng-switch-default class="editable-text">{{dia.HoraHasta}}</span>
-                                            <div class="controls" ng-class="" ng-switch-when="true">
-                                                <input type="time" 
-                                                       name="HoraDesde" 
-                                                       ng-model="dia.HoraHasta" 
-                                                       min={{dia.desdeMin}} max={{dia.hastaMax}}
-                                                       class="editable-input form-control" required/>
-                                            </div>
-                                        </td>
-                                        <td title="'Juega'">
-                                            <button type="button" ng-click="tor.juegaSiNo($index,1)" ng-disabled="dia.juega" class="btn btn-sm btn-success">
-                                                <i class="glyphicon glyphicon glyphicon-ok">
-                                                </i>
-                                            </button>
-                                            
-                                            <button type="button" ng-click="tor.juegaSiNo($index,0)" ng-disabled="!dia.juega" class="btn btn-sm btn-danger">
-                                                <i class="glyphicon glyphicon-remove-circle">
-                                                </i>
-                                            </button>
-                                            <label>{{dia.siNo}}</label>
-                             
-                                        </td>
-                                        
-                                    </tr>
-                                </table>
-                               
+                        
+                            
+                             <table ng-table="tor.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+                                <tr ng-repeat="dia in tor.diasDesde.tipos" style="background-color:white;">
+                                    <td title=""  ng-if="false">{{dia.iddia}}</td>
+                                    <td title="'Dia'"  >{{dia.nombre}}</td>
+                                    <td title="'Desde'" ng-switch="true" style="width:25%">
+                                         <span ng-switch-default class="editable-text">{{dia.HoraDesde}}</span>
+                                        <div class="controls" ng-class="" ng-switch-when="true">
+                                            <input type="time" 
+                                                   name="HoraDesde" 
+                                                   ng-model="dia.HoraDesde" 
+                                                   class="editable-input form-control "
+                                                   min={{dia.desdeMin}} max={{dia.hastaMax}}
+                                                   required/>
+                                        </div>
+                                    </td>
+                                    <td title="'Hasta'" ng-switch="true" style="width:25%">
+                                        <span ng-switch-default class="editable-text">{{dia.HoraHasta}}</span>
+                                        <div class="controls" ng-class="" ng-switch-when="true">
+                                            <input type="time" 
+                                                   name="HoraDesde" 
+                                                   ng-model="dia.HoraHasta" 
+                                                   min={{dia.desdeMin}} max={{dia.hastaMax}}
+                                                   class="editable-input form-control" required/>
+                                        </div>
+                                    </td>
+                                    <td title="'Juega'">
+                                        <button type="button" ng-click="tor.juegaSiNo($index,1)" ng-disabled="dia.juega" class="btn btn-sm btn-success">
+                                            <i class="glyphicon glyphicon glyphicon-ok">
+                                            </i>
+                                        </button>
+
+                                        <button type="button" ng-click="tor.juegaSiNo($index,0)" ng-disabled="!dia.juega" class="btn btn-sm btn-danger">
+                                            <i class="glyphicon glyphicon-remove-circle">
+                                            </i>
+                                        </button>
+                                        <label>{{dia.siNo}}</label>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
                         </fieldset>
                     </section>
                     
@@ -326,41 +326,13 @@
                         </header>
                         
                         <fieldset>
-                        <div class="table-responsive col-md-12 ">     
-                      
-                        <table  class="table table-bordered table-striped tabla-listaNegra table-hover text-center " style= "table-layout: fixed; vertical-align:center;">
-                            <tr>
-                                <th class="col-sm-1 ">Cancha </th>
-                                <th class="col-sm-1 ">Hora desde </th>
-                                <th class="col-sm-1 ">Hora hasta</th>
-                                <th class="col-sm-1 ">Se juega</th>
-                            </tr>
-                            
-                            <tr>
-                                <td>Maracana</td>
-                                <td>10</td>
-                                <td>22</td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                            </tr>
-                            
-                            <tr>
-                                <td>Cilindro</td>
-                                <td>10</td>
-                                <td>22</td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                            </tr>
-                            
-                            <tr>
-                                <td>Duco</td>
-                                <td>10</td>
-                                <td>22</td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                            </tr>
-                        </table>
-                        
-                   
-                   
-        </div>
+                            <table ng-table="tor.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+                                <tr ng-repeat="cancha in tor.canchas.tipos" style="background-color:white;">
+                                    <td title=""  ng-if="false">{{cancha.idcancha}}</td>
+                                    <td title="'Cancha'"  >{{cancha.nombre}}</td>
+                                </tr>
+                            </table>
+
                         </fieldset>
                     </section>
                     

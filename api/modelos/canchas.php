@@ -34,6 +34,27 @@ class Cancha
         return $canchas;
     }
     
+    //canchas de un duenio
+    public function getCanchasByDuenio($IdDuenio){  
+
+        $stmt = $this->connection->prepare('SET @IdDuenio := ?');
+        $stmt->bind_param('i', $IdDuenio);
+        $stmt->execute(); 
+        
+        
+              
+        $query = "CALL SP_getCanchasByDuenio (@IdDuenio);";
+        $canchas= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $canchas[] = $fila;
+            }
+            $result->free();
+        }
+        return $canchas;
+    }
+    
     
     
     

@@ -1,4 +1,4 @@
-CREATE TABLE TorneosDias;
+drop TABLE TorneosDias;
 
 CREATE TABLE TorneosDias(	
 IdTorneo	  INT   NOT NULL,

@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService){
+resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, CanchasService){
 
     var self = this;
     this.tiposTorneos =[];
@@ -25,6 +25,10 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         tipos: [],
         selectedOption: {iddia: '1',nombre:'', HoraDesde:'', HoraHasta:'', juega:0} 
     };    
+    
+    this.canchas = {
+        tipos: []
+    };  
     
    
    
@@ -62,6 +66,10 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
             };
         }); 
         
+        CanchasService.query({idDuenio:1}).$promise.then(function(data) {
+            self.canchas.tipos = data;
+            console.log(self.canchas.tipos);
+        }); 
        
     
         $scope.toggleMin();

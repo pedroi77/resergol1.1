@@ -264,6 +264,12 @@ $app->get('/canchas', function(){
 	sendResult($data);
 });
 
+//get cantidad de jugadores por duenio
+$app->get('/canchas/:idDuenio', function($idDuenio){
+    $canchas = new Cancha();
+    $data = $canchas->getCanchasByDuenio($idDuenio);
+	sendResult($data);
+});
 
 
 $app->run();
