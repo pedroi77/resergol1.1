@@ -326,10 +326,29 @@
                         </header>
                         
                         <fieldset>
-                            <table ng-table="tor.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+                            <table ng-table="tor.tableParams" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
                                 <tr ng-repeat="cancha in tor.canchas.tipos" style="background-color:white;">
                                     <td title=""  ng-if="false">{{cancha.idcancha}}</td>
-                                    <td title="'Cancha'"  >{{cancha.nombre}}</td>
+                                    <td title="'Cancha'" sortable="'cancha.nombre'" >{{cancha.nombre}}</td>
+                                    <td title="'Jugadores'"  >{{cancha.CantJugadores}}</td>
+                                    <td title="'Superficie'"  >{{cancha.descripcion}}</td>
+                                    <td title="'Techo'"  >{{cancha.techo}}</td>
+                                    <td title="'Luz'"  >{{cancha.conLuz}}</td>
+                                    <td title="'Precio'">{{cancha.precio}}</td>
+                                    <td title="'Juega'">
+                                        <button type="button" ng-click="tor.juegaCanchaSiNo($index,1)" ng-disabled="cancha.juegaCancha" class="btn btn-sm btn-success">
+                                            <i class="glyphicon glyphicon glyphicon-ok">
+                                            </i>
+                                        </button>
+
+                                        <button type="button" ng-click="tor.juegaCanchaSiNo($index,0)" ng-disabled="!cancha.juegaCancha" class="btn btn-sm btn-danger">
+                                            <i class="glyphicon glyphicon-remove-circle">
+                                            </i>
+                                        </button>
+                                        <label>{{cancha.siNo}}</label>
+
+                                    </td>
+                                    
                                 </tr>
                             </table>
 

@@ -28,6 +28,9 @@ class Torneo
         $descripcion = $this->connection->real_escape_string($torneo['descripcion']);
         $reglas = $this->connection->real_escape_string($torneo['reglas']);
         $idEstado = $this->connection->real_escape_string($torneo['idEstado']);
+        $canchas = $this->connection->real_escape_string($torneo['canchas']);
+        $dias = $this->connection->real_escape_string($torneo['dias']);
+        
 
         $salida='';
       
@@ -127,6 +130,11 @@ class Torneo
         */
         
         if($res > -1){
+            
+            /*Alta de canchas*/
+            
+            /*Alta de Dias*/
+            
             $dat= array($res);
             sendResult($dat, 'OK' );
         }else{
@@ -240,4 +248,48 @@ class Torneo
                         "reglas": "reglas Vale todo!",
                         "idEstado": 2
   	       }
+
+
+//aca le agrego torneos y dias 
+{
+	"idDuenio": 1,
+	"idTipoTorneo": 1,
+	"nombre": "Sudamericana",
+	"cantEquipos": 8,
+	"cantJugadores": 11,
+	"idSuperficie": 1,
+	"idaYvuelta": 0,
+	"precioInscripcion": 500.00,
+	"fecIniInscripcion": "06/05/2016",
+	"fecFinInscripcion": "10/05/2016",
+	"horasCancelacion": 16,
+	"fechaInicio": "15/05/2016",
+	"fechaFin": "18/06/2016",
+	"descripcion": "el segundo torneo",
+	"reglas": "reglas Vale todo!",
+	"idEstado": 2,
+	"canchas": [{
+		"idTorneo": 0,
+		"idComplejo": 1,
+		"idCancha": 2
+	}, {
+		"idTorneo": 0,
+		"idComplejo": 1,
+		"idCancha": 2
+	}],
+	"dias": [{
+			"idTorneo": 0,
+			"idDia": 1,
+			"horaDesde": 10,
+			"horaHasta": 21
+		}, {
+			"idTorneo": 0,
+			"idDia": 1,
+			"horaDesde": 10,
+			"horaHasta": 21
+		}
+
+	]
+}
+
 */

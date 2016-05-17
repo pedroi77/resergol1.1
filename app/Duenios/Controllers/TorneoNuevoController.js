@@ -68,7 +68,21 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         
         CanchasService.query({idDuenio:1}).$promise.then(function(data) {
             self.canchas.tipos = data;
-            console.log(self.canchas.tipos);
+            var i;
+            for(i=0; i<self.canchas.tipos.length; i++){
+                if(self.canchas.tipos[i]['techada'] == 1) 
+                    self.canchas.tipos[i]['techo'] = 'SI';
+                else    
+                    self.canchas.tipos[i]['techo'] = 'NO';
+                
+                 if(self.canchas.tipos[i]['luz'] == 1) 
+                    self.canchas.tipos[i]['conLuz'] = 'SI';
+                else 
+                    self.canchas.tipos[i]['conLuz'] = 'NO';
+                
+                self.canchas.tipos[i]['juegaCancha'] = '1';
+                self.canchas.tipos[i]['siNo'] = 'SI';
+            };
         }); 
        
     
@@ -85,6 +99,18 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
             self.diasDesde.tipos[indice]["siNo"]='NO';
         };
     };
+    
+    this.juegaCanchaSiNo = function(indice, valor){
+        self.canchas.tipos[indice]["juegaCancha"]=valor;
+        if(valor==1){
+            self.canchas.tipos[indice]["siNo"]='SI';
+        }
+        else{
+            self.canchas.tipos[indice]["siNo"]='NO';
+        };
+    };
+    
+  
     
     this.fecha= function(){
         console.log(self.FecInscDesde);
