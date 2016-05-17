@@ -130,11 +130,24 @@ $app->get('/dueniosPendientes', function(){
 });
 
 //Cambia de estado a los dueños pendientes.
+/*
 $app->put('/administrarDuenio/:IdDuenio/:acepta', function($IdDuenio, $acepta){
     $aceptarDuenio = new Administrador();
     $data = $aceptarDuenio->aceptarDuenio($IdDuenio, $acepta);
 	sendResult($data);
 });
+*/
+$app->put('/administrarDuenio', function(){
+    $request = Slim\Slim::getInstance()->request();   
+    $data = json_decode($request->getBody(), true);
+    $aceptarDuenio = new Administrador();
+    
+    $result = $aceptarDuenio->aceptarDuenio($data);
+        
+	sendResult($result);
+});
+
+ 
 
 /*************************************************FIN ADMINISTRADORES*************************************************/
 

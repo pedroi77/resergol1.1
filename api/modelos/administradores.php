@@ -50,6 +50,7 @@ class Administrador
         
     }
     
+    /*
     public function aceptarDuenio($IdDuenio, $acepta){
         
         $resultado = 0;
@@ -80,4 +81,40 @@ class Administrador
         return $duenioAceptar;
         
     }
+    */
+    
+      public function aceptarDuenio($data){
+        $IdDuenio = $this->connection->real_escape_string($data['IdDuenio']);
+        $acepta = $this->connection->real_escape_string($data['acepta']);
+          
+        $resultado = 0;
+        
+        $stmt = $this->connection->prepare('SET @IdDuenio := ?');
+        $stmt->bind_param('i', $IdDuenio);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @acepta := ?');
+        $stmt->bind_param('i', $acepta);
+        $stmt->execute(); 
+        
+        //salida
+        $stmt = $this->connection->prepare('SET @resultado := ?');
+        $stmt->bind_param('i', $resultado);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_administrarDuePendiente(@IdDuenio, @acepta, @resultado);";
+        
+        $duenioAceptar= array();
+        
+        if( $result = $this->connection->query($query) ){
+            $r = $this->connection->query('SELECT @resultado as result');
+            //$r = $this->connection->query('SELECT @id as id, @tipo as tipo');
+            $cliente[] = $r->fetch_assoc();               
+        }
+        
+        return $duenioAceptar;
+        
+    }
+    
+    
 }

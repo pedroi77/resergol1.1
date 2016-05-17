@@ -37,7 +37,7 @@ app.controller("AdminController", function(DueniosPendientesService, AceptarDuen
         var duePen = new AceptarDueniosService();
      
         duePen.data = {
-                        "IdDuenio": 13,
+                        "IdDuenio": 1,
                         "acepta": 1
   	       };   
         
