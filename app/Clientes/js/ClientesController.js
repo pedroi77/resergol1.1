@@ -93,7 +93,7 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
                 self.cliente.id =  data[0].id;                                                         
                 self.cliente.tipo  = data[0].tipo;    
                 
-                if(self.cliente.id > -1 && self.cliente.tipo == 'C'){
+                if(self.cliente.id > -1){
                     self.cliente.existe = true;
                     console.log(self.cliente.existe + " - "  + self.cliente.tipo + " - " + self.cliente.usuario);
                     

@@ -30,6 +30,17 @@ $app->get('/tiposDocs', function(){
 $app->get('/provincias', function(){
     $provincias = new Common();
     $data = $provincias->getAllProvincias();
+    //mail('matiasfumacoo@gmail.com', 'se mando el mail', 'cuerpo del mail', 'algo opcional');
+    $headers = "MIME-Version: 1.0\r\n"; 
+    $headers .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
+    //dirección del remitente 
+    $headers .= "From: root@localhost \r\n";
+    $bool = mail('ivanjfernandez@outlook.com', 'se mando el mail', 'cuerpo del mail',$headers);
+    if($bool){
+        echo "Mensaje enviado pepe";
+    }else{
+        echo "Mensaje no enviado";
+    }
 	sendResult($data);
 });
 
