@@ -57,6 +57,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
             duenio = data;       
                    
             if(duenio[0] != '-1'){
+                self.Usuario.id = duenio[0].IdDuenio;
                 self.Usuario.passInvalida = false;
                 self.Usuario.login = true;
                 store.set('token',  duenio[1]);
@@ -140,6 +141,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
         sessionStorage.tipo = self.Usuario.tipo;
         sessionStorage.usuario = self.Usuario.usuario;
         sessionStorage.pass = btoa(self.Usuario.contrasenia);    
+        sessionStorage.id = self.Usuario.id;
     };
     
     this.desloguearse = function(){
@@ -149,6 +151,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
             sessionStorage.tipo = '';
             sessionStorage.usuario = '';
             sessionStorage.pass = '';  
+            sessionStorage.id = '';
             self.init();
             $state.go('Clientes.buscarCanchas');
         }
