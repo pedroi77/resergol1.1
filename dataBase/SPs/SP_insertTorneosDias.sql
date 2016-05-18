@@ -12,9 +12,8 @@ CREATE PROCEDURE SP_insertTorneosDias
 
 BEGIN 
 	
-    /*call SP_insertTorneosCanchas(1,1, 1,  @du);
-
-select @du;*/
+    /*call SP_insertTorneosDias (8,1,'15:00:00','22:00:00',@res);
+select @res;*/
     DECLARE Error INT DEFAULT 0;
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
     

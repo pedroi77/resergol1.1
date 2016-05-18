@@ -28,8 +28,12 @@ class Torneo
         $descripcion = $this->connection->real_escape_string($torneo['descripcion']);
         $reglas = $this->connection->real_escape_string($torneo['reglas']);
         $idEstado = $this->connection->real_escape_string($torneo['idEstado']);
-        $canchas = $this->connection->real_escape_string($torneo['canchas']);
-        $dias = $this->connection->real_escape_string($torneo['dias']);
+        $canchas= array();
+        $dias= array();
+        $canchas=$torneo['canchas'];
+        $dias =$torneo['dias'];
+        //$canchas = $this->connection->real_escape_string($torneo['canchas']);
+        //$dias = $this->connection->real_escape_string($torneo['dias']);
         
 
         $salida='';
@@ -108,6 +112,7 @@ class Torneo
         
         
          // execute the stored Procedure         SP_insertDuenios
+        
         $result = $this->connection->query('CALL SP_insertTorneos( @idDuenio, @idTipoTorneo, @nombre, @cantEquipos, @cantJugadores,@idSuperficie, @idaYvuelta,                                                                                          @precioInscripcion, @fecIniInscripcion, @fecFinInscripcion,  @horasCancelacion, 
                                                                    @fechaInicio, @fechaFin, @descripcion,  @reglas, @idEstado, @salida);');
         
@@ -120,20 +125,85 @@ class Torneo
 
         $res = $row['idTorneo'] ;
         
-        /*
-        if(2 > -1){
-            $dat= array($row);
-            sendResult($dat, 'OK' );
-        }else{
-           sendError("Error, no se pudo registrar el torneo." . $res ); //por algun motivo pincha aca
-        }
-        */
         
+  
         if($res > -1){
             
             /*Alta de canchas*/
-            
+            foreach ($canchas as $can) {
+                $idComplejo = $this->connection->real_escape_string($can['idComplejo']);
+                $idCancha = $this->connection->real_escape_string($can['idCancha']);
+                
+                $stmt = $this->connection->prepare('SET @idTorneo := ?');
+                $stmt->bind_param('i', $res);
+                $stmt->execute();
+
+                $stmt = $this->connection->prepare('SET @idComplejo := ?');
+                $stmt->bind_param('i', $idComplejo);
+                $stmt->execute();
+                
+                $stmt = $this->connection->prepare('SET @idCancha := ?');
+                $stmt->bind_param('i', $idCancha);
+                $stmt->execute();
+                
+                //Salida
+                $stmt = $this->connection->prepare('SET @outCancha := ?');
+                $stmt->bind_param('s', $salida);
+                $stmt->execute();
+                
+                $resultCan = $this->connection->query('CALL SP_insertTorneosCanchas( @idTorneo, @idComplejo, @idCancha, @outCancha);');
+        
+                       
+        
+                // getting the value of the OUT parameter
+                $rcan = $this->connection->query('SELECT @outCancha as res');
+                $row = $rcan->fetch_assoc();               
+
+                $resCan = $row['res'] ;
+            }
+                
             /*Alta de Dias*/
+            foreach ($dias as $dia) {
+                $idDia = $this->connection->real_escape_string($dia['idDia']);
+                $HoraDesde = $this->connection->real_escape_string($dia['horaDesde']);
+                $HoraHasta = $this->connection->real_escape_string($dia['horaHasta']);
+                
+                $stmt = $this->connection->prepare('SET @idTorneo := ?');
+                $stmt->bind_param('i', $res);
+                $stmt->execute();
+
+                $stmt = $this->connection->prepare('SET @idDia := ?');
+                $stmt->bind_param('i', $idDia);
+                $stmt->execute();
+                
+                $stmt = $this->connection->prepare('SET @horaDesde := ?');
+                $stmt->bind_param('s', $HoraDesde);
+                $stmt->execute();
+                
+                
+                $stmt = $this->connection->prepare('SET @horaHasta := ?');
+                $stmt->bind_param('s', $HoraHasta);
+                $stmt->execute();
+                
+                 //Salida
+                $stmt = $this->connection->prepare('SET @outDia := ?');
+                $stmt->bind_param('s', $salida);
+                $stmt->execute();
+                
+                $resultDia = $this->connection->query('CALL SP_insertTorneosDias( @idTorneo, @idDia, @horaDesde, @horaHasta, @outDia);');
+        
+                       
+        
+                //getting the value of the OUT parameter
+                $rcan = $this->connection->query('SELECT @outDia as res');
+                $row = $rcan->fetch_assoc();               
+
+                $resCan = $row['res'] ;
+            }    
+    
+                
+
+            
             
             $dat= array($res);
             sendResult($dat, 'OK' );
@@ -252,44 +322,40 @@ class Torneo
 
 //aca le agrego torneos y dias 
 {
-	"idDuenio": 1,
-	"idTipoTorneo": 1,
-	"nombre": "Sudamericana",
-	"cantEquipos": 8,
-	"cantJugadores": 11,
-	"idSuperficie": 1,
-	"idaYvuelta": 0,
-	"precioInscripcion": 500.00,
-	"fecIniInscripcion": "06/05/2016",
-	"fecFinInscripcion": "10/05/2016",
-	"horasCancelacion": 16,
-	"fechaInicio": "15/05/2016",
-	"fechaFin": "18/06/2016",
-	"descripcion": "el segundo torneo",
-	"reglas": "reglas Vale todo!",
-	"idEstado": 2,
-	"canchas": [{
-		"idTorneo": 0,
-		"idComplejo": 1,
-		"idCancha": 2
-	}, {
-		"idTorneo": 0,
-		"idComplejo": 1,
-		"idCancha": 2
-	}],
-	"dias": [{
-			"idTorneo": 0,
-			"idDia": 1,
-			"horaDesde": 10,
-			"horaHasta": 21
-		}, {
-			"idTorneo": 0,
-			"idDia": 1,
-			"horaDesde": 10,
-			"horaHasta": 21
-		}
+                        "idDuenio":1,
+                        "idTipoTorneo": 1,
+                        "nombre": "Sudamericana",
+                        "cantEquipos": 8,
+                        "cantJugadores": 11,
+                        "idSuperficie": 1,
+                        "idaYvuelta": 0,
+                        "precioInscripcion": 500.00,
+                        "fecIniInscripcion": "06/05/2016",
+                        "fecFinInscripcion": "10/05/2016",
+                        "horasCancelacion": 16,
+                        "fechaInicio": "15/05/2016",
+                        "fechaFin": "18/06/2016",
+                        "descripcion": "el segundo torneo",
+                        "reglas": "reglas Vale todo!",
+                        "idEstado": 2,"canchas": [{
+                                                "idComplejo": 1,
+                                                "idCancha": 2
+                                            }, {
+                                                "idComplejo": 1,
+                                                "idCancha": 4
+                                            }],
+                                            "dias": [{
+                                                    "idDia": 1,
+                                                    "horaDesde": "10:00:00",
+                                                    "horaHasta": "21:00:00"
+                                                }, {
+                                                    "idDia": 2,
+                                                    "horaDesde": "10:00:00",
+                                                    "horaHasta": "22:00:00"
+                                                }
 
-	]
-}
+                                            ]
+  	       }
+
 
 */
