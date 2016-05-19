@@ -64,3 +64,46 @@ insert dias(Nombre) values ('Jueves');
 insert dias(Nombre) values ('Viernes');
 insert dias(Nombre) values ('Sabado');
 insert dias(Nombre) values ('Domingo');
+
+
+
+
+insert into tipotorneosEquipos values(1,4);
+insert into tipotorneosEquipos values(1,5);
+insert into tipotorneosEquipos values(1,6);
+insert into tipotorneosEquipos values(1,7);
+insert into tipotorneosEquipos values(1,8);
+insert into tipotorneosEquipos values(1,9);
+insert into tipotorneosEquipos values(1,10);
+insert into tipotorneosEquipos values(1,11);
+insert into tipotorneosEquipos values(1,12);
+insert into tipotorneosEquipos values(1,13);
+insert into tipotorneosEquipos values(1,14);
+insert into tipotorneosEquipos values(1,15);
+insert into tipotorneosEquipos values(1,16);
+insert into tipotorneosEquipos values(1,17);
+insert into tipotorneosEquipos values(1,18);
+insert into tipotorneosEquipos values(1,19);
+insert into tipotorneosEquipos values(1,20);
+insert into tipotorneosEquipos values(1,21);
+insert into tipotorneosEquipos values(1,22);
+insert into tipotorneosEquipos values(1,23);
+insert into tipotorneosEquipos values(1,24);
+insert into tipotorneosEquipos values(1,25);
+insert into tipotorneosEquipos values(1,26);
+insert into tipotorneosEquipos values(1,27);
+insert into tipotorneosEquipos values(1,28);
+insert into tipotorneosEquipos values(1,29);
+insert into tipotorneosEquipos values(1,30);
+
+insert into tipotorneosEquipos values(2,4);
+insert into tipotorneosEquipos values(2,8);
+insert into tipotorneosEquipos values(2,16);
+insert into tipotorneosEquipos values(2,32);
+
+
+
+
+
+
+

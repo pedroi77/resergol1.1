@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, CanchasService){
+resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, CanchasService, DueniosCantEquiposService, DuenioTorneoService){
 
     var self = this;
     this.tiposTorneos =[];
@@ -20,9 +20,11 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         horasCancelacion: 16,
                         fechaInicio: '15/05/2016',
                         fechaFin: '18/06/2016',
-                        descripcion: 'el segundo torneo',
-                        reglas: 'reglas Vale todo!',
-                        idEstado: 2                                                              
+                        descripcion: '',
+                        reglas: '',
+                        idEstado: 2 ,
+                        canchas:[],
+                        dias:[]
 
                       };
         
@@ -42,6 +44,11 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         selectedOption: {CantJugadores: '1'} 
     };   
     
+    this.cantEquipos = {
+        tipos: [],
+        selectedOption: {cantidad: '1'} 
+    };   
+    
     this.diasDesde = {
         tipos: [],
         selectedOption: {iddia: '1',nombre:'', HoraDesde:'', HoraHasta:'', juega:0} 
@@ -52,8 +59,8 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
     };  
     
     this.tiposPartidos = {
-        tipos: [{tipo:"Ida"}, {tipo:"Ida y vuelta"}],
-        selectedOption: {tipo: ''} 
+        tipos: [{ tipo:"Ida"}, { tipo:"Ida y vuelta"}],
+        selectedOption: { tipo: ''} 
     }; 
     
    
@@ -65,6 +72,11 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         TipoTorneosService.query({idTorneo:-1}).$promise.then(function(data) {
             self.tiposTorneos.tipos = data;
             self.tiposTorneos.selectedOption = self.tiposTorneos.tipos[0];
+        }); 
+        
+        DueniosCantEquiposService.query({TipoTorneo:self.tiposTorneos.selectedOption.IdTipoTorneo}).$promise.then(function(data) {
+            self.cantEquipos.tipos = data;
+            self.cantEquipos.selectedOption = self.cantEquipos.tipos[0];
         }); 
     
         DueniosSuperficiesService.query({idDuenio:1}).$promise.then(function(data) {
@@ -84,8 +96,8 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
             for(i=0; i<self.diasDesde.tipos.length; i++){
                 self.diasDesde.tipos[i]['HoraDesde'] =new Date(1970, 0, 1, parseInt(self.diasDesde.tipos[i]['HoraDesde'].substring(0,2)), 00, 0);
                 self.diasDesde.tipos[i]['HoraHasta'] =new Date(1970, 0, 1, parseInt(self.diasDesde.tipos[i]['HoraHasta'].substring(0,2)), 00, 0);
-                self.diasDesde.tipos[i]['juega'] = '1';
-                self.diasDesde.tipos[i]['siNo'] = 'SI';
+                self.diasDesde.tipos[i]['juega'] = false;
+                self.diasDesde.tipos[i]['siNo'] = 'NO';
                 self.diasDesde.tipos[i]['desdeMin'] =  self.diasDesde.tipos[i]['HoraDesde'].getHours().toString() + ':0' +
                                                        self.diasDesde.tipos[i]['HoraDesde'].getMinutes().toString();
                 
@@ -108,8 +120,8 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                 else 
                     self.canchas.tipos[i]['conLuz'] = 'NO';
                 
-                self.canchas.tipos[i]['juegaCancha'] = '1';
-                self.canchas.tipos[i]['siNo'] = 'SI';
+                self.canchas.tipos[i]['juegaCancha'] = false;
+                self.canchas.tipos[i]['siNo'] = 'NO';
             };
         }); 
        
@@ -138,6 +150,13 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         };
     };
     
+    this.getCantEquipos= function(){
+        DueniosCantEquiposService.query({TipoTorneo:self.tiposTorneos.selectedOption.IdTipoTorneo}).$promise.then(function(data) {
+            self.cantEquipos.tipos = data;
+            self.cantEquipos.selectedOption = self.cantEquipos.tipos[0];
+        }); 
+    
+    };
   
     
     this.fecha= function(){
@@ -317,16 +336,58 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         self.Torneo.idTipoTorneo = self.tiposTorneos.selectedOption.IdTipoTorneo;
         self.Torneo.cantJugadores = self.cantJugadores.selectedOption.CantJugadores;
         self.Torneo.idSuperficie = self.superficies.selectedOption.IdSuperficie;
-        
-        if(self.Torneo.idaYvuelta = 'SI')
-            self.Torneo.idaYvuelta = 1;
-        else
+        self.Torneo.idaYvuelta = self.tiposPartidos.selectedOption.tipo;
+        self.Torneo.cantEquipos = self.cantEquipos.selectedOption.cantidad;
+        self.Torneo.fecIniInscripcion = self.FecInscDesde.toLocaleDateString();
+        self.Torneo.fecFinInscripcion = self.FecInscHasta.toLocaleDateString();
+        self.Torneo.fechaInicio = self.TorneoDesde.toLocaleDateString();
+        self.Torneo.fechaFin = self.TorneoHasta.toLocaleDateString();
+        self.Torneo.idEstado = 2;  //Inscripcion
+
+        if(self.Torneo.idaYvuelta == 'Ida')
             self.Torneo.idaYvuelta = 0;
+        else
+            self.Torneo.idaYvuelta = 1;
         
-        //console.log(self.Torneo);
         
-        console.log(self.tiposPartidos);
-        console.log(self.diasDesde);
+        var i;
+        for(i=0; i<self.canchas.tipos.length; i++){
+            if(self.canchas.tipos[i]['juegaCancha'] == true) {
+                self.Torneo.canchas.push({ "idComplejo": 1, "idCancha": self.canchas.tipos[i]['idcancha']});
+            };
+        };
+        
+        for(i=0; i<self.diasDesde.tipos.length; i++){
+            if(self.diasDesde.tipos[i]['juega'] == true) {
+                
+                var h = addZero(self.diasDesde.tipos[i]['HoraDesde'].getHours());
+                var m = addZero(self.diasDesde.tipos[i]['HoraDesde'].getMinutes());
+                var s = addZero(self.diasDesde.tipos[i]['HoraDesde'].getSeconds());
+                
+                var HoraDesde = h + ":" + m + ":" + s;
+                
+                h = addZero(self.diasDesde.tipos[i]['HoraHasta'].getHours());
+                m = addZero(self.diasDesde.tipos[i]['HoraHasta'].getMinutes());
+                s = addZero(self.diasDesde.tipos[i]['HoraHasta'].getSeconds());
+                
+                var HoraHasta = h + ":" + m + ":" + s;
+                
+                self.Torneo.dias.push({ "idDia": self.diasDesde.tipos[i]['iddia'], "horaDesde": HoraDesde , "horaHasta": HoraHasta });
+            };
+        };
+        
+       console.log(self.Torneo);
+        
+        var TorneoNuevo = new DuenioTorneoService();
+        
+        TorneoNuevo.data=self.Torneo;
+        
+        DuenioTorneoService.save(TorneoNuevo.data, function(reponse){
+            console.log("El registro se realizo correctamente! " + reponse.data);  
+          },function(errorResponse){
+              console.log(errorResponse.data.message);  
+         });
+        
         /*
         idDuenio:sessionStorage.id,
                         idTipoTorneo: 0,
@@ -346,6 +407,13 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         idEstado: 2     */
         
     
+    };
+    
+    function addZero(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
     };
     
     self.init();

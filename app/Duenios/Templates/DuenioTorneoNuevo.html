@@ -46,7 +46,8 @@
                                                     class="select2 form-control" 
                                                     name="TipoTorneo" style="margin-bottom:5px;"
                                                     ng-model="tor.tiposTorneos.selectedOption"
-                                                    ng-options="tipoTorneo.Nombre for tipoTorneo in tor.tiposTorneos.tipos track                                                                    by tipoTorneo.Nombre">
+                                                    ng-options="tipoTorneo.Nombre for tipoTorneo in tor.tiposTorneos.tipos track by tipoTorneo.Nombre"
+                                                    ng-click="tor.getCantEquipos()">
                                                
                                             </select>
                                         </div>
@@ -88,8 +89,7 @@
                                                     class="select2 form-control" 
                                                     name="TipoPartidos" style="margin-bottom:5px;"
                                                     ng-model="tor.tiposPartidos.selectedOption"
-                                                    ng-options="tiposPartido.tipo for tiposPartido in tor.tiposPartidos.tipos track by tiposPartido.tipo>">
-                                               
+                                                    ng-options="tiposPartido.tipo for tiposPartido in tor.tiposPartidos.tipos track by tiposPartido.tipo">
                                             </select>
                                         </div>
                                     </div>
@@ -97,14 +97,20 @@
                                     <div class="form-group">
                                         <label for="precio" class="control-label col-sm-4">Cantidad de equipos</label>
                                         <div class="col-xs-12 col-sm-8">    
-                                            <input id="cantEq" ng-model = "tor.Torneo.cantEquipos" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder=""  name="cantEquipos" />
+                                            <select id="cantEq" 
+                                                    data-placeholder="" 
+                                                    class="select2 form-control" 
+                                                    name="cantEq" style="margin-bottom:5px;"
+                                                    ng-model="tor.cantEquipos.selectedOption"
+                                                    ng-options="eQcantidad.cantidad for eQcantidad in tor.cantEquipos.tipos track by eQcantidad.cantidad">
+                                            </select>
                                         </div>    
                                     </div>  
                                     
                                     <div class="form-group">
                                         <label for="precio" class="control-label col-sm-4">Precio de inscripción</label>
                                         <div class="col-xs-12 col-sm-8">    
-                                            <input id="precio" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder=""  name="precio" />
+                                            <input id="precio" class="form-control input-transparent" style="margin-bottom:5px;" type="number" placeholder=""  name="precio" ng-model = "tor.Torneo.precioInscripcion" min="0"/>
                                         </div>    
                                     </div>  
                                     
@@ -203,7 +209,7 @@
                                     <div class="form-group" >
                                         <label for="horas" class="control-label col-sm-4">Tiempo de aviso de cancelación al torneo (horas)</label>
                                         <div class="col-xs-12 col-sm-8" style="margin-bottom:30px;">    
-                                            <input id="horas" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder="24 hs"  name="horas" />
+                                            <input id="horas" class="form-control input-transparent" style="margin-bottom:5px;" type="number" ng-model = "tor.Torneo.horasCancelacion" min ="0" placeholder="24 hs"  name="horas" />
                                         </div>    
                                     </div>  
                                     
@@ -216,7 +222,7 @@
                                 
                                     <div class="form-group">
                                         <div class="col-sm-12" style="margin-bottom:20px;" >
-                                            <textarea placeholder="Descripción breve del torneo." class="form-control" rows="3"></textarea>
+                                            <textarea type="text" ng-model= "tor.Torneo.descripcion" placeholder="Descripción breve del torneo." class="form-control" rows="3"></textarea>
                                         </div>
                                     </div>
                                     
@@ -226,7 +232,7 @@
                                 
                                     <div class="form-group">
                                         <div class="col-sm-12" style="margin-bottom:30px;" >
-                                            <textarea placeholder="Reglas del torneo." class="form-control" rows="3"></textarea>
+                                            <textarea type="text" ng-model= "tor.Torneo.reglas" placeholder="Reglas del torneo." class="form-control" rows="3"></textarea>
                                         </div>
                                     </div>
                                     
@@ -309,12 +315,12 @@
                                         </div>
                                     </td>
                                     <td title="'Juega'">
-                                        <button type="button" ng-click="tor.juegaSiNo($index,1)" ng-disabled="dia.juega" class="btn btn-sm btn-success">
+                                        <button type="button" ng-click="tor.juegaSiNo($index,true)" ng-disabled="dia.juega" class="btn btn-sm btn-success">
                                             <i class="glyphicon glyphicon glyphicon-ok">
                                             </i>
                                         </button>
 
-                                        <button type="button" ng-click="tor.juegaSiNo($index,0)" ng-disabled="!dia.juega" class="btn btn-sm btn-danger">
+                                        <button type="button" ng-click="tor.juegaSiNo($index,false)" ng-disabled="!dia.juega" class="btn btn-sm btn-danger">
                                             <i class="glyphicon glyphicon-remove-circle">
                                             </i>
                                         </button>
@@ -344,12 +350,12 @@
                                     <td title="'Luz'"  >{{cancha.conLuz}}</td>
                                     <td title="'Precio'">{{cancha.precio}}</td>
                                     <td title="'Juega'">
-                                        <button type="button" ng-click="tor.juegaCanchaSiNo($index,1)" ng-disabled="cancha.juegaCancha" class="btn btn-sm btn-success">
+                                        <button type="button" ng-click="tor.juegaCanchaSiNo($index,true)" ng-disabled="cancha.juegaCancha" class="btn btn-sm btn-success">
                                             <i class="glyphicon glyphicon glyphicon-ok">
                                             </i>
                                         </button>
 
-                                        <button type="button" ng-click="tor.juegaCanchaSiNo($index,0)" ng-disabled="!cancha.juegaCancha" class="btn btn-sm btn-danger">
+                                        <button type="button" ng-click="tor.juegaCanchaSiNo($index,false)" ng-disabled="!cancha.juegaCancha" class="btn btn-sm btn-danger">
                                             <i class="glyphicon glyphicon-remove-circle">
                                             </i>
                                         </button>
