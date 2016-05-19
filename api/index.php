@@ -36,7 +36,7 @@ $app->get('/provincias', function(){
     $headers .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
     //dirección del remitente 
     $headers .= "From: root@localhost \r\n";
-    $bool = mail('ivanjfernandez@outlook.com', 'se mando el mail', 'cuerpo del mail',$headers);
+    /*$bool = mail('ivanjfernandez@outlook.com', 'se mando el mail', 'cuerpo del mail',$headers);
     if($bool){
         echo "Mensaje enviado pepe";
     }else{

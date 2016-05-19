@@ -6,6 +6,27 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
     this.tiposTorneos =[];
     this.superficies =[];
     
+    this.Torneo ={
+                        idDuenio:sessionStorage.id,
+                        idTipoTorneo: 0,
+                        nombre: '',
+                        cantEquipos: 0,
+                        cantJugadores: 11,
+                        idSuperficie: 1,
+                        idaYvuelta: 0,
+                        precioInscripcion: 500.00,
+                        fecIniInscripcion: '06/05/2016',
+                        fecFinInscripcion: '10/05/2016',
+                        horasCancelacion: 16,
+                        fechaInicio: '15/05/2016',
+                        fechaFin: '18/06/2016',
+                        descripcion: 'el segundo torneo',
+                        reglas: 'reglas Vale todo!',
+                        idEstado: 2                                                              
+
+                      };
+        
+    
     this.tiposTorneos = {
         tipos: [],
         selectedOption: {IdTipoTorneo: '1', Nombre: ''} 
@@ -30,9 +51,16 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         tipos: []
     };  
     
+    this.tiposPartidos = {
+        tipos: [{tipo:"Ida"}, {tipo:"Ida y vuelta"}],
+        selectedOption: {tipo: ''} 
+    }; 
+    
    
    
     this.init = function(){
+       
+        self.tiposPartidos.selectedOption = self.tiposPartidos.tipos[0];
         //LEER sacar el 1 HARCODE
         TipoTorneosService.query({idTorneo:-1}).$promise.then(function(data) {
             self.tiposTorneos.tipos = data;
@@ -281,9 +309,46 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         }
 
         return '';
-      }
+      };
 
 
+    this.mostrarDatos = function(){
+        
+        self.Torneo.idTipoTorneo = self.tiposTorneos.selectedOption.IdTipoTorneo;
+        self.Torneo.cantJugadores = self.cantJugadores.selectedOption.CantJugadores;
+        self.Torneo.idSuperficie = self.superficies.selectedOption.IdSuperficie;
+        
+        if(self.Torneo.idaYvuelta = 'SI')
+            self.Torneo.idaYvuelta = 1;
+        else
+            self.Torneo.idaYvuelta = 0;
+        
+        //console.log(self.Torneo);
+        
+        console.log(self.tiposPartidos);
+        console.log(self.diasDesde);
+        /*
+        idDuenio:sessionStorage.id,
+                        idTipoTorneo: 0,
+                        nombre: "Sudamericana",
+                        cantEquipos: 8,
+                        cantJugadores: 11,
+                        idSuperficie: 1,
+                        idaYvuelta: 0,
+                        precioInscripcion: 500.00,
+                        fecIniInscripcion: "06/05/2016",
+                        fecFinInscripcion: "10/05/2016",
+                        horasCancelacion: 16,
+                        fechaInicio: "15/05/2016",
+                        fechaFin: "18/06/2016",
+                        descripcion: "el segundo torneo",
+                        reglas: "reglas Vale todo!",
+                        idEstado: 2     */
+        
+    
+    };
+    
     self.init();
+    
     
 });
