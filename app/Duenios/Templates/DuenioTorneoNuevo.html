@@ -1,21 +1,23 @@
-    <div class="container-fluid">
-        
-        <header class="row widget" >
-            <div style = "color: white; " class="container">
-                <h3  style=" font-size: 50px; text-align:center; font-style:italic;" ></span>Nuevo torneo</h3>
-            </div>
-        </header>
+    <div class="container  ">
+        <div class="container">
+            <header class="row widget" >
+                <div style = "color: white; " class="container">
+                    <h3  style=" font-size: 50px; text-align:center; font-style:italic;" ></span>Nuevo torneo</h3>
+                </div>
+            </header>
+        </div>
     </div>    
 
 
     
     
-    <div class="container" id="main" ng-controller="TorneoNuevoController as tor" >
+    <div class="container" id="mainTorneo" ng-controller="TorneoNuevoController as tor" >
         <div class="container">
             
             <div class=" principal row " style="margin-bottom: 0px;">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     
+                    <form name="torneoForm">
                         <section class="widget">
                         <header>
                             <h4><i class="fa fa-user"></i><p class="mensajeExplicacion">Datos del torneo</h4>
@@ -31,9 +33,17 @@
                                     
                                      <div class="form-group">
                                         <label for="nombre" class="control-label col-sm-4">Nombre</label>
-                                        <div class="col-xs-12 col-sm-8">    
-                                           <input placeholder="Ingrese un nombre" id="nombreD" ng-model="tor.Torneo.nombre" class="form-control input-transparent" style="margin-bottom:5px;" type="text" name="nombretor">
-                                        </div>
+                                        
+                                         <div class="col-xs-12 col-sm-8">    
+                                            <span ng-show="!torneoForm.$pristine && torneoForm.nombretor.$error.required" class="msjError">
+                                                Debe Ingresar el nombre del torneo.
+                                            </span>
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="tor.Torneo.nombre" class="form-control input-transparent"                                                               style="margin-bottom:5px;" type="text" name="nombretor" 
+                                                   required ng-class="{ error: torneoForm.nombretor.$error.required && !torneoForm.$pristine, warning:torneoForm.nombretor.$error.nombretor }">
+                                         
+                                         </div>
+                                        
                                     </div>
                                     
                                     <div class="form-group">
@@ -276,7 +286,7 @@
                         </div>
                         </fieldset>
                     </section>
-                    
+                    </form>
                 </div>
                     
                 <div class="col-md-6">
