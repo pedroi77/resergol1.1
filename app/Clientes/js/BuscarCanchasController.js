@@ -8,6 +8,11 @@ this.provincias = [];
 this.localidades = [];
 this.superficies = [];
 this.canchas = []; 
+    
+$scope.totalItems = 0;
+$scope.itemsPerPage = 2;
+$scope.currentPage = 1;
+    
 
     
  /*this.cancha = { 
@@ -92,9 +97,31 @@ TiposSuperficiesService.query().$promise.then(function(data) {
 				
                 //self.canchas.cancha = data;
                 self.canchas = data;
+                $scope.totalItems = self.canchas.length;
+                self.algo();
 			});
 		
 	};
+    
+    
+    
+    
+    
+$scope.pageCount = function () {
+    return Math.ceil(self.canchas.length / self.itemsPerPage);
+};
+    
+    
+this.algo = $scope.$watch('currentPage + itemsPerPage', function() {
+     var begin = ((self.currentPage - 1) * self.itemsPerPage),
+         end = begin + self.itemsPerPage;
+    alert('begin ' + begin);
+    alert('end ' + end);
+    
+     $scope.canchasPaginadas = self.canchas.slice(begin, end);
+    
+   });    
+    
 /*********************************************************************************************/
 
     

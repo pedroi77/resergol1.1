@@ -176,7 +176,7 @@
             </div> 
             </div>
             <div ng-show="bus.canchas.length > 0">
-                <p>Mostrando {{bus.canchas.length}} canchas.</p>
+                <p>Mostrando {{canchasPaginadas.length}} canchas.</p>
             </div>
             <!--<div ng-show="bus.canchas.length == 0">
                 <p>No se encontraron canchas.</p>
@@ -188,7 +188,7 @@
             <div class ="principal row filtro-Complejos" ng-controller="ClientesController as cli">
                 
                 
-                <div class="col-lg-3" style="height:250px;" ng-repeat="cancha in bus.canchas">
+                <div class="col-lg-3" style="height:250px;" ng-repeat="cancha in canchasPaginadas">
     				<div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
 						<p>
 							<img src="/../resergol1.1/images/canchas/cancha1.jpg" class="img-thumbnail" style="height:250px;" alt="">
@@ -222,6 +222,15 @@
 						</div>
 					</div>
 	           </div>
+                
+                
+                <pagination total-items="totalItems" ng-show="true" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+  
+                  <p>
+                  total Items: {{totalItems}}<br />
+                  Items per page: {{itemsPerPage}}<br />
+                  Current Page: {{currentPage}}
+                  </p>
                 
                 <!--<div class="col-md-3 portfolio-item" ng-repeat="cancha in bus.canchas">
                     <a href="#">
