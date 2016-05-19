@@ -1,17 +1,22 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("BuscarCanchasController", function($scope, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService){
+resergolApp.controller("BuscarCanchasController", function($scope, $state, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService){
 
 var self = this;
 this.tiposDoc = [];
 this.provincias = [];
 this.localidades = [];
 this.superficies = [];
-this.canchas = []; 
+$scope.canchas = []; 
     
+$scope.canchasPaginadas = [];     
 $scope.totalItems = 0;
-$scope.itemsPerPage = 2;
-$scope.currentPage = 1;
+$scope.itemsPerPage = 3;
+//$scope.currentPage = 1;
+    
+$scope.pagination = {
+    currentPage:  1
+};    
     
 
     
@@ -54,12 +59,7 @@ ProvinciasService.query().$promise.then(function(data) {
         self.provincias.prov.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Provincia-'});
     }); 
 
-    
-/*self.canchas = {
-    cancha: []
-};*/
-    
-    
+   
 this.getLocalidades = function(){
         var idProv = self.provincias.selectedProv.IdProvincia;
         
@@ -95,33 +95,43 @@ TiposSuperficiesService.query().$promise.then(function(data) {
     this.getCanchas = function(){
 			CanchasService.query().$promise.then(function(data){
 				
-                //self.canchas.cancha = data;
-                self.canchas = data;
-                $scope.totalItems = self.canchas.length;
-                self.algo();
-			});
-		
+                    $scope.canchas = data;
+                    $scope.totalItems = $scope.canchas.length;
+                    $scope.pagination.currentPage = 1;
+
+                    $scope.numPages = function () {
+                        return Math.ceil($scope.canchas.length / $scope.itemsPerPage);
+                    };
+    
+                    $scope.$watch('currentPage + numPerPage', function() {
+                        var begin = (($scope.pagination.currentPage - 1) * $scope.itemsPerPage)
+                            , end = begin + $scope.itemsPerPage;
+
+                        $scope.canchasPaginadas = $scope.canchas.slice(begin, end);
+                        console.log($scope.canchasPaginadas);
+
+                    });
+                
+                
+            });	
+        
+        
 	};
     
     
+  
+$scope.pageChanged = function(currentPage)
+{
     
-    
-    
-$scope.pageCount = function () {
-    return Math.ceil(self.canchas.length / self.itemsPerPage);
-};
-    
-    
-this.algo = $scope.$watch('currentPage + itemsPerPage', function() {
-     var begin = ((self.currentPage - 1) * self.itemsPerPage),
-         end = begin + self.itemsPerPage;
-    alert('begin ' + begin);
-    alert('end ' + end);
-    
-     $scope.canchasPaginadas = self.canchas.slice(begin, end);
-    
-   });    
-    
+    $scope.$watch('currentPage + numPerPage', function() {
+            var begin = ((currentPage - 1) * $scope.itemsPerPage)
+                , end = begin + $scope.itemsPerPage;
+            
+          $scope.canchasPaginadas = $scope.canchas.slice(begin, end);
+          console.log($scope.canchasPaginadas);
+                
+    });
+}
 /*********************************************************************************************/
 
     
