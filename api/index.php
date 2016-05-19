@@ -273,6 +273,15 @@ $app->get('/jugadores/:idDuenio', function($idDuenio){
 	sendResult($data);
 });
 
+//get cantidad de equipos por tipo
+
+$app->get('/cantEquipos/:idTorneo', function($idtipo){
+    $equipos = new Torneo();
+    $data = $equipos->getCantJugByTipoTorneo($idtipo);
+    sendResult($data);
+});
+
+
 //get dias y horarios por duenio
 $app->get('/dias/:idDuenio', function($idDuenio){
     $dias = new Torneo();

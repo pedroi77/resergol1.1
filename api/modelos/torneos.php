@@ -277,6 +277,26 @@ class Torneo
         return $jugadores;
     }
     
+    public function getCantJugByTipoTorneo($TipoTorneo){  
+
+        $stmt = $this->connection->prepare('SET @Idtipo := ?');
+        $stmt->bind_param('i', $TipoTorneo);
+        $stmt->execute(); 
+        
+        
+              
+        $query = "CALL SP_getCantEquiposByTipoTorneo(@Idtipo);";
+        $cant= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $cant[] = $fila;
+            }
+            $result->free();
+        }
+        return $cant;
+    }
+    
     public function getDiasByDuenio($IdDuenio){  
 
         $stmt = $this->connection->prepare('SET @IdDuenio := ?');

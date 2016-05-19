@@ -919,3 +919,11 @@ PRIMARY KEY(IdTorneo,IdComplejo,IdCancha),
 CONSTRAINT canchas_Torneos_fk   FOREIGN KEY (IdTorneo) REFERENCES  Torneos(IdTorneo),
 CONSTRAINT com_Torneos_fk   FOREIGN KEY (IdComplejo,IdCancha) REFERENCES  Canchas(IdComplejo,IdCancha)
 );
+
+
+CREATE TABLE tipotorneosEquipos(	
+IdTipoTorneo	INT  NOT NULL,
+cantidad	    INT  NOT NULL,
+PRIMARY KEY (IdTipoTorneo,cantidad)
+);
+
