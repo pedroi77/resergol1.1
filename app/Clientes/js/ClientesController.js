@@ -330,7 +330,8 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
                         "nroDoc": self.cliente.nroDoc,
                         "email": self.cliente.eMail,
                         "valor": -5
-  	       };   
+  	       };  
+        
         
         ClientesService.save(clienteNuevo.data, function(reponse){
             alert("El registro se realizo correctamente! " + reponse.data);  //Quitar el id

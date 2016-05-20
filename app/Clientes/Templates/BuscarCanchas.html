@@ -34,8 +34,9 @@
                           
                                 <div class=" col-sm-4 ">
                                   
-                                    <select style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="bus.provincias.selectedProv" 
-                                            ng-options="provincia.Nombre for provincia in bus.provincias.prov track by
+                                    <select style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="bus.provincias.selectedOption" 
+                                            
+                                            ng-options="provincia as provincia.Nombre for provincia in bus.provincias.prov track by
                                                         provincia.IdProvincia" ng-change="bus.getLocalidades()">
                                     </select> 
                                 </div>    
@@ -49,17 +50,23 @@
                             
                                 <label for="jugadores" class="control-label col-sm-2">Jugadores</label>
                                 <div class="col-sm-4">
-                                    <select id="jugadores" required="required"
+                                    
+                                    <select data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="selectedCantJugadoresId" 
+                                                ng-options="cantJugador.id as cantJugador.desc for cantJugador in bus.cantJugadores" >
+                                    </select>
+                                    
+                                    
+                                    <!--<select id="jugadores" required="required"
                                             class=" form-control" 
                                             name="jugadores" style="margin-bottom:5px;">
-                                        <option value="1" selected="selected">5 vs 5</option>
-                                        <option value="2">6 vs 6</option>
-                                        <option value="3">7 vs 7</option>
-                                        <option value="1">8 vs 8</option>
-                                        <option value="6">9 vs 9</option>
-                                        <option value="5">10 vs 10</option>
-                                        <option value="7">11 vs 11</option>
-                                    </select>
+                                        <option value="5" selected="selected">5 vs 5</option>
+                                        <option value="6">6 vs 6</option>
+                                        <option value="7">7 vs 7</option>
+                                        <option value="8">8 vs 8</option>
+                                        <option value="9">9 vs 9</option>
+                                        <option value="10">10 vs 10</option>
+                                        <option value="11">11 vs 11</option>
+                                    </select>-->
                                 </div>    
                           
                                 <label for="superficie" class="control-label col-sm-2">Superficie</label>
@@ -103,13 +110,13 @@
                             
                             <label for="precio" class="control-label col-sm-3 ">Precio máximo</label>
                                 <div class="col-sm-3">       
-                                    <input   type="number" id="precio" class="input-sm col-sm-3 form-control">
+                                    <input   type="number" id="precioMaximo" class="input-sm col-sm-3 form-control">
                                 </div>
                                 
                                 <div class="form-group col-sm-6">
                                     <div class="col-sm-12"> 
-                                        <label class="checkbox-inline"><input type="checkbox" value="">Techada</label>
-                                        <label class="checkbox-inline"><input type="checkbox" value="">Con Luz</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="techada" value="">Techada</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="conLuz" value="">Con Luz</label>
                                     </div>
                                     
                                 </div>
@@ -124,11 +131,11 @@
                                         
                                 <div class="form-group " >
                                     <div class="col-sm-12">
-                                        <label class="checkbox-inline"><input type="checkbox" value="">Estacionamiento</label>
-                                        <label class="checkbox-inline"><input type="checkbox" value="">Duchas</label>
-                                        <label class="checkbox-inline"><input type="checkbox" value="">Buffet</label>
-                                        <label class="checkbox-inline"><input type="checkbox" value="">Parrilla</label>
-                                        <label class="checkbox-inline"><input type="checkbox" value="">WiFi</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="conEstac" value="">Estacionamiento</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="conDuchas" value="">Duchas</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="conBuffet" value="">Buffet</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="conParrilla" value="">Parrilla</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="conWifi" value="">WiFi</label>
                                     <div>
                                 </div>
                                 
@@ -226,7 +233,7 @@
     </div>
     
       <div class="text-center">        
-        <uib-pagination previous-text="Anterior" next-text="Siguiente" first-text="Inicio" last-text="Última" total-items="totalItems" ng-show = "canchas.length > 0" items-per-page="itemsPerPage" ng-model="pagination.currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" on-select-page="onGoToPage(page)" ng-change="pageChanged(pagination.currentPage)"></uib-pagination>       
+        <uib-pagination previous-text="Anterior" next-text="Siguiente" first-text="Inicio" last-text="Fin" total-items="totalItems" ng-show = "canchas.length > 0" items-per-page="itemsPerPage" ng-model="pagination.currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" on-select-page="onGoToPage(page)" ng-change="pageChanged(pagination.currentPage)"></uib-pagination>       
       </div>
             
 </div>     

@@ -11,16 +11,57 @@ class Cancha
     }
     
     //Se usa en el buscador de canchas del cliente.
-    public function getCanchas(){
-        /*$stmt = $this->connection->prepare('SET @usuario := ?');
-        $stmt->bind_param('s', $usuario);
-        $stmt->execute(); 
-    
-        $stmt = $this->connection->prepare('SET @contrasenia := ?');
-        $stmt->bind_param('s', $contrasenia);
-        $stmt->execute(); */
+    public function getCanchas($pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi){
         
-        $query = "CALL SP_getCanchas();";
+        $stmt = $this->connection->prepare('SET @pIdProv := ?');
+        $stmt->bind_param('i', $pIdProv);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pIdLoc := ?');
+        $stmt->bind_param('i', $pIdLoc);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pCantJug := ?');
+        $stmt->bind_param('i', $pCantJug);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pIdSuperficie := ?');
+        $stmt->bind_param('i', $pIdSuperficie);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pPrecioMax := ?');
+        $stmt->bind_param('d', $pPrecioMax);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pTechada := ?');
+        $stmt->bind_param('b', $pTechada);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pConLuz := ?');
+        $stmt->bind_param('b', $pConLuz);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pConEstac := ?');
+        $stmt->bind_param('b', $pConEstac);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pConDuchas := ?');
+        $stmt->bind_param('b', $pConDuchas);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pConBuffet := ?');
+        $stmt->bind_param('b', $pConBuffet);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pConParrilla := ?');
+        $stmt->bind_param('b', $pConParrilla);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pConWifi := ?');
+        $stmt->bind_param('b', $pConWifi);
+        $stmt->execute();
+        
+        $query = "CALL SP_getCanchas(@pIdProv, @pIdLoc, @pCantJug, @pIdSuperficie, @pPrecioMax, @pTechada, @pConLuz, @pConEstac, @pConDuchas, @pConBuffet, @pConParrilla, @pConWifi);";
         
         $canchas = array();
         
