@@ -32,8 +32,6 @@ class Torneo
         $dias= array();
         $canchas=$torneo['canchas'];
         $dias =$torneo['dias'];
-        //$canchas = $this->connection->real_escape_string($torneo['canchas']);
-        //$dias = $this->connection->real_escape_string($torneo['dias']);
         
 
         $salida='';

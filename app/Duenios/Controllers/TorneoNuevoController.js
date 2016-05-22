@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, CanchasService, DueniosCantEquiposService, DuenioTorneoService){
+resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, DuenioCanchasService, DueniosCantEquiposService, DuenioTorneoService){
 
     var self = this;
     this.tiposTorneos =[];
@@ -106,7 +106,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
             };
         }); 
         
-        CanchasService.query({idDuenio:1}).$promise.then(function(data) {
+        DuenioCanchasService.query({idDuenio:1}).$promise.then(function(data) {
             self.canchas.tipos = data;
             var i;
             for(i=0; i<self.canchas.tipos.length; i++){

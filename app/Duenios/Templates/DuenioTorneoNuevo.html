@@ -35,7 +35,7 @@
                                         <label for="nombre" class="control-label col-sm-4">Nombre</label>
                                         
                                          <div class="col-xs-12 col-sm-8">    
-                                            <span ng-show="!torneoForm.$pristine && torneoForm.nombretor.$error.required" class="msjError">
+                                            <span ng-show="!torneoForm.$pristine && torneoForm.nombretor.$error.required" class="msjErrorTorneo">
                                                 Debe Ingresar el nombre del torneo.
                                             </span>
                                             <input placeholder="" id="nombreD" 
@@ -258,18 +258,7 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="col-md-4"> 
-                                            <div class="form-group">
-                                                <buton href="#imagenModal" role="button" data-toggle="modal" class="btn  btn-md btn-info btn-block " style="border-radius: 7px;">
-                                                    <i class="glyphicon glyphicon-camera"></i>
-                                                    Agregar imagen
-                                                </buton>
-                                       
-                                          
-                                             
-                                            </div>
-                                        </div>
-                                        
+                                    
                                         <div class="col-md-4"> 
                                             <div class="form-group">
                                                 <button class="btn  btn-md btn-success btn-block" ng-click="tor.mostrarDatos()" style="border-radius: 7px;">
@@ -356,7 +345,7 @@
                                     <td title="'Cancha'" sortable="'cancha.nombre'" >{{cancha.nombre}}</td>
                                     <td title="'Jugadores'"  >{{cancha.CantJugadores}}</td>
                                     <td title="'Superficie'"  >{{cancha.descripcion}}</td>
-                                    <td title="'Techo'"  >{{cancha.techo}}</td>
+                                    <td title="'Techo'"  >{{cancha.techo}}</td> 
                                     <td title="'Luz'"  >{{cancha.conLuz}}</td>
                                     <td title="'Precio'">{{cancha.precio}}</td>
                                     <td title="'Juega'">
