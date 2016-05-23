@@ -43,7 +43,7 @@
                           
                                 <label for="localidades" class="control-label col-sm-2">Localidad</label>
                                 <div class=" col-sm-4">    
-                                    <select data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="bus.localidades.selectedOption" 
+                                    <select data-live-search="true" style="margin-bottom:5px;font-size:12px;" class="form-control" ng-model="bus.localidades.selectedOption" 
                                                 ng-options="localidad.Nombre for localidad in bus.localidades.loc track by               localidad.Nombre" >
                                     </select>
                                 </div>
@@ -80,7 +80,18 @@
                                <label for="sel2" class="control-label col-sm-2" >Fecha</label>
                                <div class="col-sm-4">    
                                     <p class="input-group">
-                                                      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Cerrar" alt-input-formats="altInputFormats" />
+                                                      <input type="text" id="fecha" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Cerrar" alt-input-formats="altInputFormats" />
+                                        
+                                                     <!--
+                                                                         ng-model="tor.FecInscDesde" 
+                                                                         min-date="dateOptionsInscDesde.minDate"    
+                                                                         is-open="FecInscripcionDesde.opened" 
+                                                                         datepicker-options="dateOptionsInscDesde" 
+                                                                         ng-required="true"  
+                                                                         close-text="Cerrar"
+                                                                         alt-input-formats="altInputFormats" 
+                                                                          ng-blur="tor.setearDesdeInsc()"/>-->
+                                        
                                                       <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                                                       </span>
@@ -89,8 +100,8 @@
                             
                             
                                 <label for="horas" class="control-label col-sm-2">Hora</label>
-                                <div class="col-sm-4">    
-                                    <select id="superficie" required="required"
+                                <div class="col-sm-4" >    
+                                    <select  id="superficie" required="required"
                                             data-placeholder="Seleccione una localidad" 
                                             class="select2 form-control" 
                                             name="localidades" style="margin-bottom:5px;">
@@ -141,8 +152,12 @@
                                 
                                <br>
                                 
-                                <div class="col-sm-12">
-                                    <button class="btn btn-md btn-success btn-block" onclick="$('html,body').animate({scrollTop:1000},'slow');return false;" ng-click="bus.getCanchas()"><i class="fa fa-plus glyphicon glyphicon-search"></i>Buscar</button>
+                                <div class="col-sm-8">
+                                    <button class="btn btn-md btn-success btn-block"
+                                            onclick="$('html, body').animate({ scrollTop: $('#divpag').offset().top }, 1000);"  ng-click="bus.getCanchas()"><i class="fa fa-plus glyphicon glyphicon-search"></i>Buscar</button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <button class="btn btn-md btn-info btn-block" ng-click="bus.limpiarFiltros()"><i class="fa fa-plus glyphicon glyphicon-erase"></i>Limpiar filtros</button>
                                 </div>
                             </fieldset>
                         </form>
@@ -182,12 +197,15 @@
                 
             </div> 
             </div>
-            <div ng-show="canchas.length > 0">
-                <p>Mostrando {{canchasPaginadas.length}} de {{canchas.length}} canchas.</p>
+            <div style="color:white;" ng-show="canchas.length > 0">
+                <p>Mostrando {{canchasPaginadas.length}} de {{canchas.length}} canchas...</p>
             </div>
-            <!--<div ng-show="bus.canchas.length == 0">
-                <p>No se encontraron canchas.</p>
+            <!--<div class="alert alert-success" ng-show="canchas.length > 0">
+                 <h5>Total Filtered Client: {{canchasPaginadas.length}}</h5>
             </div>-->
+            <div style="color:#FFE6E6;" ng-show="canchas.length == 0 && bus.seBusco">
+                <p>No se encontraron canchas para los filtros ingresados...</p>
+            </div>
             
             <!-- /.row -->
             <hr>
@@ -195,7 +213,7 @@
             <div class ="principal row filtro-Complejos" ng-controller="ClientesController as cli">
                 
                 
-                <div class="col-lg-3" style="height:250px;" ng-repeat="cancha in canchasPaginadas">
+                <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="cancha in canchasPaginadas">
     				<div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
 						<p>
 							<img src="/../resergol1.1/images/canchas/cancha1.jpg" class="img-thumbnail" style="height:250px;" alt="">
@@ -221,7 +239,7 @@
                                     <li>Precio p/Hora: ${{cancha.Precio}} </li>
                                 </ul>
                                 <div class="col-md-12 text-center">
-								<a href="#" class="btn btn-success"><span class="glyphicon glyphicon-eye-open"></span> VER</a>
+								<a href="#" class="btn btn-success" ui-sref="Clientes.verCancha({id:'{{cancha.IdCancha}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER CANCHA</a>
                                 </div>
 							</div>
 						</div>
@@ -230,11 +248,11 @@
                 
                   
 				
-    </div>
-    
-      <div class="text-center">        
+    </div>  
+      <div class="text-center" id="divpag">        
         <uib-pagination previous-text="Anterior" next-text="Siguiente" first-text="Inicio" last-text="Fin" total-items="totalItems" ng-show = "canchas.length > 0" items-per-page="itemsPerPage" ng-model="pagination.currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" on-select-page="onGoToPage(page)" ng-change="pageChanged(pagination.currentPage)"></uib-pagination>       
       </div>
-            
+        <div class="col-sm-2">
+        <button id="btnSubir" class="btn btn-md btn-primary btn-block" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" ng-show = "canchas.length > 0"><i class="fa fa-plus glyphicon glyphicon-arrow-up"></i> Subir</button>
+      </div>     
 </div>     
-<hr>

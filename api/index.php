@@ -300,9 +300,17 @@ $app->get('/canchas/:pIdProv/:pIdLoc/:pCantJug/:pIdSuperficie/:pPrecioMax/:pTech
 });
 
 //get cantidad de jugadores por duenio
-$app->get('/duenio/canchas/:idDuenio', function($idDuenio){
+/*$app->get('/duenio/canchas/:idDuenio', function($idDuenio){
     $canchas = new Cancha();
     $data = $canchas->getCanchasByDuenio($idDuenio);
+	sendResult($data);
+});*/
+
+//Get cancha especifica por idCancha.
+$app->get('/canchas/:idCancha', function($idCancha){
+    
+    $canchas = new Cancha();
+    $data = $canchas->getCancha($idCancha);
 	sendResult($data);
 });
 

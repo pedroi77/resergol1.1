@@ -7,6 +7,7 @@ this.tiposDoc = [];
 this.provincias = [];   
 this.localidades = [];
 this.superficies = [];
+this.seBusco = false;
     
 this.cantJugadores = [
           { id: -1, desc: '-Todos-'},
@@ -24,7 +25,7 @@ $scope.canchas = [];
     
 $scope.canchasPaginadas = [];     
 $scope.totalItems = 0;
-$scope.itemsPerPage = 1;
+$scope.itemsPerPage = 8;
 //$scope.currentPage = 1;
     
 $scope.pagination = {
@@ -39,13 +40,13 @@ $scope.filtros = {
     Fecha : '',
     Hora : '',
     PrecioMaximo : -1,
-    Techada : false,
-    Luz : false,
-    Estacionamiento : false,
-    Duchas : false,
-    Buffet : false,
-    Parrilla : false,
-    Wifi : false
+    Techada : null,
+    Luz : null,
+    Estacionamiento : null,
+    Duchas : null,
+    Buffet : null,
+    Parrilla : null,
+    Wifi : null
 };    
     
 
@@ -116,14 +117,32 @@ TiposSuperficiesService.query().$promise.then(function(data) {
     });
     
 
-    
+
+    this.limpiarFiltros = function(){
+      
+        self.provincias.selectedOption.IdProvincia = 1;
+        self.getLocalidades();
+        //LIMPIAR HORA!.    
+        $scope.today();    
+        self.superficies.selectedOption.IdSuperficie = -1;    
+        $scope.selectedCantJugadoresId = -1;     
+        document.getElementById("precioMaximo").value = null;    
+        document.getElementById("techada").checked = false;
+        document.getElementById("conLuz").checked = false;
+        document.getElementById("conEstac").checked = false;
+        document.getElementById("conDuchas").checked = false;
+        document.getElementById("conBuffet").checked = false;
+        document.getElementById("conParrilla").checked = false;
+        document.getElementById("conWifi").checked = false;
+        
+    };
 /***************************CANCHAS************************************************************/
     this.getCanchas = function(){
         
             self.getFiltros();
+            self.seBusco = true;    
         
-            
-			CanchasService.query({pIdProv:$scope.filtros.IdProvincia, pIdLoc:$scope.filtros.IdLocalidad, pCantJug:$scope.filtros.CantJugadores, pIdSuperficie:$scope.filtros.TipoSuperficie, pPrecioMax:$scope.filtros.PrecioMaximo, pTechada:$scope.filtros.Techada, pConLuz:$scope.filtros.Luz, pConEstac:$scope.filtros.Estacionamiento, pConDuchas:$scope.filtros.Duchas, pConBuffet:$scope.filtros.Buffet, pConParrilla:$scope.filtros.Parrilla, pConWifi:0}).$promise.then(function(data){
+			CanchasService.query({pIdProv:$scope.filtros.IdProvincia, pIdLoc:$scope.filtros.IdLocalidad, pCantJug:$scope.filtros.CantJugadores, pIdSuperficie:$scope.filtros.TipoSuperficie, pPrecioMax:$scope.filtros.PrecioMaximo, pTechada:$scope.filtros.Techada, pConLuz:$scope.filtros.Luz, pConEstac:$scope.filtros.Estacionamiento, pConDuchas:$scope.filtros.Duchas, pConBuffet:$scope.filtros.Buffet, pConParrilla:$scope.filtros.Parrilla, pConWifi:$scope.filtros.Wifi}).$promise.then(function(data){
 				
                     $scope.canchas = data;
                     $scope.totalItems = $scope.canchas.length;
@@ -178,7 +197,7 @@ this.getFiltros = function(){
           'duchas ->' + $scope.filtros.Duchas + '\n' +
           'buffet ->' + $scope.filtros.Buffet + '\n' +
           'parrilla ->' + $scope.filtros.Parrilla + '\n' +
-          'wifi ->' + $scope.filtros.Wifi + '\n'
+          'wifi ->' + $scope.filtros.Wifi
          );*/
     
     
@@ -209,6 +228,7 @@ $scope.pageChanged = function(currentPage)
     
     /*INICIO FECHAS*/
     /*PARA FECHAS*/
+
      $scope.today = function() {
         $scope.dt = new Date();
       };
@@ -217,7 +237,8 @@ $scope.pageChanged = function(currentPage)
       $scope.clear = function() {
         $scope.dt = null;
       };
-
+    
+         
       $scope.inlineOptions = {
         customClass: getDayClass,
         minDate: new Date(),
@@ -235,14 +256,23 @@ $scope.pageChanged = function(currentPage)
 
       // Disable weekend selection
       function disabled(data) {
-        //var date = data.date,
-          //mode = data.mode;
+        var date = data.date,
+          mode = data.mode;
         //return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+          //return mode === 'day' && (date < new Date(2016,04,21));
       }
-
-      $scope.toggleMin = function() {
-        $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
-        $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    
+      $scope.dateOptionsFechaFiltro = {
+        dateDisabled: disabled,
+        language: 'es-es',  
+        formatYear: 'yy',
+        maxDate: new Date(2018, 1, 1),
+        minDate: new Date(),
+        startingDay: 1
+      };
+    
+       $scope.toggleMin = function() {
+        $scope.dateOptionsFechaFiltro.minDate = new Date();
       };
 
       $scope.toggleMin();

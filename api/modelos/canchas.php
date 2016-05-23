@@ -34,31 +34,31 @@ class Cancha
         $stmt->execute();
         
         $stmt = $this->connection->prepare('SET @pTechada := ?');
-        $stmt->bind_param('b', $pTechada);
+        $stmt->bind_param('i', $pTechada);
         $stmt->execute();
         
         $stmt = $this->connection->prepare('SET @pConLuz := ?');
-        $stmt->bind_param('b', $pConLuz);
+        $stmt->bind_param('i', $pConLuz);
         $stmt->execute();
         
         $stmt = $this->connection->prepare('SET @pConEstac := ?');
-        $stmt->bind_param('b', $pConEstac);
+        $stmt->bind_param('i', $pConEstac);
         $stmt->execute();
         
         $stmt = $this->connection->prepare('SET @pConDuchas := ?');
-        $stmt->bind_param('b', $pConDuchas);
+        $stmt->bind_param('i', $pConDuchas);
         $stmt->execute();
         
         $stmt = $this->connection->prepare('SET @pConBuffet := ?');
-        $stmt->bind_param('b', $pConBuffet);
+        $stmt->bind_param('i', $pConBuffet);
         $stmt->execute();
         
         $stmt = $this->connection->prepare('SET @pConParrilla := ?');
-        $stmt->bind_param('b', $pConParrilla);
+        $stmt->bind_param('i', $pConParrilla);
         $stmt->execute();
         
         $stmt = $this->connection->prepare('SET @pConWifi := ?');
-        $stmt->bind_param('b', $pConWifi);
+        $stmt->bind_param('i', $pConWifi);
         $stmt->execute();
         
         $query = "CALL SP_getCanchas(@pIdProv, @pIdLoc, @pCantJug, @pIdSuperficie, @pPrecioMax, @pTechada, @pConLuz, @pConEstac, @pConDuchas, @pConBuffet, @pConParrilla, @pConWifi);";
@@ -75,7 +75,9 @@ class Cancha
         return $canchas;
     }
     
-    //canchas de un duenio
+    
+
+     //canchas de un duenio
     public function getCanchasByDuenio($IdDuenio){  
 
         $stmt = $this->connection->prepare('SET @IdDuenio := ?');
@@ -96,7 +98,25 @@ class Cancha
         return $canchas;
     }
     
-    
+     //Get de cancha específica.
+    public function getCancha($IdCancha){  
+
+        $stmt = $this->connection->prepare('SET @IdCancha := ?');
+        $stmt->bind_param('i', $IdCancha);
+        $stmt->execute(); 
+               
+        $query = "CALL SP_getCancha(@IdCancha);";
+        $canchas = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $canchas[] = $fila;
+            }
+            $result->free();
+        }
+        return $canchas;
+    }
+   
     
     
 }
