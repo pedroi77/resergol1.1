@@ -1,30 +1,29 @@
 
   
 <div class="container" ng-controller="VerCanchaController as can">
-    <div class="row">
+    <div class="row" ng-repeat="canc in cancha">
             <div class="col-md-3 boxComplejo"> 
                 <section class="widget2 boxComplejo">
                     <div class="row">
                      <header>
-                        <h3 class="fa fa-user titul">Cancha 1</h3>
-                         <h4 class="fa fa-user titul">Complejo: <a ui-sref="Clientes.verComplejo">Todo Futbol</a></h4>
+                        <h3 class="fa fa-user titul">{{canc.nombre}}</h3>
+                         <h4 class="fa fa-user titul">Complejo: <a ui-sref="Clientes.verComplejo">{{canc.Complejo}}</a></h4>
                      </header>
                       <!--<div class="imgMiniatura">
                             <img src="images/complejos/complejo1.jpeg" alt="">
-                      <div>-->
-                          
+                      <div>--> 
                       <ul class="liSeparados">
                           <li>
-                        <b>Provincia:</b> <label>Buenos Aires</label>
+                        <b>Provincia:</b> <label>{{canc.Provincia}}</label>
                           </li>
                           <li>
-                            <b>Localidad:</b> <label>Lomas de Zamora</label>  
+                            <b>Localidad:</b> <label>{{canc.Localidad}}</label>  
                           </li>
                           <li>
-                            <b>Direccion:</b> <label>Laprida 950</label>  
+                            <b>Direccion:</b> <label>{{canc.Calle}} {{canc.Altura}}</label>  
                           </li>
                           <li>
-                           <b>Teléfono:</b> <label>4-244-1933</label>  
+                           <b>Teléfono:</b> <label>{{canc.NroTelef}}</label>  
                           </li>
                           <li class="glyphicon glyphicon-time">
                             <label class="letraHorarios">L a V - 12hs - 18hs.</label>
@@ -82,20 +81,20 @@
                   <div class="row">
                       <div class="col-md-12">
                           <ul>
-                            <li>
-                                <b>Tamaño:</b> <label>6 (12 jugadores)</label>
+                            <li> 
+                                <b>Tamaño:</b> <label>{{canc.CantJugadores}} ({{canc.CantJugadores * 2}} jugadores)</label>
                             </li>
                             <li>
-                                <b>Superficie:</b> <label>Pasto sintético</label>
+                                <b>Superficie:</b> <label>{{canc.Superficie}}</label>
                             </li>
                             <li>
-                                <b>Techada:</b> <label>NO</label>
+                                <b>Techada:</b> <label>{{canc.Techada == 1 ? "SI" : "NO"}}</label>
                             </li>
                             <li>
-                                <b>Luz:</b> <label>SI</label>
+                                <b>Luz:</b> <label>{{canc.Luz == 1 ? "SI" : "NO"}}</label>
                             </li>
                             <li>
-                                <b>Precio por hora:</b> <label>$380</label>
+                                <b>Precio P/Hora:</b> <label>${{canc.Precio}}</label>
                                 <label class="glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title="Tanto el precio como la seña que se indican no incluyen luz." ></label>
                             </li>
                             <li>

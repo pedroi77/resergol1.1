@@ -299,12 +299,23 @@ $app->get('/canchas/:pIdProv/:pIdLoc/:pCantJug/:pIdSuperficie/:pPrecioMax/:pTech
 	sendResult($data);
 });
 
+//Get cancha especifica por idCancha.
+$app->get('/canchas/:idCancha', function($idCancha){
+    
+    $canchas = new Cancha();
+    $data = $canchas->getCancha($idCancha);
+	sendResult($data);
+});
+
 //get cantidad de jugadores por duenio
-$app->get('/canchas/:idDuenio', function($idDuenio){
+/*$app->get('/canchas/:idDuenio', function($idDuenio){
     $canchas = new Cancha();
     $data = $canchas->getCanchasByDuenio($idDuenio);
 	sendResult($data);
-});
+});*/
+
+
+
 
 
 $app->run();

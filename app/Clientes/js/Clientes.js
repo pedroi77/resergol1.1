@@ -45,7 +45,10 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
                 controllerAs : "cli"
             })
         .state("Clientes.verCancha",{
-                url : "/VerCancha",
+                url : "/VerCancha/:id",
+                params: {
+                    id:{value:'defaultValue'}
+                },
                 templateUrl : "app/Clientes/Templates/VerCancha.html",
                 controllerAs : "cli"
             })
