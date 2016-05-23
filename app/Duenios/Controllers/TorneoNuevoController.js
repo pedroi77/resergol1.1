@@ -11,7 +11,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         idTipoTorneo: 0,
                         nombre: '',
                         cantEquipos: 0,
-                        cantJugadores: 11,
+                        cantJugadores: 0,
                         idSuperficie: 1,
                         idaYvuelta: 0,
                         precioInscripcion: 0,
@@ -79,18 +79,18 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
             self.cantEquipos.selectedOption = self.cantEquipos.tipos[0];
         }); 
     
-        DueniosSuperficiesService.query({idDuenio:1}).$promise.then(function(data) {
+        DueniosSuperficiesService.query({idDuenio:self.tiposTorneos.selectedOption.IdTipoTorneo}).$promise.then(function(data) {
             self.superficies.tipos = data;
             self.superficies.selectedOption = self.superficies.tipos[0];
         }); 
         
-        DueniosJugadoresService.query({idDuenio:1}).$promise.then(function(data) {
+        DueniosJugadoresService.query({idDuenio:this.Torneo.idDuenio}).$promise.then(function(data) {
             self.cantJugadores.tipos = data;
             self.cantJugadores.selectedOption = self.cantJugadores.tipos[0];
         }); 
         
         
-        DuenioDiasService.query({idDuenio:1}).$promise.then(function(data) {
+        DuenioDiasService.query({idDuenio:self.tiposTorneos.selectedOption.IdTipoTorneo}).$promise.then(function(data) {
             self.diasDesde.tipos = data;
             var i;
             for(i=0; i<self.diasDesde.tipos.length; i++){
@@ -106,7 +106,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
             };
         }); 
         
-        DuenioCanchasService.query({idDuenio:1}).$promise.then(function(data) {
+        DuenioCanchasService.query({idDuenio:self.tiposTorneos.selectedOption.IdTipoTorneo}).$promise.then(function(data) {
             self.canchas.tipos = data;
             var i;
             for(i=0; i<self.canchas.tipos.length; i++){
@@ -159,6 +159,38 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
     };
     
   
+    this.tieneDias= function(){
+        var i;
+        for(i=0; i<self.diasDesde.tipos.length; i++){
+            if(self.diasDesde.tipos[i]['juega'] == true){
+                return true;
+            }
+        };
+        return false;
+    };
+    
+    this.tieneCanchas= function(){
+        var i;
+        for(i=0; i<self.canchas.tipos.length; i++){
+            if(self.canchas.tipos[i]['juegaCancha'] == true){
+                return true;
+            }
+        };
+        return false;
+    };
+    
+    this.superficieValida= function(){
+        var i;
+        for(i=0; i<self.canchas.tipos.length; i++){
+            if(self.canchas.tipos[i]['juegaCancha'] == true){
+                //Deberia validar po id
+               if(this.superficies.selectedOption.Descripcion ==self.canchas.tipos[i]['descripcion']){ 
+                return true;
+               }
+            }
+        };
+        return false;
+    };
     
     this.validaFecInscDesde= function(){
         if (self.FecInscDesde == undefined){
@@ -184,14 +216,6 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         }
     };
     
-  
-    
-    this.fecha= function(){
-        console.log(self.FecInscDesde);
-        console.log($scope.dateOptionsInscHasta.minDate);
-        
-        console.log($scope.dateOptionsInscHasta.minDate);
-    };
     
     this.setearDesdeInsc= function(){
         self.FecInscHasta = self.FecInscDesde;
@@ -383,7 +407,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         var i;
         for(i=0; i<self.canchas.tipos.length; i++){
             if(self.canchas.tipos[i]['juegaCancha'] == true) {
-                self.Torneo.canchas.push({ "idComplejo": 1, "idCancha": self.canchas.tipos[i]['idcancha']});
+                self.Torneo.canchas.push({ "idComplejo": sessionStorage.idComplejo, "idCancha": self.canchas.tipos[i]['idcancha']});
             };
         };
         
@@ -437,6 +461,86 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         idEstado: 2     */
         
     
+    };
+    
+    this.crearTorneo = function(){
+       
+        if(this.validarDatos()){
+            self.Torneo.idTipoTorneo = self.tiposTorneos.selectedOption.IdTipoTorneo;
+            self.Torneo.cantJugadores = self.cantJugadores.selectedOption.CantJugadores;
+            self.Torneo.idSuperficie = self.superficies.selectedOption.IdSuperficie;
+            self.Torneo.idaYvuelta = self.tiposPartidos.selectedOption.tipo;
+            self.Torneo.cantEquipos = self.cantEquipos.selectedOption.cantidad;
+            self.Torneo.fecIniInscripcion = self.FecInscDesde.toLocaleDateString();
+            self.Torneo.fecFinInscripcion = self.FecInscHasta.toLocaleDateString();
+            self.Torneo.fechaInicio = self.TorneoDesde.toLocaleDateString();
+            self.Torneo.fechaFin = self.TorneoHasta.toLocaleDateString();
+            self.Torneo.idEstado = 2;  //Inscripcion
+
+            if(self.Torneo.idaYvuelta == 'Ida')
+                self.Torneo.idaYvuelta = 0;
+            else
+                self.Torneo.idaYvuelta = 1;
+
+
+            var i;
+            for(i=0; i<self.canchas.tipos.length; i++){
+                if(self.canchas.tipos[i]['juegaCancha'] == true) {
+                    self.Torneo.canchas.push({ "idComplejo": sessionStorage.idComplejo, "idCancha": self.canchas.tipos[i]['idcancha']});
+                };
+            };
+
+            for(i=0; i<self.diasDesde.tipos.length; i++){
+                if(self.diasDesde.tipos[i]['juega'] == true) {
+
+                    var h = addZero(self.diasDesde.tipos[i]['HoraDesde'].getHours());
+                    var m = addZero(self.diasDesde.tipos[i]['HoraDesde'].getMinutes());
+                    var s = addZero(self.diasDesde.tipos[i]['HoraDesde'].getSeconds());
+
+                    var HoraDesde = h + ":" + m + ":" + s;
+
+                    h = addZero(self.diasDesde.tipos[i]['HoraHasta'].getHours());
+                    m = addZero(self.diasDesde.tipos[i]['HoraHasta'].getMinutes());
+                    s = addZero(self.diasDesde.tipos[i]['HoraHasta'].getSeconds());
+
+                    var HoraHasta = h + ":" + m + ":" + s;
+
+                    self.Torneo.dias.push({ "idDia": self.diasDesde.tipos[i]['iddia'], "horaDesde": HoraDesde , "horaHasta": HoraHasta });
+                };
+        };
+        
+       console.log(self.Torneo);
+        
+        var TorneoNuevo = new DuenioTorneoService();
+        
+        TorneoNuevo.data=self.Torneo;
+        
+        DuenioTorneoService.save(TorneoNuevo.data, function(reponse){
+            console.log("El registro se realizo correctamente! " + reponse.data);  
+          },function(errorResponse){
+              console.log(errorResponse.data.message);  
+         });
+        }
+    };
+    
+    this.validarDatos = function(){
+        if(!this.tieneDias()){
+            alert("No selecciono días");
+            return false;
+        }
+                
+        if(!this.tieneCanchas()){
+            alert("No selecciono canchas");
+            return false;
+        }
+        
+        if(!this.superficieValida()){
+            alert("La superficie del torneo no coincide con ninguna de las canchas seleccionadas.");
+            return false;
+        }
+        
+        return true;
+        
     };
     
     function addZero(i) {

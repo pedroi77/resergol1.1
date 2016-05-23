@@ -12,6 +12,9 @@ class Torneo
     
  
     public function create($torneo){
+        $this->connection->autocommit(false);
+        
+        try {
         $idDuenio = $this->connection->real_escape_string($torneo['idDuenio']);
         $idTipoTorneo = $this->connection->real_escape_string($torneo['idTipoTorneo']);
         $nombre = $this->connection->real_escape_string($torneo['nombre']);
@@ -201,14 +204,20 @@ class Torneo
     
                 
 
-            
+            //$this->connection->commit();
+            $this->connection->rollback();
             
             $dat= array($res);
             sendResult($dat, 'OK' );
+            
         }else{
            sendError("Error, no se pudo registrar el torneo." . $res ); //por algun motivo pincha aca
         }
         
+    } catch (Exception $e) {
+            $this->connection->rollback();
+            echo 'Something fails: ',  $e->getMessage(), "\n";
+        }
     }
     
     
