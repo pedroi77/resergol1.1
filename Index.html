@@ -367,7 +367,7 @@
                                     
                                     <div class="col-md-6">
                                         
-                                        <input id="nroDoc" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="due.Duenio.nroDoc" required ng-class="{ error:frmDatosUsuario.nroDoc.$error.required && frmDatosUsuario.nroDoc.$dirty, warning:frmDatosUsuario.nroDoc.$error.nroDoc}" ng-blur="due.existeDni()">
+                                        <input id="nroDoc" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="due.Duenio.nroDoc" required ng-class="{ error:frmDatosUsuario.nroDoc.$error.required && frmDatosUsuario.nroDoc.$dirty, warning:frmDatosUsuario.nroDoc.$error.nroDoc}" ng-blur="due.existeDni()">
                                         <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.frmDatosUsuario.$error.maxlength" class= "msjError">
                                             Supero la cantidad máxima de caracteres.
                                         </span>

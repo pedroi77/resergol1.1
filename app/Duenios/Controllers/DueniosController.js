@@ -294,9 +294,6 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
              + '\n'+ "loc: " + self.localidades.selectedOption.IdLocalidad
              + '\n'+ "direccion: " + self.Duenio.direccion
              + '\n'+ "nroCalle: " + self.Duenio.nroCalle;
-        
-        
-        
     };
    
 });

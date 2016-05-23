@@ -1,24 +1,24 @@
 
-    <!--<div class="container-fluid">-->
-    <div class="container-fluid">
-        <header class="row widget" >
-            <div style = "color: white; " class="container">
-                <h3  style=" font-size: 50px; text-align:center; font-style:italic;" >Mi complejo</h3>
-            </div>
-        </header>
-    </div>    
+<!--<div class="container-fluid">-->
+<div class="container-fluid">
+    <header class="row widget" >
+        <div style = "color: white; " class="container">
+            <h3  style=" font-size: 50px; text-align:center; font-style:italic;" >Mi complejo</h3>
+        </div>
+    </header>
+</div>    
 
 
     
-    <!--pi-->
-    <!--
-    <div id="main" ng-controller="MainController as main" class="container clear-top" style="min-height: 300px;">
-    -->
-    <div id="main" ng-controller="AdministrarComplejoController as admCom"  class="container clear-top" style="min-height: 300px;">
-
-        <div class="row">
-            <div class="col-md-7">
-                <section class="widget">
+<!--pi-->
+<!--
+<div id="main" ng-controller="MainController as main" class="container clear-top" style="min-height: 300px;">
+-->
+<div id="main" ng-controller="AdministrarComplejoController as admCom"  class="container clear-top" style="min-height: 300px;">
+    <form class="modal-body" name="frmAdminDuenio">
+    <div class="row">
+        <div class="col-md-7">
+            <section class="widget">
                     
                     <div class="body">
                         <form id="user-form" class="form-horizontal form-label-left"
@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group" >
+                                <div class="form-group" style="margin-bottom:5px;">
                                     <div class="col-sm-12">
                                         <label class="checkbox-inline"><input type="checkbox" value="">Estacionamiento</label>
                                         <label class="checkbox-inline"><input type="checkbox" value="">Duchas</label>
@@ -51,8 +51,8 @@
                                 </div>
                                 
                                 
-                                <div class="form-group" style="margin-top:20px;">
-                                    <label for="descripcion" class="control-label   col-sm-4">Descripción<span class="required"></span></label>
+                                <div class="form-group" style="margin-bottom:5px;">
+                                    <label for="descripcion" class="control-label col-sm-4">Descripción<span class="required"></span></label>
                                 </div>
                                 
                                 <div class="form-group">
@@ -110,7 +110,7 @@
                                             <input style="color:black" type="time" name="hora" value="11:45:00" max="22:30:00" min="10:00:00" step="1"> 
                                     </div>    
                                     <div class="col-sm-4">
-                                        <button class="btn btn-md btn-success"><i class="fa fa-plus glyphicon glyphicon-plus"></i> Agregar</button>
+                                        <button class="btn btn-md btn-success" ng-click="admCom.mostrarDatos()"><i class="fa fa-plus glyphicon glyphicon-plus"></i> Agregar</button>
                                     </div>
                                 </div>
                                 
@@ -130,6 +130,8 @@
                                           </tr>
                                         
                                     </table>
+                                </div>
+                                    </div>
                                 </div>
                             </fieldset>
                             
@@ -224,16 +226,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="telefono-particular" class="control-label col-sm-4">Teléfono particular</label>
-                                    <div class="col-xs-12 col-sm-4"><input id="telefono-particular" placeholder="Teléfono fijo" class="form-control input-transparent" type="text" value="4213-6789" name="telefono-particular"></div>
+                                    <input id="NroTelef" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Telefono" ng-maxlength="15" name="NroTelef" ng-model="admCom.Duenio.NroTelef" required ng-class="{ error:frmAdminDuenio.NroTelef.$error.required && frmAdminDuenio.NroTelef.$dirty, warning:frmAdminDuenio.NroTelef.$error.NroTelef}">
                                 </div>
                                 <div class="form-group">
                                     <label for="telefono-celular" class="control-label col-sm-4">Teléfono celular</label>
-                                    <div class="col-xs-12 col-sm-4"><input id="telefono-celular" placeholder="Teléfono celular" class="form-control input-transparent" type="text" value="15-4578-9855" name="telefono-celular"></div>
+                                    <input id="celular" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Celular" ng-maxlength="15" name="celular" ng-model="admCom.Duenio.nroCelular"
+                                           value="{{admCom.Duenio.nroCelular}}">
                                 </div>
                             </fieldset>
 
                         </form>
-                    </div>
+                </div>
+                
                 </section>
                 <section class="widget">
                     
@@ -279,9 +283,9 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="calle" class="control-label col-sm-2">Calle</label>
+                                    <label for="calle" class="control-label col-sm-2">Dirección</label>
                                     <div class="col-xs-12 col-sm-10">    
-                                        <input id="calle" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder="Calle"  name="calle" />
+                                        <input style="margin-bottom:5px;" id="direccion" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Dirección" ng-maxlength="60" name="direccion" ng-model="admCom.Duenio.direccion" required ng-class="{ error:frmAdminDuenio.direccion.$error.required && frmAdminDuenio.direccion.$dirty, warning:frmAdminDuenio.direccion.$error.direccion}">
                                     </div>    
                                 </div>  
                                 
@@ -301,6 +305,8 @@
                                 
                             </form>
                     </div>
+                </div>
+                        
                     </fieldset>
                 </section>
                 
@@ -324,11 +330,6 @@
                     </div>
                     
                 </section>
-                
-                
-               
-
-                
                 <section class="widget">
                     <header>
                         <h4><i class="fa fa-user"></i>Datos del dueño</h4>
@@ -342,63 +343,60 @@
                     <fieldset>
                     <div class="body">
                         <p class="mensajeExplicacion">Administre aquí los datos del dueño del complejo.</p>
-                        
-                        
                         <div class="form-group">
                             <form action="" class="">
                                 
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom:50px;">
                                     <label for="usuario" class="control-label  col-sm-4">Usuario<span class="required">*</span></label>
                                     <div class="col-sm-8">
-                                        <input placeholder="Usuario" id="usuario" class="form-control input-transparent" style="margin-bottom:5px;" type="text" name="usuario" value="Usuario">
+                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Usuario" ng-maxlength="25" name="usuarioDuenio" ng-model="admCom.Duenio.usuario" required ng-class="{ error:frmAdminDuenio.usuario.$error.required && frmAdminDuenio.usuario.$dirty, warning:frmAdminDuenio.usuario.$error.usuario }" ng-blur="admCom.existeUsuario()">
                                     </div>
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom:50px;">
                                     <label for="contraseña" class="control-label col-sm-4">Contraseña <span class="required">*</span></label>
-                                    <div class="col-sm-8"><input placeholder="Ingrese un apelido" id="contraseña" class="form-control input-transparent" style="margin-bottom:5px;"  type="text" name="contraseña" value="*********"></div>
+                                    <div class="col-sm-8">
+                                        <input id="contrasenia" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Contraseña" ng-minlength="6" ng-maxlength="25" name="contrasenia" ng-model="admCom.Duenio.contrasenia" required ng-class="{ error: frmAdminDuenio.contrasenia.$error.required && frmAdminDuenio.contrasenia.$dirty, warning: frmAdminDuenio.contrasenia.$error.contrasenia }">
+                                    </div>
                                 </div>
                                 
-                                
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom:50px;">
                                     <label for="nombreD" class="control-label  col-sm-4">Nombre<span class="required">*</span></label>
                                     <div class="col-sm-8">
-                                        <input placeholder="Ingrese un nombre" id="nombreD" class="form-control input-transparent" style="margin-bottom:5px;" type="text" name="nombre" value="Cosme">
+                                        <input id="nombre" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre" ng-maxlength="60" name="nombre" ng-model="admCom.Duenio.nombre" required ng-class="{ error:frmAdminDuenio.nombre.$error.required && frmAdminDuenio.nombre.$dirty, warning:frmAdminDuenio.nombre.$error.nombre}">
                                     </div>
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom:50px;">
                                     <label for="apellido" class="control-label col-sm-4">Apellido <span class="required">*</span></label>
-                                    <div class="col-sm-8"><input placeholder="Ingrese un apelido" id="apelido" class="form-control input-transparent" style="margin-bottom:5px;"  type="text" name="apelido" value="Fulanito"></div>
+                                    <div class="col-sm-8">
+                                        <input id="apellido" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Apellido" ng-maxlength="60" name="apellido" ng-model="admCom.Duenio.apellido" required ng-class="{ error:frmAdminDuenio.apellido.$error.required && frmAdminDuenio.apellido.$dirty, warning:frmAdminDuenio.apellido.$error.apellido}">
+                                    </div>
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom:50px;">
                                     <label for="tipoDoc" class="control-label col-sm-4">Tipo doc.</label>
                                     <div class="col-xs-12 col-sm-8">    
-                                        <select id="tipoDoc" required="required"
-                                                data-placeholder="" 
-                                                class="select2 form-control" 
-                                                name="tipoDoc" style="margin-bottom:5px;">
-                                            <option value=""></option>
-                                            <option value="1" selected="selected">DNI</option>
-                                            <option value="2">CUIL</option>
+                                       <select style="margin-bottom:5px;" class="form-control" ng-model="admCom.tiposDoc.selectedOption" 
+                                                             ng-options="tipoDoc.Descripcion for tipoDoc in admCom.tiposDoc.tipos 
+                                                                         track by tipoDoc.IdTipoDoc">
                                         </select>
                                     </div>
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom:50px;">
                                     <label for="nro-documento" class="control-label col-sm-4">Documento <span class="required">*</span></label>
                                     <div class="col-sm-8">
-                                            <input id="nro-documento" class="form-control input-transparent"
-                                                    type="text"
-                                                    name="nro-documento" maxlength="28" value="34987222"  style="margin-bottom:5px;"  >
+                                        <input id="nroDoc" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="admCom.Duenio.nroDoc" required ng-class="{ error:frmAdminDuenio.nroDoc.$error.required && frmAdminDuenio.nroDoc.$dirty, warning:frmAdminDuenio.nroDoc.$error.nroDoc}" ng-blur="due.existeDni()">
                                     </div>
                                 </div>
                                 
-                                   
-                                <div class="form-group">
-                                    <label for="email" class="control-label col-sm-4">Email <span class="required">*</span></label>
-                                    <div class="col-sm-8"><input placeholder="Ingrese un email" id="email" class="form-control input-transparent" style="margin-bottom:5px;"  type="text" name="email" value="Ingrese un Email"></div>
+                                <div class="form-group" style="margin-bottom:50px;">
+                                    <label for="email" class="control-label col-sm-4">Mail <span class="required">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="email" type="email" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="example@email.com" name="email" ng-model="admCom.Duenio.email" 
+                                        required ng-class="{ error:frmAdminDuenio.email.$error.required && frmAdminDuenio.email.$dirty, warning:frmAdminDuenio.email.$error.email }" ng-blur="due.existeEmail()">
+                                    </div>
                                 </div>
                                 
                             </form>
@@ -473,24 +471,18 @@
                         </div>
                         
                     </div>
+                        
                     </fieldset>
                    
-                </section>
-                
-                
-                
-                
-                
-            </div>    
-        </div>    
-        
-
-    </div>
-        
+                </section> 
+            </div>
+        </div>
+    </form>
+</div>
 
 
-    <!--pi-->
-    <div class="clearfix"></div>
+<!--pi-->
+<div class="clearfix"></div>
         
 
 
