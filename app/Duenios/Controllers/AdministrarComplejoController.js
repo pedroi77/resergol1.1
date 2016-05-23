@@ -152,4 +152,28 @@ TiposSuperficiesService.query().$promise.then(function(data) {
         });
     };
     
+    //aca tendria que hacer un UPDATE a la tabla de complejos segun el ID del complejo y del usuario
+    this.updateComplejo = function()
+    {
+        var complejoData = new ClientesService();
+     
+        complejoData.data = {
+                        "usuario": self.cliente.usuario,
+                        "contrasenia": self.cliente.contrasenia,
+                        "nombre": self.cliente.nombre,
+                        "apellido": self.cliente.apellido,
+                        "idTipoDoc": self.cliente.tipoDoc,
+                        "nroDoc": self.cliente.nroDoc,
+                        "email": self.cliente.eMail,
+                        "valor": -5
+  	       };  
+        
+        
+        ClientesService.save(clienteNuevo.data, function(reponse){
+            alert("El registro se realizo correctamente! " + reponse.data);  //Quitar el id
+          },function(errorResponse){
+              console.log(errorResponse.data.message);  
+         });
+    }
+    
 });

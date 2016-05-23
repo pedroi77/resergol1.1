@@ -413,7 +413,7 @@
                                     <div class="col-md-6">
                                         <select class="form-control" ng-model="due.provincias.selectedProv" 
                                             ng-options="provincia.Nombre for provincia in due.provincias.prov track by
-                                                        provincia.IdProvincia" ng-click="due.getLocalidades()">
+                                                        provincia.IdProvincia" ng-change="due.getLocalidades()">
                                         </select> 
                                     </div>
                                     
