@@ -14,10 +14,10 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         cantJugadores: 11,
                         idSuperficie: 1,
                         idaYvuelta: 0,
-                        precioInscripcion: 500.00,
+                        precioInscripcion: 0,
                         fecIniInscripcion: '06/05/2016',
                         fecFinInscripcion: '10/05/2016',
-                        horasCancelacion: 16,
+                        horasCancelacion: 72,
                         fechaInicio: '15/05/2016',
                         fechaFin: '18/06/2016',
                         descripcion: '',
@@ -157,6 +157,33 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         }); 
     
     };
+    
+  
+    
+    this.validaFecInscDesde= function(){
+        if (self.FecInscDesde == undefined){
+            self.FecInscDesde = "";
+        }
+    };
+    
+    this.validaFecInscHasta= function(){
+        if (self.FecInscHasta == undefined){
+            self.FecInscHasta = "";
+        }
+    };
+    
+    this.validaFecDesde= function(){
+        if (self.TorneoDesde == undefined){
+            self.TorneoDesde = "";
+        }
+    };
+    
+    this.validaFecHasta= function(){
+        if (self.TorneoHasta == undefined){
+            self.TorneoHasta = "";
+        }
+    };
+    
   
     
     this.fecha= function(){
@@ -244,11 +271,14 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
 
 
         //Deshabilita x eje el dom 0 o el sab 6
-      function disabled(data) {
+    
+    function disabled(data) {
         var date = data.date,
           mode = data.mode;
-        return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+        //return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+        return mode === 'day' && (false);
       }
+    
 
       $scope.toggleMin = function() {
         $scope.dateOptionsInscDesde.minDate = new Date();
@@ -414,6 +444,12 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
             i = "0" + i;
         }
         return i;
+    };
+    
+    this.limpiar = function(){
+        console.log("entroo");
+        self.init();
+        $state.go("Duenios.torneoNuevo");
     };
     
     self.init();
