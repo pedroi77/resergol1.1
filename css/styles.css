@@ -1170,6 +1170,12 @@ background: #333333;
     color:red;
 }
 
+
+.msjErrorTorneo{
+    color:#F48F3C;
+}
+
+
  .full button span {
     background-color: limegreen;
     border-radius: 32px;
