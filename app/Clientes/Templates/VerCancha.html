@@ -98,7 +98,7 @@
                                 <label class="glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title="Tanto el precio como la seña que se indican no incluyen luz." ></label>
                             </li>
                             <li>
-                                <b>Seña requerida:</b> <label>$80</label>
+                                <b>Seña requerida:</b> <label>${{canc.Precio * canc.PorcentSenia / 100}} ({{canc.PorcentSenia}}%) </label>
                             </li>  
                           </ul>
                       </div>
@@ -109,23 +109,24 @@
                 <div class="panel-heading" ><h4>Servicios adicionales</h4></div>
                   <div class="row">
                       <div class="col-md-6">
-                        <label>Buffet </label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
+                        <label>Buffet </label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[canc.Buffet]" aria-hidden="true"></span>  
+                          
                       </div>
                       <div class="col-md-6">
-                        <label>Parrilla </label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>  
+                        <label>Parrilla </label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[canc.Parrillas]" aria-hidden="true"></span>  
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-md-6">
-                        <label>Duchas </label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
+                        <label>Duchas </label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[canc.Duchas]" aria-hidden="true"></span>  
                       </div>
                       <div class="col-md-6">
-                        <label>Wifi</label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>  
+                        <label>Wifi</label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[canc.WiFi]" aria-hidden="true"></span>  
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-md-8">
-                        <label>Estacionamiento</label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
+                        <label>Estacionamiento</label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[canc.Estacionamiento]" aria-hidden="true"></span>  
                       </div>
                   </div>   
             </section>
