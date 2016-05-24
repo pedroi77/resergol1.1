@@ -42,10 +42,10 @@ app.controller("AdminController", function(DueniosPendientesService, AceptarDuen
   	       };   
         
         AceptarDueniosService.update(duePen.data, function(reponse){
-            if(p_Acepta == 1)
+            /*if(p_Acepta == 1)
                 alert("Se acepto la solicitud!");  
             else
-                alert("Se rechazo la solicitud! "); 
+                alert("Se rechazo la solicitud! ");*/ 
             
           },function(errorResponse){
               //console.log(errorResponse.data.message);
@@ -55,6 +55,9 @@ app.controller("AdminController", function(DueniosPendientesService, AceptarDuen
         
         self.init();
         $state.go("Admin.administracion");
+        //$scope.table.reload();
+        //$('#tablaDuenios').modal('refresh');
+        //$scope.tablaDuenios.refresh();
     };
     
     this.init = function()

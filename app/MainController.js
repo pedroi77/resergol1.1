@@ -58,6 +58,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                    
             if(duenio[0] != '-1'){
                 self.Usuario.id = duenio[0].IdDuenio;
+                self.Usuario.idComplejo = duenio[0].IdComplejo;
                 self.Usuario.passInvalida = false;
                 self.Usuario.login = true;
                 store.set('token',  duenio[1]);
@@ -142,6 +143,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
         sessionStorage.usuario = self.Usuario.usuario;
         sessionStorage.pass = btoa(self.Usuario.contrasenia);    
         sessionStorage.id = self.Usuario.id;
+        sessionStorage.idComplejo = self.Usuario.idComplejo;
     };
     
     this.desloguearse = function(){
@@ -165,6 +167,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                      id:0,
                      contrasenia: '',
                      tipo : '',
+                     idComplejo:0,
                      existe: true, 
                      passInvalida:false,
                      login: false

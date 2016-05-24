@@ -119,8 +119,17 @@
                                     
                                     <div class="form-group">
                                         <label for="precio" class="control-label col-sm-4">Precio de inscripción</label>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.precio.$error.required" class="msjErrorTorneo">
+                                            Debe Ingresar el precio.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.precio.$error.number" class="msjErrorTorneo">
+                                            Debe ingresar un número positivo.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.precio.$error.min" class="msjErrorTorneo">
+                                            Debe ingresar un número positivo.
+                                        </span>
                                         <div class="col-xs-12 col-sm-8">    
-                                            <input id="precio" class="form-control input-transparent" style="margin-bottom:5px;" type="number" placeholder=""  name="precio" ng-model = "tor.Torneo.precioInscripcion" min="0"/>
+                                            <input id="precio" class="form-control input-transparent" style="margin-bottom:5px;" type="number" placeholder=""  name="precio" ng-model = "tor.Torneo.precioInscripcion" min="0" required/>
                                         </div>    
                                     </div>  
                                     
@@ -132,7 +141,7 @@
                                                   <div class="col-sm-4">
                                                     <p class="input-group">
                                                         <!--date-disabled="tor.disabled(date)"-->
-                                                      <input type="text" class="form-control "  
+                                                      <input type="text" class="form-control " ng-change="tor.validaFecInscDesde()"
                                                              uib-datepicker-popup="{{format}}" 
                                                              ng-model="tor.FecInscDesde" 
                                                              min-date="dateOptionsInscDesde.minDate"    
@@ -150,7 +159,7 @@
                                                   
                                                  <div class="col-sm-4">
                                                     <p class="input-group">
-                                                      <input type="text" 
+                                                      <input type="text"    ng-change="tor.validaFecInscHasta()"
                                                              class="form-control" 
                                                              uib-datepicker-popup="{{format}}" 
                                                              ng-model="tor.FecInscHasta" 
@@ -177,13 +186,13 @@
   
                                                   <div class="col-sm-4">
                                                     <p class="input-group">
-                                                      <input type="text" 
+                                                      <input type="text" ng-change="tor.validaFecDesde()"
                                                               format-day-header="EEE"
                                                              class="form-control" 
                                                              uib-datepicker-popup="{{format}}" 
                                                              ng-model="tor.TorneoDesde" 
                                                              is-open="FecDesde.opened" 
-                                                             datepicker-options="dateOptions" 
+                                                             datepicker-options="dateOptionsTorneoDesde" 
                                                              ng-required="true" 
                                                              ng-blur= "tor.setearTorneoHasta()"
                                                              close-text="Cerrar" 
@@ -196,12 +205,12 @@
                                                   
                                                  <div class="col-sm-4">
                                                     <p class="input-group">
-                                                      <input type="text" 
+                                                      <input type="text" ng-change="tor.validaFecHasta()"
                                                              class="form-control" 
                                                              uib-datepicker-popup="{{format}}" 
                                                              ng-model="tor.TorneoHasta" 
                                                              is-open="FecHasta.opened" 
-                                                             datepicker-options="dateOptions" 
+                                                             datepicker-options="dateOptionsTorneoHasta" 
                                                              ng-required="true" 
                                                              close-text="Cerrar" 
                                                              alt-input-formats="altInputFormats" />
@@ -219,7 +228,16 @@
                                     <div class="form-group" >
                                         <label for="horas" class="control-label col-sm-4">Tiempo de aviso de cancelación al torneo (horas)</label>
                                         <div class="col-xs-12 col-sm-8" style="margin-bottom:30px;">    
-                                            <input id="horas" class="form-control input-transparent" style="margin-bottom:5px;" type="number" ng-model = "tor.Torneo.horasCancelacion" min ="0" placeholder="24 hs"  name="horas" />
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.horas.$error.required" class="msjErrorTorneo">
+                                            Debe Ingresar la cantidad de horas.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.horas.$error.number" class="msjErrorTorneo">
+                                            Debe ingresar un número positivo.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.horas.$error.min" class="msjErrorTorneo">
+                                            La cantidad mínima de aviso es de 72 hs.
+                                        </span>
+                                            <input id="horas" class="form-control input-transparent" style="margin-bottom:5px;" type="number" ng-model = "tor.Torneo.horasCancelacion" min ="72"   name="horas" required />
                                         </div>    
                                     </div>  
                                     
@@ -227,12 +245,15 @@
                                   
                                     
                                     <div class="form-group" style="margin-top:15px;">
-                                        <label for="descripcion" class="control-label   col-sm-4">Descripción<span class=""></span></label>
+                                        <label for="descripcion" class="control-label   col-sm-4">Descripción <span class=""></span></label>
                                     </div>
                                 
                                     <div class="form-group">
                                         <div class="col-sm-12" style="margin-bottom:20px;" >
-                                            <textarea type="text" ng-model= "tor.Torneo.descripcion" placeholder="Descripción breve del torneo." class="form-control" rows="3"></textarea>
+                                            <span ng-show="!torneoForm.$pristine && torneoForm.descTorneo.$error.required" class="msjErrorTorneo">
+                                                Debe Ingresar la Descripción del torneo.
+                                            </span>
+                                            <textarea id="descTorneo" type="text" ng-model= "tor.Torneo.descripcion" placeholder="Descripción breve del torneo."class="form-control" rows="3" required></textarea>
                                         </div>
                                     </div>
                                     
@@ -242,26 +263,29 @@
                                 
                                     <div class="form-group">
                                         <div class="col-sm-12" style="margin-bottom:30px;" >
-                                            <textarea type="text" ng-model= "tor.Torneo.reglas" placeholder="Reglas del torneo." class="form-control" rows="3"></textarea>
+                                            <span ng-show="!torneoForm.$pristine && torneoForm.reglas.$error.required" class="msjErrorTorneo">
+                                                Debe Ingresar las reglas del torneo.
+                                            </span>
+                                            <textarea id="reglas" type="text" ng-model= "tor.Torneo.reglas" placeholder="Reglas del torneo." class="form-control" rows="3" required></textarea>
                                         </div>
                                     </div>
                                     
                         
                                     
                                     <div class="form-group">
-                                        <div class="col-md-4"> 
+                                        <div class="col-md-6"> 
                                             <div class="form-group"  >
-                                                <button class="btn  btn-md btn-danger btn-block" style="border-radius: 7px;">
+                                                <button class="btn  btn-md btn-info btn-block" style="border-radius: 7px;" ng-click="tor.limpiar()" >
                                                 <i class="glyphicon glyphicon-trash"></i>
-                                                    Eliminar
+                                                    Limpiar
                                                 </button>   
                                             </div>
                                         </div>
                                         
                                     
-                                        <div class="col-md-4"> 
+                                        <div class="col-md-6"> 
                                             <div class="form-group">
-                                                <button class="btn  btn-md btn-success btn-block" ng-click="tor.mostrarDatos()" style="border-radius: 7px;">
+                                                <button class="btn  btn-md btn-success btn-block"   ng-disabled="!torneoForm.$valid" ng-click="tor.crearTorneo()" style="border-radius: 7px;">
                                                  <i class="glyphicon glyphicon-floppy-save"></i>
                                                     Guardar
                                                 </button>
