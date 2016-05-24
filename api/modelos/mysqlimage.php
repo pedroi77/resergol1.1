@@ -32,7 +32,7 @@
             {
                 $con=mysql_connect("localhost","root", "");
                 mysql_select_db("resergol",$con);
-                $qry="insert into canchasimagenes (IdComplejo, IdCancha, IdImagen, Imagen) values (5,12,1,'$image')";
+                $qry="insert into canchasimagenes (IdComplejo, IdCancha, IdImagen, Imagen) values (6,13,1,'$image')";
                 echo $qry;
                 $result=mysql_query($qry,$con);
                 if($result)

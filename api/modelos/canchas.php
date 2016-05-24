@@ -99,13 +99,17 @@ class Cancha
     }
     
      //Get de cancha específica.
-    public function getCancha($IdCancha){  
+    public function getCancha($IdCancha, $IdComplejo){  
 
         $stmt = $this->connection->prepare('SET @IdCancha := ?');
         $stmt->bind_param('i', $IdCancha);
         $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @IdComplejo := ?');
+        $stmt->bind_param('i', $IdComplejo);
+        $stmt->execute(); 
                
-        $query = "CALL SP_getCancha(@IdCancha);";
+        $query = "CALL SP_getCancha(@IdCancha, @IdComplejo);";
         $canchas = array();
         
         if( $result = $this->connection->query($query) ){

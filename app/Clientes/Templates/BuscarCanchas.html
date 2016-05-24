@@ -1,8 +1,4 @@
-<?php
-    //require_once("connection.php");
-    ini_set('mysql.connect_timeout',300);
-    ini_set('default_socket_timeout',300);
-?>
+
 <div class="container-fluid">
 
     <br>
@@ -43,7 +39,8 @@
                                             
                                             ng-options="provincia as provincia.Nombre for provincia in bus.provincias.prov track by
                                                         provincia.IdProvincia" ng-change="bus.getLocalidades()">
-                                    </select> 
+                                    </select>
+                                    
                                 </div>    
                           
                                 <label for="localidades" class="control-label col-sm-2">Localidad</label>
@@ -118,6 +115,8 @@
                                         <OPTION>21 Hs</OPTION> 
                                         <OPTION>22 Hs</OPTION> 
                                     </select>
+
+                                    
                                 </div>
                               
                                 <br>
@@ -202,13 +201,10 @@
                 
             </div> 
             </div>
-            <div style="color:white;" ng-show="canchas.length > 0">
-                <p>Mostrando {{canchasPaginadas.length}} de {{canchas.length}} canchas...</p>
-            </div>
             <!--<div class="alert alert-success" ng-show="canchas.length > 0">
                  <h5>Total Filtered Client: {{canchasPaginadas.length}}</h5>
             </div>-->
-            <div style="color:#FFE6E6;" ng-show="canchas.length == 0 && bus.seBusco">
+            <div style="color:#FFCCCC;" ng-show="bus.seBusco && canchas.length == 0">
                 <p>No se encontraron canchas para los filtros ingresados...</p>
             </div>
             
@@ -222,8 +218,8 @@
     				<div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
 						<p>
 							<!--<img src="/../resergol1.1/images/canchas/cancha1.jpg" class="img-thumbnail" style="height:250px;" alt="">-->
-                            <img src="{{cancha.Imagen}}">
-						</p>
+                            <img ng-src="{{cancha.Imagen}}">
+                        </p>
 						<div class="caption">
 							<div class="blur"></div>
 							<div class="caption-text">
@@ -245,10 +241,14 @@
                                     <li>Precio p/Hora: ${{cancha.Precio}} </li>
                                 </ul>
                                 <div class="col-md-12 text-center">
-								<a href="#" class="btn btn-success" ui-sref="Clientes.verCancha({id:'{{cancha.IdCancha}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER CANCHA</a>
+								<a href="#" class="btn btn-success"
+                                   ui-sref="Clientes.verCancha({idCan:'{{cancha.IdCancha}}', idComp:'{{cancha.IdComplejo}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER CANCHA</a>
                                 </div>
 							</div>
 						</div>
+                        
+                     
+                        
 					</div>
 	           </div>
                 
@@ -258,7 +258,10 @@
       <div class="text-center" id="divpag">        
         <uib-pagination previous-text="Anterior" next-text="Siguiente" first-text="Inicio" last-text="Fin" total-items="totalItems" ng-show = "canchas.length > 0" items-per-page="itemsPerPage" ng-model="pagination.currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" on-select-page="onGoToPage(page)" ng-change="pageChanged(pagination.currentPage)"></uib-pagination>       
       </div>
-        <div class="col-sm-2">
-        <button id="btnSubir" class="btn btn-md btn-primary btn-block" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" ng-show = "canchas.length > 0"><i class="fa fa-plus glyphicon glyphicon-arrow-up"></i> Subir</button>
+        <div class="col-sm-1">
+        <button id="btnSubir" class="btn btn-primary" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" ng-show = "canchas.length > 0"><i class="fa fa-plus glyphicon glyphicon-arrow-up"></i></button>    
       </div>     
+      <div class="col-sm-3" style="color:white;" ng-show="canchas.length > 0">
+        <p>Mostrando {{canchasPaginadas.length}} de {{canchas.length}} canchas...</p>
+      </div>
 </div>     

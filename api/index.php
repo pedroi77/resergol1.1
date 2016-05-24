@@ -306,11 +306,11 @@ $app->get('/duenio/canchas/:idDuenio', function($idDuenio){
 	sendResult($data);
 });
 
-//Get cancha especifica por idCancha.
-$app->get('/canchas/:idCancha', function($idCancha){
+//Get cancha especifica por idComplejo.
+$app->get('/canchas/:idCancha/:idComplejo', function($idCancha, $idComplejo){
     
     $canchas = new Cancha();
-    $data = $canchas->getCancha($idCancha);
+    $data = $canchas->getCancha($idCancha, $idComplejo);
 	sendResult($data);
 });
 

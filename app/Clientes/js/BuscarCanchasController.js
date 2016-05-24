@@ -145,6 +145,16 @@ TiposSuperficiesService.query().$promise.then(function(data) {
 			CanchasService.query({pIdProv:$scope.filtros.IdProvincia, pIdLoc:$scope.filtros.IdLocalidad, pCantJug:$scope.filtros.CantJugadores, pIdSuperficie:$scope.filtros.TipoSuperficie, pPrecioMax:$scope.filtros.PrecioMaximo, pTechada:$scope.filtros.Techada, pConLuz:$scope.filtros.Luz, pConEstac:$scope.filtros.Estacionamiento, pConDuchas:$scope.filtros.Duchas, pConBuffet:$scope.filtros.Buffet, pConParrilla:$scope.filtros.Parrilla, pConWifi:$scope.filtros.Wifi}).$promise.then(function(data){
 				
                     $scope.canchas = data;
+                    //console.log($scope.canchas);
+                    //var urlCreator = window.URL;
+                     angular.forEach(data, function(aux) {
+                        if(aux.Imagen != null)
+                        {
+                            aux.Imagen = "data:image/jpg;base64," + aux.Imagen;
+                        }
+                    }); 
+                
+                    
                     $scope.totalItems = $scope.canchas.length;
                     $scope.pagination.currentPage = 1;
 
@@ -157,7 +167,7 @@ TiposSuperficiesService.query().$promise.then(function(data) {
                             , end = begin + $scope.itemsPerPage;
 
                         $scope.canchasPaginadas = $scope.canchas.slice(begin, end);
-                        console.log($scope.canchasPaginadas);
+                        //console.log($scope.canchasPaginadas);
 
                     });
                 

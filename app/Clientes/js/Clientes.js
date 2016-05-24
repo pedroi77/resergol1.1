@@ -45,9 +45,10 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
                 controllerAs : "cli"
             })
         .state("Clientes.verCancha",{
-                url : "/VerCancha/:id",
+                url : "/VerCancha/:idCan/:idComp",
                 params: {
-                    id:{value:'defaultValue'}
+                    idCan:{value:'defaultValue'},
+                    idComp:{value:'defaultValue'}
                 },
                 templateUrl : "app/Clientes/Templates/VerCancha.html",
                 controllerAs : "cli"
@@ -68,7 +69,7 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
         .state("Clientes.buscarCanchas",{
 			url : "/Canchas",
 			//templateUrl : "app/Clientes/Templates/BuscarCanchas.html",
-            templateUrl : "app/Clientes/Templates/BuscarCanchas.php",
+            templateUrl : "app/Clientes/Templates/BuscarCanchas.html",
             controller : "",	
             controllerAs : ""
 		})

@@ -5,17 +5,15 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
 	
     var self = this;
     $scope.cancha = [];
-    $scope.idCancha = $stateParams.id;
+    $scope.idCancha = $stateParams.idCan;
+    $scope.idComplejo = $stateParams.idComp;
     
     
     
     this.getCancha = function(){
         
-			CanchasService.query({idCancha:$scope.idCancha}).$promise.then(function(data){
+			CanchasService.query({idCancha:$scope.idCancha, idComplejo:$scope.idComplejo}).$promise.then(function(data){
                     $scope.cancha = data;
-                //TENGO QUE, VER SI PUEDE ANDAR LA URL CON UN SOLO PARAMETRO, PORQ PEDRO USA OTRO CON UN PARAMETRO TMB,
-                //O SI NO CREAR SERVICE NUEVO.
-                
                 //TENGO QUE HACER QUE DATA NO DEVUEVA UN ARRAY!!!!!!.
             });	
 	};
