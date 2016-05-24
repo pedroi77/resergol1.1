@@ -1,3 +1,8 @@
+<?php
+    //require_once("connection.php");
+    ini_set('mysql.connect_timeout',300);
+    ini_set('default_socket_timeout',300);
+?>
 <div class="container-fluid">
 
     <br>
@@ -34,7 +39,7 @@
                           
                                 <div class=" col-sm-4 ">
                                   
-                                    <select style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="bus.provincias.selectedOption" 
+                                    <select style="margin-bottom:5px;"  data-live-search="true" class="selectpicker form-control ac-select stateList" ng-model="bus.provincias.selectedOption" 
                                             
                                             ng-options="provincia as provincia.Nombre for provincia in bus.provincias.prov track by
                                                         provincia.IdProvincia" ng-change="bus.getLocalidades()">
@@ -216,7 +221,8 @@
                 <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="cancha in canchasPaginadas">
     				<div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
 						<p>
-							<img src="/../resergol1.1/images/canchas/cancha1.jpg" class="img-thumbnail" style="height:250px;" alt="">
+							<!--<img src="/../resergol1.1/images/canchas/cancha1.jpg" class="img-thumbnail" style="height:250px;" alt="">-->
+                            <img src="{{cancha.Imagen}}">
 						</p>
 						<div class="caption">
 							<div class="blur"></div>
