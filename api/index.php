@@ -292,10 +292,10 @@ $app->get('/dias/:idDuenio', function($idDuenio){
 /*****************************************CANCHAS****************************************************************************/
 
 //Get canchas con filtros.
-$app->get('/canchas/:pIdProv/:pIdLoc/:pCantJug/:pIdSuperficie/:pPrecioMax/:pTechada/:pConLuz/:pConEstac/:pConDuchas/:pConBuffet/:pConParrilla/:pConWifi', function($pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi){
+$app->get('/canchas/:pIdProv/:pIdLoc/:pCantJug/:pIdSuperficie/:pFecha/:pDiaSemana/:pHora/:pPrecioMax/:pTechada/:pConLuz/:pConEstac/:pConDuchas/:pConBuffet/:pConParrilla/:pConWifi', function($pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pFecha, $pDiaSemana, $pHora, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi){
     
     $canchas = new Cancha();
-    $data = $canchas->getCanchas($pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi);
+    $data = $canchas->getCanchas($pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pFecha, $pDiaSemana, $pHora, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi);
 	sendResult($data);
 });
 

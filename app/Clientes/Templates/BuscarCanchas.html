@@ -82,7 +82,7 @@
                                <label for="sel2" class="control-label col-sm-2" >Fecha</label>
                                <div class="col-sm-4">    
                                     <p class="input-group">
-                                                      <input type="text" id="fecha" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Cerrar" alt-input-formats="altInputFormats" />
+                                                      <input type="text" id="fecha" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="false" close-text="Cerrar" alt-input-formats="altInputFormats" />
                                         
                                                      <!--
                                                                          ng-model="tor.FecInscDesde" 
@@ -103,20 +103,9 @@
                             
                                 <label for="horas" class="control-label col-sm-2">Hora</label>
                                 <div class="col-sm-4" >    
-                                    <select  id="superficie" required="required"
-                                            data-placeholder="Seleccione una localidad" 
-                                            class="select2 form-control" 
-                                            name="localidades" style="margin-bottom:5px;">
-                                        <option value="1" selected="selected">18 Hs</option>
-                                        <OPTION>18 Hs</OPTION> 
-                                        <OPTION>19 Hs</OPTION> 
-                                        <OPTION>19 Hs</OPTION> 
-                                        <OPTION>20 Hs</OPTION> 
-                                        <OPTION>21 Hs</OPTION> 
-                                        <OPTION>22 Hs</OPTION> 
+                                    <select data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="selectedHoraId" 
+                                                ng-options="hora.id as hora.desc for hora in bus.horas" >
                                     </select>
-
-                                    
                                 </div>
                               
                                 <br>

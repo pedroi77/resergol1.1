@@ -20,7 +20,29 @@ this.cantJugadores = [
           { id: 11, desc: '11 vs 11' }
       ];
     
-$scope.selectedCantJugadoresId = -1;    
+this.horas = [
+          { id: -1, desc: '-Todas-'},
+          { id: 8, desc: '08:00 hs.'},
+          { id: 9, desc: '09:00 hs.'},
+          { id: 10, desc: '10:00 hs.' },
+          { id: 11, desc: '11:00 hs.' },
+          { id: 12, desc: '12:00 hs.' },
+          { id: 13, desc: '13:00 hs.' },
+          { id: 14, desc: '14:00 hs.' },
+          { id: 15, desc: '15:00 hs.' },
+          { id: 16, desc: '16:00 hs.' },
+          { id: 17, desc: '17:00 hs.' },
+          { id: 18, desc: '18:00 hs.' },
+          { id: 19, desc: '19:00 hs.' },
+          { id: 20, desc: '20:00 hs.' },
+          { id: 21, desc: '21:00 hs.' },
+          { id: 22, desc: '22:00 hs.' },
+          { id: 23, desc: '23:00 hs.' }
+      ];
+    
+$scope.diaSemana = -1;
+$scope.selectedCantJugadoresId = -1;
+$scope.selectedHoraId = -1;
 $scope.canchas = []; 
     
 $scope.canchasPaginadas = [];     
@@ -37,8 +59,8 @@ $scope.filtros = {
     IdLocalidad : -1,
     CantJugadores : '',
     TipoSuperficie : -1,
-    Fecha : '',
-    Hora : '',
+    Fecha : '1900-01-01',
+    Hora : -1,
     PrecioMaximo : -1,
     Techada : null,
     Luz : null,
@@ -122,10 +144,11 @@ TiposSuperficiesService.query().$promise.then(function(data) {
       
         self.provincias.selectedOption.IdProvincia = 1;
         self.getLocalidades();
-        //LIMPIAR HORA!.    
-        $scope.today();    
+        $scope.dt = null;
+        $scope.diaSemana = -1;
         self.superficies.selectedOption.IdSuperficie = -1;    
-        $scope.selectedCantJugadoresId = -1;     
+        $scope.selectedCantJugadoresId = -1; 
+        $scope.selectedHoraId = -1;     
         document.getElementById("precioMaximo").value = null;    
         document.getElementById("techada").checked = false;
         document.getElementById("conLuz").checked = false;
@@ -138,15 +161,12 @@ TiposSuperficiesService.query().$promise.then(function(data) {
     };
 /***************************CANCHAS************************************************************/
     this.getCanchas = function(){
-        
             self.getFiltros();
-            self.seBusco = true;    
-        
-			CanchasService.query({pIdProv:$scope.filtros.IdProvincia, pIdLoc:$scope.filtros.IdLocalidad, pCantJug:$scope.filtros.CantJugadores, pIdSuperficie:$scope.filtros.TipoSuperficie, pPrecioMax:$scope.filtros.PrecioMaximo, pTechada:$scope.filtros.Techada, pConLuz:$scope.filtros.Luz, pConEstac:$scope.filtros.Estacionamiento, pConDuchas:$scope.filtros.Duchas, pConBuffet:$scope.filtros.Buffet, pConParrilla:$scope.filtros.Parrilla, pConWifi:$scope.filtros.Wifi}).$promise.then(function(data){
+              
+			CanchasService.query({pIdProv:$scope.filtros.IdProvincia, pIdLoc:$scope.filtros.IdLocalidad, pCantJug:$scope.filtros.CantJugadores, pIdSuperficie:$scope.filtros.TipoSuperficie, pFecha:$scope.filtros.Fecha, pDiaSemana:$scope.filtros.DiaSemana, pHora:$scope.filtros.Hora, pPrecioMax:$scope.filtros.PrecioMaximo, pTechada:$scope.filtros.Techada, pConLuz:$scope.filtros.Luz, pConEstac:$scope.filtros.Estacionamiento, pConDuchas:$scope.filtros.Duchas, pConBuffet:$scope.filtros.Buffet, pConParrilla:$scope.filtros.Parrilla, pConWifi:$scope.filtros.Wifi}).$promise.then(function(data){
 				
                     $scope.canchas = data;
-                    //console.log($scope.canchas);
-                    //var urlCreator = window.URL;
+                    self.seBusco = true;  
                      angular.forEach(data, function(aux) {
                         if(aux.Imagen != null)
                         {
@@ -185,6 +205,35 @@ this.getFiltros = function(){
     $scope.filtros.CantJugadores = $scope.selectedCantJugadoresId;
     $scope.filtros.TipoSuperficie = self.superficies.selectedOption.IdSuperficie;
     
+    if($scope.dt == null)
+    {
+        $scope.filtros.Fecha = '1900-01-01';
+        $scope.filtros.DiaSemana = -1;
+    }
+    else
+        {
+            $scope.filtros.Fecha = $scope.dt.getFullYear() + "-" + ($scope.dt.getMonth() + 1) + "-" + $scope.dt.getDate();
+            //1-Lunes 2-Martes etc...
+            if($scope.dt.getUTCDay() == 0)
+                $scope.filtros.DiaSemana = 7; //Domingo lo toma como 0, pero para nosotros va a ser 7.
+            else
+                $scope.filtros.DiaSemana = $scope.dt.getUTCDay();
+            console.log('diaSemana ->' + $scope.filtros.DiaSemana);
+        }
+        
+    console.log('fecha -> ' + $scope.filtros.Fecha);
+    
+    if($scope.selectedHoraId == -1)
+        $scope.filtros.Hora = -1
+    else
+        {   
+            if($scope.selectedHoraId < 10)
+              $scope.filtros.Hora = '0' + $scope.selectedHoraId + ':00:00';
+            else
+              $scope.filtros.Hora = $scope.selectedHoraId + ':00:00';    
+        }
+    console.log('hora -> ' + $scope.filtros.Hora);
+
     $scope.filtros.PrecioMaximo = document.getElementById("precioMaximo").value == "" ? -1 : document.getElementById("precioMaximo").value ;
     
     $scope.filtros.Techada = document.getElementById("techada").checked ? 1 : 0;
@@ -242,7 +291,7 @@ $scope.pageChanged = function(currentPage)
      $scope.today = function() {
         $scope.dt = new Date();
       };
-      $scope.today();
+      //$scope.today();
 
       $scope.clear = function() {
         $scope.dt = null;
@@ -367,3 +416,9 @@ $scope.pageChanged = function(currentPage)
     
     self.init();*/
 []});
+
+
+
+
+
+

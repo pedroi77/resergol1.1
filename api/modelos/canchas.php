@@ -11,7 +11,7 @@ class Cancha
     }
     
     //Se usa en el buscador de canchas del cliente.
-    public function getCanchas($pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi){
+    public function getCanchas($pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pFecha, $pDiaSemana, $pHora, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi){
         
         $stmt = $this->connection->prepare('SET @pIdProv := ?');
         $stmt->bind_param('i', $pIdProv);
@@ -27,6 +27,18 @@ class Cancha
         
         $stmt = $this->connection->prepare('SET @pIdSuperficie := ?');
         $stmt->bind_param('i', $pIdSuperficie);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pFecha := ?');
+        $stmt->bind_param('s', $pFecha);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pDiaSemana := ?');
+        $stmt->bind_param('i', $pFecha);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pHora := ?');
+        $stmt->bind_param('s', $pHora);
         $stmt->execute();
         
         $stmt = $this->connection->prepare('SET @pPrecioMax := ?');
@@ -61,7 +73,7 @@ class Cancha
         $stmt->bind_param('i', $pConWifi);
         $stmt->execute();
         
-        $query = "CALL SP_getCanchas(@pIdProv, @pIdLoc, @pCantJug, @pIdSuperficie, @pPrecioMax, @pTechada, @pConLuz, @pConEstac, @pConDuchas, @pConBuffet, @pConParrilla, @pConWifi);";
+        $query = "CALL SP_getCanchas(@pIdProv, @pIdLoc, @pCantJug, @pIdSuperficie, @pFecha, @pDiaSemana, @pHora, @pPrecioMax, @pTechada, @pConLuz, @pConEstac, @pConDuchas, @pConBuffet, @pConParrilla, @pConWifi);";
         
         $canchas = array();
         
