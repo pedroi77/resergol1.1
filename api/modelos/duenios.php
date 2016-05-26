@@ -32,6 +32,33 @@ class Duenio
         }
         return $duenio;
     }
+    
+     public function validarDuenio($usuario,$contrasenia ){
+        $stmt = $this->connection->prepare('SET @usuario := ?');
+        $stmt->bind_param('s', $usuario);
+        $stmt->execute(); 
+    
+        $stmt = $this->connection->prepare('SET @contrasenia := ?');
+        $stmt->bind_param('s', $contrasenia);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getDuenio(@usuario, @contrasenia );";
+        
+        $duenio= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $duenio[] = $fila;
+            }
+              
+            $result->free();
+        }
+         
+        if(count($duenio)>0) 
+            return true;
+        else
+            return false;
+    }
 
  
     public function create($duenio){

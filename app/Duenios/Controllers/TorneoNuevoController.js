@@ -509,16 +509,17 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                 };
         };
         
-       console.log(self.Torneo);
+       
         
         var TorneoNuevo = new DuenioTorneoService();
         
         TorneoNuevo.data=self.Torneo;
         
         DuenioTorneoService.save(TorneoNuevo.data, function(reponse){
-            console.log("El registro se realizo correctamente! " + reponse.data);  
+            alert("El registro se realizo correctamente! " + reponse.data);  
           },function(errorResponse){
-              console.log(errorResponse.data.message);  
+              //alert(errorResponse.data.message);  
+            alert("falla " + reponse.data); 
          });
         }
     };

@@ -6,14 +6,18 @@ app.service("DuenioTorneoService", function($http, $resource){
     TORNEOS_URI = "http://localhost:8080/resergol1.1/api/duenios/torneos";
     
     return $resource(TORNEOS_URI, { }, {
-        query: {method: 'GET',
+        /*query: {method: 'GET',
                 transformResponse: function(data) {
                         return angular.fromJson(data).data;
                     },
                 isArray: true
                 }
+        ,*/
+        /*save:{  method: 'save',
+                params: {},
+                isArray: false}*/
     });
     
-    
-	
+    //localStorage.getItem('token')
+	//,headers:  { 'auth-token': 'pepe' }  
 });

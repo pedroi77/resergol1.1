@@ -11,6 +11,7 @@ class Torneo
     
     
  
+
     public function create($torneo){
         $this->connection->autocommit(false);
         
@@ -36,7 +37,6 @@ class Torneo
         $canchas=$torneo['canchas'];
         $dias =$torneo['dias'];
         
-
         $salida='';
       
        
@@ -44,15 +44,12 @@ class Torneo
         $stmt = $this->connection->prepare('SET @idDuenio := ?');
         $stmt->bind_param('i', $idDuenio);
         $stmt->execute();
-
         $stmt = $this->connection->prepare('SET @idTipoTorneo := ?');
         $stmt->bind_param('i', $idTipoTorneo);
         $stmt->execute();
-
         $stmt = $this->connection->prepare('SET @nombre := ?');
         $stmt->bind_param('s', $nombre);
         $stmt->execute();
-
         $stmt = $this->connection->prepare('SET @cantEquipos := ?');
         $stmt->bind_param('i', $cantEquipos);
         $stmt->execute();
@@ -60,16 +57,12 @@ class Torneo
         $stmt = $this->connection->prepare('SET @cantJugadores := ?');
         $stmt->bind_param('i', $cantJugadores);
         $stmt->execute();
-
-
         $stmt = $this->connection->prepare('SET @idSuperficie := ?');
         $stmt->bind_param('i', $idSuperficie);
         $stmt->execute();
-
         $stmt = $this->connection->prepare('SET @idaYvuelta := ?');
         $stmt->bind_param('i', $idaYvuelta);
         $stmt->execute();
-
         $stmt = $this->connection->prepare('SET @precioInscripcion := ?');
         $stmt->bind_param('d', $precioInscripcion);
         $stmt->execute();
@@ -123,7 +116,6 @@ class Torneo
         // getting the value of the OUT parameter
         $r = $this->connection->query('SELECT @salida as idTorneo');
         $row = $r->fetch_assoc();               
-
         $res = $row['idTorneo'] ;
         
         
@@ -138,7 +130,6 @@ class Torneo
                 $stmt = $this->connection->prepare('SET @idTorneo := ?');
                 $stmt->bind_param('i', $res);
                 $stmt->execute();
-
                 $stmt = $this->connection->prepare('SET @idComplejo := ?');
                 $stmt->bind_param('i', $idComplejo);
                 $stmt->execute();
@@ -159,7 +150,6 @@ class Torneo
                 // getting the value of the OUT parameter
                 $rcan = $this->connection->query('SELECT @outCancha as res');
                 $row = $rcan->fetch_assoc();               
-
                 $resCan = $row['res'] ;
             }
                 
@@ -172,7 +162,6 @@ class Torneo
                 $stmt = $this->connection->prepare('SET @idTorneo := ?');
                 $stmt->bind_param('i', $res);
                 $stmt->execute();
-
                 $stmt = $this->connection->prepare('SET @idDia := ?');
                 $stmt->bind_param('i', $idDia);
                 $stmt->execute();
@@ -198,14 +187,12 @@ class Torneo
                 //getting the value of the OUT parameter
                 $rcan = $this->connection->query('SELECT @outDia as res');
                 $row = $rcan->fetch_assoc();               
-
                 $resCan = $row['res'] ;
             }    
     
                 
-
-            //$this->connection->commit();
-            $this->connection->rollback();
+            $this->connection->commit();
+            //$this->connection->rollback();
             
             $dat= array($res);
             sendResult($dat, 'OK' );

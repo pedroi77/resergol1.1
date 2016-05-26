@@ -8,6 +8,7 @@ var resergolApp = angular.module("resergolApp",
 "ngResource",
 "ngGrid",
 "angular-jwt", 
+//  "jwtInterceptorProvider",
 "angular-storage",
 "ngTable",
 "ngAnimate",
@@ -15,7 +16,16 @@ var resergolApp = angular.module("resergolApp",
 ]);
 
 
-resergolApp.config(function($stateProvider, $urlRouterProvider){
+resergolApp.config(function($stateProvider, $urlRouterProvider,  $httpProvider, jwtInterceptorProvider ){
+    
+    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+    
+    //en cada petición enviamos el token a través de los headers con el nombre Authorization jwtInterceptorProvider
+    jwtInterceptorProvider.tokenGetter = function() {
+        return localStorage.getItem('token');
+    };
+    $httpProvider.interceptors.push('jwtInterceptor');
+ 
  
 	$stateProvider
         .state("Duenios", {
