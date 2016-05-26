@@ -57,6 +57,7 @@ class JWT
      * @uses jsonDecode
      * @uses urlsafeB64Decode
      */
+    //public static function decode($jwt, $key)
     public static function decode($jwt, $key, $allowed_algs = array())
     {
         if (empty($key)) {

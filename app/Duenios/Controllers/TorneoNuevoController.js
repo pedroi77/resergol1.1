@@ -20,7 +20,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         horasCancelacion: 72,
                         fechaInicio: '15/05/2016',
                         fechaFin: '18/06/2016',
-                        descripcion: '',
+                        descripcion: null,
                         reglas: '',
                         idEstado: 2 ,
                         canchas:[],
@@ -509,16 +509,17 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                 };
         };
         
-       console.log(self.Torneo);
+       
         
         var TorneoNuevo = new DuenioTorneoService();
         
         TorneoNuevo.data=self.Torneo;
         
         DuenioTorneoService.save(TorneoNuevo.data, function(reponse){
-            console.log("El registro se realizo correctamente! " + reponse.data);  
+            alert("El registro se realizo correctamente! " + reponse.data);  
           },function(errorResponse){
-              console.log(errorResponse.data.message);  
+              //alert(errorResponse.data.message);  
+            alert("falla " + reponse.data); 
          });
         }
     };
@@ -552,8 +553,13 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
     
     this.limpiar = function(){
         console.log("entroo");
-        self.init();
-        $state.go("Duenios.torneoNuevo");
+      
+        $state.reload("Duenios.torneoNuevo");
+      
+         console.log("salio");
+      //  self.init();
+       
+        
     };
     
     self.init();

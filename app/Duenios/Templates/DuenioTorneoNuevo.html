@@ -245,15 +245,15 @@
                                   
                                     
                                     <div class="form-group" style="margin-top:15px;">
-                                        <label for="descripcion" class="control-label   col-sm-4">Descripción <span class=""></span></label>
+                                        <label for="descripcion" class="control-label   col-sm-4">Descripción breve <span class=""></span></label>
                                     </div>
                                 
                                     <div class="form-group">
                                         <div class="col-sm-12" style="margin-bottom:20px;" >
-                                            <span ng-show="!torneoForm.$pristine && torneoForm.descTorneo.$error.required" class="msjErrorTorneo">
+                                            <span ng-show="!torneoForm.$pristine && torneoForm.descTor.$error.required && torneoForm.descTor.$dirty" class="msjErrorTorneo">
                                                 Debe Ingresar la Descripción del torneo.
                                             </span>
-                                            <textarea id="descTorneo" type="text" ng-model= "tor.Torneo.descripcion" placeholder="Descripción breve del torneo."class="form-control" rows="3" required></textarea>
+                                            <textarea id="descTorneo" name="descTor" type="text" ng-model= "tor.Torneo.descripcion" class="form-control" rows="3" required ng-class="{ error:torneoForm.descTor.$error.required && torneoForm.descTor.$dirty, warning:torneoForm.descTor.$error.required }"></textarea>
                                         </div>
                                     </div>
                                     
@@ -263,10 +263,10 @@
                                 
                                     <div class="form-group">
                                         <div class="col-sm-12" style="margin-bottom:30px;" >
-                                            <span ng-show="!torneoForm.$pristine && torneoForm.reglas.$error.required" class="msjErrorTorneo">
+                                            <span ng-show="!torneoForm.$pristine && torneoForm.reglasTor.$error.required && torneoForm.reglasTor.$dirty" class="msjErrorTorneo">
                                                 Debe Ingresar las reglas del torneo.
                                             </span>
-                                            <textarea id="reglas" type="text" ng-model= "tor.Torneo.reglas" placeholder="Reglas del torneo." class="form-control" rows="3" required></textarea>
+                                            <textarea id="reglas" name="reglasTor" type="text" ng-model= "tor.Torneo.reglas"  class="form-control" rows="3" required></textarea>
                                         </div>
                                     </div>
                                     

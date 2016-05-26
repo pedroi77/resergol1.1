@@ -56,6 +56,7 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 		});
     
         $urlRouterProvider.otherwise("/duenios/Reservas");
+    
 		
     
 });

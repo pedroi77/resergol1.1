@@ -21,7 +21,7 @@ class Connection extends MySQLi{
      public static function getInstance(){
        
          
-         if (self::$instance == null){
+         //if (self::$instance == null){ //comento por que anda mal si la instancia ya esta abierta
             self::$instance = new self(self::HOST, self::USER, self::PASSWORD, self::DATABASE); //si lo uso desde localhost
               
             $servername ='localhost';
@@ -32,7 +32,7 @@ class Connection extends MySQLi{
              
              self::$instance =new mysqli($servername, $username, $password, $database, $dbport);
              self::$instance->query("SET NAMES 'utf8'");
-         }
+        // }
          return self::$instance ;
      }
 }

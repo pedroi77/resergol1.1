@@ -84,10 +84,10 @@ $app->get('/duenios/:user/:pass', function($usuario,$contrasenia){
     
     if(count($result)>0){
         //Creo el token
-        $key = 'mi-secret-key';
+        $key = 'resergol77';
         $token = array(
-                "id" => "1",
-                "name" => "unodepiera",
+                "user" => $result[0]['Usuario'],
+                "pass" => $result[0]['Contrasenia'],
                 "iat" => 1356999524,
                 "nbf" => 1357000000
                 );
@@ -95,9 +95,15 @@ $app->get('/duenios/:user/:pass', function($usuario,$contrasenia){
         $jwt = \Firebase\JWT\JWT::encode($token, $key);
     
         $miToken['token'] = $jwt;
-        array_push($result,$miToken);
+        
+        //$aux =  \Firebase\JWT\JWT::decode($jwt, 'resergol77');  //borrar
+        
+        //array_push($result,$miToken);
+        array_push($result,$jwt);
 
         sendResult($result);
+        //sendResult($aux);//borrar
+        
     }else{
         $result[] = "-1";
         sendResult($result);
@@ -133,6 +139,7 @@ $app->get('/admin/:user/:pass', function($usuario,$contrasenia){
         sendResult($result);
     }
 });
+
 
 //Get de dueños pendientes.
 $app->get('/dueniosPendientes', function(){
@@ -235,17 +242,32 @@ $app->post('/clientes', function(){
 /*****************************************TORNEOS****************************************************************************/
 //alta
 $app->post('/duenios/torneos', function(){
-    $request = Slim\Slim::getInstance()->request();
-    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $torneo = new Torneo();
+        $result = $torneo->create($data);
 	
-	$torneo = new Torneo();
-    $result = $torneo->create($data);
-	
-	if($result){
-		sendResult($result);
-	}else{
-		sendError("Error al dar de alta el dueño");
-	}
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al dar de alta el torneo");
+        };
+        
+    }
+	else{
+        sendError("token invalido");
+    }
+    
 });
 
 
