@@ -1,11 +1,12 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("AdministrarComplejoController", function($scope, $state, DocumentosService, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DueniosService){
+resergolApp.controller("AdministrarComplejoController", function($scope, $state, DiasServices, DocumentosService, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DueniosService){
 
 var self = this;
 this.tiposDoc = [];
 this.provincias = [];
 this.localidades = [];
+this.dias = [];
 //this.superficies = []; 
 this.Duenio = { 
 
@@ -31,6 +32,25 @@ this.Duenio = {
         contraseniasIguales: true
   };
     
+this.Complejo = {
+    
+    idComplejo: -1,
+    nombre: '',
+    descripcion: '',
+    estacionamiento: 0,
+    buffet: 0,
+    duchas: 0,
+    parrilla: 0,
+    wifi: 0,
+    horaCobroLuz:0,
+    porcentajeSeña:0,
+    horasCancelacion:0,
+    tiempoReserva:0,
+    email: '',
+    idEstado: -1,
+    idDuenio: -1 
+};
+    
 self.provincias = {
         prov: [],
         //selectedOption:{IdProvincia: '-1', Nombre: '-Provincia-'} 
@@ -52,6 +72,11 @@ this.tiposDoc = {
     selectedOption: {IdTipoDoc: '-3', Descripcion: '-Tipo doc.-'} //This sets the default value of the select in the ui
 }; 
     
+this.dias = {
+    dia: [],
+    selectedOption: {idDia: '-1', Nombre: '-Dia-'} 
+}; 
+    
 self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
     
 ProvinciasService.query().$promise.then(function(data) {
@@ -64,6 +89,11 @@ DueniosService.query().$promise.then(function(data){
     self.Duenio = data;
 });
 
+DiasServices.query().$promise.then(function(data){
+    self.dias = data;
+    
+    self.dias.dia.splice(0, 0, {idDia: '-1', Nombre: '-Dia-'});
+});
    
 this.getLocalidades = function(){
         var idProv = self.provincias.selectedProv.IdProvincia;
@@ -128,7 +158,7 @@ TiposSuperficiesService.query().$promise.then(function(data) {
             if(duenio[0] != '-1'){
                 self.Duenio.apellido = duenio[0].Apellido;
                 self.Duenio.contrasenia = duenio[0].Contrasenia;
-                self.Duenio.direccion = duenio[0].Apellido;
+                self.Duenio.direccion = duenio[0].direccion;
                 self.Duenio.apellido = duenio[0].Apellido;
                 self.Duenio.apellido = duenio[0].Apellido;
                 self.Duenio.apellido = duenio[0].Apellido;

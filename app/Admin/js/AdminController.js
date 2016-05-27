@@ -54,7 +54,8 @@ app.controller("AdminController", function(DueniosPendientesService, AceptarDuen
         
         
         self.init();
-        $state.go("Admin.administracion");
+        //$state.go("Admin.administracion");
+        $state.reload("Admin.administracion")
         //$scope.table.reload();
         //$('#tablaDuenios').modal('refresh');
         //$scope.tablaDuenios.refresh();
