@@ -44,6 +44,7 @@ $scope.diaSemana = -1;
 $scope.selectedCantJugadoresId = -1;
 $scope.selectedHoraId = -1;
 $scope.canchas = []; 
+$scope.puntajeCancha = 0;
     
 $scope.canchasPaginadas = [];     
 $scope.totalItems = 0;
@@ -163,11 +164,48 @@ TiposSuperficiesService.query().$promise.then(function(data) {
     this.getCanchas = function(){
             self.getFiltros();
               
-			CanchasService.query({pIdProv:$scope.filtros.IdProvincia, pIdLoc:$scope.filtros.IdLocalidad, pCantJug:$scope.filtros.CantJugadores, pIdSuperficie:$scope.filtros.TipoSuperficie, pFecha:$scope.filtros.Fecha, pDiaSemana:$scope.filtros.DiaSemana, pHora:$scope.filtros.Hora, pPrecioMax:$scope.filtros.PrecioMaximo, pTechada:$scope.filtros.Techada, pConLuz:$scope.filtros.Luz, pConEstac:$scope.filtros.Estacionamiento, pConDuchas:$scope.filtros.Duchas, pConBuffet:$scope.filtros.Buffet, pConParrilla:$scope.filtros.Parrilla, pConWifi:$scope.filtros.Wifi}).$promise.then(function(data){
+			CanchasService.query({pIdProv:$scope.filtros.IdProvincia, pIdLoc:$scope.filtros.IdLocalidad, pCantJug:$scope.filtros.CantJugadores, pIdSuperficie:$scope.filtros.TipoSuperficie, pPrecioMax:$scope.filtros.PrecioMaximo, pTechada:$scope.filtros.Techada, pConLuz:$scope.filtros.Luz, pConEstac:$scope.filtros.Estacionamiento, pConDuchas:$scope.filtros.Duchas, pConBuffet:$scope.filtros.Buffet, pConParrilla:$scope.filtros.Parrilla, pConWifi:$scope.filtros.Wifi, pFecha:$scope.filtros.Fecha, pHora:$scope.filtros.Hora, pDiaSemana:$scope.filtros.DiaSemana }).$promise.then(function(data){
 				
                     $scope.canchas = data;
                     self.seBusco = true;  
                      angular.forEach(data, function(aux) {
+                         
+                        aux.muestroPConLuz = false;
+                        if($scope.filtros.HoraCompleta != -1 && aux.Luz == 1)
+                            if($scope.filtros.HoraCompleta >= aux.HoraCobroLuz)
+                                aux.muestroPConLuz = true;
+                            
+                         
+                        if(aux.Puntaje == 0){
+                            aux.PuntajeDesc = 'Sin votos.';
+                            aux.PuntajeClass = "btn-xs btn-default";
+                            }
+                        else
+                        if(aux.Puntaje > 0 && aux.Puntaje <= 1){
+                            aux.PuntajeDesc = 'Muy mala';
+                            aux.PuntajeClass = "btn-xs btn-static btn-danger";
+                            }
+                         else
+                            if(aux.Puntaje > 1 && aux.Puntaje <= 2){ 
+                                aux.PuntajeDesc = 'No me gustan';
+                                aux.PuntajeClass = "btn-xs btn-warning";
+                            }
+                            else
+                                if(aux.Puntaje > 2 && aux.Puntaje <= 3){
+                                    aux.PuntajeDesc = 'Mas o menos';
+                                    aux.PuntajeClass = "btn-xs btn-info";
+                                }
+                                else
+                                    if(aux.Puntaje > 3 && aux.Puntaje <= 4){
+                                        aux.PuntajeDesc = 'Muy buena';
+                                        aux.PuntajeClass = "btn-xs btn-primary";
+                                    }
+                                    else
+                                        if(aux.Puntaje > 4 && aux.Puntaje <= 5){
+                                            aux.PuntajeDesc = 'Una fantasía';
+                                            aux.PuntajeClass = "btn-xs btn-success";
+                                        }
+                            
                         if(aux.Imagen != null)
                         {
                             aux.Imagen = "data:image/jpg;base64," + aux.Imagen;
@@ -207,12 +245,21 @@ this.getFiltros = function(){
     
     if($scope.dt == null)
     {
-        $scope.filtros.Fecha = '1900-01-01';
+        $scope.filtros.Fecha = '19000101';
         $scope.filtros.DiaSemana = -1;
     }
     else
         {
-            $scope.filtros.Fecha = $scope.dt.getFullYear() + "-" + ($scope.dt.getMonth() + 1) + "-" + $scope.dt.getDate();
+            var anio = $scope.dt.getFullYear().toString();
+            var mes = ($scope.dt.getMonth() + 1).toString();
+            var dia = $scope.dt.getDate().toString();
+            
+            if(mes.length == 1)
+                mes = '0'+ mes;
+            if(dia.length == 1)
+                dia = '0'+ dia;
+            
+            $scope.filtros.Fecha = anio + mes + dia;
             //1-Lunes 2-Martes etc...
             if($scope.dt.getUTCDay() == 0)
                 $scope.filtros.DiaSemana = 7; //Domingo lo toma como 0, pero para nosotros va a ser 7.
@@ -224,13 +271,21 @@ this.getFiltros = function(){
     console.log('fecha -> ' + $scope.filtros.Fecha);
     
     if($scope.selectedHoraId == -1)
+    {
         $scope.filtros.Hora = -1
+        $scope.filtros.HoraCompleta = -1; //HoraCompleta solo lo uso para ver si muestro el precio con luz o no.
+    }
     else
         {   
-            if($scope.selectedHoraId < 10)
-              $scope.filtros.Hora = '0' + $scope.selectedHoraId + ':00:00';
+            if($scope.selectedHoraId < 10){
+                $scope.filtros.Hora = '0' + $scope.selectedHoraId;// + ':00:00';
+                $scope.filtros.HoraCompleta = '0' + $scope.selectedHoraId + ':00:00';
+            }
             else
-              $scope.filtros.Hora = $scope.selectedHoraId + ':00:00';    
+            {
+                $scope.filtros.Hora = $scope.selectedHoraId;// + ':00:00';    
+                $scope.filtros.HoraCompleta = $scope.selectedHoraId + ':00:00';    
+            }
         }
     console.log('hora -> ' + $scope.filtros.Hora);
 
@@ -256,9 +311,11 @@ this.getFiltros = function(){
           'duchas ->' + $scope.filtros.Duchas + '\n' +
           'buffet ->' + $scope.filtros.Buffet + '\n' +
           'parrilla ->' + $scope.filtros.Parrilla + '\n' +
-          'wifi ->' + $scope.filtros.Wifi
+          'wifi ->' + $scope.filtros.Wifi + '\n' +
+          'fecha ->' + $scope.filtros.Fecha + '\n' +
+          'hora ->' + $scope.filtros.Hora + '\n' +
+          'diaSemana ->' + $scope.filtros.DiaSemana
          );*/
-    
     
 };    
     
