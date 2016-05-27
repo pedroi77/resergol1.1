@@ -111,7 +111,7 @@
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
               
-                <div class="modal-body">
+                <div class="modal-body" data-ng-controller="TorneoImgController">
                       <div class = 'form-horizontal well'>
                         <fieldset>
                              <div class="col-xs-12 col-sm-6 col-md-12">
@@ -122,26 +122,25 @@
                     
                             
                         <fieldset>
-                            <div class="form-group">
+                            <form name="TorneoImgService" ng-submit="uploadFile()">
                                <div class="col-md-6"> 
                                     <div class="form-group">
-                                        <button class="btn  btn-md btn-info btn-block" style="border-radius: 7px;">
-                                             <i class="glyphicon glyphicon-folder-open"></i>
-                                             Seleccionar
-                                        </button>   
+                                        <input type="text" ng-model="name" /><br>
+                                        <input type="file" name="file" uploader-model="file" /> <br>
+                                        
                                     </div>
                                 </div>
                                 
                                
                                 <div class="col-md-6"> 
                                     <div class="form-group">
-                                        <button class="btn  btn-md btn-success btn-block" style="border-radius: 7px;">
+                                        <button type="submit" class="btn  btn-md btn-success btn-block" style="border-radius: 7px;">
                                             <i class="glyphicon glyphicon-floppy-save"></i>
                                             Guardar foto
                                         </button>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </fieldset>
                         
                         
