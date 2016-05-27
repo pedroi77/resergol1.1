@@ -1,10 +1,11 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, DuenioCanchasService, DueniosCantEquiposService, DuenioTorneoService){
+resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, DuenioCanchasService, DueniosCantEquiposService, DuenioTorneoService, $uibModal,  $uibModalStack){
 
     var self = this;
     this.tiposTorneos =[];
     this.superficies =[];
+    $scope.msj= '';
     
     this.Torneo ={
                         idDuenio:sessionStorage.id,
@@ -385,63 +386,6 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
       };
 
 
-    this.mostrarDatos = function(){
-        
-        self.Torneo.idTipoTorneo = self.tiposTorneos.selectedOption.IdTipoTorneo;
-        self.Torneo.cantJugadores = self.cantJugadores.selectedOption.CantJugadores;
-        self.Torneo.idSuperficie = self.superficies.selectedOption.IdSuperficie;
-        self.Torneo.idaYvuelta = self.tiposPartidos.selectedOption.tipo;
-        self.Torneo.cantEquipos = self.cantEquipos.selectedOption.cantidad;
-        self.Torneo.fecIniInscripcion = self.FecInscDesde.toLocaleDateString();
-        self.Torneo.fecFinInscripcion = self.FecInscHasta.toLocaleDateString();
-        self.Torneo.fechaInicio = self.TorneoDesde.toLocaleDateString();
-        self.Torneo.fechaFin = self.TorneoHasta.toLocaleDateString();
-        self.Torneo.idEstado = 2;  //Inscripcion
-
-        if(self.Torneo.idaYvuelta == 'Ida')
-            self.Torneo.idaYvuelta = 0;
-        else
-            self.Torneo.idaYvuelta = 1;
-        
-        
-        var i;
-        for(i=0; i<self.canchas.tipos.length; i++){
-            if(self.canchas.tipos[i]['juegaCancha'] == true) {
-                self.Torneo.canchas.push({ "idComplejo": sessionStorage.idComplejo, "idCancha": self.canchas.tipos[i]['idcancha']});
-            };
-        };
-        
-        for(i=0; i<self.diasDesde.tipos.length; i++){
-            if(self.diasDesde.tipos[i]['juega'] == true) {
-                
-                var h = addZero(self.diasDesde.tipos[i]['HoraDesde'].getHours());
-                var m = addZero(self.diasDesde.tipos[i]['HoraDesde'].getMinutes());
-                var s = addZero(self.diasDesde.tipos[i]['HoraDesde'].getSeconds());
-                
-                var HoraDesde = h + ":" + m + ":" + s;
-                
-                h = addZero(self.diasDesde.tipos[i]['HoraHasta'].getHours());
-                m = addZero(self.diasDesde.tipos[i]['HoraHasta'].getMinutes());
-                s = addZero(self.diasDesde.tipos[i]['HoraHasta'].getSeconds());
-                
-                var HoraHasta = h + ":" + m + ":" + s;
-                
-                self.Torneo.dias.push({ "idDia": self.diasDesde.tipos[i]['iddia'], "horaDesde": HoraDesde , "horaHasta": HoraHasta });
-            };
-        };
-        
-       console.log(self.Torneo);
-        
-        var TorneoNuevo = new DuenioTorneoService();
-        
-        TorneoNuevo.data=self.Torneo;
-        
-        DuenioTorneoService.save(TorneoNuevo.data, function(reponse){
-            console.log("El registro se realizo correctamente! " + reponse.data);  
-          },function(errorResponse){
-              console.log(errorResponse.data.message);  
-         });
-        
         /*
         idDuenio:sessionStorage.id,
                         idTipoTorneo: 0,
@@ -461,7 +405,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         idEstado: 2     */
         
     
-    };
+    
     
     this.crearTorneo = function(){
        
@@ -516,10 +460,9 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         TorneoNuevo.data=self.Torneo;
         
         DuenioTorneoService.save(TorneoNuevo.data, function(reponse){
-            alert("El registro se realizo correctamente! " + reponse.data);  
+            self.open('sm', true);
           },function(errorResponse){
-              //alert(errorResponse.data.message);  
-            alert("falla " + reponse.data); 
+             self.open('sm', false);
          });
         }
     };
@@ -552,17 +495,55 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
     };
     
     this.limpiar = function(){
-        console.log("entroo");
-      
+        $('body,html').animate({scrollTop : 0}, 500);
         $state.reload("Duenios.torneoNuevo");
-      
-         console.log("salio");
-      //  self.init();
-       
-        
     };
     
-    self.init();
+    
+    /*Modal*/
+    $scope.animationsEnabled = true;
     
     
+    self.open = function (size, res) {
+        var modalInstance = $uibModal.open({
+          animation: $scope.animationsEnabled,
+          templateUrl: 'myModalContent.html',
+          controller: 'ModalInstanceCtrl',
+          size: size,
+          resolve: { msj : function () {
+                                if (res){
+                                        return 'Se creo el torneo! ¿desea agregar imagenes ahora?';
+                                    }else{
+                                       return 'Se produjo un error.';
+                                    }
+                                },
+                     res : function(){return res}
+                   }
+            });
+        
+        
+    };
+
+    self.init(); 
+});
+
+
+angular.module('resergolApp').controller('ModalInstanceCtrl', function ($scope,$state, $uibModalInstance, msj, res) {
+
+  $scope.msj = msj;
+    
+ $scope.cargarImagenes = function () {
+     if(res){
+         $state.go('Duenios.torneoImagenes');
+     };
+     $('body,html').animate({scrollTop : 0}, 500);
+     $uibModalInstance.close('sm');
+     
+  };
+
+  $scope.cancelar = function () {
+    $('body,html').animate({scrollTop : 0}, 500);
+    $uibModalInstance.dismiss('cancel');
+  };
+  
 });
