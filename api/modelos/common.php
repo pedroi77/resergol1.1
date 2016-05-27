@@ -56,6 +56,19 @@ class Common
         return $localidades;
     }
     
+    //Dias
+    public function getDias(){
+        $query = "CALL SP_getDias();";
+        $dias = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $dias[] = $fila;
+            }
+            $result->free();
+        }
+        return $dias;
+    }
     
      //Existe Email
     public function existeEmail($email){  
