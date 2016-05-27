@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group" style="margin-bottom:5px;">
+                                <div class="form-group" style="margin-bottom:15px;">
                                     <div class="col-sm-12">
                                         <label class="checkbox-inline"><input type="checkbox" value="">Estacionamiento</label>
                                         <label class="checkbox-inline"><input type="checkbox" value="">Duchas</label>
@@ -65,7 +65,7 @@
                                 
                                 <legend class="section legend-mod">Dias y horarios</legend>    
                                 
-                                <div class="form-group">
+                                <div class="row" style="margin-bottom:15px;">
                                     <label for="diaDesde" class="control-label  col-sm-1">De</label>
                                     <div class="col-xs-12 col-sm-3">  
                                       <select   id="diaDesde" required="required"
@@ -85,22 +85,14 @@
                                     </div>
                                     <label for="diaHasta" class="control-label  col-sm-1">A</label>
                                     <div class="col-xs-12 col-sm-3">  
-                                      <select id="diaHasta" required="required"
-                                                data-placeholder="Dia" 
-                                                class="select2 form-control col-sm-8" 
-                                                name="diaDdiaHastaesde" >
-                                            <option value="1" >Lunes</option>
-                                            <option value="2">Martes</option>
-                                            <option value="3">Miercoles</option>
-                                            <option value="4">Jueves</option>
-                                            <option value="6">Viernes</option>
-                                            <option value="5">sábado</option>
-                                            <option value="7" selected="selected">Domingo</option>
+                                        <select style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="admCom.dias.selectedDia" 
+                                            ng-options="dias.Nombre for dias in admCom.dias.dia track by
+                                                        dias.idDia">
                                         </select>
                                     </div>
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="row" style="margin-bottom:15px;">
                                     <label id="horaIni" for="sel2" class="  col-sm-1">De</label>
                                     <div class="col-xs-12 col-sm-3">  
                                         <input style="color:black" type="time" name="hora" value="11:45:00" max="22:30:00" min="10:00:00" step="1"> 
@@ -114,7 +106,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="table-responsive col-md-12 ">          
+                                <div class="table-responsive col-md-12 row" style="margin-bottom:5px;">          
                                     <table class="table table-striped table-bordered table-hover" style= "background-color:white;">
                                         <thead>
                                             <tr>
@@ -269,7 +261,7 @@
                                         <select style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="admCom.provincias.selectedProv" 
                                             ng-options="provincia.Nombre for provincia in admCom.provincias.prov track by
                                                         provincia.IdProvincia" ng-change="admCom.getLocalidades()">
-                                    </select> 
+                                        </select> 
                                     </div>    
                                 </div>        
                                 

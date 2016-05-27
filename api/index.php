@@ -59,6 +59,12 @@ $app->get('/tiposSuperficies', function(){
 	sendResult($data);
 });
 
+//Dias
+$app->get('/dias', function(){
+    $dias = new Common();
+    $data = $dias->getDias();
+	sendResult($data);
+});
 
 /*************************************************DUENIOS*************************************************/
 //Alta

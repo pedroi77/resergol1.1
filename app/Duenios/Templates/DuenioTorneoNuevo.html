@@ -1,3 +1,4 @@
+    
     <div class="container  ">
         <div class="container">
             <header class="row widget" >
@@ -8,10 +9,25 @@
         </div>
     </div>    
 
+    
 
     
-    
     <div class="container" id="mainTorneo" ng-controller="TorneoNuevoController as tor" >
+        <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+                <h4 class="modal-title">resergol</h4>
+            </div>
+            <div class="modal-body" >
+                <h2 class="modal-title">{{msj}}</h2>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" type="button"   ng-click="cargarImagenes()">OK
+                </button>
+                <button class="btn btn-danger" type="button"   ng-click="cancelar()">Salir
+                </button>
+            </div>
+        </script>
+        
         <div class="container">
             
             <div class=" principal row " style="margin-bottom: 0px;">
@@ -276,7 +292,7 @@
                                         <div class="col-md-6"> 
                                             <div class="form-group"  >
                                                 <button class="btn  btn-md btn-info btn-block" style="border-radius: 7px;" ng-click="tor.limpiar()" >
-                                                <i class="glyphicon glyphicon-trash"></i>
+                                                <i class="fa fa-plus glyphicon glyphicon-erase"></i>
                                                     Limpiar
                                                 </button>   
                                             </div>
@@ -285,12 +301,15 @@
                                     
                                         <div class="col-md-6"> 
                                             <div class="form-group">
-                                                <button class="btn  btn-md btn-success btn-block"   ng-disabled="!torneoForm.$valid" ng-click="tor.crearTorneo()" style="border-radius: 7px;">
+                                                <button class="btn  btn-md btn-success btn-block"   ng-disabled="!torneoForm.$valid"  ng-click="tor.crearTorneo()" style="border-radius: 7px;">
                                                  <i class="glyphicon glyphicon-floppy-save"></i>
                                                     Guardar
                                                 </button>
                                             </div>
+                                              
                                         </div>
+                                        
+                                      
                                     </div> 
                                     
                                     
