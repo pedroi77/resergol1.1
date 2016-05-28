@@ -68,59 +68,58 @@
                                 <div class="row" style="margin-bottom:15px;">
                                     <label for="diaDesde" class="control-label  col-sm-1">De</label>
                                     <div class="col-xs-12 col-sm-3">  
-                                      <select   id="diaDesde" required="required"
-                                                data-placeholder="Dia" 
-                                                class="select2 form-control col-sm-8" 
-                                                name="diaDesde" >
-                                          <option ng-repeat="Dias in main.filteredList" value="1" selected="selected"> {{Dias.Nombre}}</option>
-                                            <!--
-                                            <option value="1" selected="selected">Lunes</option>
-                                            <option value="2">Martes</option>
-                                            <option value="3">Miercoles</option>
-                                            <option value="6">Viernes</option>
-                                            <option value="5">sábado</option>
-                                            <option value="7">Domingo</option>
-                                            -->
+                                      <select id="diaDesde" ng-model="diaDesde" style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="admCom.dias.selectedOption" 
+                                            ng-options="Nombre as dias.Nombre for dias in admCom.dias.dia track by
+                                                        dias.idDia">
                                         </select>
                                     </div>
                                     <label for="diaHasta" class="control-label  col-sm-1">A</label>
                                     <div class="col-xs-12 col-sm-3">  
-                                        <select style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="admCom.dias.selectedDia" 
-                                            ng-options="dias.Nombre for dias in admCom.dias.dia track by
+                                        <select id="diaHasta" ng-model="diaHasta" style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="admCom.dias.selectedOption" 
+                                            ng-options="Nombre as dias.Nombre for dias in admCom.dias.dia track by
                                                         dias.idDia">
                                         </select>
                                     </div>
                                 </div>
                                 
                                 <div class="row" style="margin-bottom:15px;">
-                                    <label id="horaIni" for="sel2" class="  col-sm-1">De</label>
+                                    <label for="sel2" class="  col-sm-1">De</label>
                                     <div class="col-xs-12 col-sm-3">  
-                                        <input style="color:black" type="time" name="hora" value="11:45:00" max="22:30:00" min="10:00:00" step="1"> 
+                                        <input id="horaDesde" style="color:black" type="time" ng-model="admCom.horasComplejo.horaDesde" value="11:45:00" max="22:30:00" min="10:00:00" step="1"> 
                                     </div>
                                     <label for="sel2" class=" col-sm-1">A</label>
                                     <div class="col-xs-12 col-sm-3">  
-                                            <input style="color:black" type="time" name="hora" value="11:45:00" max="22:30:00" min="10:00:00" step="1"> 
+                                        <input id="horaHasta" style="color:black" type="time" ng-model="admCom.horasComplejo.horaHasta" value="11:45:00" max="22:30:00" min="10:00:00" step="1"> 
                                     </div>    
                                     <div class="col-sm-4">
-                                        <button class="btn btn-md btn-success" ng-click="admCom.mostrarDatos()"><i class="fa fa-plus glyphicon glyphicon-plus"></i> Agregar</button>
+                                        <!--<button class="btn btn-md btn-success" ng-click="admCom.mostrarDatos()"><i class="fa fa-plus glyphicon glyphicon-plus"></i> Agregar</button>-->
+                                        <!--<input ng-click="admCom.mostrarDatosFila()" value="Agregar" class="btn btn-primary">-->
+                                        <input ng-click="addRow()" value="Agregar" class="btn btn-primary">
                                     </div>
                                 </div>
                                 
                                 <div class="table-responsive col-md-12 row" style="margin-bottom:5px;">          
                                     <table class="table table-striped table-bordered table-hover" style= "background-color:white;">
-                                        <thead>
-                                            <tr>
-                                                <th style="color:black;">Cargados</th>
-                                            </tr>
-                                        </thead>
-                                        
-                                          <tr>
-                                            <td style="color:black;">De lunes a viernes de 17Hs a 23Hs</td>
-                                          </tr>
-                                          <tr>
-                                            <td style="color:black;">De Sábados a domingos de 08Hs a 21Hs</td>
-                                          </tr>
-                                        
+                                        <tr>
+                                            <th>De
+                                            </th>
+                                            <th>A
+                                            </th>
+                                            <th>DE
+                                            </th>
+                                            <th>A
+                                            </th>
+                                        </tr>
+                                        <tr ng-repeat="dias in diasComplejo">
+                                            <td> {{dias.diaDesde}}
+                                            </td>
+                                            <td> {{dias.diaHasta}}
+                                            </td>
+                                            <td> {{dias.horaDesde}}
+                                            </td>
+                                            <td> {{dias.horaHasta}}
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
                                     </div>

@@ -1,6 +1,6 @@
 var app = angular.module("resergolApp");
 
-app.service("DiasService", function($http, $resource){
+app.service("DiasServices", function($http, $resource){
 
     var DIAS_URI = "http://localhost:8080/resergol1.1/api/dias"; 
     

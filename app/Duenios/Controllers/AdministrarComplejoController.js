@@ -10,12 +10,12 @@ this.dias = [];
 //this.superficies = []; 
 this.Duenio = { 
 
-        id: -3,
+        id: sessionStorage.id,
         tipo: 'D',
-        usuario: '', 
+        usuario: sessionStorage.usuario,
         email: '',
-        contrasenia: '', 
-        contrasenia2: '' ,
+        contrasenia: sessionStorage.pass,
+        contrasenia2: sessionStorage.pass,
         nombre: '',
         apellido: '',
         idTipoDoc:0,
@@ -31,6 +31,21 @@ this.Duenio = {
         existeMail: false,
         contraseniasIguales: true
   };
+    
+$scope.diasComplejo = [{
+    
+    'diaDesde': '' ,
+    'diaHasta': '',
+    'horaDesde': '',
+    'horaHasta': '',
+}];
+    
+this.horasComplejo ={
+    
+    horaDesde: 0,
+    horaHasta: 0,
+    
+};
     
 this.Complejo = {
     
@@ -90,7 +105,7 @@ DueniosService.query().$promise.then(function(data){
 });
 
 DiasServices.query().$promise.then(function(data){
-    self.dias = data;
+    self.dias.dia = data;
     
     self.dias.dia.splice(0, 0, {idDia: '-1', Nombre: '-Dia-'});
 });
@@ -180,6 +195,59 @@ TiposSuperficiesService.query().$promise.then(function(data) {
                 self.Usuario.passInvalida = true;
             }
         });
+    };
+    
+    
+    $scope.addRow = function(){		
+        
+        var t = document.getElementById("diaDesde");
+        var selectedText = t.options[t.selectedIndex].text;
+        $scope.diaDesde = selectedText;
+        
+        t = document.getElementById("diaHasta");
+        selectedText = t.options[t.selectedIndex].text;
+        $scope.diaHasta = selectedText;
+        
+        t = document.getElementById("horaDesde").value;
+        $scope.horaDesde = t;
+        
+        t = document.getElementById("horaHasta").value;
+        $scope.horaHasta = t;
+        
+        $scope.diasComplejo.push({ 'diaDesde':$scope.diaDesde, 'diaHasta': $scope.diaHasta, 'horaDesde':$scope.horaDesde, 'horaHasta':$scope.horaHasta });
+        $scope.diaDesde='';
+        $scope.diaHasta='';
+        $scope.horaDesde='';
+        $scope.horaHasta='';
+    };
+    
+    this.mostrarDatosFila = function()
+    {
+        var t = document.getElementById("diaDesde");
+        var selectedText = t.options[t.selectedIndex].text;
+        $scope.diaDesde = selectedText;
+        
+        t = document.getElementById("diaHasta");
+        selectedText = t.options[t.selectedIndex].text;
+        $scope.diaHasta = selectedText;
+        
+        t = document.getElementById("horaDesde").value;
+        //selectedText = t.options[t.selectedIndex].text;
+        $scope.horaDesde = t;
+        
+        t = document.getElementById("horaHasta").value;
+        //selectedText = t.options[t.selectedIndex].text;
+        $scope.horaHasta = t;
+        
+        //$scope.horaDesde = self.horasComplejo.horaDesde;
+        //$scope.horaHasta = self.horasComplejo.horaHasta;
+        
+        alert("Dia desde: " + $scope.diaDesde
+             + '\n' + "Dia hasta: " + $scope.diaHasta
+             + '\n'+ "Hora desde: " + $scope.horaDesde
+             + '\n'+ "Hora Hasta: " + $scope.horaHasta
+            
+            ); 
     };
     
     //aca tendria que hacer un UPDATE a la tabla de complejos segun el ID del complejo y del usuario
