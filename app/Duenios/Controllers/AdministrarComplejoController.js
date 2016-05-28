@@ -31,6 +31,48 @@ this.Duenio = {
         existeMail: false,
         contraseniasIguales: true
   };
+
+this.horasDesde = [
+          { id: 8, desc: '08:00 hs.'},
+          { id: 9, desc: '09:00 hs.'},
+          { id: 10, desc: '10:00 hs.' },
+          { id: 11, desc: '11:00 hs.' },
+          { id: 12, desc: '12:00 hs.' },
+          { id: 13, desc: '13:00 hs.' },
+          { id: 14, desc: '14:00 hs.' },
+          { id: 15, desc: '15:00 hs.' },
+          { id: 16, desc: '16:00 hs.' },
+          { id: 17, desc: '17:00 hs.' },
+          { id: 18, desc: '18:00 hs.' },
+          { id: 19, desc: '19:00 hs.' },
+          { id: 20, desc: '20:00 hs.' },
+          { id: 21, desc: '21:00 hs.' },
+          { id: 22, desc: '22:00 hs.' },
+          { id: 23, desc: '23:00 hs.' }
+      ];
+    
+this.horasHasta = [
+          
+          { id: 9, desc: '09:00 hs.'},
+          { id: 10, desc: '10:00 hs.' },
+          { id: 11, desc: '11:00 hs.' },
+          { id: 12, desc: '12:00 hs.' },
+          { id: 13, desc: '13:00 hs.' },
+          { id: 14, desc: '14:00 hs.' },
+          { id: 15, desc: '15:00 hs.' },
+          { id: 16, desc: '16:00 hs.' },
+          { id: 17, desc: '17:00 hs.' },
+          { id: 18, desc: '18:00 hs.' },
+          { id: 19, desc: '19:00 hs.' },
+          { id: 20, desc: '20:00 hs.' },
+          { id: 21, desc: '21:00 hs.' },
+          { id: 22, desc: '22:00 hs.' },
+          { id: 23, desc: '23:00 hs.' },
+          { id: 24, desc: '00:00 hs.' }
+      ];
+    
+$scope.selectedHoraIdDesde = 8;
+$scope.selectedHoraIdHasta = $scope.selectedHoraIdDesde + 1;
     
 $scope.diasComplejo = [{
     
@@ -58,7 +100,8 @@ this.Complejo = {
     parrilla: 0,
     wifi: 0,
     horaCobroLuz:0,
-    porcentajeSeña:0,
+    porcentajeLuz:0,
+    porcentajeSenia:0,
     horasCancelacion:0,
     tiempoReserva:0,
     email: '',
@@ -208,11 +251,13 @@ TiposSuperficiesService.query().$promise.then(function(data) {
         selectedText = t.options[t.selectedIndex].text;
         $scope.diaHasta = selectedText;
         
-        t = document.getElementById("horaDesde").value;
-        $scope.horaDesde = t;
+        t = document.getElementById("horaDesde");
+        selectedText = t.options[t.selectedIndex].text;
+        $scope.horaDesde = selectedText;
         
-        t = document.getElementById("horaHasta").value;
-        $scope.horaHasta = t;
+        t = document.getElementById("horaHasta");
+        selectedText = t.options[t.selectedIndex].text;
+        $scope.horaHasta = selectedText;
         
         $scope.diasComplejo.push({ 'diaDesde':$scope.diaDesde, 'diaHasta': $scope.diaHasta, 'horaDesde':$scope.horaDesde, 'horaHasta':$scope.horaHasta });
         $scope.diaDesde='';
@@ -231,16 +276,13 @@ TiposSuperficiesService.query().$promise.then(function(data) {
         selectedText = t.options[t.selectedIndex].text;
         $scope.diaHasta = selectedText;
         
-        t = document.getElementById("horaDesde").value;
-        //selectedText = t.options[t.selectedIndex].text;
-        $scope.horaDesde = t;
+        t = document.getElementById("horaDesde");
+        selectedText = t.options[t.selectedIndex].text;
+        $scope.horaDesde = selectedText;
         
-        t = document.getElementById("horaHasta").value;
-        //selectedText = t.options[t.selectedIndex].text;
-        $scope.horaHasta = t;
-        
-        //$scope.horaDesde = self.horasComplejo.horaDesde;
-        //$scope.horaHasta = self.horasComplejo.horaHasta;
+        t = document.getElementById("horaHasta");
+        selectedText = t.options[t.selectedIndex].text;
+        $scope.horaHasta = selectedText;
         
         alert("Dia desde: " + $scope.diaDesde
              + '\n' + "Dia hasta: " + $scope.diaHasta
@@ -272,6 +314,67 @@ TiposSuperficiesService.query().$promise.then(function(data) {
           },function(errorResponse){
               console.log(errorResponse.data.message);  
          });
+    }
+    
+    this.cambiaHasta = function(){
+        
+        self.horasHasta = [];
+        for(var i = $scope.selectedHoraIdDesde + 1; i < 25; i++)
+        {
+            self.horasHasta.push({id: i, desc:  i + ':00 hs.'});
+        }
+        $scope.selectedHoraIdHasta = $scope.selectedHoraIdDesde + 1;
+        console.log('llegue al cambia hasta');
+    }
+    
+    this.validarDatosHorarios = function(){
+        
+        var t = document.getElementById("diaDesde");
+        var selectedText = t.options[t.selectedIndex].text;
+        var hayError = 0;
+        var mensaje = '';
+        
+        if(selectedText.length == 0)
+        {
+            mensaje += 'No se ha seleccionado un Dia desde! \n';
+            hayError = 1;
+        }
+        
+        t = document.getElementById("diaHasta");
+        selectedText = t.options[t.selectedIndex].text;
+        
+        if(selectedText.length == 0)
+        {
+            mensaje += 'No se ha seleccionado un Dia hasta! \n';
+            hayError = 1;
+        }
+        
+        t = document.getElementById("horaDesde");
+        selectedText = t.options[t.selectedIndex].text;
+        
+        if(selectedText.length == 0)
+        {
+            mensaje += 'No se ha seleccionado un Hora desde! \n';
+            hayError = 1;
+        }
+        
+        t = document.getElementById("horaHasta");
+        selectedText = t.options[t.selectedIndex].text;
+        
+        if(selectedText.length == 0)
+        {
+            mensaje += 'No se ha seleccionado un Hora hasta!';
+            hayError = 1;
+        }
+        
+        if(hayError == 0)
+        {
+            $scope.addRow();
+        }
+        else
+        {
+             alert(mensaje);   
+        }
     }
     
 });

@@ -83,18 +83,22 @@
                                 </div>
                                 
                                 <div class="row" style="margin-bottom:15px;">
-                                    <label for="sel2" class="  col-sm-1">De</label>
+                                    <label for="diaHasta" class="control-label  col-sm-1">De</label>
                                     <div class="col-xs-12 col-sm-3">  
-                                        <input id="horaDesde" style="color:black" type="time" ng-model="admCom.horasComplejo.horaDesde" value="11:45:00" max="22:30:00" min="10:00:00" step="1"> 
+                                        <select id="horaDesde" data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="selectedHoraIdDesde" ng-change="admCom.cambiaHasta()"
+                                                ng-options="hora.id as hora.desc for hora in admCom.horasDesde" >
+                                        </select>
                                     </div>
                                     <label for="sel2" class=" col-sm-1">A</label>
                                     <div class="col-xs-12 col-sm-3">  
-                                        <input id="horaHasta" style="color:black" type="time" ng-model="admCom.horasComplejo.horaHasta" value="11:45:00" max="22:30:00" min="10:00:00" step="1"> 
+                                        <select id="horaHasta" data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="selectedHoraIdHasta"
+                                                ng-options="hora.id as hora.desc for hora in admCom.horasHasta" >
+                                    </select>
                                     </div>    
                                     <div class="col-sm-4">
                                         <!--<button class="btn btn-md btn-success" ng-click="admCom.mostrarDatos()"><i class="fa fa-plus glyphicon glyphicon-plus"></i> Agregar</button>-->
                                         <!--<input ng-click="admCom.mostrarDatosFila()" value="Agregar" class="btn btn-primary">-->
-                                        <input ng-click="addRow()" value="Agregar" class="btn btn-primary">
+                                        <input ng-click="admCom.validarDatosHorarios()" value="Agregar" class="btn btn-primary">
                                     </div>
                                 </div>
                                 
@@ -105,7 +109,7 @@
                                             </th>
                                             <th>A
                                             </th>
-                                            <th>DE
+                                            <th>De
                                             </th>
                                             <th>A
                                             </th>
@@ -130,70 +134,34 @@
                             <fieldset>
                                 <legend class="section legend-mod">Configuraciones especiales</legend>
                                 
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom:15px; ">
                                     <label id="horaSeñaLabel" for="horaSeña" class="control-label col-sm-6">Hora a partir de la cual se cobra luz<span class="required">*</span></label>
                                     <div class="col-xs-12 col-sm-3">  
-                                            <SELECT NAME="horaSeña" SIZE=1 class="select2 form-control col-sm-3"> 
-                                            <OPTION >08 Hs</OPTION>
-                                            <OPTION>09 Hs</OPTION>
-                                            <OPTION>10 Hs</OPTION>
-                                            <OPTION>11 Hs</OPTION> 
-                                            <OPTION>12 Hs</OPTION> 
-                                            <OPTION>13 Hs</OPTION> 
-                                            <OPTION>14 Hs</OPTION> 
-                                            <OPTION>15 Hs</OPTION>
-                                            <OPTION>16 Hs</OPTION> 
-                                            <OPTION>17 Hs</OPTION> 
-                                            <OPTION>18 Hs</OPTION> 
-                                            <OPTION selected="selected">19 Hs</OPTION> 
-                                            <OPTION>20 Hs</OPTION> 
-                                            <OPTION>21 Hs</OPTION> 
-                                            <OPTION>22 Hs</OPTION> 
-                                            <OPTION  >23 HS</OPTION> 
-                                        </SELECT> 
+                                        <select id="horaDesdeSeña" data-live-search="true" style="margin-bottom:15px;" class="form-control" ng-model="selectedHoraIdDesde"
+                                                ng-options="hora.id as hora.desc for hora in admCom.horasDesde" >
+                                        </select>
                                     </div>    
                                 </div>
                                 
-                                
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom:15px;">
                                     <label for="porcentajeExtra" class="control-label col-sm-6">Porcentaje extra por jugar con luz</label>
                                     <div class="col-xs-12 col-sm-3">  
-                                            <SELECT NAME="horaSeña" SIZE=1 class="select2 form-control col-sm-3"> 
-                                            <OPTION>10 %</OPTION>
-                                            <OPTION>20 %</OPTION>
-                                            <OPTION selected="selected">30 %</OPTION>
-                                            <OPTION>40 %</OPTION> 
-                                            <OPTION>50 %</OPTION> 
-                                            <OPTION>60 %</OPTION> 
-                                            <OPTION>70 %</OPTION> 
-                                            <OPTION>80 %</OPTION>
-                                            <OPTION>90 %</OPTION>
-                                            <OPTION>100 %</OPTION> 
-                                        </SELECT> 
+                                        <input style="margin-bottom:15px;" id="porcentajeLuz" placeholder="24 Hs" ng-model="admCom.Complejo.porcentajeLuz" class="form-control input-transparent" type="number" value="0" name="porcentajeLuz"> 
                                     </div>    
                                 </div>
                                 
-                                 <div class="form-group">
+                                 <div class="form-group" style="margin-bottom:15px;">
                                     <label for="porcentajeSeña" class="control-label col-sm-6">Porcentaje de seña para reservar</label>
                                     <div class="col-xs-12 col-sm-3">  
-                                            <SELECT NAME="porcentajeSeña" SIZE=1 class="select2 form-control col-sm-3"> 
-                                            <OPTION>10 %</OPTION>
-                                            <OPTION>20 %</OPTION>
-                                            <OPTION>30 %</OPTION>
-                                            <OPTION>40 %</OPTION> 
-                                            <OPTION selected="selected"> 50 %</OPTION> 
-                                            <OPTION>60 %</OPTION> 
-                                            <OPTION>70 %</OPTION> 
-                                            <OPTION>80 %</OPTION>
-                                            <OPTION>90 %</OPTION>
-                                            <OPTION>100 %</OPTION> 
-                                        </SELECT> 
+                                        <input style="margin-bottom:15px;" id="porcentajeSenia" placeholder="24 Hs" ng-model="admCom.Complejo.porcentajeSenia" class="form-control input-transparent" type="number" value="0" name="porcentajeSenia">
                                     </div>    
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom:15px;">
                                     <label for="horasAviso" class="control-label col-sm-6">Tiempo de aviso de cancelación de cancha (horas)</label>
-                                    <div class="col-xs-12 col-sm-4"><input id="horasAviso" placeholder="24 Hs" class="form-control input-transparent" type="text" value="24 Hs" name="horasAviso"></div>
+                                    <div style="color: black;" class="col-xs-12 col-sm-4">
+                                        <input style="margin-bottom:15px;" id="horasAviso" placeholder="24 Hs" class="form-control input-transparent" type="number" value="0" name="horasAviso">
+                                    </div>
                                 </div>
                             </fieldset>
                             
@@ -206,23 +174,21 @@
                                 <div class="form-group">
                                     <label id="email-label" for="email" class="control-label col-sm-4">Correo electrónico <span class="required">*</span></label>
                                     <div class="col-xs-12 col-sm-8">
-                                        
-                                            <input id="email" type="email"
-                                                    data-trigger="change" required="required"
-                                                    class="form-control input-transparent" value="CosmeFulanito@gmail.com"
-                                                    name="email" placeholder="Correo electrónico">
-                                                
-                                        
+                                        <input style="margin-bottom:5px;" id="email" type="email" data-trigger="change" required="required"
+                                        class="form-control input-transparent" value="CosmeFulanito@gmail.com" name="email" placeholder="Correo electrónico">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="telefono-particular" class="control-label col-sm-4">Teléfono particular</label>
-                                    <input id="NroTelef" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Telefono" ng-maxlength="15" name="NroTelef" ng-model="admCom.Duenio.NroTelef" required ng-class="{ error:frmAdminDuenio.NroTelef.$error.required && frmAdminDuenio.NroTelef.$dirty, warning:frmAdminDuenio.NroTelef.$error.NroTelef}">
+                                    <div class="col-xs-12 col-sm-8">
+                                        <input style="margin-bottom:5px;" id="telefono" type="number" data-trigger="change" required="required" class="form-control input-transparent" name="telefono" placeholder="Teléfono">
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="telefono-celular" class="control-label col-sm-4">Teléfono celular</label>
-                                    <input id="celular" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Celular" ng-maxlength="15" name="celular" ng-model="admCom.Duenio.nroCelular"
-                                           value="{{admCom.Duenio.nroCelular}}">
+                                    <label class="control-label col-sm-4">Teléfono celular</label>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <input style="margin-bottom:5px;" id="celular" type="number" data-trigger="change" required="required" class="form-control input-transparent" name="celular" placeholder="Celular">
+                                    </div>
                                 </div>
                             </fieldset>
 
@@ -276,7 +242,7 @@
                                 <div class="form-group">
                                     <label for="calle" class="control-label col-sm-2">Dirección</label>
                                     <div class="col-xs-12 col-sm-10">    
-                                        <input style="margin-bottom:5px;" id="direccion" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Dirección" ng-maxlength="60" name="direccion" ng-model="admCom.Duenio.direccion" required ng-class="{ error:frmAdminDuenio.direccion.$error.required && frmAdminDuenio.direccion.$dirty, warning:frmAdminDuenio.direccion.$error.direccion}">
+                                        <input style="margin-bottom:5px;" id="direccion" class="form-control input-transparent" type="text" placeholder="Dirección" ng-maxlength="60" name="direccion" ng-model="admCom.Duenio.direccion">
                                     </div>    
                                 </div>  
                                 
@@ -340,28 +306,28 @@
                                 <div class="form-group" style="margin-bottom:50px;">
                                     <label for="usuario" class="control-label  col-sm-4">Usuario<span class="required">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Usuario" ng-maxlength="25" name="usuarioDuenio" ng-model="admCom.Duenio.usuario" required ng-class="{ error:frmAdminDuenio.usuario.$error.required && frmAdminDuenio.usuario.$dirty, warning:frmAdminDuenio.usuario.$error.usuario }" ng-blur="admCom.existeUsuario()">
+                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="usuario" type="text" placeholder="Usuario" ng-maxlength="25" name="usuarioDuenio" ng-model="admCom.Duenio.usuario" ng-blur="admCom.existeUsuario()">
                                     </div>
                                 </div>
                                 
                                 <div class="form-group" style="margin-bottom:50px;">
                                     <label for="contraseña" class="control-label col-sm-4">Contraseña <span class="required">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="contrasenia" type="password" class="form-control ng-dirty ng-touched ng-valid-contrasenia ng-valid ng-valid-required" placeholder="Contraseña" ng-minlength="6" ng-maxlength="25" name="contrasenia" ng-model="admCom.Duenio.contrasenia" required ng-class="{ error: frmAdminDuenio.contrasenia.$error.required && frmAdminDuenio.contrasenia.$dirty, warning: frmAdminDuenio.contrasenia.$error.contrasenia }">
+                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="contrasenia" type="password" placeholder="Contraseña" ng-minlength="6" ng-maxlength="25" name="contrasenia" ng-model="admCom.Duenio.contrasenia">
                                     </div>
                                 </div>
                                 
                                 <div class="form-group" style="margin-bottom:50px;">
                                     <label for="nombreD" class="control-label  col-sm-4">Nombre<span class="required">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="nombre" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nombre" ng-maxlength="60" name="nombre" ng-model="admCom.Duenio.nombre" required ng-class="{ error:frmAdminDuenio.nombre.$error.required && frmAdminDuenio.nombre.$dirty, warning:frmAdminDuenio.nombre.$error.nombre}">
+                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="nombre" type="text" placeholder="Nombre" ng-maxlength="60" name="nombre" ng-model="admCom.Duenio.nombre" >
                                     </div>
                                 </div>
                                 
                                 <div class="form-group" style="margin-bottom:50px;">
                                     <label for="apellido" class="control-label col-sm-4">Apellido <span class="required">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="apellido" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Apellido" ng-maxlength="60" name="apellido" ng-model="admCom.Duenio.apellido" required ng-class="{ error:frmAdminDuenio.apellido.$error.required && frmAdminDuenio.apellido.$dirty, warning:frmAdminDuenio.apellido.$error.apellido}">
+                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="apellido" type="text" placeholder="Apellido" ng-maxlength="60" name="apellido" ng-model="admCom.Duenio.apellido">
                                     </div>
                                 </div>
                                 
@@ -378,15 +344,14 @@
                                 <div class="form-group" style="margin-bottom:50px;">
                                     <label for="nro-documento" class="control-label col-sm-4">Documento <span class="required">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="nroDoc" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="admCom.Duenio.nroDoc" required ng-class="{ error:frmAdminDuenio.nroDoc.$error.required && frmAdminDuenio.nroDoc.$dirty, warning:frmAdminDuenio.nroDoc.$error.nroDoc}" ng-blur="due.existeDni()">
+                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="nroDoc" type="number" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="admCom.Duenio.nroDoc" ng-blur="due.existeDni()">
                                     </div>
                                 </div>
                                 
                                 <div class="form-group" style="margin-bottom:50px;">
                                     <label for="email" class="control-label col-sm-4">Mail <span class="required">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="email" type="email" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="example@email.com" name="email" ng-model="admCom.Duenio.email" 
-                                        required ng-class="{ error:frmAdminDuenio.email.$error.required && frmAdminDuenio.email.$dirty, warning:frmAdminDuenio.email.$error.email }" ng-blur="due.existeEmail()">
+                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="email" type="email" placeholder="example@email.com" name="email" ng-model="admCom.Duenio.email" ng-blur="due.existeEmail()">
                                     </div>
                                 </div>
                                 
