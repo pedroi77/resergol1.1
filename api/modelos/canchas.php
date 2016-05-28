@@ -135,6 +135,19 @@ class Cancha
         return $canchas;
     }
    
-    
+    public function getCanchasTOP(){
+        
+        $query = "CALL SP_getCanchasTOP();";
+        $canchas = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $canchas[] = $fila;
+            }
+            $result->free();
+        }
+        return $canchas;
+        
+    }
     
 }

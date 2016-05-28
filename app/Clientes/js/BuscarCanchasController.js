@@ -44,6 +44,7 @@ $scope.diaSemana = -1;
 $scope.selectedCantJugadoresId = -1;
 $scope.selectedHoraId = -1;
 $scope.canchas = []; 
+$scope.canchasTOP = [];
 $scope.puntajeCancha = 0;
     
 $scope.canchasPaginadas = [];     
@@ -183,7 +184,7 @@ TiposSuperficiesService.query().$promise.then(function(data) {
                         else
                         if(aux.Puntaje > 0 && aux.Puntaje <= 1){
                             aux.PuntajeDesc = 'Muy mala';
-                            aux.PuntajeClass = "btn-xs btn-static btn-danger";
+                            aux.PuntajeClass = "btn-xs btn-danger";
                             }
                          else
                             if(aux.Puntaje > 1 && aux.Puntaje <= 2){ 
@@ -203,7 +204,7 @@ TiposSuperficiesService.query().$promise.then(function(data) {
                                     else
                                         if(aux.Puntaje > 4 && aux.Puntaje <= 5){
                                             aux.PuntajeDesc = 'Una fantasía';
-                                            aux.PuntajeClass = "btn-xs btn-success";
+                                            aux.PuntajeClass = "btn-xs block btn-success";
                                         }
                             
                         if(aux.Imagen != null)
@@ -318,7 +319,69 @@ this.getFiltros = function(){
          );*/
     
 };    
+
     
+
+this.getCanchasTOP = function(){
+              
+			CanchasService.query().$promise.then(function(data){
+                    $scope.canchasTOP = data;
+                     var activo = 0;
+                     var contador = 0;
+                     angular.forEach(data, function(aux) {
+                        aux.contador = contador;
+                        contador++;
+                        if(activo == 0)
+                        {
+                                aux.Clase = "item carousel-item active";
+                                activo = 1;
+                        }
+                         else
+                             {
+                                aux.Clase = "item carousel-item"; 
+                             }
+                             
+                        if(aux.Puntaje == 0){
+                            aux.PuntajeDesc = 'Sin votos.';
+                            aux.PuntajeClass = "btn-xs btn-default";
+                            }
+                        else
+                        if(aux.Puntaje > 0 && aux.Puntaje <= 1){
+                            aux.PuntajeDesc = 'Muy mala';
+                            aux.PuntajeClass = "btn-xs btn-danger";
+                            }
+                         else
+                            if(aux.Puntaje > 1 && aux.Puntaje <= 2){ 
+                                aux.PuntajeDesc = 'No me gustan';
+                                aux.PuntajeClass = "btn-xs btn-warning";
+                            }
+                            else
+                                if(aux.Puntaje > 2 && aux.Puntaje <= 3){
+                                    aux.PuntajeDesc = 'Mas o menos';
+                                    aux.PuntajeClass = "btn-xs btn-info";
+                                }
+                                else
+                                    if(aux.Puntaje > 3 && aux.Puntaje <= 4){
+                                        aux.PuntajeDesc = 'Muy buena';
+                                        aux.PuntajeClass = "btn-xs btn-primary";
+                                    }
+                                    else
+                                        if(aux.Puntaje > 4 && aux.Puntaje <= 5){
+                                            aux.PuntajeDesc = 'Una fantasía';
+                                            aux.PuntajeClass = "btn-xs block btn-success";
+                                        }
+                            
+                        if(aux.Imagen != null)
+                        {
+                            aux.Imagen = "data:image/jpg;base64," + aux.Imagen;
+                        }            
+            });	
+                
+        });
+	};    
+    
+    
+self.getCanchasTOP();
   
 $scope.pageChanged = function(currentPage)
 {

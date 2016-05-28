@@ -341,5 +341,11 @@ $app->get('/canchas/:idCancha/:idComplejo', function($idCancha, $idComplejo){
 	sendResult($data);
 });
 
+//Get TOP 3 canchas mejores votadas.
+$app->get('/canchas', function(){
+    $canchas = new Cancha();
+    $data = $canchas->getCanchasTOP();
+	sendResult($data);
+});
 
 $app->run();

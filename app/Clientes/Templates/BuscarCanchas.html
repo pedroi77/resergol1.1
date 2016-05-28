@@ -160,29 +160,40 @@
             </div>    
 
             <div class="col-md-6">
+                <div class="text-center"><h4><strong>¡TOP 3 CANCHAS MÁS VOTADAS!</strong></h4></div>
                     <div class="col-md-6 carousel-container anchoCarousel ">
-                        <div id="carouselComplejos" class="carousel slide carousel-fade">
+                        <div id="carouselCanchas" class="carousel slide carousel-fade">
                             <!-- Carousel items -->
                             <div class="carousel-inner carousel-altoBusqueda">
-                                <div data-slide-no="0" class="item carousel-item active">
+                                <div data-slide-no="{{cancha.contador}}" ng-repeat="cancha in canchasTOP" class="{{cancha.Clase}}">
                                     <img src="/../resergol1.1/images/complejos/complejo1.jpeg" alt="">
-                                    <div class="carousel-caption">
-                                    </div>
-                                </div>
-                                <div data-slide-no="1" class="item carousel-item">
-                                    <img src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
-                                    <div class="carousel-caption">
-                                    </div>
-                                </div>
-                                <div data-slide-no="2" class="item carousel-item">
-                                    <img src="/../resergol1.1/images/complejos/complejo3.jpg" alt="">
-                                    <div class="carousel-caption">
+                                    <div class="carousel-caption text-center">
+                                        <div class="row">
+                                        <div class="col-md-8">
+                                            <h4 class="fa fa-user titul" style="padding:1px;">
+                                                "{{cancha.NombreCancha}}", en <a style="color:green;" ui-sref="Clientes.verComplejo">{{cancha.NombreComplejo}}</a>             
+                                            </h4>
+                                        </div>
+                                        <div class="col-md-4 text-center">
+                                            <button class="{{cancha.PuntajeClass}}" id="cuatro">
+                                                <span>{{cancha.PuntajeDesc}}</span>
+                                            </button>
+                                        </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h6>{{cancha.Calle}} {{cancha.Altura}}, {{cancha.Localidad}} ({{cancha.Provincia}}).</h6>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="#" class="btn btn-primary"
+                                            ui-sref="Clientes.verCancha({idCan:'{{cancha.IdCancha}}', idComp:'{{cancha.IdComplejo}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span>  VER EN DETALLE</a>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
                             <!-- Carousel nav -->
-                            <a class="carousel-control left" href="#carouselComplejos" data-slide="prev">‹</a>
-                            <a class="carousel-control right" href="#carouselComplejos" data-slide="next">›</a>
+                            <a class="carousel-control left" href="#carouselCanchas" data-slide="prev">‹</a>
+                            <a class="carousel-control right" href="#carouselCanchas" data-slide="next">›</a>
                         </div>
 
                     </div>
