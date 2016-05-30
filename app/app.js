@@ -12,7 +12,8 @@ var resergolApp = angular.module("resergolApp",
 "angular-storage",
 "ngTable",
 "ngAnimate",
-"ui.bootstrap"
+"ui.bootstrap",
+    "ngFileUpload"
 ]);
 
 

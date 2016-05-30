@@ -1193,5 +1193,11 @@ background: #333333;
     color: black;
   }
 
-
+  .imgCarga {
+  width: 750px;
+  height: 500px;
+  float: none;
+  position: relative;
+  display: inline;	
+}
 

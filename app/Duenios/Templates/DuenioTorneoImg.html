@@ -111,35 +111,37 @@
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
               
-                <div class="modal-body" data-ng-controller="TorneoImgController">
+                <div class="modal-body" data-ng-controller="TorneoImgController as tor">
                       <div class = 'form-horizontal well'>
                         <fieldset>
-                             <div class="col-xs-12 col-sm-6 col-md-12">
-                                <img src="/../resergol1.1/images/canchas/cancha2.jpg" class="img-responsive" alt="Image" >
-                             </div>
+                            <div class="col-xs-12 col-sm-6 col-md-12">
+                                <img  ngf-src="picFile[0]" class="img-responsive imgCarga" alt="Image" >
+                            </div>
                           </fieldset>
                         </div>
                     
                             
                         <fieldset>
+                             
                             <form name="TorneoImgService" ng-submit="uploadFile()">
-                               <div class="col-md-6"> 
+                               <div class="col-md-12"> 
                                     <div class="form-group">
-                                        <input type="text" ng-model="name" /><br>
-                                        <input type="file" name="file" uploader-model="file" /> <br>
+                                        
+                                    <div class="input-box">
+                                    <input type="file" id="file" class="input-text" ngf-change="onChange($files)" ngf-select uploader-model="file" ng-model="picFile" name="attachement" accept="image/png, image/jpeg, image/jpg" />
+                                    </div>
+                                  
+                                        
                                         
                                     </div>
+                                   
+                                    <button type="submit" class="btn  btn-md btn-success btn-block" style="border-radius: 7px;">
+                                            <i class="glyphicon glyphicon-floppy-save"></i>
+                                            Guardar foto
+                                    </button>
                                 </div>
                                 
                                
-                                <div class="col-md-6"> 
-                                    <div class="form-group">
-                                        <button type="submit" class="btn  btn-md btn-success btn-block" style="border-radius: 7px;">
-                                            <i class="glyphicon glyphicon-floppy-save"></i>
-                                            Guardar foto
-                                        </button>
-                                    </div>
-                                </div>
                             </form>
                         </fieldset>
                         

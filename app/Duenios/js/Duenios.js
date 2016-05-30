@@ -33,8 +33,12 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			controllerAs : "due"
 		})
         .state("Duenios.torneoImagenes",{
-			url : "/Torneos/Imagenes",
-			templateUrl : "app/Duenios/Templates/DuenioTorneoImg.html",
+			url : "/Torneos/Imagenes/:idTorneo/:idDuenio",
+		    params: {
+                    idTorneo:{value:'defaultValue'},
+                    idDuenio:{value:'defaultValue'}
+                },	
+            templateUrl : "app/Duenios/Templates/DuenioTorneoImg.html",
 			controllerAs : "due"
 		})
         .state("Duenios.complejoImagenes",{

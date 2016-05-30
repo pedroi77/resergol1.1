@@ -91,7 +91,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         }); 
         
         
-        DuenioDiasService.query({idDuenio:self.tiposTorneos.selectedOption.IdTipoTorneo}).$promise.then(function(data) {
+        DuenioDiasService.query({idDuenio:this.Torneo.idDuenio}).$promise.then(function(data) {
             self.diasDesde.tipos = data;
             var i;
             for(i=0; i<self.diasDesde.tipos.length; i++){
@@ -107,7 +107,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
             };
         }); 
         
-        DuenioCanchasService.query({idDuenio:self.tiposTorneos.selectedOption.IdTipoTorneo}).$promise.then(function(data) {
+        DuenioCanchasService.query({idDuenio:this.Torneo.idDuenio}).$promise.then(function(data) {
             self.canchas.tipos = data;
             var i;
             for(i=0; i<self.canchas.tipos.length; i++){
@@ -460,9 +460,10 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
         TorneoNuevo.data=self.Torneo;
         
         DuenioTorneoService.save(TorneoNuevo.data, function(reponse){
-            self.open('sm', true);
+            idTorneo = reponse.data[0];
+            self.open('sm', true, idTorneo);
           },function(errorResponse){
-             self.open('sm', false);
+             self.open('sm', false,0);
          });
         }
     };
@@ -504,7 +505,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
     $scope.animationsEnabled = true;
     
     
-    self.open = function (size, res) {
+    self.open = function (size, res, pidTorneo) {
         var modalInstance = $uibModal.open({
           animation: $scope.animationsEnabled,
           templateUrl: 'myModalContent.html',
@@ -517,7 +518,9 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                                        return 'Se produjo un error.';
                                     }
                                 },
-                     res : function(){return res}
+                     res : function(){return res},
+                     p_idDuenio: function(){return self.Torneo.idDuenio},
+                     p_idTorneo: function(){return pidTorneo}
                    }
             });
         
@@ -528,13 +531,13 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
 });
 
 
-angular.module('resergolApp').controller('ModalInstanceCtrl', function ($scope,$state, $uibModalInstance, msj, res) {
+angular.module('resergolApp').controller('ModalInstanceCtrl', function ($scope,$state, $uibModalInstance, msj, res, p_idDuenio, p_idTorneo) {
 
   $scope.msj = msj;
     
  $scope.cargarImagenes = function () {
      if(res){
-         $state.go('Duenios.torneoImagenes');
+         $state.go("Duenios.torneoImagenes",{idTorneo:p_idTorneo, idDuenio:p_idDuenio});
      };
      $('body,html').animate({scrollTop : 0}, 500);
      $uibModalInstance.close('sm');
