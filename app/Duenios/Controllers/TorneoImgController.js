@@ -43,6 +43,18 @@ resergolApp.controller("TorneoImgController", function($scope,$state,$stateParam
           }
         }
     
+        
+    this.borrar = function(){
+         dataimg={
+                        idTorneo: self.idTorneo,
+                        url: "sss",
+                    }   
+        TorneoImgDBService.delete(dataimg, function(reponse){
+                console.log(reponse.data);
+              },function(errorResponse){
+                 console.log('Error');
+             });
+    };    
 });
                        
                        

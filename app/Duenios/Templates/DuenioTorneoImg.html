@@ -16,13 +16,13 @@
 
     
     
-    <div class="container" id="main">
+    <div class="container" id="main"  ng-controller="TorneoImgController as tor">
         <div class="container">
             
             <div class=" principal row " style="margin-bottom: 20px; display: inline;">
                 
                 <div class= "col-md-3 " style="height:400px; position:relative;" >
-                    <buton class="btn  btn-md btn-danger   pull-right btn-circle"  style="position:absolute; bottom:1px; left:120px;">
+                    <buton class="btn  btn-md btn-danger   pull-right btn-circle"  ng-click="tor.borrar()" style="position:absolute; bottom:1px; left:120px;">
                         <i class="glyphicon glyphicon-trash"></i>
                         Eliminar imagen
                     </buton>
