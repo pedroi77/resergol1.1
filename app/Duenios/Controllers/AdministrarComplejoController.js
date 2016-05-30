@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("AdministrarComplejoController", function($scope, $state, DiasServices, DocumentosService, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DueniosService){
+resergolApp.controller("AdministrarComplejoController", function($scope, $state, DueniosComplejosService, DiasServices, DocumentosService, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DueniosService){
 
 var self = this;
 this.tiposDoc = [];
@@ -10,7 +10,7 @@ this.dias = [];
 //this.superficies = []; 
 this.Duenio = { 
 
-        id: sessionStorage.id,
+        idDuenio: sessionStorage.id,
         tipo: 'D',
         usuario: sessionStorage.usuario,
         email: '',
@@ -20,12 +20,6 @@ this.Duenio = {
         apellido: '',
         idTipoDoc:0,
         nroDoc:'',
-        nombreComplejo: '',
-        NroTelef:'',
-        idProv:0,
-        idLoc:0,
-        direccion:'',
-        nroCalle:'',
         existeDni:false,
         existe:false,
         existeMail: false,
@@ -85,13 +79,20 @@ $scope.diasComplejo = [{
 this.horasComplejo ={
     
     horaDesde: 0,
-    horaHasta: 0,
+    horaHasta: 0
+    
+};
+    
+this.telefonosComplejo = {
+    
+    nroCelular: 0,
+    nroTelefono: 0
     
 };
     
 this.Complejo = {
     
-    idComplejo: -1,
+    idComplejo: sessionStorage.idComplejo,
     nombre: '',
     descripcion: '',
     estacionamiento: 0,
@@ -107,6 +108,16 @@ this.Complejo = {
     email: '',
     idEstado: -1,
     idDuenio: -1 
+};
+    
+this.complejoDireccion = {
+    
+    calle: '',
+    altura: 0,
+    idProv:0,
+    idLoc:0,
+    X: 0,
+    Y: 0
 };
     
 self.provincias = {
@@ -152,6 +163,28 @@ DiasServices.query().$promise.then(function(data){
     
     self.dias.dia.splice(0, 0, {idDia: '-1', Nombre: '-Dia-'});
 });
+    
+this.traerDatosComplejos = function(){
+    
+    DueniosComplejosService.query({idDuenio: self.Duenio.idDuenio}).$promise.then(function(data){
+            self.Duenio.apellido = data[0].Apellido;
+            self.Duenio.nombre = data[0].Nombre;
+            self.Complejo.nombre = data[0].nombreComplejo;
+            self.Duenio.nroDoc = data[0].NroDoc;
+            self.Duenio.email = data[0].Email;
+            self.Duenio.idTipoDoc = data[0].IdTipoDoc;
+            self.Duenio.usuario = data[0].Usuario;
+            self.Duenio.contrasenia = data[0].Contrasenia;
+            self.Duenio.contrasenia2 = data[0].Contrasenia;
+            self.telefonosComplejo.nroTelefono = data[0].NroTelef;
+            self.complejoDireccion.calle = data[0].Calle;
+            self.complejoDireccion.altura = data[0].Altura;
+            self.complejoDireccion.idLoc = data[0].IdLocalidad;
+            self.complejoDireccion.idProv = data[0].IdProvincia;
+        });
+};
+    
+self.traerDatosComplejos();
    
 this.getLocalidades = function(){
         var idProv = self.provincias.selectedProv.IdProvincia;
@@ -375,6 +408,18 @@ TiposSuperficiesService.query().$promise.then(function(data) {
         {
              alert(mensaje);   
         }
+    }
+    
+    this.validarPorcentajes = function(){
+        
+        var t = document.getElementById("diaDesde");
+        
+        
+        if(t.length > 3)
+        {
+            t = 100;
+        }
+        
     }
     
 });

@@ -9,6 +9,7 @@ require_once("modelos/clientes.php");
 require_once("modelos/administradores.php");
 require_once("modelos/torneos.php");
 require_once("modelos/canchas.php");
+require_once("modelos/complejos.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -345,6 +346,14 @@ $app->get('/canchas/:idCancha/:idComplejo', function($idCancha, $idComplejo){
 $app->get('/canchas', function(){
     $canchas = new Cancha();
     $data = $canchas->getCanchasTOP();
+	sendResult($data);
+});
+
+/******************************COMPLEJOS****************************************************************/
+//Get de dueños pendientes.
+$app->get('/complejos/:idDuenio', function($idDuenio){
+    $complejo = new Complejo();
+    $data = $complejo->getComplejo($idDuenio);
 	sendResult($data);
 });
 
