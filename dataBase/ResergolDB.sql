@@ -425,7 +425,7 @@ CREATE TABLE CanchasImagenes(
 IdComplejo	INT     NOT NULL, 
 IdCancha	  INT     NOT NULL,   
 IdImagen	  INT     NOT NULL, 
-Imagen	    BLOB    NOT NULL, 
+Imagen	    VARCHAR(150)    NOT NULL, 
 PRIMARY KEY(IdComplejo,IdCancha,IdImagen),
 CONSTRAINT Imagenes_Canchas_fk   FOREIGN KEY (IdComplejo,IdCancha) REFERENCES  Canchas(IdComplejo,IdCancha)
 );
@@ -442,9 +442,8 @@ CONSTRAINT Imagenes_Complejos_fk   FOREIGN KEY (IdComplejo) REFERENCES  Complejo
 
 CREATE TABLE TorneosImagenes(	
 IdTorneo   	INT     NOT NULL, 
-IdImagen	  INT     NOT NULL, 
-Imagen	    BLOB    NOT NULL, 
-PRIMARY KEY(IdTorneo,IdImagen),
+url	    VARCHAR(150)    NOT NULL, 
+PRIMARY KEY(IdTorneo,url),
 CONSTRAINT Imagenes_Torneos_fk   FOREIGN KEY (IdTorneo) REFERENCES  Torneos(IdTorneo)
 );
 

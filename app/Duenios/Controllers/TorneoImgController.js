@@ -1,7 +1,7 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoImgController", function($scope,$state,$stateParams, TorneoImgService, $compile, Upload){
-    
+resergolApp.controller("TorneoImgController", function($scope,$state,$stateParams, TorneoImgService, $compile, Upload, TorneoImgDBService){
+    self = this;
     this.idTorneo = $stateParams.idTorneo;
     this.idDuenio = $stateParams.idDuenio;
     
@@ -12,10 +12,22 @@ resergolApp.controller("TorneoImgController", function($scope,$state,$stateParam
 	{
 		
 		var file = $scope.file;
-      
+        
 		TorneoImgService.uploadFile(file).then(function(res)
 		{
-			console.log(res);
+			console.log(res.data);
+            var vURL = res.data;
+            //guardar el resultado e insertar la imagen
+            dataimg={
+                        idTorneo: self.idTorneo,
+                        url: vURL,
+                    }   
+    
+            TorneoImgDBService.save(dataimg, function(reponse){
+                console.log(reponse.data[0]);
+              },function(errorResponse){
+                 console.log('Error');
+             });
 		})
         
 	}

@@ -318,6 +318,35 @@ $app->get('/dias/:idDuenio', function($idDuenio){
 	sendResult($data);
 });
 
+//alta imagenes
+$app->post('/duenios/torneos/imagen', function(){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $torneo = new Torneo();
+        $result = $torneo->agregarTorneoImagen($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al guardar la imagen");
+        };
+    }
+	else{
+        sendError("token invalido");
+    }
+    
+});
+
 /*****************************************CANCHAS****************************************************************************/
 
 //Get canchas con filtros.

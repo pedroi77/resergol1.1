@@ -208,6 +208,57 @@ class Torneo
     }
     
     
+    public function agregarTorneoImagen($torneoimg){
+        $this->connection->autocommit(false);
+        
+        try {
+        $idTorneo = $this->connection->real_escape_string($torneoimg['idTorneo']);
+        $url = $this->connection->real_escape_string($torneoimg['url']);
+        $salida='';
+      
+       
+        // Parametros
+        $stmt = $this->connection->prepare('SET @idTorneo := ?');
+        $stmt->bind_param('i', $idTorneo);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @url := ?');
+        $stmt->bind_param('s', $url);
+        $stmt->execute();
+        
+        //Salida
+        $stmt = $this->connection->prepare('SET @salida := ?');
+        $stmt->bind_param('s', $salida);
+        $stmt->execute();
+        
+        
+         // execute the stored Procedure         SP_insertDuenios
+        
+        $result = $this->connection->query('CALL SP_insertTorneosImagenes( @idTorneo, @url , @salida);');
+        
+            
+        
+        // getting the value of the OUT parameter
+        $r = $this->connection->query('SELECT @salida as res');
+        $row = $r->fetch_assoc();               
+        $res = $row['res'] ;
+        
+        
+  
+        if($res > -1){
+            $this->connection->commit();
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+            
+        }else{
+           sendError("Error, no se pudo registrar el torneo." . $res ); //por algun motivo pincha aca
+        }
+        
+    } catch (Exception $e) {
+            $this->connection->rollback();
+            echo 'Something fails: ',  $e->getMessage(), "\n";
+        }
+    }
+    
     public function getTipoTorneo($IdTipoTorneo){  
         if($IdTipoTorneo == -1){
             $IdTipoTorneo = null;
@@ -311,7 +362,11 @@ class Torneo
         return $dias;
     }
     
+    
+    
 }
+
+
 
 /*Ejemplo para el POST
 {

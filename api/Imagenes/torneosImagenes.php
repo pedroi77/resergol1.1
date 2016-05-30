@@ -3,8 +3,8 @@ $file = $_FILES["file"]["name"];
 
 $hoy = getdate();
 $aux = $hoy["year"].$hoy["mon"].$hoy["mday"]."_".$hoy["hours"].$hoy["minutes"].$hoy["seconds"];
-$pos = strrpos($file, "1");
-$nombre = substr($file, 0, $pos+1); 
+$pos = strrpos($file, ".");
+$nombre = substr($file, 0, $pos); 
 $extension = substr($file, $pos, 5);
 
 $file=$nombre."_".$aux.$extension;

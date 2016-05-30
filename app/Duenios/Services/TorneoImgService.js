@@ -8,7 +8,7 @@ app.service("TorneoImgService", function($http,$q, $resource){
         var deferred = $q.defer();
         var formData = new FormData();
           
-        formData.append("name", name);
+        //formData.append("name", name);
         formData.append("file", file);
      
         return $http.post(TORNEOIMG_URI, formData, {
