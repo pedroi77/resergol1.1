@@ -4,14 +4,21 @@ resergolApp.controller("TorneoImgController", function($scope,$state,$stateParam
     self = this;
     this.idTorneo = $stateParams.idTorneo;
     this.idDuenio = $stateParams.idDuenio;
-    this.imagenes =[];
+    //this.imagenes =[];
     //this.imagen =  "/../resergol1.1/images/canchas/cancha1.jpg";
-   
+    this.imagenes = {
+        tipos: [],
+        selectedOption: {IdTorneo: '1', nombre: '', url:'', imagem:''} 
+    };    
     
-    TorneoImgDBService.query({idTorneo: 11}).$promise.then(function(data) {
-        self.imagenes = data;
-        console.log( self.imagenes);
-        //self.provincias.prov.push({IdProvincia: '-1', Nombre: 'Provincia'}); //Valor por defecto
+    TorneoImgDBService.query({idTorneo: self.idTorneo}).$promise.then(function(data) {
+        var i;
+        for(i=0; i< data.length; i++){
+            console.log(data[i]);
+             self.imagenes.tipos.push(data[i]);
+        };
+        
+        self.imagenes.selectedOption = self.imagenes.tipos[0];
     });
     
     $scope.uploadFile = function()

@@ -1201,3 +1201,11 @@ background: #333333;
   display: inline;	
 }
 
+
+  .imgSelect {
+  width: 750px;
+  height: 400px;
+  float: none;
+  position: relative;
+  display: inline;	
+}
