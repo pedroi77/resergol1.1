@@ -317,9 +317,28 @@ $app->get('/dias/:idDuenio', function($idDuenio){
 	sendResult($data);
 });
 
+//get de imagenes por torneo
+$app->get('/duenios/torneos/imagen/:idTorneo', function($idTorneo){
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $imagenes = new Torneo();
+        $data = $imagenes->getImagenesByTorneo($idTorneo);
+        sendResult($data);
+    }
+	else{
+        sendError("token invalido");
+    }
+});
+
+
 //alta imagenes
 $app->post('/duenios/torneos/imagen', function(){
-    
     $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
@@ -347,9 +366,7 @@ $app->post('/duenios/torneos/imagen', function(){
 });
 
 //delete de imagens
-$app->delete('/duenios/torneos/imagen', function(){
-    
-    /*
+$app->delete('/duenios/torneos/imagen/:idTorneo/:url', function($idTorneo, $url){
     $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
@@ -358,24 +375,12 @@ $app->delete('/duenios/torneos/imagen', function(){
     $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
 
     if($tokenOK){
-        $request = Slim\Slim::getInstance()->request();
-        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
-        
         $torneo = new Torneo();
-        $result = $torneo->agregarTorneoImagen($data);
-	
-        if($result){
-           sendResult($result);
-        }else{
-            sendError("Error al guardar la imagen");
-        };
+        $result = $torneo->deleteImagen($idTorneo, $url);
     }
 	else{
         sendError("token invalido");
     }
-    */
-     sendError("llego al delete");
-    
 });
 
 /*****************************************CANCHAS****************************************************************************/

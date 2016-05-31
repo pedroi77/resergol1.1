@@ -1,12 +1,18 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoImgController", function($scope,$state,$stateParams, TorneoImgService, $compile, Upload, TorneoImgDBService){
+resergolApp.controller("TorneoImgController", function($scope,$state,$stateParams, TorneoImgService, $compile, Upload, TorneoImgDBService,TorneoimgAltaService){
     self = this;
     this.idTorneo = $stateParams.idTorneo;
     this.idDuenio = $stateParams.idDuenio;
-    
+    this.imagenes =[];
     //this.imagen =  "/../resergol1.1/images/canchas/cancha1.jpg";
    
+    
+    TorneoImgDBService.query({idTorneo: 11}).$promise.then(function(data) {
+        self.imagenes = data;
+        console.log( self.imagenes);
+        //self.provincias.prov.push({IdProvincia: '-1', Nombre: 'Provincia'}); //Valor por defecto
+    });
     
     $scope.uploadFile = function()
 	{
@@ -21,9 +27,10 @@ resergolApp.controller("TorneoImgController", function($scope,$state,$stateParam
             dataimg={
                         idTorneo: self.idTorneo,
                         url: vURL,
+                        aux :'alta',
                     }   
     
-            TorneoImgDBService.save(dataimg, function(reponse){
+            TorneoimgAltaService.save(dataimg, function(reponse){
                 console.log(reponse.data[0]);
               },function(errorResponse){
                  console.log('Error');
@@ -45,11 +52,9 @@ resergolApp.controller("TorneoImgController", function($scope,$state,$stateParam
     
         
     this.borrar = function(){
-         dataimg={
-                        idTorneo: self.idTorneo,
-                        url: "sss",
-                    }   
-        TorneoImgDBService.delete(dataimg, function(reponse){
+
+        //SACAR HARCODE
+        TorneoImgDBService.delete({idTorneo: 11, url:"chilena_2016531_51353.jpg" }, function(reponse){
                 console.log(reponse.data);
               },function(errorResponse){
                  console.log('Error');

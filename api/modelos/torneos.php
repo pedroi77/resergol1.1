@@ -362,7 +362,80 @@ class Torneo
         return $dias;
     }
     
+    public function getImagenesByTorneo($IdTorneo){  
+
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getTorneosImagenes(@IdTorneo);";
+        $imagenes= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $imagenes[] = $fila;
+            }
+            $result->free();
+        }
+        return $imagenes;
+    }
     
+    public function deleteImagen($idTorneo, $url){  
+
+  
+
+        $this->connection->autocommit(false);
+
+        try {
+            
+        
+        $salida='';
+        $archivo ="C:\\xampp\\htdocs\\resergol1.1\\api\\Imagenes\\torneos\\".$url;    
+
+        // Parametros
+        $stmt = $this->connection->prepare('SET @idTorneo := ?');
+        $stmt->bind_param('i', $idTorneo);
+        $stmt->execute();
+            
+        $stmt = $this->connection->prepare('SET @url := ?');
+        $stmt->bind_param('s', $url);
+        $stmt->execute();
+
+        //Salida
+        $stmt = $this->connection->prepare('SET @salida := ?');
+        $stmt->bind_param('s', $salida);
+        $stmt->execute();
+
+
+         
+
+        $result = $this->connection->query('CALL SP_deleteTorneosImagenes( @idTorneo, @url , @salida);');
+
+
+
+        // getting the value of the OUT parameter
+        $r = $this->connection->query('SELECT @salida as res');
+        $row = $r->fetch_assoc();               
+        $res = $row['res'] ;
+
+
+        
+        if($res > -1){
+            unlink($archivo);
+            $this->connection->commit(); 
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+
+        }else{
+           sendError("Error, no se pudo registrar el torneo." . $res ); //por algun motivo pincha aca
+        }
+
+        } catch (Exception $e) {
+            $this->connection->rollback();
+            sendError("Error de transaccion"); //por algun motivo pincha aca
+        }
+
+    }
     
 }
 
