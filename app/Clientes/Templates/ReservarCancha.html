@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-controller="VerCanchaController as can">
 	<div class="row form-group">
         <div class="col-xs-12">
             <ul class="nav nav-pills nav-justified thumbnail setup-panel">
@@ -18,7 +18,7 @@
         </div>
 	</div>
     <div class="row setup-content" id="step-1">
-        <div class="col-xs-12">
+        <div class="col-xs-12" ng-repeat="canc in cancha">
 
          <div class="row">
                 <div class="col-md-3 boxComplejo"> 
@@ -26,27 +26,27 @@
                         <div class="row">
                          <header>
                             <h3 class="fa fa-user titul">Estás reservando...</h3>
-                             <h5 class="fa fa-user titul">Cancha 1, en Todo Futbol</a></h5>
+                             <h5 class="fa fa-user titul">"{{canc.nombre}}", en {{canc.Complejo}}.</a></h5>
                          </header>
 
                           <ul class="liSeparados">
                               <li>
-                            <b>Provincia:</b> <label>Buenos Aires</label>
+                            <b>Provincia:</b> <label>{{canc.Provincia}}</label>
                               </li>
                               <li>
-                                <b>Localidad:</b> <label>Lomas de Zamora</label>  
+                                <b>Localidad:</b> <label>{{canc.Localidad}}</label>  
                               </li>
                               <li>
-                                <b>Direccion:</b> <label>Laprida 950</label>  
+                                <b>Direccion:</b> <label>{{canc.Calle}} {{canc.Altura}}</label>  
                               </li>
                               <li>
-                               <b>Superficie:</b> <label>Pasto Sintético</label>  
+                               <b>Superficie:</b> <label>{{canc.Superficie}}</label>  
                               </li>
                               <li>
-                                <b>Tamaño:</b> <label>6 (12 jugadores)</label>  
+                                <b>Tamaño:</b> <label>{{canc.CantJugadores}} ({{canc.CantJugadores * 2}} jugadores)</label>  
                               </li>
                               <li>
-                                <b>Precio base p/hora:</b> <label>$380</label>
+                                <b>Precio base p/hora:</b> <label>${{canc.Precio}}</label>
                                 <label class="glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title="Tanto el precio como la seña que se indican no incluyen luz." ></label>  
                               </li>
                           </ul>
@@ -59,16 +59,18 @@
            <section class="widget">
                     <fieldset>
                     <div class="body">
-                        <!--<p class="mensajeExplicacion">Administre aquí los datos del dueño del complejo.</p>-->
                         <div class="form-group">
                             <form action="" class="">
                                 <div class="form-group">
                                     <label for="diaReserva" class="control-label col-sm-1">Día:<span class="required"></span></label>
                                     <div class='col-sm-4 input-group date'>
-                                    <input type='text'  class="form-control" id="fecha" style="height:31px;"/>
-                                    <span class="input-group-addon" id="fechaReserva" onclick="mostrarCalendario()" >
-                                    <span class="glyphicon glyphicon-calendar"  ></span>
-                                    </span>
+                                    <p class="input-group">
+                                                      <input type="text" id="fecha" readonly='true' class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-change="can.cambiaFecha(dt)" ng-required="false" close-text="Cerrar" alt-input-formats="altInputFormats" />
+                                        
+                                                      <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                      </span>
+                                   </p>
                                     </div>   
                                     
                                 </div>
@@ -78,47 +80,35 @@
                                 <div class="form-group">
                                     <label for="desde" class="control-label col-sm-1">Desde <span class="required"></span></label>
                                     <div class="col-xs-12 col-sm-3">  
-                                            <SELECT NAME="cboHoraDesde" style="height:30px;" SIZE=1 class="select2 form-control col-sm-2" placeholder=".col-lg-2"> 
-                                            <OPTION >08 Hs</OPTION>
-                                            <OPTION>09 Hs</OPTION>
-                                            <OPTION>10 Hs</OPTION>
-                                            <OPTION>11 Hs</OPTION> 
-                                            <OPTION>12 Hs</OPTION> 
-                                            <OPTION>13 Hs</OPTION> 
-                                            <OPTION>14 Hs</OPTION> 
-                                            <OPTION>15 Hs</OPTION>
-                                            <OPTION>16 Hs</OPTION> 
-                                            <OPTION>17 Hs</OPTION> 
-                                            <OPTION>18 Hs</OPTION> 
-                                            <OPTION>19 Hs</OPTION> 
-                                            <OPTION>19 Hs</OPTION> 
-                                            <OPTION>20 Hs</OPTION> 
-                                            <OPTION>21 Hs</OPTION> 
-                                            <OPTION>22 Hs</OPTION> 
-                                            <OPTION  selected="selected">08 HS</OPTION> 
-                                        </SELECT> 
+                                        <!--<select data-live-search="true" style="margin-bottom:5px;" class="form-control"  
+                                                    ng-model="selectedHoraDId" ng-options="horaD.id as horaD.desc for horaD in horasDesde" ng-change="can.changeSelectedHoraD(selectedHoraDId)" >
+                                        </select>-->
+                                        <!--<span class="editable-text">{{horaDesde}}</span>-->
+                                        <div class="controls" ng-class="">
+                                            <input id="horaDesde" type="time" 
+                                                   name="horaDesde" 
+                                                   ng-model="horaDesde" 
+                                                   ng-change="can.changeSelectedHoraD(horaDesde)"
+                                                   class="editable-input form-control "
+                                                   min={{horaD}} max={{horaH}}
+                                                   required/>
+                                        </div>
                                     </div> 
                                     <label for="hasta" class="control-label col-sm-1">Hasta <span class="required"></span></label>
                                     <div class="col-xs-12 col-sm-3">  
-                                            <SELECT NAME="cboHoraHasta" SIZE=1 class="input-small form-control col-sm-2"> 
-                                            <OPTION>08 Hs</OPTION>
-                                            <OPTION>09 Hs</OPTION>
-                                            <OPTION>10 Hs</OPTION>
-                                            <OPTION>11 Hs</OPTION> 
-                                            <OPTION>12 Hs</OPTION> 
-                                            <OPTION>13 Hs</OPTION> 
-                                            <OPTION>14 Hs</OPTION> 
-                                            <OPTION>15 Hs</OPTION>
-                                            <OPTION>16 Hs</OPTION> 
-                                            <OPTION>17 Hs</OPTION> 
-                                            <OPTION>18 Hs</OPTION> 
-                                            <OPTION>19 Hs</OPTION> 
-                                            <OPTION>19 Hs</OPTION> 
-                                            <OPTION>20 Hs</OPTION> 
-                                            <OPTION>21 Hs</OPTION> 
-                                            <OPTION>22 Hs</OPTION> 
-                                            <OPTION  selected="selected">23 HS</OPTION> 
-                                        </SELECT> 
+                                        <!--<select data-live-search="true" style="margin-bottom:5px;" class="form-control"  
+                                                    ng-model="selectedHoraHId" ng-options="horaH.id as horaH.desc for horaH in horasHasta" >
+                                        </select>-->
+                                        <!--<span class="editable-text">{{horaDesde2}}</span>-->
+                                        <div class="controls" ng-class="">
+                                            <input id="horaHasta" type="time" 
+                                                   name="horaDesde2" 
+                                                   ng-model="horaDesde2"
+                                                   ng-change="can.changeSelectedHoraH(horaDesde, horaDesde2)"
+                                                   class="editable-input form-control "
+                                                   min={{horaD2}} max={{horaH2}}
+                                                   required/>
+                                        </div>
                                     </div>
                                     
                                     
@@ -145,10 +135,10 @@
                                         <hr>
                                         <div class="row">
                                         <div class="col-md-4">
-                                            <span class="uneditable-input h3">A pagar: $380</span>
+                                            <span class="uneditable-input h3">A pagar: $ {{precioAPagar | currency:""}}</span>
                                         </div>
                                         <div class="col-md-2">
-                                            <button id="activate-step-2" class="btn btn-primary btn-md">Realizar Pago</button>
+                                            <button id="activate-step-2" ng-disabled="{{!paso1Completo}}" class="btn btn-primary btn-md">Realizar Pago</button>
                                         </div>
                                             <div class="col-md-6">
                                             <button id="" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-md">CANCELAR / VOLVER</button>
@@ -171,7 +161,7 @@
         </div>
     </div>
  </div>
-    <div class="row setup-content" id="step-2">
+    <div class="row setup-content" id="step-2" ng-repeat="canc in cancha">
                 <div class="col-xs-12">
 
          <div class="row">
