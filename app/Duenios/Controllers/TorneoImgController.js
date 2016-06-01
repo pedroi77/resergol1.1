@@ -8,14 +8,16 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
     this.msjPantalla = "Imagenes del torneo ";
     this.imagenes = {
         tipos: [],
-        selectedOption: {IdTorneo: '1', nombre: '', url:'', imagem:''} 
+        selectedOption: {idtorneo: '1', nombre: '', url:'', imagen:''} 
     };    
-    $scope.imgSelect;
+    
     
     TorneoImgDBService.query({idTorneo: self.idTorneo}).$promise.then(function(data) {
         var i;
         for(i=0; i< data.length; i++){
-             self.imagenes.tipos.push(data[i]);
+            self.imagenes.tipos.push(data[i]);
+            //console.log(self.imagenes.tipos[i]);
+            console.log(self.imagenes.tipos[i].idtorneo);
         };
         
         self.imagenes.selectedOption = self.imagenes.tipos[0];
@@ -23,12 +25,9 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
         self.msjPantalla=self.msjPantalla+self.imagenes.selectedOption.nombre;
     });
     
-    this.setimg = function(){
     
-        $scope.imgSelect =self.imagenes.selectedOption.imagen;
-        console.log($scope.imgSelect);
-        console.log(self.imagenes.selectedOption.imagen);
-    }
+        //console.log(self.imagenes.selectedOption.imagen);
+    
     
     $scope.uploadFile = function()
 	{
@@ -48,6 +47,7 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
     
             TorneoimgAltaService.save(dataimg, function(reponse){
                 console.log(reponse.data[0]);
+                $state.reload("Duenios.torneoImagenes",{idTorneo:self.idTorneo, idDuenio:self.idDuenio});
               },function(errorResponse){
                  console.log('Error');
              });
@@ -68,9 +68,7 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
     
         
     this.borrar = function(){
-
-        //SACAR HARCODE
-        TorneoImgDBService.delete({idTorneo: 11, url:"chilena_2016531_51353.jpg" }, function(reponse){
+        TorneoImgDBService.delete({idTorneo: self.imagenes.selectedOption.idtorneo, url:self.imagenes.selectedOption.url}, function(reponse){
                 console.log(reponse.data);
               },function(errorResponse){
                  console.log('Error');

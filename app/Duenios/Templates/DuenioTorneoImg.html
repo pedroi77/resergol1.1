@@ -32,7 +32,7 @@
                 </div>
              
                 <div class="col-xs-12 col-sm-6 col-md-6" style="height:400px">
-                    <img id="miImg" src= {{imgSelect}}  class="img-responsive imgSelect" alt="Image">
+                    <img id="miImg" src= {{tor.imagenes.selectedOption.imagen}}  class="img-responsive imgSelect" alt="Image">
                 </div>
          
                 
@@ -46,9 +46,9 @@
             </div>
             
             <div class="principal row">
-            	<div class="col-md-3 seleccion"  ng-repeat="img in tor.imagenes.tipos"  >
+            	<div class="col-md-3 seleccion"  ng-repeat="img in tor.imagenes.tipos"   >
     				<p>
-    					<img  ng-src="{{img.imagen}}" ng-model="tor.imagenes.selectedOption.imagen" ng-click="tor.setimg()" class="img-responsive" alt="" style="background-color:#cccccc; height:250px;">
+    					<img  ng-src="{{img.imagen}}"  ng-click="tor.imagenes.selectedOption = img" class="img-responsive" alt="" style="background-color:#cccccc; height:250px;">
     				</p>
         	    </div>
                 
