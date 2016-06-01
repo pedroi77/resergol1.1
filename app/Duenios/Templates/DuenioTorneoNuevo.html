@@ -339,6 +339,7 @@
                                          <span ng-switch-default class="editable-text">{{dia.HoraDesde}}</span>
                                         <div class="controls" ng-class="" ng-switch-when="true">
                                             <input type="time" 
+                                                   step="3600"
                                                    name="HoraDesde" 
                                                    ng-model="dia.HoraDesde" 
                                                    class="editable-input form-control "
@@ -350,6 +351,7 @@
                                         <span ng-switch-default class="editable-text">{{dia.HoraHasta}}</span>
                                         <div class="controls" ng-class="" ng-switch-when="true">
                                             <input type="time" 
+                                                   step="3600"
                                                    name="HoraDesde" 
                                                    ng-model="dia.HoraHasta" 
                                                    min={{dia.desdeMin}} max={{dia.hastaMax}}

@@ -15,7 +15,7 @@
             <header class="row widget" >
                 <div style = "color: white; " class="container">
                     <h3  style=" font-size: 50px; text-align:center; font-style:italic;" ></span>
-                    {{tor.imagenes.nombre}}</h3>
+                    {{tor.msjPantalla}}</h3>
                 </div>
             </header>
         </div>    
@@ -32,7 +32,7 @@
                 </div>
              
                 <div class="col-xs-12 col-sm-6 col-md-6" style="height:400px">
-                    <img ng-src="{{tor.imagenes.selectedOption.imagen}}" class="img-responsive imgSelect" alt="Image">
+                    <img id="miImg" src= {{imgSelect}}  class="img-responsive imgSelect" alt="Image">
                 </div>
          
                 
@@ -48,7 +48,7 @@
             <div class="principal row">
             	<div class="col-md-3 seleccion"  ng-repeat="img in tor.imagenes.tipos"  >
     				<p>
-    					<img  ng-src="{{img.imagen}}" ng-model="tor.imagenes.selectedOption" class="img-responsive" alt="" style="background-color:#cccccc; height:250px;">
+    					<img  ng-src="{{img.imagen}}" ng-model="tor.imagenes.selectedOption.imagen" ng-click="tor.setimg()" class="img-responsive" alt="" style="background-color:#cccccc; height:250px;">
     				</p>
         	    </div>
                 

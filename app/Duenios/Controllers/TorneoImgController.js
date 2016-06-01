@@ -1,25 +1,34 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoImgController", function($scope,$state,$stateParams, TorneoImgService, $compile, Upload, TorneoImgDBService,TorneoimgAltaService){
+resergolApp.controller("TorneoImgController", function($scope, $state , $stateParams, TorneoImgService, $compile, Upload, TorneoImgDBService,TorneoimgAltaService){
     self = this;
+    
     this.idTorneo = $stateParams.idTorneo;
     this.idDuenio = $stateParams.idDuenio;
-    //this.imagenes =[];
-    //this.imagen =  "/../resergol1.1/images/canchas/cancha1.jpg";
+    this.msjPantalla = "Imagenes del torneo ";
     this.imagenes = {
         tipos: [],
         selectedOption: {IdTorneo: '1', nombre: '', url:'', imagem:''} 
     };    
+    $scope.imgSelect;
     
     TorneoImgDBService.query({idTorneo: self.idTorneo}).$promise.then(function(data) {
         var i;
         for(i=0; i< data.length; i++){
-            console.log(data[i]);
              self.imagenes.tipos.push(data[i]);
         };
         
         self.imagenes.selectedOption = self.imagenes.tipos[0];
+        $scope.imgSelect =  self.imagenes.selectedOption.imagen;
+        self.msjPantalla=self.msjPantalla+self.imagenes.selectedOption.nombre;
     });
+    
+    this.setimg = function(){
+    
+        $scope.imgSelect =self.imagenes.selectedOption.imagen;
+        console.log($scope.imgSelect);
+        console.log(self.imagenes.selectedOption.imagen);
+    }
     
     $scope.uploadFile = function()
 	{
