@@ -6,6 +6,8 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
     this.idTorneo = $stateParams.idTorneo;
     this.idDuenio = $stateParams.idDuenio;
     this.msjPantalla ="" ;
+    this.archivoInvalido = true;
+    this.bMensaje = false;
     this.imagenes = {
         tipos: [],
         selectedOption: {idtorneo: '1', nombre: '', url:'', imagen:''} 
@@ -29,8 +31,6 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
     
   
     
-    
-        //console.log(self.imagenes.selectedOption.imagen);
     
     
     $scope.uploadFile = function()
@@ -58,15 +58,20 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
 	}
     
      $scope.onChange = function (files) {
-          if(files[0] == undefined) return;
-          $scope.fileExt = files[0].name.split(".").pop()
+         
+        if(files[0] == undefined) return;
+            $scope.fileExt = files[0].name.split(".").pop()
+            return $scope.isImage($scope.fileExt );
         }
         
+        
         $scope.isImage = function(ext) {
-          if(ext) {
-            return ext == "jpg" || ext == "jpeg"|| ext == "gif" || ext=="png"
-          }
-        }
+            var res = ext == ("jpg" || ext == "jpeg"|| ext == "gif" || ext=="png");
+            self.archivoInvalido = !res;
+            self.bMensaje= !res ;
+            
+            return res;          
+        };
     
         
     this.borrar = function(){
