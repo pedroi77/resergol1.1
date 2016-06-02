@@ -5,25 +5,29 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
     
     this.idTorneo = $stateParams.idTorneo;
     this.idDuenio = $stateParams.idDuenio;
-    this.msjPantalla = "Imagenes del torneo ";
+    this.msjPantalla ="" ;
     this.imagenes = {
         tipos: [],
         selectedOption: {idtorneo: '1', nombre: '', url:'', imagen:''} 
     };    
     
+    this.init = function(){
+        this.imagenes.tipos=[]; 
+        TorneoImgDBService.query({idTorneo: self.idTorneo}).$promise.then(function(data) {
+            var i;
+            for(i=0; i< data.length; i++){
+                self.imagenes.tipos.push(data[i]);
+            };
+
+            self.imagenes.selectedOption = self.imagenes.tipos[0];
+            $scope.imgSelect =  self.imagenes.selectedOption.imagen;
+            self.msjPantalla="Imagenes del torneo " + self.imagenes.selectedOption.nombre;
+        });
+    };
     
-    TorneoImgDBService.query({idTorneo: self.idTorneo}).$promise.then(function(data) {
-        var i;
-        for(i=0; i< data.length; i++){
-            self.imagenes.tipos.push(data[i]);
-            //console.log(self.imagenes.tipos[i]);
-            console.log(self.imagenes.tipos[i].idtorneo);
-        };
-        
-        self.imagenes.selectedOption = self.imagenes.tipos[0];
-        $scope.imgSelect =  self.imagenes.selectedOption.imagen;
-        self.msjPantalla=self.msjPantalla+self.imagenes.selectedOption.nombre;
-    });
+    self.init();
+    
+  
     
     
         //console.log(self.imagenes.selectedOption.imagen);
@@ -31,12 +35,11 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
     
     $scope.uploadFile = function()
 	{
-		
 		var file = $scope.file;
         
 		TorneoImgService.uploadFile(file).then(function(res)
 		{
-			console.log(res.data);
+			
             var vURL = res.data;
             //guardar el resultado e insertar la imagen
             dataimg={
@@ -46,9 +49,8 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
                     }   
     
             TorneoimgAltaService.save(dataimg, function(reponse){
-                console.log(reponse.data[0]);
-                $state.reload("Duenios.torneoImagenes",{idTorneo:self.idTorneo, idDuenio:self.idDuenio});
-              },function(errorResponse){
+                self.init();
+             },function(errorResponse){
                  console.log('Error');
              });
 		})
@@ -68,16 +70,17 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
     
         
     this.borrar = function(){
-        TorneoImgDBService.delete({idTorneo: self.imagenes.selectedOption.idtorneo, url:self.imagenes.selectedOption.url}, function(reponse){
-                console.log(reponse.data);
-              },function(errorResponse){
-                 console.log('Error');
-             });
+        if(confirm("¿Esta seguro que desea borrar la imagen seleccionada?")){
+            TorneoImgDBService.delete({idTorneo: self.imagenes.selectedOption.idtorneo, url:self.imagenes.selectedOption.url}, function(reponse){
+                    console.log(reponse.data);
+                    self.init();
+                  },function(errorResponse){
+             
+                 });
+        }
     };    
 });
-                       
-                       
-                       
+  
 resergolApp.directive('uploaderModel', ["$parse", function ($parse) {
 	return {
 		restrict: 'A',

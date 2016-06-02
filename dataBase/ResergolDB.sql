@@ -442,7 +442,8 @@ CONSTRAINT Imagenes_Complejos_fk   FOREIGN KEY (IdComplejo) REFERENCES  Complejo
 
 CREATE TABLE TorneosImagenes(	
 IdTorneo   	INT     NOT NULL, 
-url	    VARCHAR(150)    NOT NULL, 
+url	    VARCHAR(150)    NOT NULL,
+fechaAlta DATE NOT NULL,
 PRIMARY KEY(IdTorneo,url),
 CONSTRAINT Imagenes_Torneos_fk   FOREIGN KEY (IdTorneo) REFERENCES  Torneos(IdTorneo)
 );

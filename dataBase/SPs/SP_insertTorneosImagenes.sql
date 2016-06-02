@@ -14,9 +14,10 @@ BEGIN
     
     SET vResultado = 1;
   
-	INSERT INTO torneosimagenes	(IdTorneo,url)	        
+	INSERT INTO torneosimagenes	(IdTorneo,url,fechaAlta)	        
 	VALUES( pIdTorneo,
-			pUrl);  
+			pUrl,
+            NOW());  
 
 	IF (Error=-1)  THEN
         SET vResultado = -1; /*Devuelve -1 en caso de error*/

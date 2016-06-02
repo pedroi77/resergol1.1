@@ -6,6 +6,8 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
     var self = this;
 	this.brand;
     this.IniciarSesion;
+    this.rta = false;
+    this.pregunta = "";
      
     this.mayusculas = function(){
         self.Usuario.usuario = self.Usuario.usuario.toUpperCase();

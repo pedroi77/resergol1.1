@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: resergol
+-- Host: localhost    Database: resergol
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.10-MariaDB
+-- Server version	5.6.26
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -176,7 +176,7 @@ CREATE TABLE `canchaspuntuacion` (
   KEY `CanchasPuntuacion_Clientes_fk` (`IdCliente`),
   CONSTRAINT `CanchasPuntuacion_Clientes_fk` FOREIGN KEY (`IdCliente`) REFERENCES `clientes` (`IdCliente`),
   CONSTRAINT `CanchassPuntuacion_Canchas_fk` FOREIGN KEY (`IdComplejo`, `IdCancha`) REFERENCES `canchas` (`IdComplejo`, `IdCancha`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,6 +185,7 @@ CREATE TABLE `canchaspuntuacion` (
 
 LOCK TABLES `canchaspuntuacion` WRITE;
 /*!40000 ALTER TABLE `canchaspuntuacion` DISABLE KEYS */;
+INSERT INTO `canchaspuntuacion` VALUES (1,5,12,11,4,'2016-05-26 00:00:00'),(2,5,12,20,2,'2016-05-26 00:00:00'),(3,5,12,21,5,'2016-05-26 00:00:00'),(4,3,8,14,5,'2016-05-26 00:00:00'),(5,5,11,14,1,'2016-05-26 00:00:00'),(6,3,8,7,2,'2016-05-28 00:00:00'),(7,5,11,7,2,'2016-05-28 00:00:00'),(8,6,16,24,5,'2016-05-28 00:00:00');
 /*!40000 ALTER TABLE `canchaspuntuacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,6 +298,7 @@ CREATE TABLE `complejos` (
   `Email` varchar(60) NOT NULL,
   `IdEstado` int(11) NOT NULL,
   `IdDuenio` int(11) NOT NULL,
+  `PorcentajeLuz` int(11) NOT NULL,
   PRIMARY KEY (`IdComplejo`),
   KEY `complejos_estados_fk` (`IdEstado`),
   CONSTRAINT `complejos_estados_fk` FOREIGN KEY (`IdEstado`) REFERENCES `complejosestados` (`IdEstado`)
@@ -309,7 +311,7 @@ CREATE TABLE `complejos` (
 
 LOCK TABLES `complejos` WRITE;
 /*!40000 ALTER TABLE `complejos` DISABLE KEYS */;
-INSERT INTO `complejos` VALUES (1,'Open Gallo','primer complejo',1,1,1,1,1,'00:00:00',50,24,'00:00:05','open@gmail.com',1,1),(2,'Todo Fútbol','Las mejores canchas de lomas de zamora, veni a disfrutar del fútbol!',0,1,1,1,1,'18:00:00',50,24,'00:00:05','todofutbol@hotmail.com',1,4),(3,'Oasis','Viví el fútbol en Banfield en Oasis!',1,1,0,0,0,'18:00:00',40,24,'00:00:05','oasis_banfield@hotmail.com',1,5),(4,'Maracaná','Puro fútbol en escalada!',0,1,1,0,0,'17:00:00',35,48,'00:00:05','maracana@yahoo.com.ar',1,6),(5,'Los Lagartos','Excelente para jugar con amigos, vení a Los Lagartos!',0,1,1,0,1,'18:00:00',20,36,'00:00:05','loslagartosfutbol@yahoo.com.ar',1,7),(6,'Las Heras','Fútbol Las Heras, tierra de cracks!',1,1,1,1,0,'18:00:00',0,48,'00:00:05','flasheras5@hotmail.com',1,8);
+INSERT INTO `complejos` VALUES (1,'Open Gallo','primer complejo',1,1,1,1,1,'00:00:00',50,24,'00:00:05','open@gmail.com',1,1,0),(2,'Todo Fútbol','Las mejores canchas de lomas de zamora, veni a disfrutar del fútbol!',0,1,1,1,1,'18:00:00',50,24,'00:00:05','todofutbol@hotmail.com',1,4,20),(3,'Oasis','Viví el fútbol en Banfield en Oasis!',1,1,0,0,0,'18:00:00',40,24,'00:00:05','oasis_banfield@hotmail.com',1,5,0),(4,'Maracaná','Puro fútbol en escalada!',0,1,1,0,0,'17:00:00',35,48,'00:00:05','maracana@yahoo.com.ar',1,6,20),(5,'Los Lagartos','Excelente para jugar con amigos, vení a Los Lagartos!',0,1,1,0,1,'18:00:00',20,36,'00:00:05','loslagartosfutbol@yahoo.com.ar',1,7,15),(6,'Las Heras','Fútbol Las Heras, tierra de cracks!',1,1,1,1,0,'18:00:00',0,48,'00:00:05','flasheras5@hotmail.com',1,8,18);
 /*!40000 ALTER TABLE `complejos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1012,6 +1014,7 @@ CREATE TABLE `reservas` (
   `Precio` double NOT NULL,
   `PorcentajePago` int(11) NOT NULL,
   `IdEstado` int(11) NOT NULL,
+  `FechaReserva` date NOT NULL,
   PRIMARY KEY (`IdReserva`),
   KEY `Reservas_Canchas_fk` (`IdComplejo`,`IdCancha`),
   KEY `Reservas_Clientes_fk` (`IdCliente`),
@@ -1019,7 +1022,7 @@ CREATE TABLE `reservas` (
   CONSTRAINT `Reservas_Canchas_fk` FOREIGN KEY (`IdComplejo`, `IdCancha`) REFERENCES `canchas` (`IdComplejo`, `IdCancha`),
   CONSTRAINT `Reservas_Clientes_fk` FOREIGN KEY (`IdCliente`) REFERENCES `clientes` (`IdCliente`),
   CONSTRAINT `Reservas_Estados_fk` FOREIGN KEY (`IdEstado`) REFERENCES `reservasestados` (`IdEstado`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1028,6 +1031,7 @@ CREATE TABLE `reservas` (
 
 LOCK TABLES `reservas` WRITE;
 /*!40000 ALTER TABLE `reservas` DISABLE KEYS */;
+INSERT INTO `reservas` VALUES (1,5,12,20,'2016-05-26','18:00:00','20:00:00',500,20,1,'2016-05-25');
 /*!40000 ALTER TABLE `reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1042,7 +1046,7 @@ CREATE TABLE `reservasestados` (
   `IdEstado` int(11) NOT NULL AUTO_INCREMENT,
   `Descripcion` varchar(30) NOT NULL,
   PRIMARY KEY (`IdEstado`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1051,6 +1055,7 @@ CREATE TABLE `reservasestados` (
 
 LOCK TABLES `reservasestados` WRITE;
 /*!40000 ALTER TABLE `reservasestados` DISABLE KEYS */;
+INSERT INTO `reservasestados` VALUES (1,'Señada'),(2,'Pagada completa');
 /*!40000 ALTER TABLE `reservasestados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1130,6 +1135,30 @@ INSERT INTO `tipotorneos` VALUES (1,'Liga'),(2,'Torneo');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tipotorneosequipos`
+--
+
+DROP TABLE IF EXISTS `tipotorneosequipos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipotorneosequipos` (
+  `IdTipoTorneo` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  PRIMARY KEY (`IdTipoTorneo`,`cantidad`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipotorneosequipos`
+--
+
+LOCK TABLES `tipotorneosequipos` WRITE;
+/*!40000 ALTER TABLE `tipotorneosequipos` DISABLE KEYS */;
+INSERT INTO `tipotorneosequipos` VALUES (1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,29),(1,30),(2,4),(2,8),(2,16),(2,32);
+/*!40000 ALTER TABLE `tipotorneosequipos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `torneos`
 --
 
@@ -1163,7 +1192,7 @@ CREATE TABLE `torneos` (
   CONSTRAINT `Torneo_Superficie_fk` FOREIGN KEY (`IdSuperficie`) REFERENCES `tipossuperficie` (`IdSuperficie`),
   CONSTRAINT `Torneo_Tipos_fk` FOREIGN KEY (`IdTipoTorneo`) REFERENCES `tipotorneos` (`IdTipoTorneo`),
   CONSTRAINT `Torneo_duenio_fk` FOREIGN KEY (`IdDuenio`) REFERENCES `duenios` (`IdDuenio`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1172,6 +1201,7 @@ CREATE TABLE `torneos` (
 
 LOCK TABLES `torneos` WRITE;
 /*!40000 ALTER TABLE `torneos` DISABLE KEYS */;
+INSERT INTO `torneos` VALUES (1,1,1,'pepe',4,5,1,0,0.00,'2016-05-29','2016-05-29',72,'2016-05-29','2016-05-29','fdfd','fdfd',2),(2,1,1,'fdf',4,5,1,0,0.00,'2016-05-29','2016-05-29',72,'2016-05-29','2016-05-29','fdfdf','dfdfdf',2),(3,1,1,'lanus',4,5,1,0,0.00,'2016-05-29','2016-05-29',72,'2016-05-29','2016-05-29','dasdsa','dsda',2),(4,1,1,'dsds',4,5,1,0,0.00,'2016-05-29','2016-05-29',72,'2016-05-29','2016-05-29','sadads','dsadsdsd',2),(5,1,1,'ddd',4,5,1,0,0.00,'2016-05-29','2016-05-29',72,'2016-05-29','2016-05-29','dsds','dsdsd',2),(6,1,1,'hhhh',4,5,1,0,0.00,'2016-05-29','2016-05-29',72,'2016-05-29','2016-05-29','hhh','hhh',2),(7,1,1,'ssas',4,5,1,0,0.00,'2016-05-29','2016-05-29',72,'2016-05-29','2016-05-29','fdfdf','dfdfdf',2),(8,1,1,'ddd',4,5,1,0,0.00,'2016-05-29','2016-05-29',72,'2016-05-29','2016-05-29','d','d',2),(9,1,1,'xdccc',4,5,1,0,0.00,'2016-05-29','2016-05-29',72,'2016-05-29','2016-05-29','cdxc','cdf',2),(10,1,1,'ddd',4,5,1,0,0.00,'2016-05-29','2016-05-29',72,'2016-05-29','2016-05-29','gfgfg','fgfgf',2),(11,1,1,'lanus cup',4,5,1,0,0.00,'2016-05-30','2016-05-30',72,'2016-05-30','2016-05-30','algo','mis reglas',2);
 /*!40000 ALTER TABLE `torneos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1229,6 +1259,7 @@ CREATE TABLE `torneosdias` (
 
 LOCK TABLES `torneosdias` WRITE;
 /*!40000 ALTER TABLE `torneosdias` DISABLE KEYS */;
+INSERT INTO `torneosdias` VALUES (1,2,'10:00:00','22:00:00'),(2,4,'10:00:00','22:00:00'),(3,7,'17:00:00','22:00:00'),(4,6,'17:00:00','22:00:00'),(5,7,'17:00:00','22:00:00'),(6,7,'17:00:00','22:00:00'),(7,6,'17:00:00','22:00:00'),(8,4,'10:00:00','22:00:00'),(9,7,'17:00:00','22:00:00'),(10,6,'17:00:00','22:00:00'),(11,7,'17:00:00','22:00:00');
 /*!40000 ALTER TABLE `torneosdias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1294,9 +1325,9 @@ DROP TABLE IF EXISTS `torneosimagenes`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `torneosimagenes` (
   `IdTorneo` int(11) NOT NULL,
-  `IdImagen` int(11) NOT NULL,
-  `Imagen` blob NOT NULL,
-  PRIMARY KEY (`IdTorneo`,`IdImagen`),
+  `url` varchar(150) NOT NULL,
+  `fechaAlta` datetime NOT NULL,
+  PRIMARY KEY (`IdTorneo`,`url`),
   CONSTRAINT `Imagenes_Torneos_fk` FOREIGN KEY (`IdTorneo`) REFERENCES `torneos` (`IdTorneo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1307,6 +1338,7 @@ CREATE TABLE `torneosimagenes` (
 
 LOCK TABLES `torneosimagenes` WRITE;
 /*!40000 ALTER TABLE `torneosimagenes` DISABLE KEYS */;
+INSERT INTO `torneosimagenes` VALUES (11,'17b55dd9-87d2-4cb9-bb1b-acee36824489_201662_5133.jpg','2016-06-02 00:13:03'),(11,'descarga (1)_201662_51248.jpg','2016-06-02 00:12:48'),(11,'scripts_201662_51416.js','2016-06-02 00:14:16');
 /*!40000 ALTER TABLE `torneosimagenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1325,33 +1357,93 @@ UNLOCK TABLES;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_administrarDuePendiente`(IN `pIdDuenio` INT(11), IN `pAcepta` INT, OUT `pResultado` INT)
     NO SQL
-BEGIN 
+BEGIN 
 
-DECLARE Error INT DEFAULT 0;
-DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+
 
-if (pAcepta = 1) then
+DECLARE Error INT DEFAULT 0;
 
-update duenios set
-IdEstado = 2
-where IdDuenio = pIdDuenio;
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
 
-ELSE
+
 
-update duenios set
-IdEstado = 4
-where IdDuenio = pIdDuenio;
+if (pAcepta = 1) then
 
-end IF;
+
 
+update duenios set
 
-    IF Error=-1 THEN
-        SET pResultado = -1; 
-    ELSE
-        SET pResultado = 1;
-	end IF;
+IdEstado = 2
+
+where IdDuenio = pIdDuenio;
+
+
+
+ELSE
+
+
+
+update duenios set
+
+IdEstado = 4
+
+where IdDuenio = pIdDuenio;
+
+
+
+end IF;
+
+
+
+
+
+    IF Error=-1 THEN
+
+        SET pResultado = -1; 
+
+    ELSE
+
+        SET pResultado = 1;
+
+	end IF;
+
+
 
 end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_deleteTorneosImagenes` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_deleteTorneosImagenes`(
+    pIdTorneo	        INT        ,
+	pUrl                VARCHAR(150),
+    OUT vResultado       INT
+)
+BEGIN 
+    DECLARE Error INT DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+    
+    SET vResultado = 1;
+    
+    DELETE FROM torneosimagenes
+    WHERE IdTorneo =  pIdTorneo 
+    AND   url = pUrl;
+
+	IF (Error=-1)  THEN
+        SET vResultado = -1; /*Devuelve -1 en caso de error*/
+    END IF;
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1367,47 +1459,87 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existeDocumento`( 
-    pIdTipoDoc 	    INT,
-    pNroDoc	        INT,
-    pTipo           VARCHAR(1),
-    OUT resultado   INT
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existeDocumento`( 
+
+    pIdTipoDoc 	    INT,
+
+    pNroDoc	        INT,
+
+    pTipo           VARCHAR(1),
+
+    OUT resultado   INT
+
 )
-BEGIN 
+BEGIN 
 
-    
-    
-    
-    DECLARE Aux   INT;
-    
-    SET resultado = 0;
-    SET Aux = -1;
-       
-    IF pTipo = 'D' THEN
-        
-        SELECT IFNULL(D.idDuenio, -1) INTO Aux 
-        FROM Duenios AS D
-        INNER JOIN Personas AS p ON D.idPersona = P.idPersona
-        WHERE P.IdTipoDoc = pIdTipoDoc 
-            AND P.NroDoc  = pNroDoc
-            AND D.FechaBaja IS NULL;
-            
-    ELSE
+
 
-        SELECT IFNULL(C.idCliente, -1) INTO Aux 
-        FROM Clientes AS C
-        INNER JOIN Personas AS p ON C.idPersona = P.idPersona
-        WHERE P.IdTipoDoc = pIdTipoDoc 
-            AND P.NroDoc  = pNroDoc
-            AND C.FechaBaja IS NULL;
-            
-    END IF;
-         
-    IF Aux > -1 THEN
-        SET resultado = 1;
-    END IF;
-    
-    
+    
+
+    
+
+    
+
+    DECLARE Aux   INT;
+
+    
+
+    SET resultado = 0;
+
+    SET Aux = -1;
+
+       
+
+    IF pTipo = 'D' THEN
+
+        
+
+        SELECT IFNULL(D.idDuenio, -1) INTO Aux 
+
+        FROM Duenios AS D
+
+        INNER JOIN Personas AS p ON D.idPersona = P.idPersona
+
+        WHERE P.IdTipoDoc = pIdTipoDoc 
+
+            AND P.NroDoc  = pNroDoc
+
+            AND D.FechaBaja IS NULL;
+
+            
+
+    ELSE
+
+
+
+        SELECT IFNULL(C.idCliente, -1) INTO Aux 
+
+        FROM Clientes AS C
+
+        INNER JOIN Personas AS p ON C.idPersona = P.idPersona
+
+        WHERE P.IdTipoDoc = pIdTipoDoc 
+
+            AND P.NroDoc  = pNroDoc
+
+            AND C.FechaBaja IS NULL;
+
+            
+
+    END IF;
+
+         
+
+    IF Aux > -1 THEN
+
+        SET resultado = 1;
+
+    END IF;
+
+    
+
+    
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1424,28 +1556,49 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existeEmail`( 
-    pEmail  		VARCHAR(60),
-    OUT resultado   INT
-)
-BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existeEmail`( 
 
-    
-    
-    
-    DECLARE Aux   INT;
-    
-    SET resultado = 0;
-    SET Aux = -1;
-        
-	SELECT IFNULL(IdPersona, -1) INTO Aux 
-	FROM Personas 
-	WHERE Email = pEmail;
-		
-	
-    IF Aux > -1 THEN
-        SET resultado = 1;
-    END IF;
+    pEmail  		VARCHAR(60),
+
+    OUT resultado   INT
+
+)
+BEGIN 
+
+
+
+    
+
+    
+
+    
+
+    DECLARE Aux   INT;
+
+    
+
+    SET resultado = 0;
+
+    SET Aux = -1;
+
+        
+
+	SELECT IFNULL(IdPersona, -1) INTO Aux 
+
+	FROM Personas 
+
+	WHERE Email = pEmail;
+
+		
+
+	
+
+    IF Aux > -1 THEN
+
+        SET resultado = 1;
+
+    END IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1462,45 +1615,83 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existeUsuario`( 
-    pUsuario	VARCHAR(25),
-    OUT Id      INT,
-    OUT tipo	VARCHAR(1)
-)
-BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existeUsuario`( 
 
-    
-    
-    
-    DECLARE IdAux   INT;
-    
-    SET IdAux = -1;
-    SET tipo = 'A';     
-         
-    SELECT IFNULL(a.id, -1) INTO IdAux
-    FROM Administradores as a
-    WHERE a.Usuario = pUsuario;
-    
-    IF (IdAux = -1) THEN
-    
-        SET tipo = 'D';     
-        
-        SELECT IFNULL(idDuenio, -1) INTO IdAux 
-        FROM Duenios 
-        WHERE Usuario = pUsuario AND FechaBaja IS NULL;
-        
-        IF (IdAux = -1) THEN
-        
-            SET tipo = 'C';     
-            
-            SELECT IFNULL(idCliente,-1) INTO IdAux 
-            FROM Clientes 
-            WHERE Usuario = pUsuario AND FechaBaja IS NULL;
-        END IF;
-        
-    END IF;
-    
-    SET Id = IdAux;
+    pUsuario	VARCHAR(25),
+
+    OUT Id      INT,
+
+    OUT tipo	VARCHAR(1)
+
+)
+BEGIN 
+
+
+
+    
+
+    
+
+    
+
+    DECLARE IdAux   INT;
+
+    
+
+    SET IdAux = -1;
+
+    SET tipo = 'A';     
+
+         
+
+    SELECT IFNULL(a.id, -1) INTO IdAux
+
+    FROM Administradores as a
+
+    WHERE a.Usuario = pUsuario;
+
+    
+
+    IF (IdAux = -1) THEN
+
+    
+
+        SET tipo = 'D';     
+
+        
+
+        SELECT IFNULL(idDuenio, -1) INTO IdAux 
+
+        FROM Duenios 
+
+        WHERE Usuario = pUsuario AND FechaBaja IS NULL;
+
+        
+
+        IF (IdAux = -1) THEN
+
+        
+
+            SET tipo = 'C';     
+
+            
+
+            SELECT IFNULL(idCliente,-1) INTO IdAux 
+
+            FROM Clientes 
+
+            WHERE Usuario = pUsuario AND FechaBaja IS NULL;
+
+        END IF;
+
+        
+
+    END IF;
+
+    
+
+    SET Id = IdAux;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1517,23 +1708,39 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getAdministrador`( 
-    pUsuario	    VARCHAR(25),
-    pContrasenia  VARCHAR(20)   
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getAdministrador`( 
+
+    pUsuario	    VARCHAR(25),
+
+    pContrasenia  VARCHAR(20)   
+
     )
-BEGIN 
-    
-   
-    
-    
-    
-    SELECT *
-    FROM administradores as Adm
-    WHERE Adm.Usuario = pUsuario 
-    AND Adm.Contrasenia = pContrasenia;
-    
-    
-   
+BEGIN 
+
+    
+
+   
+
+    
+
+    
+
+    
+
+    SELECT *
+
+    FROM administradores as Adm
+
+    WHERE Adm.Usuario = pUsuario 
+
+    AND Adm.Contrasenia = pContrasenia;
+
+    
+
+    
+
+   
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1551,26 +1758,46 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCancha`(IN `idCancha` INT(11), IN `idComplejo` INT(11))
-BEGIN 
-SELECT CA.IdCancha, CA.nombre, CO.IdComplejo, CO.Nombre as Complejo, P.Nombre AS Provincia, L.Nombre as Localidad,
-       CD.Calle, CD.Altura, DP.NroTelef, CA.CantJugadores, TS.Descripcion as Superficie, CA.Techada, CA.Luz,
-       CA.Precio, CO.PorcentajeSeña as PorcentSenia, CO.Buffet, CO.Parrillas, CO.Duchas, CO.WiFi, CO.Estacionamiento
-       
-FROM CANCHAS CA
-INNER JOIN COMPLEJOS CO
-	ON CA.IdComplejo = CO.IdComplejo
-INNER JOIN complejosdireccion CD
-	ON CD.IdComplejo = CO.IdComplejo
-INNER JOIN provincias p
-	ON P.IdProvincia = CD.IdProvincia
-INNER JOIN localidades L
-	ON L.IdProvincia = CD.IdProvincia AND L.IdLocalidad = CD.IdLocalidad
-INNER JOIN dueniospendientes DP
-	ON DP.IdDuenio = CO.IdDuenio
-INNER JOIN tipossuperficie TS
-	ON TS.IdSuperficie = CA.IdSuperficie
-WHERE CA.IdEstado = 1 and CO.IdEstado = 1 AND
-CA.IdCancha = idCancha AND CO.IdComplejo = idComplejo;
+BEGIN 
+
+SELECT CA.IdCancha, CA.nombre, CO.IdComplejo, CO.Nombre as Complejo, P.Nombre AS Provincia, L.Nombre as Localidad,
+
+       CD.Calle, CD.Altura, DP.NroTelef, CA.CantJugadores, TS.Descripcion as Superficie, CA.Techada, CA.Luz,
+
+       CA.Precio, CO.PorcentajeSeña as PorcentSenia, CO.Buffet, CO.Parrillas, CO.Duchas, CO.WiFi, CO.Estacionamiento
+
+       
+
+FROM CANCHAS CA
+
+INNER JOIN COMPLEJOS CO
+
+	ON CA.IdComplejo = CO.IdComplejo
+
+INNER JOIN complejosdireccion CD
+
+	ON CD.IdComplejo = CO.IdComplejo
+
+INNER JOIN provincias p
+
+	ON P.IdProvincia = CD.IdProvincia
+
+INNER JOIN localidades L
+
+	ON L.IdProvincia = CD.IdProvincia AND L.IdLocalidad = CD.IdLocalidad
+
+INNER JOIN dueniospendientes DP
+
+	ON DP.IdDuenio = CO.IdDuenio
+
+INNER JOIN tipossuperficie TS
+
+	ON TS.IdSuperficie = CA.IdSuperficie
+
+WHERE CA.IdEstado = 1 and CO.IdEstado = 1 AND
+
+CA.IdCancha = idCancha AND CO.IdComplejo = idComplejo;
+
   END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1587,31 +1814,125 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCanchas`(IN `pIdProv` INT(11), IN `pIdLoc` INT(11), IN `pCantJug` INT(11), IN `pIdSuperficie` INT(11), IN `pPrecioMax` DECIMAL(6,2), IN `pTechada` TINYINT(1), IN `pConLuz` TINYINT(1), IN `pConEstac` TINYINT(1), IN `pConDuchas` TINYINT(1), IN `pConBuffet` TINYINT(1), IN `pConParrilla` TINYINT(1), IN `pConWifi` TINYINT(1))
-BEGIN 
-     SELECT ca.IdCancha, ca.IdComplejo, ca.nombre as NombreCancha, ca.CantJugadores, ca.Techada, ca.Luz, ca.Precio,
-    co.Nombre as NombreComplejo, prov.Nombre as Provincia, loc.Nombre as Localidad, ts.Descripcion as Superficie, cd.Calle, cd.Altura, CI.Imagen
-    FROM canchas ca
-    INNER JOIN complejos co ON co.IdComplejo = ca.IdComplejo
-    INNER JOIN duenios d ON d.IdDuenio = co.IdDuenio
-    INNER JOIN personas p ON p.IdPersona = d.IdPersona
-    INNER JOIN complejosdireccion cd ON cd.IdComplejo = co.IdComplejo
-    INNER JOIN provincias prov ON prov.IdProvincia = cd.IdProvincia 
-    INNER JOIN localidades loc ON loc.IdLocalidad = cd.IdLocalidad AND loc.IdProvincia = prov.IdProvincia
-    INNER JOIN tipossuperficie ts ON ts.IdSuperficie = ca.IdSuperficie
-    LEFT JOIN canchasimagenes CI ON CI.IdCancha = CA.IdCancha
-    WHERE ca.IdEstado = 1 
-    AND (cd.IdProvincia = pIdProv AND cd.IdLocalidad = pIdLoc)    
-    AND (ca.CantJugadores = pCantJug OR pCantJug = -1)
-    AND (ca.IdSuperficie = pIdSuperficie OR pIdSuperficie = -1)
-    AND (ca.Precio <= pPrecioMax OR pPrecioMax = -1)
-    AND (ca.Techada = 1 OR pTechada = 0) 
-    AND (ca.Luz = pConLuz OR pConLuz = 0)
-    AND (co.Estacionamiento = pConEstac OR pConEstac = 0)
-    AND (co.Duchas = pConDuchas OR pConDuchas = 0)
-    AND (co.Buffet = pConBuffet OR pConBuffet = 0)
-    AND (co.Parrillas = pConParrilla OR pConParrilla = 0)
-    AND (co.WiFi = pConWifi OR pConWifi = 0);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCanchas`(IN `pIdProv` INT(11), IN `pIdLoc` INT(11), IN `pCantJug` INT(11), IN `pIdSuperficie` INT(11), IN `pPrecioMax` DECIMAL(6,2), IN `pTechada` TINYINT(1), IN `pConLuz` TINYINT(1), IN `pConEstac` TINYINT(1), IN `pConDuchas` TINYINT(1), IN `pConBuffet` TINYINT(1), IN `pConParrilla` TINYINT(1), IN `pConWifi` TINYINT(1), IN `pFecha` DATE, IN `pHora` VARCHAR(10), IN `pDiaSemana` INT(10))
+BEGIN 
+
+
+
+    IF pFecha = '19000101'
+
+    THEN SET pFecha = null;
+
+    END IF;
+
+    
+
+    IF pHora != '-1'
+
+    THEN SET pHora = CONCAT(pHora, ':00:00');
+
+    END IF;
+
+    
+
+    IF pHora = '-1'
+
+    THEN SET pHora = null;
+
+    END IF;
+
+    
+
+    IF pDiaSemana = '-1'
+
+    THEN SET pDiaSemana = null;
+
+    END IF;
+
+
+
+     SELECT ca.IdCancha, ca.IdComplejo, ca.nombre as NombreCancha, ca.CantJugadores, ca.Techada, ca.Luz, ca.Precio,
+
+    co.Nombre as NombreComplejo, prov.Nombre as Provincia, loc.Nombre as Localidad, ts.Descripcion as Superficie, cd.Calle, cd.Altura, CI.Imagen, IFNULL(AVG(CP.Puntaje),0) AS Puntaje, co.HoraCobroLuz, co.PorcentajeLuz, (ca.Precio + (ca.Precio * co.PorcentajeLuz / 100)) as PrecioConLuz
+
+    FROM canchas ca
+
+    INNER JOIN complejos co ON co.IdComplejo = ca.IdComplejo
+
+    INNER JOIN duenios d ON d.IdDuenio = co.IdDuenio
+
+    INNER JOIN personas p ON p.IdPersona = d.IdPersona
+
+    INNER JOIN complejosdireccion cd ON cd.IdComplejo = co.IdComplejo
+
+    INNER JOIN provincias prov ON prov.IdProvincia = cd.IdProvincia 
+
+    INNER JOIN localidades loc ON loc.IdLocalidad = cd.IdLocalidad AND loc.IdProvincia = prov.IdProvincia
+
+    INNER JOIN tipossuperficie ts ON ts.IdSuperficie = ca.IdSuperficie
+
+    LEFT JOIN canchasimagenes CI ON CI.IdCancha = CA.IdCancha
+
+    LEFT JOIN canchaspuntuacion CP ON CP.IdCancha = CA.IdCancha AND CP.IdComplejo = CO.IdComplejo
+
+    WHERE ca.IdEstado = 1 
+
+    AND (cd.IdProvincia = pIdProv AND cd.IdLocalidad = pIdLoc)    
+
+    AND (ca.CantJugadores = pCantJug OR pCantJug = -1)
+
+    AND (ca.IdSuperficie = pIdSuperficie OR pIdSuperficie = -1)
+
+    AND (ca.Precio <= pPrecioMax OR pPrecioMax = -1)
+
+    AND (ca.Techada = 1 OR pTechada = 0) 
+
+    AND (ca.Luz = pConLuz OR pConLuz = 0)
+
+    AND (co.Estacionamiento = pConEstac OR pConEstac = 0)
+
+    AND (co.Duchas = pConDuchas OR pConDuchas = 0)
+
+    AND (co.Buffet = pConBuffet OR pConBuffet = 0)
+
+    AND (co.Parrillas = pConParrilla OR pConParrilla = 0)
+
+    AND (co.WiFi = pConWifi OR pConWifi = 0)
+
+    AND exists(select idcomplejo
+
+                from complejosdias cd
+
+                where idcomplejo = co.IdComplejo
+
+                and ifnull(pDiaSemana,cd.iddiadesde) between cd.iddiadesde and cd.iddiahasta
+
+                and ifnull(pHora,horadesde) >= horadesde and ifnull(pHora,horahasta-1) < horahasta)  
+
+    AND not exists(select idcomplejo
+
+                    from reservas R
+
+                    where R.idcomplejo = co.IdComplejo
+
+                    and R.idCancha = ca.idcancha
+
+                    and R.fecha = ifnull(pFecha,'19000101')
+
+                    and ifnull(pHora,55) >= HoraInicio and ifnull(pHora,55) < horafin)
+
+
+
+GROUP BY ca.IdCancha, ca.IdComplejo, ca.nombre, ca.CantJugadores, ca.Techada, ca.Luz, ca.Precio,
+
+    co.Nombre, prov.Nombre, loc.Nombre, ts.Descripcion, cd.Calle, cd.Altura, CI.Imagen
+
+   
+
+ORDER BY IFNULL(AVG(CP.Puntaje),0) DESC;
+
+
+
   END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1628,18 +1949,122 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCanchasByDuenio`(
-    pIdDuenio  	  INT 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCanchasByDuenio`(
+
+    pIdDuenio  	  INT 
+
 )
-BEGIN 
-    SELECT CA.idcancha, CA.nombre, CA.CantJugadores, ts.descripcion, CA.techada, CA.luz, CA.precio
-    FROM canchas      AS CA
-    INNER JOIN complejos    AS c ON (c.idcomplejo = ca.idcomplejo)
-    INNER JOIN tipossuperficie ts ON ts.IdSuperficie = ca.idSuperficie
-    WHERE c.idduenio = pIdDuenio
-        AND CA.idestado = 1
-        AND C.idestado = 1
-    ORDER BY 2;
+BEGIN 
+
+    SELECT CA.idcancha, CA.nombre, CA.CantJugadores, ts.descripcion, CA.techada, CA.luz, CA.precio
+
+    FROM canchas      AS CA
+
+    INNER JOIN complejos    AS c ON (c.idcomplejo = ca.idcomplejo)
+
+    INNER JOIN tipossuperficie ts ON ts.IdSuperficie = ca.idSuperficie
+
+    WHERE c.idduenio = pIdDuenio
+
+        AND CA.idestado = 1
+
+        AND C.idestado = 1
+
+    ORDER BY 2;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_getCanchasTOP` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCanchasTOP`()
+    NO SQL
+BEGIN 
+
+     SELECT ca.IdCancha, ca.IdComplejo, ca.nombre as NombreCancha, 
+
+    co.Nombre as NombreComplejo, prov.Nombre as Provincia, loc.Nombre as Localidad, cd.Calle, cd.Altura, CI.Imagen, IFNULL(AVG(CP.Puntaje),0) AS Puntaje
+
+    FROM canchas ca
+
+    INNER JOIN complejos co ON co.IdComplejo = ca.IdComplejo
+
+    INNER JOIN duenios d ON d.IdDuenio = co.IdDuenio
+
+    INNER JOIN complejosdireccion cd ON cd.IdComplejo = co.IdComplejo
+
+    INNER JOIN provincias prov ON prov.IdProvincia = cd.IdProvincia 
+
+    INNER JOIN localidades loc ON loc.IdLocalidad = cd.IdLocalidad AND loc.IdProvincia = prov.IdProvincia
+
+    LEFT JOIN canchasimagenes CI ON CI.IdCancha = CA.IdCancha
+
+    INNER JOIN canchaspuntuacion CP ON CP.IdCancha = CA.IdCancha AND CP.IdComplejo = CO.IdComplejo
+
+    /*INNER JOIN (select cp.IdCancha, cp.IdComplejo, count(*) as votos
+
+	from canchaspuntuacion cp
+
+	group by cp.IdCancha
+
+	order by votos DESC
+
+	) AS CANTVOTOS ON CA.IdCancha = CANTVOTOS.IdCancha AND CA.IdComplejo = CANTVOTOS.IdComplejo*/
+
+    WHERE ca.IdEstado = 1 and co.IdEstado = 1
+
+ 
+
+GROUP BY ca.IdCancha, ca.IdComplejo, ca.nombre,
+
+    co.Nombre, prov.Nombre, loc.Nombre, cd.Calle, cd.Altura, CI.Imagen
+
+   
+
+ORDER BY IFNULL(AVG(CP.Puntaje),0) DESC
+
+LIMIT 3;
+
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_getCantEquiposByTipoTorneo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCantEquiposByTipoTorneo`(
+
+    pIdTipo 	  INT 
+
+)
+BEGIN 
+
+    SELECT cantidad 
+
+    FROM tipotorneosEquipos 
+
+    WHERE IdTipoTorneo =pIdTipo;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1656,18 +2081,29 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCantJugByDuenio`(
-    pIdDuenio  	  INT 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCantJugByDuenio`(
+
+    pIdDuenio  	  INT 
+
 )
-BEGIN 
-     SELECT distinct C.CantJugadores
-	FROM  canchas AS C 
-	INNER JOIN complejos AS CO ON CO.idcomplejo = C.idcomplejo
-	WHERE   C.idEstado = 1
-		AND CO.idestado = 1 
-		AND CO.idDuenio = pIdDuenio
-    ORDER BY 1;
-		
+BEGIN 
+
+     SELECT distinct C.CantJugadores
+
+	FROM  canchas AS C 
+
+	INNER JOIN complejos AS CO ON CO.idcomplejo = C.idcomplejo
+
+	WHERE   C.idEstado = 1
+
+		AND CO.idestado = 1 
+
+		AND CO.idDuenio = pIdDuenio
+
+    ORDER BY 1;
+
+		
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1684,23 +2120,62 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCliente`( 
-    pUsuario	    VARCHAR(25),
-    pContrasenia  VARCHAR(20)   
-    )
-BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCliente`( 
 
+    pUsuario	    VARCHAR(25),
+
+    pContrasenia  VARCHAR(20)   
+
+    )
+BEGIN 
+
+
+
+    
+
+    
+
+    
+
+    SELECT *
+
+    FROM personas as P
+
+    INNER JOIN clientes as C ON P.idPersona = C.idPersona
+
+    WHERE C.usuario = pUsuario 
+
+    AND C.contrasenia = pContrasenia
+
+    AND C.idEstado = 1; 
+
+    
+
+   
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_getDias` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getDias`()
+BEGIN 
+select 
+	idDia
+	,Nombre 
+from dias;
     
-    
-    
-    SELECT *
-    FROM personas as P
-    INNER JOIN clientes as C ON P.idPersona = C.idPersona
-    WHERE C.usuario = pUsuario 
-    AND C.contrasenia = pContrasenia
-    AND C.idEstado = 1; 
-    
-   
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1717,17 +2192,28 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getDiasByDuenio`(
-    pIdDuenio  	  INT 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getDiasByDuenio`(
+
+    pIdDuenio  	  INT 
+
 )
-BEGIN 
-    SELECT d.iddia, d.nombre , TIME_FORMAT(cd.HoraDesde, "%H:%S" ) as HoraDesde ,  TIME_FORMAT(cd.HoraHasta, "%H:%S" ) as HoraHasta
-    FROM complejosdias      AS cd
-    INNER JOIN complejos    AS c ON (c.idcomplejo = cd.idcomplejo)
-    INNER JOIN dias         AS d ON (d.iddia between cd.iddiadesde and cd.iddiahasta)
-    WHERE c.idduenio = pIdDuenio
-    AND C.idestado = 1
-    ORDER BY 1;
+BEGIN 
+
+    SELECT d.iddia, d.nombre , TIME_FORMAT(cd.HoraDesde, "%H:%S" ) as HoraDesde ,  TIME_FORMAT(cd.HoraHasta, "%H:%S" ) as HoraHasta
+
+    FROM complejosdias      AS cd
+
+    INNER JOIN complejos    AS c ON (c.idcomplejo = cd.idcomplejo)
+
+    INNER JOIN dias         AS d ON (d.iddia between cd.iddiadesde and cd.iddiahasta)
+
+    WHERE c.idduenio = pIdDuenio
+
+    AND C.idestado = 1
+
+    ORDER BY 1;
+
+
 
 END ;;
 DELIMITER ;
@@ -1745,23 +2231,39 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getDuenio`( 
-    pUsuario	    VARCHAR(25),
-    pContrasenia  VARCHAR(20)   
-    )
-BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getDuenio`( 
 
-    
-    
-    
-    SELECT *
-    FROM personas as P
-    INNER JOIN duenios as D ON P.idPersona = D.idPersona
-    WHERE D.usuario = pUsuario 
-    AND D.contrasenia = pContrasenia
-    AND D.idEstado = 2; 
-    
-   
+    pUsuario	    VARCHAR(25),
+
+    pContrasenia  VARCHAR(20)   
+
+    )
+BEGIN 
+
+
+
+    
+
+    
+
+    
+
+    SELECT *
+
+    FROM personas as P
+
+    INNER JOIN duenios as D ON P.idPersona = D.idPersona
+
+    WHERE D.usuario = pUsuario 
+
+    AND D.contrasenia = pContrasenia
+
+    AND D.idEstado = 2; 
+
+    
+
+   
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1779,18 +2281,52 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getDueniosPendientes`()
-BEGIN 
-select due.IdDuenio,due.Usuario, due.FechaAlta, duep.nombreComplejo, duep.NroTelef, duep.Calle, duep.Altura,prov.Nombre as Provincia, loc.Nombre as Localidad
-    from duenios due
-    inner join dueniospendientes duep
-    on due.IdDuenio = duep.IdDuenio
-    inner join localidades loc 
-    on duep.IdLocalidad = loc.IdLocalidad
-    and duep.IdProvincia = loc.IdProvincia
-    inner join provincias prov
-    on duep.IdProvincia = prov.IdProvincia
-    where due.IdEstado = 1;
+BEGIN 
+
+select due.IdDuenio,due.Usuario, due.FechaAlta, duep.nombreComplejo, duep.NroTelef, duep.Calle, duep.Altura,prov.Nombre as Provincia, loc.Nombre as Localidad
+
+    from duenios due
+
+    inner join dueniospendientes duep
+
+    on due.IdDuenio = duep.IdDuenio
+
+    inner join localidades loc 
+
+    on duep.IdLocalidad = loc.IdLocalidad
+
+    and duep.IdProvincia = loc.IdProvincia
+
+    inner join provincias prov
+
+    on duep.IdProvincia = prov.IdProvincia
+
+    where due.IdEstado = 1;
+
   END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_getJugadoresByTipoTorneo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getJugadoresByTipoTorneo`(
+    pIdTipo 	  INT 
+)
+BEGIN 
+    SELECT cantidad 
+    FROM tipotorneosEquipos 
+    WHERE IdTipoTorneo =pIdTipo;
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1806,16 +2342,25 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getLocalidadesByProvincia`(
-    pIdProvincia 	  INT 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getLocalidadesByProvincia`(
+
+    pIdProvincia 	  INT 
+
 )
-BEGIN 
-    SELECT l.IdLocalidad,
-           l.Nombre 
-    FROM Localidades as l
-    INNER JOIN Provincias as p ON l.IdProvincia = p.IdProvincia
-    WHERE p.IdProvincia = pIdProvincia
-    ORDER BY  l.Nombre ;
+BEGIN 
+
+    SELECT l.IdLocalidad,
+
+           l.Nombre 
+
+    FROM Localidades as l
+
+    INNER JOIN Provincias as p ON l.IdProvincia = p.IdProvincia
+
+    WHERE p.IdProvincia = pIdProvincia
+
+    ORDER BY  l.Nombre ;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1833,11 +2378,16 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getProvincias`()
-BEGIN 
-    SELECT IdProvincia,
-           Nombre 
-    FROM Provincias
-    ORDER BY Nombre;
+BEGIN 
+
+    SELECT IdProvincia,
+
+           Nombre 
+
+    FROM Provincias
+
+    ORDER BY Nombre;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1855,9 +2405,12 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getSuperficies`()
-SELECT IdSuperficie,
-       Descripcion
-    FROM tipossuperficie
+SELECT IdSuperficie,
+
+       Descripcion
+
+    FROM tipossuperficie
+
     ORDER BY Descripcion ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1874,17 +2427,27 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getSuperficiesByIdDuenio`(
-    pIdDuenio  	  INT 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getSuperficiesByIdDuenio`(
+
+    pIdDuenio  	  INT 
+
 )
-BEGIN 
-    SELECT distinct S.* 
-	FROM tipossuperficie AS S
-	INNER JOIN canchas AS C ON C.idSuperficie = S.idSuperficie
-	INNER JOIN complejos AS CO ON CO.idcomplejo = C.idcomplejo
-	WHERE   C.idEstado = 1
-		AND CO.idestado = 1 
-		AND CO.idDuenio = pIdDuenio;
+BEGIN 
+
+    SELECT distinct S.* 
+
+	FROM tipossuperficie AS S
+
+	INNER JOIN canchas AS C ON C.idSuperficie = S.idSuperficie
+
+	INNER JOIN complejos AS CO ON CO.idcomplejo = C.idcomplejo
+
+	WHERE   C.idEstado = 1
+
+		AND CO.idestado = 1 
+
+		AND CO.idDuenio = pIdDuenio;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1902,12 +2465,18 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getTiposDoc`()
-BEGIN 
-    SELECT IdTipoDoc,
-           Descripcion 
-    FROM TiposDoc
-    WHERE IdEstado = 1; 
-    
+BEGIN 
+
+    SELECT IdTipoDoc,
+
+           Descripcion 
+
+    FROM TiposDoc
+
+    WHERE IdEstado = 1; 
+
+    
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1924,13 +2493,45 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getTipoTorneos`(
-    pIdTipoTorneo  	  INT 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getTipoTorneos`(
+
+    pIdTipoTorneo  	  INT 
+
+)
+BEGIN 
+
+    SELECT *
+
+    FROM TipoTorneos 
+
+    WHERE idtipoTorneo  = IFNULL(pIdTipoTorneo,idtipoTorneo);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_getTorneosImagenes` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getTorneosImagenes`(
+    pIdTorneo  	  INT 
 )
 BEGIN 
-    SELECT *
-    FROM TipoTorneos 
-    WHERE idtipoTorneo  = IFNULL(pIdTipoTorneo,idtipoTorneo);
+    SELECT t.idtorneo, t.nombre, TI.url,  
+    concat('http://localhost:8080/resergol1.1/api/Imagenes/torneos/',TI.url) as imagen, TI.fechaalta
+    FROM torneosimagenes AS TI
+    INNER JOIN torneos as T ON T.idtorneo = TI.idtorneo
+    WHERE T.idtorneo = pIdTorneo
+    ORDER BY 5;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1947,54 +2548,102 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertClientes`(
-    pUsuario	    VARCHAR(25),
-    pContrasenia	BLOB(30),
-    pNombre	      VARCHAR(60),
-    pApellido	    VARCHAR(60),
-    pIdTipoDoc 	  INT        ,
-    pNroDoc	      INT        ,   
-    pEmail	      VARCHAR(60),
-    OUT pIdCliente  INT
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertClientes`(
+
+    pUsuario	    VARCHAR(25),
+
+    pContrasenia	BLOB(30),
+
+    pNombre	      VARCHAR(60),
+
+    pApellido	    VARCHAR(60),
+
+    pIdTipoDoc 	  INT        ,
+
+    pNroDoc	      INT        ,   
+
+    pEmail	      VARCHAR(60),
+
+    OUT pIdCliente  INT
+
 )
-BEGIN 
-    DECLARE Error INT DEFAULT 0;
-    DECLARE idPersonaAux INT DEFAULT 0;
-    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
-    
-    
-	SELECT IFNULL(idPersona, 0) INTO idPersonaAux FROM personas WHERE  idTipoDoc = pIdTipoDoc and nroDoc = pNroDoc;
-    
-    
-    IF (idPersonaAux = 0) THEN  
-    	CALL SP_insertPersonas (pNombre, pApellido, pIdTipoDoc, 			pNroDoc,pEmail, @idPersona);
-    END IF;
-     
-    IF Error = 0 THEN
-        
-        INSERT INTO Clientes(IdPersona, 
-                            Usuario,
-                            Contrasenia,	
-                            IdEstado,	
-                            FechaAlta,	
-                            FechaBaja)
-        VALUES( @idPersona,
-                pUsuario, 
-                pContrasenia, 
-                1,
-                CURDATE(),
-                null );
-        
-    ELSE
-        SET pIdCliente = -1; 
-    END IF;
-    
-    
-    IF Error=-1 THEN
-        SET pIdCliente = -1; 
-    ELSE
-        SET pIdCliente = (SELECT MAX(idCliente) FROM Clientes); 
-    END IF;
+BEGIN 
+
+    DECLARE Error INT DEFAULT 0;
+
+    DECLARE idPersonaAux INT DEFAULT 0;
+
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+
+    
+
+    
+
+	SELECT IFNULL(idPersona, 0) INTO idPersonaAux FROM personas WHERE  idTipoDoc = pIdTipoDoc and nroDoc = pNroDoc;
+
+    
+
+    
+
+    IF (idPersonaAux = 0) THEN  
+
+    	CALL SP_insertPersonas (pNombre, pApellido, pIdTipoDoc, 			pNroDoc,pEmail, @idPersona);
+
+    END IF;
+
+     
+
+    IF Error = 0 THEN
+
+        
+
+        INSERT INTO Clientes(IdPersona, 
+
+                            Usuario,
+
+                            Contrasenia,	
+
+                            IdEstado,	
+
+                            FechaAlta,	
+
+                            FechaBaja)
+
+        VALUES( @idPersona,
+
+                pUsuario, 
+
+                pContrasenia, 
+
+                1,
+
+                CURDATE(),
+
+                null );
+
+        
+
+    ELSE
+
+        SET pIdCliente = -1; 
+
+    END IF;
+
+    
+
+    
+
+    IF Error=-1 THEN
+
+        SET pIdCliente = -1; 
+
+    ELSE
+
+        SET pIdCliente = (SELECT MAX(idCliente) FROM Clientes); 
+
+    END IF;
+
+
 
 END ;;
 DELIMITER ;
@@ -2012,82 +2661,157 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertDuenios`(
-    pUsuario	      VARCHAR(25),
-    pContrasenia	  BLOB(30),
-    pNombre	        VARCHAR(60),
-    pApellido	      VARCHAR(60),
-    pIdTipoDoc 	    INT        ,
-    pNroDoc	        INT        ,   
-    pEmail	        VARCHAR(60),
-    pNombreComplejo VARCHAR(60),
-    pNroTelef       VARCHAR(15),
-    pIdProv         INT,
-    pIdLoc          INT,
-    pDireccion	    VARCHAR(40),   
-    pNroCalle       INT, 
-    OUT pIdDuenio   INT
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertDuenios`(
+
+    pUsuario	      VARCHAR(25),
+
+    pContrasenia	  BLOB(30),
+
+    pNombre	        VARCHAR(60),
+
+    pApellido	      VARCHAR(60),
+
+    pIdTipoDoc 	    INT        ,
+
+    pNroDoc	        INT        ,   
+
+    pEmail	        VARCHAR(60),
+
+    pNombreComplejo VARCHAR(60),
+
+    pNroTelef       VARCHAR(15),
+
+    pIdProv         INT,
+
+    pIdLoc          INT,
+
+    pDireccion	    VARCHAR(40),   
+
+    pNroCalle       INT, 
+
+    OUT pIdDuenio   INT
+
 )
-BEGIN 
-	
-    
-    DECLARE Error INT DEFAULT 0;
-    DECLARE idPersonaAux INT DEFAULT 0;
-    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
-    
-      
-      SELECT IFNULL(idPersona, 0) INTO idPersonaAux FROM personas WHERE idTipoDoc = pIdTipoDoc and nroDoc = pNroDoc;
-      
-      IF (idPersonaAux = 0) THEN 
-        CALL SP_insertPersonas (pNombre, pApellido, pIdTipoDoc, pNroDoc,pEmail, @idPersona);
-      END IF;
-      
-    
-     
-    IF (Error = 0) THEN
-        
-        INSERT INTO Duenios(IdPersona, 
-                            Usuario,
-                            Contrasenia,	
-                            IdEstado,	
-                            FechaAlta,	
-                            FechaBaja)
-        VALUES( @idPersona,
-                pUsuario, 
-                pContrasenia, 
-                1,
-                CURDATE(),
-                null );
-                
-         SET pIdDuenio = (SELECT MAX(idDuenio) FROM Duenios);        
-        
-            
-       
-       INSERT INTO DueniosPendientes(IdDuenio,
-                                      nombreComplejo,    
-                                      NroTelef,          
-                                      Calle,	          
-                                      Altura,	         
-                                      IdLocalidad,
-                                      IdProvincia)
-        VALUES( pIdDuenio,
-                pNombreComplejo,
-                pNroTelef, 
-                pDireccion,
-                pNroCalle,
-                pIdLoc,
-                pIdProv);
-    
-				
-    ELSE
-        SET pIdDuenio = -1; 
-    END IF;
-    
-    
-    IF (Error=-1 OR pIdDuenio = -1) THEN
-        SET pIdDuenio = -1; 
-        
-    END IF;
+BEGIN 
+
+	
+
+    
+
+    DECLARE Error INT DEFAULT 0;
+
+    DECLARE idPersonaAux INT DEFAULT 0;
+
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+
+    
+
+      
+
+      SELECT IFNULL(idPersona, 0) INTO idPersonaAux FROM personas WHERE idTipoDoc = pIdTipoDoc and nroDoc = pNroDoc;
+
+      
+
+      IF (idPersonaAux = 0) THEN 
+
+        CALL SP_insertPersonas (pNombre, pApellido, pIdTipoDoc, pNroDoc,pEmail, @idPersona);
+
+      END IF;
+
+      
+
+    
+
+     
+
+    IF (Error = 0) THEN
+
+        
+
+        INSERT INTO Duenios(IdPersona, 
+
+                            Usuario,
+
+                            Contrasenia,	
+
+                            IdEstado,	
+
+                            FechaAlta,	
+
+                            FechaBaja)
+
+        VALUES( @idPersona,
+
+                pUsuario, 
+
+                pContrasenia, 
+
+                1,
+
+                CURDATE(),
+
+                null );
+
+                
+
+         SET pIdDuenio = (SELECT MAX(idDuenio) FROM Duenios);        
+
+        
+
+            
+
+       
+
+       INSERT INTO DueniosPendientes(IdDuenio,
+
+                                      nombreComplejo,    
+
+                                      NroTelef,          
+
+                                      Calle,	          
+
+                                      Altura,	         
+
+                                      IdLocalidad,
+
+                                      IdProvincia)
+
+        VALUES( pIdDuenio,
+
+                pNombreComplejo,
+
+                pNroTelef, 
+
+                pDireccion,
+
+                pNroCalle,
+
+                pIdLoc,
+
+                pIdProv);
+
+    
+
+				
+
+    ELSE
+
+        SET pIdDuenio = -1; 
+
+    END IF;
+
+    
+
+    
+
+    IF (Error=-1 OR pIdDuenio = -1) THEN
+
+        SET pIdDuenio = -1; 
+
+        
+
+    END IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2105,21 +2829,37 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertImagen`(OUT `pValor` INT(11), IN `pIdComplejo` INT(11), IN `pIdCancha` INT(11), IN `pIdImagen` INT(11), IN `pBytesArchivo` BLOB)
-BEGIN 
-    DECLARE Error INT DEFAULT 0;
-    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
-    
-        INSERT INTO canchasimagenes(IdComplejo,IdCancha,IdImagen,Imagen)
-        VALUES(pIdComplejo,
-                pIdCancha, 
-                pIdImagen, 
-                pBytesArchivo);
-    
-    IF Error=-1 THEN
-        SET pValor = -1; 
-    ELSE
-        SET pValor = (SELECT MAX(IdImagen) FROM canchasimagenes); 
-    END IF;
+BEGIN 
+
+    DECLARE Error INT DEFAULT 0;
+
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+
+    
+
+        INSERT INTO canchasimagenes(IdComplejo,IdCancha,IdImagen,Imagen)
+
+        VALUES(pIdComplejo,
+
+                pIdCancha, 
+
+                pIdImagen, 
+
+                pBytesArchivo);
+
+    
+
+    IF Error=-1 THEN
+
+        SET pValor = -1; 
+
+    ELSE
+
+        SET pValor = (SELECT MAX(IdImagen) FROM canchasimagenes); 
+
+    END IF;
+
+
 
 END ;;
 DELIMITER ;
@@ -2137,37 +2877,68 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertPersonas`(
-    pNombre	    VARCHAR(60),
-    pApellido	  VARCHAR(60),
-    pIdTipoDoc	INT        ,
-    pNroDoc	    INT        ,   
-    pEmail	    VARCHAR(60),
-    OUT pIdPersona  INT
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertPersonas`(
+
+    pNombre	    VARCHAR(60),
+
+    pApellido	  VARCHAR(60),
+
+    pIdTipoDoc	INT        ,
+
+    pNroDoc	    INT        ,   
+
+    pEmail	    VARCHAR(60),
+
+    OUT pIdPersona  INT
+
 )
-BEGIN 
-    DECLARE Error INT DEFAULT 0;
-    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
-     
-    
-    
-    
-    INSERT INTO Personas(Nombre, 
-                        ApellidO,
-                        IdTipoDoc,
-                        NroDoc,
-                        Email)
-    VALUES( pNombre,
-            pApellido, 
-            pIdTipoDoc, 
-            pNroDoc,
-            pEmail);
-            
-    IF Error=-1 THEN
-        SET pIdPersona = -1; 
-    ELSE
-        SET pIdPersona = (SELECT MAX(IdPersona) FROM Personas); 
-    END IF;
+BEGIN 
+
+    DECLARE Error INT DEFAULT 0;
+
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+
+     
+
+    
+
+    
+
+    
+
+    INSERT INTO Personas(Nombre, 
+
+                        ApellidO,
+
+                        IdTipoDoc,
+
+                        NroDoc,
+
+                        Email)
+
+    VALUES( pNombre,
+
+            pApellido, 
+
+            pIdTipoDoc, 
+
+            pNroDoc,
+
+            pEmail);
+
+            
+
+    IF Error=-1 THEN
+
+        SET pIdPersona = -1; 
+
+    ELSE
+
+        SET pIdPersona = (SELECT MAX(IdPersona) FROM Personas); 
+
+    END IF;
+
+
 
 END ;;
 DELIMITER ;
@@ -2185,71 +2956,135 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertTorneos`(
-    pIdDuenio	        INT          ,
-	pIdTipoTorneo	    INT          ,
-	pNombre	          	VARCHAR(30)  ,
-	pCantEquipos	    INT          ,
-	pCantJugadores	    INT          ,
-	pIdSuperficie	    INT          ,
-	pIdaYvuelta	      	BOOL         ,
-	pPrecioInscripcion	DOUBLE(6,2)  ,
-	pFecIniInscripcion	VARCHAR(10)  ,
-	pFecFinInscripcion	VARCHAR(10)  ,
-	pHorasCancelacion	INT          ,
-	pFechaInicio	    VARCHAR(10)  ,
-	pFechaFin	        VARCHAR(10)  ,
-	pDescripcion	    VARCHAR(300) ,
-	pReglas	          	VARCHAR(300) ,
-	pIdEstado	        INT          ,
-    OUT pIdTorneo   	INT
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertTorneos`(
+
+    pIdDuenio	        INT          ,
+
+	pIdTipoTorneo	    INT          ,
+
+	pNombre	          	VARCHAR(30)  ,
+
+	pCantEquipos	    INT          ,
+
+	pCantJugadores	    INT          ,
+
+	pIdSuperficie	    INT          ,
+
+	pIdaYvuelta	      	BOOL         ,
+
+	pPrecioInscripcion	DOUBLE(6,2)  ,
+
+	pFecIniInscripcion	VARCHAR(10)  ,
+
+	pFecFinInscripcion	VARCHAR(10)  ,
+
+	pHorasCancelacion	INT          ,
+
+	pFechaInicio	    VARCHAR(10)  ,
+
+	pFechaFin	        VARCHAR(10)  ,
+
+	pDescripcion	    VARCHAR(300) ,
+
+	pReglas	          	VARCHAR(300) ,
+
+	pIdEstado	        INT          ,
+
+    OUT pIdTorneo   	INT
+
 )
-BEGIN 
-	
-    
-    DECLARE Error INT DEFAULT 0;
-    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
-  
-	INSERT INTO Torneos	(IdDuenio	      ,
-						 IdTipoTorneo	  ,
-						 Nombre	          ,
-						 CantEquipos	      ,
-						 CantJugadores	  ,
-						 IdSuperficie	  ,
-						 IdaYvuelta	      ,
-						 PrecioInscripcion	,
-						 FecIniInscripcion	,
-						 FecFinInscripcion	,
-						 HorasCancelacion	,
-						 FechaInicio	      ,
-						 FechaFin	      ,
-						 Descripcion	      ,
-						 Reglas	,          
-						 IdEstado
-							)	        
-	VALUES( pIdDuenio	        ,
-			pIdTipoTorneo	    ,
-			pNombre	          	,
-			pCantEquipos	    ,
-			pCantJugadores	    ,
-			pIdSuperficie	    ,
-			pIdaYvuelta	      	,
-			pPrecioInscripcion	,
-			STR_TO_DATE(pFecIniInscripcion, '%d/%m/%Y'),
-            STR_TO_DATE(pFecFinInscripcion, '%d/%m/%Y'),
-			pHorasCancelacion	,
-            STR_TO_DATE(pFechaInicio, '%d/%m/%Y'),
-            STR_TO_DATE(pFechaFin, '%d/%m/%Y'),
-			pDescripcion	    ,
-			pReglas	          	,
-			pIdEstado	        
-			);  
-			
-	SET pIdTorneo = (SELECT MAX(IdTorneo) FROM Torneos);  
-	
-	IF (Error=-1)  THEN
-        SET pIdTorneo = -1; 
-    END IF;
+BEGIN 
+
+	
+
+    
+
+    DECLARE Error INT DEFAULT 0;
+
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+
+  
+
+	INSERT INTO Torneos	(IdDuenio	      ,
+
+						 IdTipoTorneo	  ,
+
+						 Nombre	          ,
+
+						 CantEquipos	      ,
+
+						 CantJugadores	  ,
+
+						 IdSuperficie	  ,
+
+						 IdaYvuelta	      ,
+
+						 PrecioInscripcion	,
+
+						 FecIniInscripcion	,
+
+						 FecFinInscripcion	,
+
+						 HorasCancelacion	,
+
+						 FechaInicio	      ,
+
+						 FechaFin	      ,
+
+						 Descripcion	      ,
+
+						 Reglas	,          
+
+						 IdEstado
+
+							)	        
+
+	VALUES( pIdDuenio	        ,
+
+			pIdTipoTorneo	    ,
+
+			pNombre	          	,
+
+			pCantEquipos	    ,
+
+			pCantJugadores	    ,
+
+			pIdSuperficie	    ,
+
+			pIdaYvuelta	      	,
+
+			pPrecioInscripcion	,
+
+			STR_TO_DATE(pFecIniInscripcion, '%d/%m/%Y'),
+
+            STR_TO_DATE(pFecFinInscripcion, '%d/%m/%Y'),
+
+			pHorasCancelacion	,
+
+            STR_TO_DATE(pFechaInicio, '%d/%m/%Y'),
+
+            STR_TO_DATE(pFechaFin, '%d/%m/%Y'),
+
+			pDescripcion	    ,
+
+			pReglas	          	,
+
+			pIdEstado	        
+
+			);  
+
+			
+
+	SET pIdTorneo = (SELECT MAX(IdTorneo) FROM Torneos);  
+
+	
+
+	IF (Error=-1)  THEN
+
+        SET pIdTorneo = -1; 
+
+    END IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2266,32 +3101,57 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertTorneosCanchas`(
-    pIdTorneo	        INT          ,
-	pIdComplejo         INT          ,
-	pIdCancha      	    INT          ,
-    OUT vResultado       INT
-)
-BEGIN 
-	
-    
-    DECLARE Error INT DEFAULT 0;
-    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
-    
-    SET vResultado = 1;
-  
-	INSERT INTO TorneosCanchas	(IdTorneo	,
-                                 IdComplejo	,
-                                 IdCancha	          
-							     )	        
-	VALUES( pIdTorneo,
-			pIdComplejo,
-			pIdCancha	          	        
-			);  
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertTorneosCanchas`(
 
-	IF (Error=-1)  THEN
-        SET vResultado = -1; 
-    END IF;
+    pIdTorneo	        INT          ,
+
+	pIdComplejo         INT          ,
+
+	pIdCancha      	    INT          ,
+
+    OUT vResultado       INT
+
+)
+BEGIN 
+
+	
+
+    
+
+    DECLARE Error INT DEFAULT 0;
+
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+
+    
+
+    SET vResultado = 1;
+
+  
+
+	INSERT INTO TorneosCanchas	(IdTorneo	,
+
+                                 IdComplejo	,
+
+                                 IdCancha	          
+
+							     )	        
+
+	VALUES( pIdTorneo,
+
+			pIdComplejo,
+
+			pIdCancha	          	        
+
+			);  
+
+
+
+	IF (Error=-1)  THEN
+
+        SET vResultado = -1; 
+
+    END IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2308,34 +3168,97 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertTorneosDias`(
-    pIdTorneo	        INT          ,
-	pIddia              INT          ,
-	pHoraDesde      	TIME         ,
-    pHoraHasta      	TIME         ,
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertTorneosDias`(
+
+    pIdTorneo	        INT          ,
+
+	pIddia              INT          ,
+
+	pHoraDesde      	TIME         ,
+
+    pHoraHasta      	TIME         ,
+
+    OUT vResultado       INT
+
+)
+BEGIN 
+
+	
+
+    
+
+    DECLARE Error INT DEFAULT 0;
+
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+
+    
+
+    SET vResultado = 1;
+
+  
+
+	INSERT INTO TorneosDias	(IdTorneo	,
+
+                             IdDia	,
+
+                             HoraDesde,
+
+                             HoraHasta
+
+							     )	        
+
+	VALUES( pIdTorneo,
+
+			pIddia,
+
+			pHoraDesde,
+
+            pHoraHasta
+
+			);  
+
+
+
+	IF (Error=-1)  THEN
+
+        SET vResultado = -1; 
+
+    END IF;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_insertTorneosImagenes` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_insertTorneosImagenes`(
+    pIdTorneo	        INT        ,
+	pUrl                VARCHAR(150),
     OUT vResultado       INT
 )
 BEGIN 
-	
-    
     DECLARE Error INT DEFAULT 0;
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
     
     SET vResultado = 1;
   
-	INSERT INTO TorneosDias	(IdTorneo	,
-                             IdDia	,
-                             HoraDesde,
-                             HoraHasta
-							     )	        
+	INSERT INTO torneosimagenes	(IdTorneo,url,fechaAlta)	        
 	VALUES( pIdTorneo,
-			pIddia,
-			pHoraDesde,
-            pHoraHasta
-			);  
+			pUrl,
+            NOW());  
 
 	IF (Error=-1)  THEN
-        SET vResultado = -1; 
+        SET vResultado = -1; /*Devuelve -1 en caso de error*/
     END IF;
 END ;;
 DELIMITER ;
@@ -2354,9 +3277,9 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_PRUEBA_DUMP`()
-BEGIN
-select *
-from clientes;
+BEGIN
+select *
+from clientes;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2373,4 +3296,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-24  1:19:38
+-- Dump completed on 2016-06-02  0:24:25
