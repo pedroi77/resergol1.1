@@ -85,9 +85,10 @@
                                         </select>-->
                                         <!--<span class="editable-text">{{horaDesde}}</span>-->
                                         <div class="controls" ng-class="">
-                                            <input id="horaDesde" type="time" 
+                                            <input id="horaDesdee" type="time" 
                                                    name="horaDesde" 
-                                                   ng-model="horaDesde" 
+                                                   step="3600"
+                                                   ng-model="horaDesde"
                                                    ng-change="can.changeSelectedHoraD(horaDesde)"
                                                    class="editable-input form-control "
                                                    min={{horaD}} max={{horaH}}
@@ -101,10 +102,11 @@
                                         </select>-->
                                         <!--<span class="editable-text">{{horaDesde2}}</span>-->
                                         <div class="controls" ng-class="">
-                                            <input id="horaHasta" type="time" 
+                                            <input id="horaHastaa" type="time" 
                                                    name="horaDesde2" 
+                                                   step="3600"
                                                    ng-model="horaDesde2"
-                                                   ng-change="can.changeSelectedHoraH(horaDesde, horaDesde2)"
+                                                   ng-change="can.changeSelectedHoraH(horaDesde)"
                                                    class="editable-input form-control "
                                                    min={{horaD2}} max={{horaH2}}
                                                    required/>
@@ -138,7 +140,7 @@
                                             <span class="uneditable-input h3">A pagar: $ {{precioAPagar | currency:""}}</span>
                                         </div>
                                         <div class="col-md-2">
-                                            <button id="activate-step-2" ng-disabled="{{!paso1Completo}}" class="btn btn-primary btn-md">Realizar Pago</button>
+                                            <button id="activate-step-2" ng-click="can.paso1Click()" ng-disabled="{{paso1Completo}}" class="btn btn-primary btn-md">Realizar Pago</button>
                                         </div>
                                             <div class="col-md-6">
                                             <button id="" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-md">CANCELAR / VOLVER</button>
@@ -161,7 +163,7 @@
         </div>
     </div>
  </div>
-    <div class="row setup-content" id="step-2" ng-repeat="canc in cancha">
+    <div class="row setup-content" id="step-2">
                 <div class="col-xs-12">
 
          <div class="row">
@@ -240,7 +242,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <button id="pagar" class="btn btn-success btn-lg btn-block" type="submit" onclick="return confirm('¿Seguro desea realizar el pago?');">PAGAR</button>
+                                <button id="pagar" class="btn btn-success btn-lg btn-block" type="submit" ng-click="can.pagarYReservar()">PAGAR</button>
                             </div>
                         </div>
 
@@ -315,7 +317,7 @@
        
         <div class="col-xs-12 col-md-12">
             <div class="row">
-                <div class="col-xs-12 col-md-12">
+                <div class="col-xs-12 col-md-12 text-center">
                 <h3>Reserva exitosa, ¡El equipo de Resergol desea que disfrutes el partido! Gracias por confiar en nosotros.<h3>
                 </div>
             </div>
@@ -394,7 +396,7 @@ var navListItems = $('ul.setup-panel li a'),
     });
     
     $('ul.setup-panel li.active a').trigger('click');
-    
+    /*
     // DEMO ONLY //
     $('#activate-step-2').on('click', function(e) {
         console.log('3 click');
@@ -410,7 +412,7 @@ var navListItems = $('ul.setup-panel li a'),
         $('ul.setup-panel li a[href="#step-3"]').trigger('click');
         //$(this).remove();
         $(this).prop('disabled', true);
-    })  
+    })  */
     
 });
 

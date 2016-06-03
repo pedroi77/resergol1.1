@@ -66,7 +66,8 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
         
         
         $scope.isImage = function(ext) {
-            var res = ext == ("jpg" || ext == "jpeg"|| ext == "gif" || ext=="png");
+            //var res = ext == ("jpg" || ext == "jpeg"|| ext == "gif" || ext=="png");
+            var res =  ("jpg" || ext == "jpeg"|| ext == "gif" || ext=="png");
             self.archivoInvalido = !res;
             self.bMensaje= !res ;
             

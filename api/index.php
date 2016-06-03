@@ -10,6 +10,7 @@ require_once("modelos/administradores.php");
 require_once("modelos/torneos.php");
 require_once("modelos/canchas.php");
 require_once("modelos/complejos.php");
+require_once("modelos/reservas.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -421,5 +422,42 @@ $app->get('/complejos/:idDuenio', function($idDuenio){
     $data = $complejo->getComplejo($idDuenio);
 	sendResult($data);
 });
+
+
+/******************************RESERVAS****************************************************************/
+
+//alta
+$app->post('/clientes/reservas', function(){
+    
+    //$headers = apache_request_headers();
+    //$token = explode(" ", $headers["Authorization"]);
+    //$tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    //$reserva = new Reserva();
+    //$tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    //if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $reserva = new Reserva();
+        $result = $reserva->create($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al crear la reserva");
+        };
+        
+    //}
+	//else{
+    //    sendError("token invalido");
+    //}
+    
+});
+
+
+
+
 
 $app->run();

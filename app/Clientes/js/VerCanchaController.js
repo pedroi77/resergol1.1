@@ -1,7 +1,7 @@
 /*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("VerCanchaController", function($scope, $state, $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService){
+resergolApp.controller("VerCanchaController", function($scope, $state, $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService){
 	
     var self = this;
     $scope.cancha = [];
@@ -22,17 +22,32 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     $scope.paso1Completo = false;
     $scope.precioAPagar = 0;
     
+    this.Reserva ={
+                        idCliente:20,
+                        idComplejo: 6,
+                        idCancha: 16,
+                        fechaPartido: '10/06/2016',
+                        horaD: '18:00:00',
+                        horaH: '19:00:00',
+                        importeAPagar: 800,
+                        pagado: 800,
+                        porcentajePago: 100,
+                        estadoReserva: 2 //1-Señado 2-PagoCompleto
+                      };
+    
+    
     this.getCancha = function(){
         
 			CanchasService.query({idCancha:$scope.idCancha, idComplejo:$scope.idComplejo}).$promise.then(function(data){
                     $scope.cancha = data;
                     $scope.idDuenio = data[0].IdDuenio; 
                 
+                
                 DuenioDiasService.query({idDuenio:$scope.idDuenio}).$promise.then(function(data) {
                     self.diasComplejo = data;
                 }); 
    
-            });	
+            });
 	};
     
     
@@ -47,12 +62,60 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     //Para que funcione el estilo de los tooltips!.
     $(document).ready(function() {
         $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+        
+        
     });
     
 
+    this.paso1Click = function(){
+        $('ul.setup-panel li:eq(1)').removeClass('disabled');
+        $('ul.setup-panel li a[href="#step-2"]').trigger('click');
+        $(this).remove();
+    };
     
     
     
+    
+    this.reservar = function(){
+    
+        var ReservaNueva = new ReservasService();
+        
+        ReservaNueva.data=self.Reserva;
+        
+        ReservasService.save(ReservaNueva.data, function(reponse){
+                idReserva = reponse.data[0];
+                console.log('idReserva -->' + idReserva);
+              },function(errorResponse){
+                console.log('ERROR...'); 
+             });
+    };
+    
+    
+    
+    this.pagarYReservar = function(){
+        
+        if(confirm('¿Seguro desea realizar el pago?'))
+        {
+            $('ul.setup-panel li:eq(2)').removeClass('disabled');
+            $('ul.setup-panel li a[href="#step-3"]').trigger('click');
+            //$(this).remove();
+            $(this).prop('disabled', true);
+            
+            //Preparo los parametros para reservar la cancha.
+            function pad(n) {return n < 10 ? "0"+n : n;}
+            var fechaPartido = pad($scope.fechaElegida.getDate())+"/"+pad($scope.fechaElegida.getMonth()+1)+"/"+$scope.fechaElegida.getFullYear();
+            //var fechaPartido = $scope.fechaElegida.toLocaleDateString();
+            var hDesde = $scope.horaDesde.getHours();
+            var hHasta = $scope.horaDesde2.getHours();        
+            console.log(fechaPartido);
+            
+            //******************************************************************************************************************//
+            
+            //Probando a reservar con valores hardcodeados
+            self.reservar();
+             
+        }
+    };
     
      /*INICIO FECHAS*/
     /*PARA FECHAS*/
@@ -100,7 +163,7 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
           */
          var diasQueAbre = []; 
          angular.forEach(self.diasComplejo, function(aux) {
-            
+             console.log('iddia ' + aux.iddia);
              switch(aux.iddia) {
                 case '1':
                     diasQueAbre.push(1);
@@ -235,7 +298,12 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
             
             $scope.horaH = ultimaHora + ':00';
             
-            $scope.horaDesde2 = $scope.horaDesde;
+            //$scope.horaDesde2 = $scope.horaDesde;
+            var horaDesdeSelect = parseInt($scope.horaDesde.getHours() + 1);
+            horaDesdeSelect = horaDesdeSelect + ':00';
+            var horad2 = new Date(1970, 0, 1, parseInt(horaDesdeSelect));
+            $scope.horaDesde2 = horad2;
+            
             $scope.horaHasta2 = $scope.horaHasta;
             
             //---------------------------------------------------------------------------------------------------
@@ -247,7 +315,8 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
 
         }
         });
-
+        
+    
         
     };
     
@@ -255,17 +324,26 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     
     this.changeSelectedHoraD = function(horaDesde)
     {
-        var primerHora2 = parseInt(horaDesde.getHours() + 1);
-        $scope.horaD2 = primerHora2 + ':00';
+        //var primerHora2 = parseInt(horaDesde.getHours() + 1);
+        //$scope.horaD2 = primerHora2 + ':00';
+        
+        //Actualizo el model de la segunda hora (hora hasta).
+        var horaDesdeSelected = parseInt(horaDesde.getHours() + 1);
+        horaDesdeSelected = horaDesdeSelected + ':00';
+        //var hora1 = new Date(1970, 0, 1, parseInt(document.getElementById("horaDesdee").value));
+        var hora1 = new Date(1970, 0, 1, parseInt(horaDesdeSelected));
+        console.log(hora1);
+        $scope.horaDesde2 = hora1;
+        
         
         
         /*Valido si puedo calcular el precio de la cancha y activar el primer botón de pago*/
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        console.log('horadesde2 ->' + $scope.horaDesde2);
-        console.log('horadesde ->' + horaDesde);
-        var horasAlquilar = $scope.horaDesde2 - $scope.horaDesde;
-        console.log(horasAlquilar);
-        $scope.precioAPagar = $scope.cancha[0].Precio;
+        //console.log('horadesde2 ->' + $scope.horaDesde2);
+        //console.log('horadesde ->' + horaDesde);
+        //var horasAlquilar = $scope.horaDesde2 - $scope.horaDesde;
+        //console.log(horasAlquilar);
+        //$scope.precioAPagar = $scope.cancha[0].Precio;
         
         //*******************************************************************************///////////////
         
@@ -285,9 +363,7 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     };
     
     
-    
-    /////////////////////////////////////////////////////////////
-    
-    
+
+
     
 []});
