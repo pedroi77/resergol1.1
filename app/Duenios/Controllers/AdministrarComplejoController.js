@@ -7,23 +7,51 @@ this.tiposDoc = [];
 this.provincias = [];
 this.localidades = [];
 this.dias = [];
+this.provinciaSeleccionada = {IdProvincia: '-1', Nombre: 'Otra'} ;
+this.localidadSeleccionada = {IdLocalidad: '-1', Nombre: 'Otra'} ;
 //this.superficies = []; 
-this.Duenio = { 
+this.Complejo = { 
 
-        idDuenio: sessionStorage.id,
-        tipo: 'D',
-        usuario: sessionStorage.usuario,
-        email: '',
-        contrasenia: sessionStorage.pass,
-        contrasenia2: sessionStorage.pass,
-        nombre: '',
-        apellido: '',
-        idTipoDoc:0,
-        nroDoc:'',
-        existeDni:false,
-        existe:false,
-        existeMail: false,
-        contraseniasIguales: true
+        idDuenio: sessionStorage.id,        //duenio
+        tipoDuenio: 'D',                    //duenio
+        usuario: sessionStorage.usuario,    //duenio
+        emailDuenio: '',                    //duenio
+        contrasenia: sessionStorage.pass,   //duenio
+        contrasenia2: sessionStorage.pass,  //duenio
+        nombreDuenio: '',                   //duenio
+        apellidoDuenio: '',                 //duenio
+        idTipoDoc:0,                        //duenio
+        nroDoc:'',                          //duenio
+        existeDni:false,                    //duenio
+        existe:false,                       //duenio
+        existeMail: false,                  //duenio
+        contraseniasIguales: true,          //duenio
+        diasComplejo: [],                   //diasComplejo
+        calle: '',                          //complejoDireccion
+        altura: '',                         //complejoDireccion
+        idProv:0,                           //complejoDireccion
+        idLoc:0,                            //complejoDireccion
+        X: 0,                               //complejoDireccion
+        Y: 0,                               //complejoDireccion
+        idComplejo: sessionStorage.idComplejo,  //Complejo
+        nombreComplejo: '',                     //Complejo
+        descripcionComplejo: '',                //Complejo
+        estacionamiento: 0,                     //Complejo
+        buffet: 0,                              //Complejo
+        duchas: 0,                              //Complejo
+        parrilla: 0,                            //Complejo
+        wifi: 0,                                //Complejo
+        horaCobroLuz:0,                         //Complejo
+        porcentajeLuz:0,                        //Complejo
+        porcentajeSenia:0,                      //Complejo
+        horasCancelacion:0,                     //Complejo
+        tiempoReserva:0,                        //Complejo
+        emailComplejo: '',                      //Complejo
+        idEstadoComplejo: -1,                   //Complejo
+        nroCelular: '',                         //Complejo
+        nroTelefono: '',                        //Complejo
+        imagenes: []                            //ComplejoImagenes
+        
   };
 
 this.horasDesde = [
@@ -83,43 +111,6 @@ this.horasComplejo ={
     
 };
     
-this.telefonosComplejo = {
-    
-    nroCelular: 0,
-    nroTelefono: 0
-    
-};
-    
-this.Complejo = {
-    
-    idComplejo: sessionStorage.idComplejo,
-    nombre: '',
-    descripcion: '',
-    estacionamiento: 0,
-    buffet: 0,
-    duchas: 0,
-    parrilla: 0,
-    wifi: 0,
-    horaCobroLuz:0,
-    porcentajeLuz:0,
-    porcentajeSenia:0,
-    horasCancelacion:0,
-    tiempoReserva:0,
-    email: '',
-    idEstado: -1,
-    idDuenio: -1 
-};
-    
-this.complejoDireccion = {
-    
-    calle: '',
-    altura: 0,
-    idProv:0,
-    idLoc:0,
-    X: 0,
-    Y: 0
-};
-    
 self.provincias = {
         prov: [],
         //selectedOption:{IdProvincia: '-1', Nombre: '-Provincia-'} 
@@ -147,12 +138,6 @@ this.dias = {
 }; 
     
 self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
-    
-ProvinciasService.query().$promise.then(function(data) {
-        self.provincias.prov = data;
-        //self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
-        self.provincias.prov.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Provincia-'});
-    }); 
 
 DueniosService.query().$promise.then(function(data){
     self.Duenio = data;
@@ -166,48 +151,27 @@ DiasServices.query().$promise.then(function(data){
     
 this.traerDatosComplejos = function(){
     
-    DueniosComplejosService.query({idDuenio: self.Duenio.idDuenio}).$promise.then(function(data){
-            self.Duenio.apellido = data[0].Apellido;
-            self.Duenio.nombre = data[0].Nombre;
-            self.Complejo.nombre = data[0].nombreComplejo;
-            self.Duenio.nroDoc = data[0].NroDoc;
-            self.Duenio.email = data[0].Email;
-            self.Duenio.idTipoDoc = data[0].IdTipoDoc;
-            self.Duenio.usuario = data[0].Usuario;
-            self.Duenio.contrasenia = data[0].Contrasenia;
-            self.Duenio.contrasenia2 = data[0].Contrasenia;
-            self.telefonosComplejo.nroTelefono = data[0].NroTelef;
-            self.complejoDireccion.calle = data[0].Calle;
-            self.complejoDireccion.altura = data[0].Altura;
-            self.complejoDireccion.idLoc = data[0].IdLocalidad;
-            self.complejoDireccion.idProv = data[0].IdProvincia;
+        DueniosComplejosService.query({idDuenio: self.Complejo.idDuenio}).$promise.then(function(data){
+            self.Complejo.apellidoDuenio = data[0].Apellido;
+            self.Complejo.nombreDuenio = data[0].Nombre;
+            self.Complejo.nombreComplejo = data[0].nombreComplejo;
+            self.Complejo.nroDoc = parseInt(data[0].NroDoc);
+            self.Complejo.emailDuenio = data[0].Email;
+            self.Complejo.idTipoDoc = data[0].IdTipoDoc;
+            self.Complejo.usuario = data[0].Usuario;
+            self.Complejo.contrasenia = data[0].Contrasenia;
+            self.Complejo.contrasenia2 = data[0].Contrasenia;
+            self.Complejo.nroTelefono = data[0].NroTelef;
+            self.Complejo.calle = data[0].Calle;
+            self.Complejo.altura = parseInt(data[0].Altura);
+            self.Complejo.idLoc = data[0].IdLocalidad;
+            self.Complejo.idProv = data[0].IdProvincia;
+            //self.localidades.selectedOption = {IdLocalidad: self.Complejo.idLoc}; 
+            //self.provincias.selectedOption = {IdProvincia: self.Complejo.idProv};
         });
 };
     
-self.traerDatosComplejos();
-   
-this.getLocalidades = function(){
-        var idProv = self.provincias.selectedProv.IdProvincia;
-        
-        if(idProv != -1 && idProv != undefined){
-            LocalidadesService.query({id:idProv}).$promise.then(function(data) {
-                self.localidades.loc = data;
-                var idSel =  self.localidades.loc[0].IdLocalidad;
-                var nomSel = self.localidades.loc[0].Nombre;
-                self.localidades.selectedOption = {IdLocalidad: idSel, Nombre:nomSel}; 
-                self.provincias.selectedOption = {IdProvincia: '1', Nombre: 'Buenos Aires'};
-            });
-        }
-        else{
-            self.localidades.loc = [];
-            //self.localidades.loc.push({IdLocalidad: '-1', Nombre: 'Localidad'});  
-            //self.localidades.selectedOption = {IdLocalidad: '-1', Nombre: 'Localidad'}; 
-            self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
-            self.localidades.selectedOption = {IdLocalidad: '-1', Nombre:'-Localidad-'}; 
-            self.provincias.selectedOption = {IdProvincia: '1', Nombre: 'Buenos Aires'};
-        };
-        
-    };    
+self.traerDatosComplejos();    
 
 DocumentosService.query().$promise.then(function(data) {
     self.tiposDoc.tipos = data;
@@ -272,7 +236,57 @@ TiposSuperficiesService.query().$promise.then(function(data) {
             }
         });
     };
+
+////////////////////////////******************************/////////////////////////////
+//se busca la provincias y las localidades de la misma
+ProvinciasService.query().$promise.then(function(data) {
+        self.provincias.prov = data;
+        
+        angular.forEach(self.provincias.prov, function(aux) {
+             if(aux.IdProvincia == self.Complejo.idProv)    
+             {
+                 console.log('te entro');
+                 self.provinciaSeleccionada.IdProvincia = aux.IdProvincia;
+                 self.provinciaSeleccionada.Nombre = aux.Nombre;
+             }
+          });
     
+        self.getLocalidades();
+        //self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
+        //self.provincias.prov.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Provincia-'});
+    }); 
+    
+this.getLocalidades = function(){
+    var idProv = self.provinciaSeleccionada.IdProvincia;//self.provincias.selectedProv.IdProvincia;
+    console.log("Id de la provincia en getLocalidades: " + idProv)
+    if(idProv != -1 && idProv != undefined){
+        LocalidadesService.query({id:idProv}).$promise.then(function(data) {
+            self.localidades.loc = data;
+            
+            angular.forEach(self.localidades.loc, function(aux) {
+                 if(aux.IdLocalidad == self.Complejo.idLoc)    
+                 {
+                     console.log('te entro la localidad');
+                     self.localidadSeleccionada.IdLocalidad = aux.IdLocalidad;
+                     self.localidadSeleccionada.Nombre = aux.Nombre;
+                }
+            });
+        
+            self.localidades.selectedOption = {IdLocalidad: self.localidadSeleccionada.IdLocalidad, Nombre:self.localidadSeleccionada.Nombre}; 
+            //self.provincias.selectedOption = {IdProvincia: '1', Nombre: 'Buenos Aires'};
+        });
+    }
+    else{
+        self.localidades.loc = [];
+        //self.localidades.loc.push({IdLocalidad: '-1', Nombre: 'Localidad'});  
+        //self.localidades.selectedOption = {IdLocalidad: '-1', Nombre: 'Localidad'}; 
+        self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
+        self.localidades.selectedOption = {IdLocalidad: '-1', Nombre:'-Localidad-'}; 
+        self.provincias.selectedOption = {IdProvincia: '1', Nombre: 'Buenos Aires'};
+    };     
+};
+    
+////////////////////////////******************************/////////////////////////////
     
     $scope.addRow = function(){		
         
