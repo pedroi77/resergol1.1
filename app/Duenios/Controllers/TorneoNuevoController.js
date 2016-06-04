@@ -15,6 +15,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         cantJugadores: 0,
                         idSuperficie: 1,
                         idaYvuelta: 0,
+                        tiempoPartido:0,
                         precioInscripcion: 0,
                         fecIniInscripcion: '06/05/2016',
                         fecFinInscripcion: '10/05/2016',
@@ -413,6 +414,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
             self.Torneo.idTipoTorneo = self.tiposTorneos.selectedOption.IdTipoTorneo;
             self.Torneo.cantJugadores = self.cantJugadores.selectedOption.CantJugadores;
             self.Torneo.idSuperficie = self.superficies.selectedOption.IdSuperficie;
+            self.Torneo.idaYvuelta = self.tiposPartidos.selectedOption.tipo;
             self.Torneo.idaYvuelta = self.tiposPartidos.selectedOption.tipo;
             self.Torneo.cantEquipos = self.cantEquipos.selectedOption.cantidad;
             self.Torneo.fecIniInscripcion = self.FecInscDesde.toLocaleDateString();

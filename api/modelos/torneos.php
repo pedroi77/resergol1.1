@@ -23,6 +23,7 @@ class Torneo
         $cantJugadores = $this->connection->real_escape_string($torneo['cantJugadores']);
         $idSuperficie = $this->connection->real_escape_string($torneo['idSuperficie']);
         $idaYvuelta = $this->connection->real_escape_string($torneo['idaYvuelta']);
+        $tiempoPartido = $this->connection->real_escape_string($torneo['tiempoPartido']);
         $precioInscripcion = $this->connection->real_escape_string($torneo['precioInscripcion']);
         $fecIniInscripcion = $this->connection->real_escape_string($torneo['fecIniInscripcion']);
         $fecFinInscripcion  = $this->connection->real_escape_string($torneo['fecFinInscripcion']);
@@ -62,6 +63,9 @@ class Torneo
         $stmt->execute();
         $stmt = $this->connection->prepare('SET @idaYvuelta := ?');
         $stmt->bind_param('i', $idaYvuelta);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @tiempoPartido := ?');
+        $stmt->bind_param('i', $tiempoPartido);
         $stmt->execute();
         $stmt = $this->connection->prepare('SET @precioInscripcion := ?');
         $stmt->bind_param('d', $precioInscripcion);
@@ -107,7 +111,7 @@ class Torneo
         
          // execute the stored Procedure         SP_insertDuenios
         
-        $result = $this->connection->query('CALL SP_insertTorneos( @idDuenio, @idTipoTorneo, @nombre, @cantEquipos, @cantJugadores,@idSuperficie, @idaYvuelta,                                                                                          @precioInscripcion, @fecIniInscripcion, @fecFinInscripcion,  @horasCancelacion, 
+        $result = $this->connection->query('CALL SP_insertTorneos( @idDuenio, @idTipoTorneo, @nombre, @cantEquipos, @cantJugadores,@idSuperficie, @idaYvuelta,                                                                             @tiempoPartido, @precioInscripcion, @fecIniInscripcion, @fecFinInscripcion,  @horasCancelacion, 
                                                                    @fechaInicio, @fechaFin, @descripcion,  @reglas, @idEstado, @salida);');
         
         //$result = $this->connection->query('select @idDuenio as duenio');
