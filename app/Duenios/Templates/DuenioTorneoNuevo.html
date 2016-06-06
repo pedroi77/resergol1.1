@@ -134,9 +134,18 @@
                                     </div> 
                                     
                                     <div class="form-group">
-                                        <label for="precio" class="control-label col-sm-4">Duración del partido </label>
+                                        <label for="dur" class="control-label col-sm-4">Duración del partido </label>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.tiempo.$error.required" class="msjErrorTorneo">
+                                            Debe Ingresar la duración del partido.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.tiempo.$error.min" class="msjErrorTorneo">
+                                            Debe ingresar un número mayor a 10 minutos.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.tiempo.$error.max" class="msjErrorTorneo">
+                                            Debe ingresar un número menor a 120 minutos.
+                                        </span>
                                         <div class="col-xs-12 col-sm-8">    
-                                             <input id="tiempo" class="form-control input-transparent" style="margin-bottom:5px;" type="number" placeholder=""  name="precio" ng-model = "tor.Torneo.tiempoPartido" min="0" max="120" required/>
+                                             <input id="tiempo" class="form-control input-transparent" style="margin-bottom:5px;" type="number" placeholder=""  name="tiempo" ng-model = "tor.Torneo.tiempoPartido" min="10" max="120" required/>
                                         </div>    
                                     </div>  
                                     

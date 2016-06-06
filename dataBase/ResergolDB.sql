@@ -296,6 +296,7 @@ PRIMARY KEY(IdPuntuacion)
 CREATE TABLE Dias(	
 IdDia	  INT           NOT NULL AUTO_INCREMENT,
 Nombre	VARCHAR(10)   NOT NULL,
+idDiaEquivalente INT,
 PRIMARY KEY(IdDia)
 );
 

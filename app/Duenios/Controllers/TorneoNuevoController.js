@@ -15,7 +15,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         cantJugadores: 0,
                         idSuperficie: 1,
                         idaYvuelta: 0,
-                        tiempoPartido:0,
+                        tiempoPartido:10,
                         precioInscripcion: 0,
                         fecIniInscripcion: '06/05/2016',
                         fecFinInscripcion: '10/05/2016',
