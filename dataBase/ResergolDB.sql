@@ -190,6 +190,7 @@ HoraFin	        TIME    NOT NULL,
 Precio	        DOUBLE  NOT NULL,
 PorcentajePago  INT     NOT NULL,
 IdEstado	      INT     NOT NULL,
+idTorneo INT NULL,
 PRIMARY KEY (IdReserva),
 CONSTRAINT Reservas_Canchas_fk   FOREIGN KEY (IdComplejo,IdCancha) REFERENCES  Canchas(IdComplejo,IdCancha),
 CONSTRAINT Reservas_Clientes_fk  FOREIGN KEY (IdCliente)   REFERENCES  Clientes(IdCliente),
@@ -390,7 +391,7 @@ IdEquipo1	INT NOT NULL,
 IdEquipo2	INT NOT NULL,
 Gol1	    INT NOT NULL,
 Gol2	    INT NOT NULL,
-PRIMARY KEY(IdTorneo,IdFecha),
+PRIMARY KEY(IdTorneo,IdFecha,IdReserva),
 CONSTRAINT Fixture_Torneo_fk FOREIGN KEY (IdTorneo) REFERENCES  Torneos(IdTorneo),
 CONSTRAINT Fixture_Equipo1_fk FOREIGN KEY (IdEquipo1) REFERENCES  Equipos(IdEquipo),
 CONSTRAINT Fixture_Equipo2_fk FOREIGN KEY (IdEquipo2) REFERENCES  Equipos(IdEquipo)
@@ -929,3 +930,25 @@ cantidad	    INT  NOT NULL,
 PRIMARY KEY (IdTipoTorneo,cantidad)
 );
 
+
+
+CREATE TABLE calendario(
+	fecha DATETIME NOT NULL PRIMARY KEY,
+    idDia INT   NOT NULL
+    );
+    
+CREATE INDEX idx_dias ON calendario(idDia);
+
+create table horas(
+hora TIME NOT NULL);
+
+
+
+create table tmpEquipos (
+	posicion	int,
+	idtorneo	INT,
+    idReserva   INT,
+    IdEquipo1	INT,
+    IdEquipo2	INT,
+    idFecha     INT
+);

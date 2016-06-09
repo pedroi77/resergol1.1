@@ -94,7 +94,7 @@
                 <div class="form-group">
                     <input  type="password"  ng-maxlength="12" name="loginPass" class="form-control input-lg"                                                 placeholder="Contraseña" placeholder="Usuario" ng-model="main.Usuario.contrasenia" 
                          required ng-class="{ error: loginForm.loginPass.$error.required && !loginForm.$pristine, warning:                                                   loginForm.loginPass.$error.loginPass }">
-                    <span ng-show="!loginForm.$pristine && loginForm.loginPass.$error.required" class= "msjError">
+                    <span ng-show="!loginForm.$pristine && loginForm.loginPass.$error.required && loginForm.loginPass.$dirty" class= "msjError">
                         Ingrese la contraseña.
                     </span>
                     <span ng-show="!loginForm.$pristine && loginForm.loginPass.$error.maxlength" class= "msjError">
