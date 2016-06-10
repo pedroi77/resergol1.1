@@ -248,7 +248,8 @@
         <uib-pagination previous-text="Anterior" next-text="Siguiente" first-text="Inicio" last-text="Fin" total-items="totalItems" ng-show = "canchas.length > 0" items-per-page="itemsPerPage" ng-model="pagination.currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" on-select-page="onGoToPage(page)" ng-change="pageChanged(pagination.currentPage)"></uib-pagination>       
       </div>
         <div class="col-sm-1">
-        <button id="btnSubir" class="btn btn-primary" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" ng-show = "canchas.length > 0"><i class="fa fa-plus glyphicon glyphicon-arrow-up"></i></button>    
+        <button id="btnSubir" class="btn btn-primary" onclick="$('html,body').animate({scrollTop:10},'
+                                                               ');return false;" ng-show = "canchas.length > 0"><i class="fa fa-plus glyphicon glyphicon-arrow-up"></i></button>    
       </div>     
       <div class="col-sm-3" style="color:white;" ng-show="canchas.length > 0">
         <p>Mostrando {{canchasPaginadas.length}} de {{canchas.length}} canchas...</p>
