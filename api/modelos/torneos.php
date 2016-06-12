@@ -366,6 +366,42 @@ class Torneo
         return $dias;
     }
     
+    public function getTorneosByDuenio($IdDuenio,$Todos,$Activos,$Incriptos,$Finalizados){  
+
+        $stmt = $this->connection->prepare('SET @IdDuenio := ?');
+        $stmt->bind_param('i', $IdDuenio);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @Todos := ?');
+        $stmt->bind_param('i', $Todos);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @Activos := ?');
+        $stmt->bind_param('i', $Activos);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @Inscriptos := ?');
+        $stmt->bind_param('i', $Incriptos);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @Finalizados := ?');
+        $stmt->bind_param('i', $Finalizados);
+        $stmt->execute(); 
+        
+        
+              
+        $query = "CALL SP_getTorneosByDuenio(@IdDuenio,@Todos, @Activos, @Inscriptos, @Finalizados);";
+        $torneos= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $torneos[] = $fila;
+            }
+            $result->free();
+        }
+        return $torneos;
+    }
+    
     public function getImagenesByTorneo($IdTorneo){  
 
         $stmt = $this->connection->prepare('SET @IdTorneo := ?');
@@ -385,9 +421,6 @@ class Torneo
     }
     
     public function deleteImagen($idTorneo, $url){  
-
-  
-
         $this->connection->autocommit(false);
 
         try {
