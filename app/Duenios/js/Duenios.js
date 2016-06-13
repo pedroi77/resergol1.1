@@ -19,10 +19,20 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 		})
         .state("Duenios.torneoBuscar",{
 			url : "/Torneos/Buscar",
-			templateUrl : "app/Duenios/Templates/DuenioTorneosOLD.html",
+			templateUrl : "app/Duenios/Templates/DuenioTorneosBuscar.html",
 			controllerAs : "due"
 		})
-    
+        .state("Duenios.torneoEquipos",{
+			url : "/Torneos/Equipos/:idTorneo",
+		    params: {
+                    idTorneo:{value:'defaultValue'},
+                    nombre:{value:'defaultValue'},
+                    cantEquipos:{value:'defaultValue'},
+                    inscriptos:{value:'defaultValue'}
+                },	
+            templateUrl : "app/Duenios/Templates/DuenioTorneoEquipos.html",
+			controllerAs : "due"
+		})
         .state("Duenios.complejo",{
 			url : "/Complejo",
 			templateUrl : "app/Duenios/Templates/DuenioComplejo.html",
