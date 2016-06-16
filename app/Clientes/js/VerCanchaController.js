@@ -35,6 +35,7 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     this.selectedHoraHId;
     
     $scope.HorasDisponibles = [];
+    $scope.HorasReservasDia = [];
     
     this.Reserva ={
                         idCliente:sessionStorage.id,
@@ -69,24 +70,39 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     
     
     this.getHorasDisponiblesByFecha = function(fecha){
+            console.log('f->' + fecha);
+            console.log('idcomp->' + $scope.idComplejo);
+            console.log('idcanch->' + $scope.idCancha);
 			ReservasService.query({idCancha:$scope.idCancha, idComplejo:$scope.idComplejo, fecha:fecha}).$promise.then(function(data){
                     $scope.HorasDisponibles = data;
                     
                 this.selectedHoraDId = "1";
         
-        
-        
-                var dia = dt.getDay(); //LUNES, MARTES, MIERCOLES, ETC. (para saber a que hora abre).
-                var horaDesdeDia = -1; //Hora que abre para el día seleccionado.
-                var horaHastaDia = -1; //Hora que cierra para el día seleccionado.
+                self.horasD = [];
+                angular.forEach(data, function(aux)
+                {
+                  
+                  console.log(aux.hora);
+                  var sID = parseInt(aux.hora.substring(0,2));                
+                  var sDesc = sID + ':00 hs';
+                  self.horasD.push({id: sID, desc: sDesc});             
+                                
+                });
+                                                                                                                       
+                self.selectedHoraDId = self.horasD[0].id;  
+                                                                                                                       
+                                                                                                                       
+                //var dia = $scope.fechaElegida.getDay(); //LUNES, MARTES, MIERCOLES, ETC. (para saber a que hora abre).
+                //var horaDesdeDia = -1; //Hora que abre para el día seleccionado.
+                //var horaHastaDia = -1; //Hora que cierra para el día seleccionado.
 
-                if(dia == 0)
-                    dia = 7;
-                angular.forEach(self.diasComplejo, function(aux) {
-                    if(parseInt(aux.iddia) == dia)
-                    {
+                //if(dia == 0)
+                //    dia = 7;
+                //angular.forEach(self.diasComplejo, function(aux) {
+                //    if(parseInt(aux.iddia) == dia)
+                   /* {
                         //TODO NUEVO - Hora desde
-                        self.horasD = [];
+                        //self.horasD = [];
                         //Hora desde y hasta que abre el complejo para el dia seleccionado.
                         var hDd = parseInt(aux.HoraDesde.substring(0,2));
                         var hDh = parseInt(aux.HoraHasta.substring(0,2));
@@ -145,10 +161,30 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                     }
                 });
                 
+            });*/
+	});
+        
+    };
+    
+    
+    this.getHorariosReservasByFecha = function(fecha, horaSeleccionada)
+    {
+        ReservasService.query({idComplejo:$scope.idComplejo, idCancha:$scope.idCancha, fecha:'algo', fechaHorarios:fecha}).$promise.then(function(data){
+                    $scope.HorasReservasDia = data;
+            
+            console.log('data' + data[0]);
+            angular.forEach($scope.HorasReservasDia, function(aux)
+            {
                 
+                console.log(aux.HoraInicio);
+                console.log(aux.HoraFin);
                 
             });
-	};
+            
+            
+        });
+        
+    };
    
     
     this.mostrarReservar = function(){
@@ -386,8 +422,7 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
         
         var fechaSelect = pad($scope.fechaElegida.getFullYear()+"-"+pad($scope.fechaElegida.getMonth()+1)+"-"+$scope.fechaElegida.getDate());
         
-        self.getHorasDisponiblesByFecha(dt);
-        
+        self.getHorasDisponiblesByFecha(fechaSelect);
         
         /*this.selectedHoraDId = "1";
         
@@ -473,8 +508,67 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     
     this.changeSelectedHoraD = function(selectedHoraDId)
     {
-        var horaCierre = self.horasH[self.horasH.length - 1].id;
-        //console.log('cierra a las... ' + horaCierre);
+        console.log(selectedHoraDId);
+        
+        function pad(n) {return n < 10 ? "0"+n : n;}
+        
+        var fechaSelect = pad($scope.fechaElegida.getFullYear()+"-"+pad($scope.fechaElegida.getMonth()+1)+"-"+$scope.fechaElegida.getDate());
+        
+        self.getHorariosReservasByFecha(fechaSelect, selectedHoraDId);
+        
+        
+        /*console.log(selectedHoraDId);
+        
+        self.diasComplejo
+        
+        var dia = $scope.fechaElegida.getDay(); //LUNES, MARTES, MIERCOLES, ETC. (para saber a que hora abre).
+        var horaDesdeDia = -1; //Hora que abre para el día seleccionado.
+        var horaHastaDia = -1; //Hora que cierra para el día seleccionado.
+
+        if(dia == 0)
+            dia = 7;
+        angular.forEach(self.diasComplejo, function(aux) {
+        if(parseInt(aux.iddia) == dia)
+        {
+            //TODO NUEVO - Hora desde
+            self.horasH = [];
+            //Hora desde y hasta que abre el complejo para el dia seleccionado.
+            var hHd = parseInt(aux.HoraDesde.substring(0,2));
+            var hHh = parseInt(aux.HoraHasta.substring(0,2));
+            
+            if(hDh == 0) //Si cierra a las 12, lo tomo como 24 para el for.
+                hDh = 24;
+            
+            
+            //TRAER RESERVAS DEL DIA...
+            for(i=hDd;i<hDh;i++)
+            {
+              var sId = i.toString();    
+              var sDesc = sId + ':00 hs.'; 
+              if(sId == '24')
+              {
+                  sID = '00';
+                  sDesc = '00:00 hs.'
+              }
+                
+              self.horasD.push({id: sId, desc: sDesc});  
+                
+            }*/
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        ////////////////////////////////////////////////////////////
+        /*var horaCierre = self.horasH[self.horasH.length - 1].id;
         
         //El combo de hora hasta, se va a cargar desde una hora mas que la hora elegida para jugar,
         //hasta que cierra el complejo.
@@ -499,7 +593,9 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
             self.horasH.push({id: sId, desc: sDesc}); 
         }
         
-        self.selectedHoraHId = (horaHD + 1).toString();
+        self.selectedHoraHId = (horaHD + 1).toString();*/
+        
+        
 
         //**********//**********//**********//**********//**********//**********//**********//**********
         self.calcularPrecioReservar();
