@@ -33,6 +33,31 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
             templateUrl : "app/Duenios/Templates/DuenioTorneoEquipos.html",
 			controllerAs : "due"
 		})
+        .state("Duenios.verTorneoLiga",{
+			url : "/Torneo/Liga/:idTorneo",
+			templateUrl : "app/Common/Templates/VerTorneoLiga.html",
+            params: {idTorneo:{value:'defaultValue'}},
+            controller : "",	
+            controllerAs : "due"
+		})
+        .state("Duenios.verTorneoCopa",{
+			url : "/Torneo/Copa",
+			templateUrl : "app/Common/Templates/VerTorneoCopa.html",
+            controller : "",	
+            controllerAs : "due"
+		}) 
+        .state("Duenios.verTorneoLiga.inscripcionTorneoLiga",{
+			url : "/Inscripcion",
+			templateUrl : "app/Common/Templates/InscripcionTorneo.html",
+            controller : "",	
+            controllerAs : "due"
+		})
+        .state("Common.verTorneoCopa.inscripcionTorneoCopa",{
+			url : "/Inscripcion",
+			templateUrl : "app/Common/Templates/InscripcionTorneo.html",
+            controller : "",	
+            controllerAs : "cli"
+		})
         .state("Duenios.complejo",{
 			url : "/Complejo",
 			templateUrl : "app/Duenios/Templates/DuenioComplejo.html",

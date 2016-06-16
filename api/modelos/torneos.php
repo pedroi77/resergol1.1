@@ -402,6 +402,25 @@ class Torneo
         return $torneos;
     }
     
+     public function getTorneosByIdTorneo($IdTorneo){  
+
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute();
+        
+      
+        $query = "CALL SP_getTorneosByIdTorneo(@IdTorneo);";
+        $torneos= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $torneos[] = $fila;
+            }
+            $result->free();
+        }
+        return $torneos;
+    }
+    
     public function getImagenesByTorneo($IdTorneo){  
 
         $stmt = $this->connection->prepare('SET @IdTorneo := ?');

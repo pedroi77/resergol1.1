@@ -1,1 +1,3 @@
-var common = angular.module("resergolApp.Common", ["ui.router"]);
+var resergolApp = angular.module("resergolApp.Common", ["ui.router"]);
+
+
