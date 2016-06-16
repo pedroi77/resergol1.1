@@ -299,6 +299,28 @@ $app->get('/duenios/torneos/:idDuenio/:todos/:activos/:inscriptos/:finalizados',
     }
 });
 
+
+//get torneos por idTorneo
+$app->get('/common/torneo/:idTorneo', function($idTorneo){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $torneo = new Torneo();
+        $data = $torneo->getTorneosByIdTorneo($idTorneo);
+        sendResult($data);
+    }
+	else{
+        sendError("token invalido");
+    }
+});
+    
+    
 //get tipo de torneo
 //$app->get('/duenios/torneos/tipos/:idTorneo', function($idTorneo){
 $app->get('/tiposTorneos/:idTorneo', function($idTorneo){

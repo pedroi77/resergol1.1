@@ -31,6 +31,13 @@ resergolApp.controller("TorneoBuscarController", function($scope, $state, Duenio
         $state.go("Duenios.torneoEquipos",{idTorneo:vIdTorneo,nombre: vNombre, cantEquipos:vEquipos , inscriptos: vInscriptos});
     };
     
+    this.cargarFixture = function(indice, valor){
+        var vIdTorneo=self.torneo.torneos[indice]["idTorneo"];
+        $state.go("Duenios.verTorneoLiga",{idTorneo:vIdTorneo});
+    };
+    
+    
+    
     this.init = function(){
         var vActivos = 0;
         var vInsc=0;

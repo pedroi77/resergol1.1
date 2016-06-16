@@ -17,25 +17,25 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 		})
         .state("Clientes.verTorneoLiga",{
 			url : "/Torneo/Liga",
-			templateUrl : "app/Clientes/Templates/VerTorneoLiga.html",
+			templateUrl : "app/Common/Templates/VerTorneoLiga.html",
             controller : "ClientesController",	
             controllerAs : "cli"
 		})
         .state("Clientes.verTorneoCopa",{
 			url : "/Torneo/Copa",
-			templateUrl : "app/Clientes/Templates/VerTorneoCopa.html",
+			templateUrl : "app/Common/Templates/VerTorneoCopa.html",
             controller : "ClientesController",	
             controllerAs : "cli"
 		}) 
         .state("Clientes.verTorneoLiga.inscripcionTorneoLiga",{
 			url : "/Inscripcion",
-			templateUrl : "app/Clientes/Templates/InscripcionTorneo.html",
+			templateUrl : "app/Common/Templates/InscripcionTorneo.html",
             controller : "ClientesController",	
             controllerAs : "cli"
 		})
         .state("Clientes.verTorneoCopa.inscripcionTorneoCopa",{
 			url : "/Inscripcion",
-			templateUrl : "app/Clientes/Templates/InscripcionTorneo.html",
+			templateUrl : "app/Common/Templates/InscripcionTorneo.html",
             controller : "ClientesController",	
             controllerAs : "cli"
 		}) 
