@@ -474,6 +474,24 @@ class Torneo
 
     }
     
+     public function getEquiposByTorneo($IdTorneo){  
+
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getEquiposByIdTorneo(@IdTorneo);";
+        $equipos= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $equipos[] = $fila;
+            }
+            $result->free();
+        }
+        return $equipos;
+    }
+    
 }
 
 

@@ -81,7 +81,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
             self.cantEquipos.selectedOption = self.cantEquipos.tipos[0];
         }); 
     
-        DueniosSuperficiesService.query({idDuenio:self.tiposTorneos.selectedOption.IdTipoTorneo}).$promise.then(function(data) {
+        DueniosSuperficiesService.query({idDuenio:this.Torneo.idDuenio}).$promise.then(function(data) {
             self.superficies.tipos = data;
             self.superficies.selectedOption = self.superficies.tipos[0];
         }); 

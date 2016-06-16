@@ -33,6 +33,7 @@ class Duenio
         return $duenio;
     }
     
+    
      public function validarDuenio($usuario,$contrasenia ){
         $stmt = $this->connection->prepare('SET @usuario := ?');
         $stmt->bind_param('s', $usuario);
