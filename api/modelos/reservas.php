@@ -9,9 +9,36 @@ class Reserva
         $this->connection = Connection::getInstance();
     }
     
-    
+    public function getHorasDisponiblesByFecha($pIdCancha, $pIdComplejo, $pFecha){
+        
+        
+        $stmt = $this->connection->prepare('SET @pIdCancha := ?');
+        $stmt->bind_param('i', $pIdCancha);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $pIdComplejo);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pFecha := ?');
+        $stmt->bind_param('s', $pFecha);
+        $stmt->execute();
+        
+        $query = "CALL SP_getHorasDisponiblesByFecha(@pIdCancha, @pIdComplejo, @pFecha);";
+        
+        $reservas = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $reservas[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $reservas;
+    }
  
-
+    //Inserta la reserva.
     public function create($reserva){
         
         $idCliente = $this->connection->real_escape_string($reserva['idCliente']);
@@ -86,6 +113,10 @@ class Reserva
    
             
     }
+    
+    
+    
+    
     
 
     

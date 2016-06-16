@@ -272,7 +272,7 @@ this.getFiltros = function(){
     console.log('fecha -> ' + $scope.filtros.Fecha);
     
     if($scope.selectedHoraId == -1)
-    {
+    { 
         $scope.filtros.Hora = -1
         $scope.filtros.HoraCompleta = -1; //HoraCompleta solo lo uso para ver si muestro el precio con luz o no.
     }

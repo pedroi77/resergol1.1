@@ -80,36 +80,38 @@
                                 <div class="form-group">
                                     <label for="desde" class="control-label col-sm-1">Desde <span class="required"></span></label>
                                     <div class="col-xs-12 col-sm-3">  
-                                        <!--<select data-live-search="true" style="margin-bottom:5px;" class="form-control"  
-                                                    ng-model="selectedHoraDId" ng-options="horaD.id as horaD.desc for horaD in horasDesde" ng-change="can.changeSelectedHoraD(selectedHoraDId)" >
-                                        </select>-->
-                                        <!--<span class="editable-text">{{horaDesde}}</span>-->
                                         <div class="controls" ng-class="">
-                                            <input id="horaDesdee" type="time" 
+                                            <select data-live-search="true" ng-change="can.changeSelectedHoraD(can.selectedHoraDId)" style="margin-bottom:5px;" class="form-control" ng-model="can.selectedHoraDId" 
+                                                ng-options="hora.id as hora.desc for hora in can.horasD" >
+                                    </select>
+                                            
+                                            
+                                            <!--<input id="horaDesdee" type="time" 
                                                    name="horaDesde" 
                                                    step="3600"
                                                    ng-model="can.horaDesde"
                                                    ng-change="can.changeSelectedHoraD(can.horaDesde)"
                                                    class="editable-input form-control "
                                                    min={{can.horaD}} max={{can.horaH}}
-                                                   required/>
+                                                   required/>-->
                                         </div>
                                     </div> 
                                     <label for="hasta" class="control-label col-sm-1">Hasta <span class="required"></span></label>
                                     <div class="col-xs-12 col-sm-3">  
-                                        <!--<select data-live-search="true" style="margin-bottom:5px;" class="form-control"  
-                                                    ng-model="selectedHoraHId" ng-options="horaH.id as horaH.desc for horaH in horasHasta" >
-                                        </select>-->
-                                        <!--<span class="editable-text">{{horaDesde2}}</span>-->
                                         <div class="controls" ng-class="">
-                                            <input id="horaHastaa" type="time" 
+                                            
+                                            <select data-live-search="true" ng-change="can.changeSelectedHoraH(can.selectedHoraHId)" style="margin-bottom:5px;" class="form-control" ng-model="can.selectedHoraHId" 
+                                                ng-options="hora.id as hora.desc for hora in can.horasH" >
+                                            </select>
+                                            
+                                            <!--<input id="horaHastaa" type="time" 
                                                    name="horaDesde2" 
                                                    step="3600"
                                                    ng-model="can.horaDesde2"
                                                    ng-change="can.changeSelectedHoraH(horaDesde)"
                                                    class="editable-input form-control "
                                                    min={{can.horaD2}} max={{can.horaH2}}
-                                                   required/>
+                                                   required/>-->
                                         </div>
                                     </div>
                                     
@@ -138,9 +140,11 @@
                                         <div class="row">
                                         <div class="col-md-4">
                                             <span class="uneditable-input h3">A pagar: $ {{precioAPagar | currency:""}}</span>
+                                            <br>
+                                            <span class="uneditable-input h5">Restante: $ {{restante | currency:""}}</span>
                                         </div>
                                         <div class="col-md-2">
-                                            <button id="activate-step-2" ng-click="can.paso1Click()" ng-disabled="{{paso1Completo}}" class="btn btn-primary btn-md">Reservar</button>
+                                            <button id="activate-step-2" ng-click="can.paso1Click()" ng-disabled="!can.paso1Completo" class="btn btn-primary btn-md">Reservar</button>
                                         </div>
                                             <div class="col-md-6">
                                             <button id="" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-md">CANCELAR / VOLVER</button>
@@ -253,12 +257,13 @@
         <div class="col-xs-12 col-md-6">
             <div class="row">
                 <div class="col-md-10">
-               <h4>Estás reservando la cancha para el día <b>{{fechaPartido | date: format: shortDate}}</b> de <b>20.00</b> hs a <b>21.00</b> hs.</h4>
+               <h4>Estás reservando la cancha para el día <b>{{fechaPartido | date: format: shortDate}}</b> de <b>{{can.selectedHoraDId}}</b> hs a <b>{{can.selectedHoraHId}}</b> hs.</h4>
                     </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                <h4>A pagar:  <b>$ {{precioAPagar | currency:""}}</b><h4>
+                    <h4>A pagar:  <b>$ {{precioAPagar | currency:""}}</b><h4>
+                    <h5>Restante:  <b>$ {{restante | currency:""}}</b><h5>        
                 </div>    
             </div>
             <div class="row">

@@ -444,6 +444,16 @@ $app->get('/complejos/:idDuenio', function($idDuenio){
 
 /******************************RESERVAS****************************************************************/
 
+
+//Get horarios no disponibles para reservar por dia para una cancha.
+$app->get('/clientes/reservas/:idCancha/:idComplejo/:fecha', function($idCancha, $idComplejo, $fecha){
+    
+    $reservas = new Reserva();
+    $data = $reservas->getHorasDisponiblesByFecha($idCancha, $idComplejo, $fecha);
+	sendResult($data);
+});
+
+
 //alta
 $app->post('/clientes/reservas', function(){
     
@@ -473,7 +483,6 @@ $app->post('/clientes/reservas', function(){
     //}
     
 });
-
 
 
 
