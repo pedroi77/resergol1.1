@@ -499,7 +499,7 @@ $app->get('/clientes/reservas/:idCancha/:idComplejo/:fecha', function($idCancha,
 
 
 //Get horarios de las reservas para una fecha especifica de una cancha.
-$app->get('/clientes/reservas/:idCancha/:idComplejo/:fecha/:fechaHorarios', function($idCancha, $idComplejo, $fechaHorarios){
+$app->get('/clientes/reservas/:idComplejoo/:idCanchaa/:fechaHorarios/:bReservas', function($idCancha, $idComplejo, $fechaHorarios){
     
     $reservas = new Reserva();
     $data = $reservas->getHorariosReservasByDia($idCancha, $idComplejo, $fechaHorarios);
