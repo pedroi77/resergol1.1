@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("AdministrarComplejoController", function($scope, $state, DueniosComplejosService, DiasServices, DocumentosService, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DueniosService){
+resergolApp.controller("AdministrarComplejoController", function($scope, $state, DueniosComplejosService, DiasServices, DocumentosService, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DueniosService, AdministrarComplejoService, $uibModal,  $uibModalStack){
 
 var self = this;
 this.tiposDoc = [];
@@ -9,30 +9,31 @@ this.localidades = [];
 this.dias = [];
 this.provinciaSeleccionada = {IdProvincia: '-1', Nombre: 'Otra'} ;
 this.localidadSeleccionada = {IdLocalidad: '-1', Nombre: 'Otra'} ;
+this.tipoDocSeleccionado = {IdTipoDoc: '-1', Descripcion: 'Otro'} ;
 //this.superficies = []; 
 this.Complejo = { 
 
-        idDuenio: sessionStorage.id,        //duenio
-        tipoDuenio: 'D',                    //duenio
-        usuario: sessionStorage.usuario,    //duenio
-        emailDuenio: '',                    //duenio
-        contrasenia: sessionStorage.pass,   //duenio
-        contrasenia2: sessionStorage.pass,  //duenio
-        nombreDuenio: '',                   //duenio
-        apellidoDuenio: '',                 //duenio
-        idTipoDoc:0,                        //duenio
-        nroDoc:'',                          //duenio
-        existeDni:false,                    //duenio
-        existe:false,                       //duenio
-        existeMail: false,                  //duenio
-        contraseniasIguales: true,          //duenio
-        diasComplejo: [],                   //diasComplejo
-        calle: '',                          //complejoDireccion
-        altura: '',                         //complejoDireccion
-        idProv:0,                           //complejoDireccion
-        idLoc:0,                            //complejoDireccion
-        X: 0,                               //complejoDireccion
-        Y: 0,                               //complejoDireccion
+        idDuenio: sessionStorage.id,            //duenio
+        tipoDuenio: 'D',                        //duenio
+        usuario: sessionStorage.usuario,        //duenio
+        emailDuenio: '',                        //duenio
+        contrasenia: sessionStorage.pass,       //duenio
+        contrasenia2: sessionStorage.pass,      //duenio
+        nombreDuenio: '',                       //duenio
+        apellidoDuenio: '',                     //duenio
+        idTipoDoc:0,                            //duenio
+        nroDoc:'',                              //duenio
+        existeDni:false,                        //duenio
+        existe:false,                           //duenio
+        existeMail: false,                      //duenio
+        contraseniasIguales: true,              //duenio
+        diasComplejo: [],                       //diasComplejo
+        calle: '',                              //complejoDireccion
+        altura: '',                             //complejoDireccion
+        idProv:0,                               //complejoDireccion
+        idLoc:0,                                //complejoDireccion
+        X: 0,                                   //complejoDireccion
+        Y: 0,                                   //complejoDireccion
         idComplejo: sessionStorage.idComplejo,  //Complejo
         nombreComplejo: '',                     //Complejo
         descripcionComplejo: '',                //Complejo
@@ -50,7 +51,9 @@ this.Complejo = {
         idEstadoComplejo: -1,                   //Complejo
         nroCelular: '',                         //Complejo
         nroTelefono: '',                        //Complejo
-        imagenes: []                            //ComplejoImagenes
+        imagenes: [],                           //ComplejoImagenes
+        CBU: '',                                //ComplejoPagos
+        nroCuenta: ''                           //ComplejoPagos
         
   };
 
@@ -139,10 +142,6 @@ this.dias = {
     
 self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
 
-DueniosService.query().$promise.then(function(data){
-    self.Duenio = data;
-});
-
 DiasServices.query().$promise.then(function(data){
     self.dias.dia = data;
     
@@ -177,6 +176,15 @@ DocumentosService.query().$promise.then(function(data) {
     self.tiposDoc.tipos = data;
     //self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
     self.tiposDoc.tipos.splice(0, 0, {IdTipoDoc: '-3', Descripcion: '-Tipo doc.-'});
+    
+    
+    angular.forEach(self.tiposDoc.tipos, function(aux) {
+             if(aux.IdTipoDoc == self.tiposDoc.tipos.IdTipoDoc)    
+             {
+                 self.tipoDocSeleccionado.IdTipoDoc = aux.IdTipoDoc;
+                 self.tipoDocSeleccionado.Descripcion = aux.Descripcion;
+             }
+    });
 });
     
 TiposSuperficiesService.query().$promise.then(function(data) {
@@ -306,7 +314,7 @@ this.getLocalidades = function(){
         selectedText = t.options[t.selectedIndex].text;
         $scope.horaHasta = selectedText;
         
-        $scope.diasComplejo.push({ 'diaDesde':$scope.diaDesde, 'diaHasta': $scope.diaHasta, 'horaDesde':$scope.horaDesde, 'horaHasta':$scope.horaHasta });
+        self.Complejo.diasComplejo.push({ 'diaDesde':$scope.diaDesde, 'diaHasta': $scope.diaHasta, 'horaDesde':$scope.horaDesde, 'horaHasta':$scope.horaHasta });
         $scope.diaDesde='';
         $scope.diaHasta='';
         $scope.horaDesde='';
@@ -342,21 +350,12 @@ this.getLocalidades = function(){
     //aca tendria que hacer un UPDATE a la tabla de complejos segun el ID del complejo y del usuario
     this.updateComplejo = function()
     {
-        var complejoData = new ClientesService();
+        var complejoData = new AdministrarComplejoService();
      
-        complejoData.data = {
-                        "usuario": self.cliente.usuario,
-                        "contrasenia": self.cliente.contrasenia,
-                        "nombre": self.cliente.nombre,
-                        "apellido": self.cliente.apellido,
-                        "idTipoDoc": self.cliente.tipoDoc,
-                        "nroDoc": self.cliente.nroDoc,
-                        "email": self.cliente.eMail,
-                        "valor": -5
-  	       };  
+        complejoData.data = self.Complejo;  
         
         
-        ClientesService.save(clienteNuevo.data, function(reponse){
+        AdministrarComplejoService.save(complejoData.data, function(reponse){
             alert("El registro se realizo correctamente! " + reponse.data);  //Quitar el id
           },function(errorResponse){
               console.log(errorResponse.data.message);  
@@ -433,6 +432,33 @@ this.getLocalidades = function(){
         {
             t = 100;
         }
+        
+    }
+    
+    this.hacerCambiosComplejo = function(){
+           
+        var AdministrarComplejo = new AdministrarComplejoService();
+        
+        for(i=0; i<$scope.diasComplejo.length; i++){
+
+            self.Complejo.diasComplejo.push({ "diaDesde": self.diasDesde.tipos[i]['iddia'], "diaHasta": HoraDesde , "horaDesde": HoraHasta, "horaHasta": HoraDesde });
+            
+        };
+
+        AdministrarComplejo.data= self.Torneo;
+        console.log("Estamos en el hacerCambiosComplejo ");
+        
+        AdministrarComplejoService.save(AdministrarComplejo.data, function(reponse){
+            idComplejo = reponse.data[0];
+            self.open('sm', true, idComplejo);
+          },function(errorResponse){
+             self.open('sm', false,0);
+         });
+    }
+    
+    this.validarDatos = function(){
+        
+        return true;
         
     }
     

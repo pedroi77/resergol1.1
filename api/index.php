@@ -485,6 +485,35 @@ $app->get('/complejos/:idDuenio', function($idDuenio){
 	sendResult($data);
 });
 
+//alta
+$app->post('/duenios/administrarComplejo', function(){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $complejo = new Complejo();
+        $result = $complejo->createComplejo($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError($complejo); // + $data
+        };
+        
+    }
+	else{
+        sendError("token invalido");
+    }
+    
+});
 
 /******************************RESERVAS****************************************************************/
 
