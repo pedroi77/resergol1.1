@@ -140,7 +140,7 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
         //console.log(self.cliente.nroDoc);
         self.cliente.tipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
         
-        if(self.cliente.nroDoc!=undefined){
+        if(self.cliente.nroDoc!=undefined && self.cliente.nroDoc!=""){
             console.log(self.cliente.tipoDoc + self.cliente.nroDoc + self.cliente.tipo);
             TipoYDocumentosService.query({tipoDoc:self.cliente.tipoDoc, nroDoc:self.cliente.nroDoc, tipoUsu:self.cliente.tipo}).$promise.then(function(data){
 

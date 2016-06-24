@@ -100,7 +100,7 @@ class Cancha
         
         
               
-        $query = "CALL SP_getCanchasByDuenio (@IdDuenio);";
+        $query = "CALL SP_getCanchasByDuenio(@IdDuenio);";
         $canchas= array();
         
         if( $result = $this->connection->query($query) ){

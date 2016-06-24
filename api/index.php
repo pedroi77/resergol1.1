@@ -11,6 +11,7 @@ require_once("modelos/torneos.php");
 require_once("modelos/canchas.php");
 require_once("modelos/complejos.php");
 require_once("modelos/reservas.php");
+require_once("modelos/tarjetasClientes.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -566,7 +567,65 @@ $app->post('/clientes/reservas', function(){
     
 });
 
+/*******************************TARJETAS CLIENTES*****************************************************/
 
+//alta
+$app->post('/clientes/tarjetas', function(){
+    
+    //$headers = apache_request_headers();
+    //$token = explode(" ", $headers["Authorization"]);
+    //$tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    //$reserva = new Reserva();
+    //$tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    //if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $tarjeta = new TarjetaCliente();
+        $result = $tarjeta->create($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al insertar la tarjeta...");
+        };
+        
+    //}
+	//else{
+    //    sendError("token invalido");
+    //}
+    
+});
+
+
+//Get tarjeta del cliente
+$app->get('/clientes/tarjetas/:idCliente', function($idCliente){
+    
+    $tarjeta = new TarjetaCliente();
+    $data = $tarjeta->getTarjetaCliente($idCliente);
+	sendResult($data);
+    
+});
+
+//Get tarjeta del cliente
+$app->get('/clientes/tarjetas/:idCliente/:idAux', function($idCliente){
+    
+    $tarjeta = new TarjetaCliente();
+    $data = $tarjeta->getTarjetaCliente($idCliente);
+	sendResult($data);
+    
+});
+
+//Get tarjeta del cliente
+$app->get('/clientes/tarjetas/', function(){
+    
+    $tarjeta = new TarjetaCliente();
+    $data = $tarjeta->getTarjetaCliente();
+	sendResult($data);
+    
+});
 
 
 $app->run();

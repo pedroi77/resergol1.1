@@ -1,7 +1,7 @@
 /*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("VerCanchaController", function($scope, $state, $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService){
+resergolApp.controller("VerCanchaController", function($scope, $state, $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService){
 	
     var self = this;
     
@@ -23,6 +23,7 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     this.paso1Completo = false;
     $scope.precioAPagar = 0;
     $scope.restante = 0;
+    $scope.porcentajePago = 0;
     
     $scope.fechaPartido = null;
     $scope.hDesdePartido = null;
@@ -49,6 +50,15 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                         porcentajePago: 100,
                         estadoReserva: 2 //1-Señado 2-PagoCompleto
                       };
+    
+    this.Tarjeta ={
+                        idCliente:sessionStorage.id,
+                        nroTarjeta:'123456789123456',
+                        mes: 11,
+                        anio: 18,
+                        codigo: '12'
+                      };
+    
     
     
     this.getCancha = function(){
@@ -152,6 +162,7 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                 for(i=horaSeleccionada+1; i<=horaCierra; i++)
                 {
                     var bAgrego = true;
+                    
                     //HoraInicio y Fin de las reservas del dia ordenadas por HoraInicio.
                     angular.forEach($scope.HorasReservasDia, function(aux)
                     {   
@@ -175,8 +186,8 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                         //console.log('se agregaron--> ' + self.horasH.length);
                         self.selectedHoraHId = self.horasH[0].id; 
                     }
-                    else
-                        return; //Ya tengo que salir del for principal acá...
+                    //else
+                        //return; //Ya tengo que salir del for principal acá...
                 }
                 
             }
@@ -192,7 +203,8 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                 }
             }
                 
-        
+            console.log('SELECTED D-> ' + self.selectedHoraDId);
+            console.log('SELECTED H-> ' + self.selectedHoraHId);
             self.calcularPrecioReservar();
                      
         });
@@ -205,6 +217,31 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
              $state.go('Clientes.verCancha.Reservar');  
     };
 
+    
+    //Si el cliente tiene tarjeta guardada, traigo los datos de la misma...
+    this.getTarjeta = function(){
+            var id = sessionStorage.id;
+            console.log(id);
+			TarjetasClienteService.query({idCliente:id, idAux:0}).$promise.then(function(data){
+                    //$scope.cancha = data;
+                    //$scope.idDuenio = data[0].IdDuenio; 
+                    //id="expMonth"                  
+                
+                    /*if(data[0].nroTarjeta != null && data[0].nroTarjeta != undefined)
+                         document.getElementById("expMonth").value = ; */
+                       
+                    if(data[0].NroTarjeta != null && data[0].NroTarjeta != undefined)
+                         document.getElementById("cardNumber").value = data[0].NroTarjeta;
+                
+                    if(data[0].Anio != null && data[0].Anio != undefined)
+                         document.getElementById("expYear").value = data[0].Anio;
+                
+                    if(data[0].Mes != null && data[0].Mes != undefined)
+                         document.getElementById("expMonth").value = data[0].Mes;
+                        
+            });
+	};
+    
     
     //Para que funcione el estilo de los tooltips!.
     $(document).ready(function() {
@@ -222,7 +259,8 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
         function pad(n) {return n < 10 ? "0"+n : n;}
             $scope.fechaPartido = pad($scope.fechaElegida.getDate())+"/"+pad($scope.fechaElegida.getMonth()+1)+"/"+$scope.fechaElegida.getFullYear();
         
-        
+        if(sessionStorage.id != undefined && sessionStorage.id != 0)
+            self.getTarjeta();
     };
     
     
@@ -232,9 +270,16 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     
         var ReservaNueva = new ReservasService();
         
+        
         self.Reserva.fechaPartido = $scope.fechaPartido;
         self.Reserva.horaD = $scope.hDesdePartido;
         self.Reserva.horaH = $scope.hHastaPartido;
+        var precioTotal =  $scope.precioAPagar + $scope.restante;
+        self.Reserva.importeAPagar = precioTotal;
+        self.Reserva.pagado = $scope.precioAPagar;
+        self.Reserva.porcentajePago = $scope.porcentajePago;
+        var estadoRes = (document.getElementById('rbPagaCanchaCompleta').checked) ? 2 : 1;
+        self.Reserva.estadoReserva = estadoRes;
         
         console.log(self.Reserva.fechaPartido);
         console.log(self.Reserva.horaD);
@@ -244,6 +289,13 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
         ReservasService.save(ReservaNueva.data, function(reponse){
                 idReserva = reponse.data[0];
                 console.log('idReserva -->' + idReserva);
+            
+                if (document.getElementById('chkGuardaTarjeta').checked)
+                {
+                   //Si existe una tarjeta para el idCliente, hacer update! ya que el idCliente es PK. 
+                   self.guardarTarjeta();
+                }
+            
               },function(errorResponse){
                 console.log('ERROR...'); 
              });
@@ -264,17 +316,41 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
             function pad(n) {return n < 10 ? "0"+n : n;}
             //$scope.fechaPartido = pad($scope.fechaElegida.getDate())+"/"+pad($scope.fechaElegida.getMonth()+1)+"/"+$scope.fechaElegida.getFullYear();
             //var fechaPartido = $scope.fechaElegida.toLocaleDateString();
-            $scope.hDesdePartido = self.horaDesde.getHours() + ":00:00";
-            $scope.hHastaPartido = self.horaDesde2.getHours() + ":00:00";        
+            $scope.hDesdePartido = self.selectedHoraDId + ":00:00";
+            
+            $scope.hHastaPartido = self.selectedHoraHId + ":00:00";        
             //console.log(fechaPartido);
             
             //******************************************************************************************************************//
             
-            //Probando a reservar con valores hardcodeados
             self.reservar();
              
         }
     };
+    
+    
+    this.guardarTarjeta = function(){
+        
+        var TarjetaNueva = new TarjetasClienteService();
+        TarjetaNueva.data = {
+                        "idCliente": self.Tarjeta.idCliente,
+                        "nroTarjeta": document.getElementById("cardNumber").value,
+                        "mes": document.getElementById("expMonth").value,
+                        "anio": document.getElementById("expYear").value,
+                        "codigo": document.getElementById("cvCode").value,
+                        "valor": 0
+  	       };  
+        
+        
+        TarjetasClienteService.save(TarjetaNueva.data, function(reponse){
+                idRetorno = reponse.data[0];
+                console.log('retorno -->' + idRetorno);
+              },function(errorResponse){
+                console.log('ERROR TARJETA...' + errorResponse); 
+             });
+    };
+    
+    
     
      /*INICIO FECHAS*/
     /*PARA FECHAS*/
@@ -453,8 +529,6 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
             
         /*--------------------------------------------------------------------------------*/
         
-        
-        
         self.getHorasDisponiblesByFecha(fechaSelect/*, horaActual*/);
         
     };
@@ -494,7 +568,7 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
         if(self.horasD.length > 0)
             self.getHorariosReservasByDia(fechaSelect, selectedHoraDId, HoraCierra);
         
-        self.calcularPrecioReservar();
+        //self.calcularPrecioReservar();
         
     };
     
@@ -542,10 +616,12 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
         //Calculo el precio a pagar siempre y cuando se haya elegido una fecha y hora desde y hasta.
         if(this.validarFechaYHora())
         {
+            console.log('CALCULANDO PRECIO.....');
             ////////NUEVO////////////////////////////////////////////////////
             //Traigo las hora desde y hasta.
             var hd = parseInt(self.selectedHoraDId);
             var hh = parseInt(self.selectedHoraHId);
+            
             
             if(self.selectedHoraDId == '00')
                 hd = 0;
@@ -569,17 +645,17 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
             
             //Calculo cuantas horas se van a alquilar...
             var horasAlq = hh - hd;
-           // console.log('horas alq--> ' + horasAlq);
+            console.log('horas alq--> ' + horasAlq);
             var precio = parseFloat($scope.cancha[0].Precio);
             var horaLuz = -1;
             if($scope.cancha[0].HoraCobroLuz != undefined && $scope.cancha[0].HoraCobroLuz != null)
                 horaLuz = $scope.cancha[0].HoraCobroLuz.substring(0,2);
-            //console.log('luz desde-->' + horaLuz);
+            console.log('luz desde-->' + horaLuz);
             var porcentajeLuz = 0;
             if($scope.cancha[0].PorcentajeLuz != null && $scope.cancha[0].PorcentajeLuz != undefined);
                 porcentajeLuz = parseFloat($scope.cancha[0].PorcentajeLuz);
                     
-           // console.log('porcent luz-->' + porcentajeLuz);
+              console.log('porcent luz-->' + porcentajeLuz);
             
             var horasConLuz = 0;
             if($scope.cancha[0].Luz == 1 && horaLuz != -1)
@@ -616,6 +692,7 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
             {
                 $scope.precioAPagar = precioAMostrar;
                 $scope.restante = 0;
+                $scope.porcentajePago = 100;
             }
             else if(document.getElementById('rbPagaSeña').checked)
             {
@@ -628,11 +705,14 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                     {
                         $scope.precioAPagar = parseFloat(precioAMostrar * PorcentSenia) / 100 ;
                         $scope.restante = parseFloat(precioAMostrar - $scope.precioAPagar);
+                        var porcentPago = parseFloat($scope.precioAPagar / ($scope.precioAPagar + $scope.restante) * 100);
+                        $scope.porcentajePago = porcentPago;
                     }
                 else
                     {
                         $scope.precioAPagar = 0;
                         $scope.restante = parseFloat(precioAMostrar);
+                        $scope.porcentajePago = 0;
                     }
             }
             
@@ -651,6 +731,118 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
             
         
     };
+    
+    
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var $form = $('#payment-form');
+//$form.on('submit', payWithStripe);
+
+/* If you're using Stripe for payments */
+//function payWithStripe(e) {
+//    e.preventDefault();
+
+    /* Visual feedback */
+  //  $form.find('[type=submit]').html('Validando <i class="fa fa-spinner fa-pulse"></i>');
+
+    //var PublishableKey = 'pk_test_6pRNASCoBOKtIshFeQd4XMUh'; // Replace with your API publishable key
+    //Stripe.setPublishableKey(PublishableKey);
+    //Stripe.card.createToken($form, function stripeResponseHandler(status, response) {
+    //    console.log
+    //    if (response.error) {
+            /* Visual feedback */
+    //$form.find('[type=submit]').html('Intente nuevamente');
+            /* Show Stripe errors on the form */
+    //        $form.find('.payment-errors').text(response.error.message);
+    //        $form.find('.payment-errors').closest('.row').show();
+    //    } else {
+            /* Visual feedback */
+    //        $form.find('[type=submit]').html('Processing <i class="fa fa-spinner fa-pulse"></i>');
+            /* Hide Stripe errors on the form */
+      //      $form.find('.payment-errors').closest('.row').hide();
+        //    $form.find('.payment-errors').text("");
+          //  // response contains id and card, which contains additional card details
+            //var token = response.id;
+           // console.log(token);
+            // AJAX
+            //$.post('/account/stripe_card_token', {
+            //        token: token
+            //    })
+                // Assign handlers immediately after making the request,
+            //    .done(function(data, textStatus, jqXHR) {
+            //        $form.find('[type=submit]').html('Pago realizado <i class="fa fa-check"></i>').prop('disabled', true);
+              //  })
+                //.fail(function(jqXHR, textStatus, errorThrown) {
+                  //  $form.find('[type=submit]').html('Hubo un error').removeClass('success').addClass('error');
+                    /* Show Stripe errors on the form */
+                    //$form.find('.payment-errors').text('Intente nuevamente.');
+                    //$form.find('.payment-errors').closest('.row').show();
+                //});
+        //}
+    //});
+//}
+
+/* Form validation */
+jQuery.validator.addMethod("month", function(value, element) {
+  return this.optional(element) || /^(01|02|03|04|05|06|07|08|09|10|11|12)$/.test(value);
+}, "Mes inválido...");
+
+jQuery.validator.addMethod("year", function(value, element) {
+  return this.optional(element) || (/^[0-9]{2}$/.test(value) && value >= 16 && value <= 25);
+}, "Año inválido...");
+
+validator = $form.validate({
+    rules: {
+        cardNumber: {
+            required: true,
+            creditcard: true,
+            digits: true
+        },
+        expMonth: {
+            required: true,
+            month: true
+        },
+        expYear: {
+            required: true,
+            year: true
+        },
+        cvCode: {
+            required: true,
+            digits: true
+        }
+    },
+    highlight: function(element) {
+        $(element).closest('.form-control').removeClass('success').addClass('error');
+    },
+    unhighlight: function(element) {
+        $(element).closest('.form-control').removeClass('error').addClass('success');
+    },
+    errorPlacement: function(error, element) {
+        $(element).closest('.form-group').append(error);
+    }
+});
+
+paymentFormReady = function() {
+    if ($form.find('[name=cardNumber]').hasClass("success") &&
+        $form.find('[name=expMonth]').hasClass("success") &&
+        $form.find('[name=expYear]').hasClass("success") &&
+        $form.find('[name=cvCode]').val().length > 2 && $form.find('[name=cvCode]').val().length < 5) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//$form.find('[type=submit]').prop('disabled', true);
+var readyInterval = setInterval(function() {
+    if (paymentFormReady()) {
+        $form.find('[type=submit]').prop('disabled', false);
+        //clearInterval(readyInterval);
+    }
+    else
+        $form.find('[type=submit]').prop('disabled', true);
+}, 250);
+    ////////////////////////////////////////////////////////**************************************************************
     
 
 

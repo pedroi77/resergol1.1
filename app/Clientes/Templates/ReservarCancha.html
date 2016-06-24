@@ -219,7 +219,7 @@
                                 <div class="form-group" style="color:black;">
                                     <label for="cardNumber">N° DE TARJETA</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="cardNumber" placeholder="Número de tarjeta" required autofocus data-stripe="number" />
+                                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Número de tarjeta" required autofocus data-stripe="number" />
                                         <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
                                     </div>
                                 </div>                            
@@ -230,17 +230,17 @@
                                 <div class="form-group">
                                     <label for="expMonth" style={color:black};>FECHA DE EXPIRACIÓN</label>
                                     <div class="col-xs-6 col-lg-6 pl-ziro">
-                                        <input type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
+                                        <input type="text" class="form-control" id="expMonth" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
                                     </div>
                                     <div class="col-xs-6 col-lg-6 pl-ziro">
-                                        <input type="text" class="form-control" name="expYear" placeholder="YY" required data-stripe="exp_year" />
+                                        <input type="text" class="form-control" id="expYear" name="expYear" placeholder="YY" required data-stripe="exp_year" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xs-5 col-md-5 pull-right"  style="color:black;">
                                 <div class="form-group">
                                     <label for="cvCode">CÓDIGO</label>
-                                    <input type="password" class="form-control" name="cvCode" placeholder="" required data-stripe="cvc" />
+                                    <input type="password" class="form-control" id="cvCode" name="cvCode" placeholder="" required data-stripe="cvc" />
                                 </div>
                             </div>
                         </div>
@@ -267,7 +267,7 @@
                 </div>    
             </div>
             <div class="row">
-                <label class="checkbox-inline"><input type="checkbox" value="" >Deseo guardar datos de la tarjeta para futuros pagos.</label>
+                <label class="checkbox-inline"><input id="chkGuardaTarjeta" type="checkbox" value="" >Deseo guardar datos de la tarjeta para futuros pagos.</label>
             </div>
             <br>
             <hr>
