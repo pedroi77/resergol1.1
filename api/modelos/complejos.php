@@ -67,7 +67,11 @@ class Complejo
             $stmt->execute();
             
             $resultCan = $this->connection->query('CALL SP_updateDuenio( @pIdDuenio, @pUsuario, @pContrasenia, @pIdPersona);');
-            //echo 'entro al create complejo', 'otro mensaje', '\n';
+            
+            $person = $this->connection->query('SELECT @pIdPersona as persona');
+            $row = $person->fetch_assoc();        
+            $persona = $row['persona'] ;
+            
             //datos de la persona(update), modifica las datos base de una persona(dni, nombre, apellido, etc) SP_updatePersona
             $emailDuenio = $this->connection->real_escape_string($complejo['emailDuenio']);
             $nombreDuenio = $this->connection->real_escape_string($complejo['nombreDuenio']);
@@ -77,7 +81,7 @@ class Complejo
             
             // Parametros
             $stmt = $this->connection->prepare('SET @pIdPersona := ?');
-            $stmt->bind_param('i', $idPersona);
+            $stmt->bind_param('i', $persona);
             $stmt->execute();
             
             $stmt = $this->connection->prepare('SET @pNombre := ?');
@@ -107,7 +111,119 @@ class Complejo
             
             $resultCan = $this->connection->query('CALL SP_updatePersona( @pIdPersona, @pNombre, @pIdTipoDoc, @pApellido, @pNroDoc, @pEmail, @vResultado);');
             
-            //datos de los pagos del complejo(SP_insertComplejosPagos)
+            //datos del Complejo(SP_insertComplejos)
+            $idComplejo = $this->connection->real_escape_string($complejo['idComplejo']);
+            $nombreComplejo = $this->connection->real_escape_string($complejo['nombreComplejo']);
+            $descripcionComplejo = $this->connection->real_escape_string($complejo['descripcionComplejo']);
+            $estacionamiento = $this->connection->real_escape_string($complejo['estacionamiento']);
+            $buffet = $this->connection->real_escape_string($complejo['buffet']);
+            $duchas = $this->connection->real_escape_string($complejo['duchas']);
+            $parrilla = $this->connection->real_escape_string($complejo['parrilla']);
+            $wifi = $this->connection->real_escape_string($complejo['wifi']);
+            $horaCobroLuz = $this->connection->real_escape_string($complejo['horaCobroLuz']);
+            $porcentajeSenia = $this->connection->real_escape_string($complejo['porcentajeSenia']);
+            $horasCancelacion = $this->connection->real_escape_string($complejo['horasCancelacion']);
+            $tiempoReserva = $this->connection->real_escape_string($complejo['tiempoReserva']);
+            $emailComplejo = $this->connection->real_escape_string($complejo['emailComplejo']);
+            $idEstadoComplejo = $this->connection->real_escape_string($complejo['idEstadoComplejo']);
+            //$idDuenio = $this->connection->real_escape_string($complejo['idDuenio']);
+            $porcentajeLuz = $this->connection->real_escape_string($complejo['porcentajeLuz']);
+            $nroCelular = $this->connection->real_escape_string($complejo['nroCelular']);
+            $nroTelefono = $this->connection->real_escape_string($complejo['nroTelefono']);
+            
+            $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+            $stmt->bind_param('i', $idComplejo);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pNombre := ?');
+            $stmt->bind_param('i', $nombreComplejo);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pDescripcion := ?');
+            $stmt->bind_param('i', $descripcionComplejo);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pEstacionamiento := ?');
+            $stmt->bind_param('i', $estacionamiento);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pBuffet := ?');
+            $stmt->bind_param('i', $buffet);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pDuchas := ?');
+            $stmt->bind_param('i', $duchas);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pParrillas := ?');
+            $stmt->bind_param('i', $parrilla);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pWiFi := ?');
+            $stmt->bind_param('i', $wifi);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pHoraCobroLuz := ?');
+            $stmt->bind_param('i', $horaCobroLuz);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pPorcentajeSeña := ?');
+            $stmt->bind_param('i', $porcentajeSenia);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pHorasCancelacion := ?');
+            $stmt->bind_param('i', $horasCancelacion);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pTiempoReserva := ?');
+            $stmt->bind_param('i', $tiempoReserva);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pEmail := ?');
+            $stmt->bind_param('i', $emailComplejo);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pIdEstado := ?');
+            $stmt->bind_param('i', $idEstadoComplejo);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pIdDuenio := ?');
+            $stmt->bind_param('i', $idDuenio);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pPorcentajeLuz := ?');
+            $stmt->bind_param('i', $porcentajeLuz);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pNroCelular := ?');
+            $stmt->bind_param('i', $nroCelular);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pNroTelefono := ?');
+            $stmt->bind_param('i', $nroTelefono);
+            $stmt->execute();
+            
+            
+            echo 'Something fails: ', $idComplejo . ' error loco', "\n";
+            if($idComplejo == null){
+                
+                $resultCan = $this->connection->query('CALL SP_insertComplejo( @pIdComplejo, @pNombre, @pDescripcion, @pEstacionamiento, @pBuffet, @pDuchas, @pParrillas, @pWiFi, @pHoraCobroLuz, @pPorcentajeSeña, @pHorasCancelacion, @pTiempoReserva, @pEmail, @pIdEstado, @pIdDuenio, @pPorcentajeLuz, @pNroCelular, @pNroTelefono);');
+                
+                $com = $this->connection->query('SELECT @pIdComplejo as complejo');
+                $row = $person->fetch_assoc();        
+                $complejo = $row['complejo'];
+                
+                echo 'Something fails: ', 'despues del SP_insertComplejo' . 'error loco', "\n";
+            }
+            else
+            {
+                $resultCan = $this->connection->query('CALL SP_updateComplejo( @pIdComplejo, @pNombre, @pDescripcion, @pEstacionamiento, @pBuffet, @pDuchas, @pParrillas, @pWiFi, @pHoraCobroLuz, @pPorcentajeSeña, @pHorasCancelacion, @pTiempoReserva, @pEmail, @pIdEstado, @pIdDuenio, @pPorcentajeLuz, @pNroCelular, @pNroTelefono);');
+                
+                echo 'Something fails: ', 'despues del SP_updateComplejo' . 'error loco', "\n";
+            }
+            
+            //datos de la direccion del complejo(SP_insertComplejosDireccion)
+            $idComplejo = $this->connection->real_escape_string($complejo['idComplejo']);
             $calle = $this->connection->real_escape_string($complejo['calle']);
             $altura = $this->connection->real_escape_string($complejo['altura']);
             $idProv = $this->connection->real_escape_string($complejo['idProv']);
@@ -115,7 +231,6 @@ class Complejo
             $X = $this->connection->real_escape_string($complejo['X']);
             $Y = $this->connection->real_escape_string($complejo['Y']);
 
-                 
             $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
             $stmt->bind_param('i', $IdComplejo);
             $stmt->execute();
@@ -149,7 +264,18 @@ class Complejo
             $stmt->bind_param('s', $resultado);
             $stmt->execute();
             
-            $resultCan = $this->connection->query('CALL SP_insertComplejosDireccion(@pIdComplejo, @pCalle, @pAltura, @pIdLocalidad, @pIdProvincia, @pX, @pY, @vResultado);');
+            if($idComplejo == null){
+                $resultCan = $this->connection->query('CALL SP_insertComplejosDireccion(@pIdComplejo, @pCalle, @pAltura, @pIdLocalidad, @pIdProvincia, @pX, @pY, @vResultado);');
+                
+                echo 'Something fails: ', 'despues del SP_insertComplejosDireccion' . 'error loco', "\n";
+            }
+            else{
+                $resultCan = $this->connection->query('CALL SP_updateComplejoDireccion(@pIdComplejo, @pCalle, @pAltura, @pIdLocalidad, @pIdProvincia, @pX, @pY, @vResultado);');
+                
+                echo 'Something fails: ', 'despues del SP_updateComplejoDireccion' . 'error loco', "\n";
+            }
+            
+            //
             
             //PARTE DE COMPLEJOS PAGOS
             $CBU = $this->connection->real_escape_string($complejo['CBU']);
@@ -167,10 +293,16 @@ class Complejo
             $stmt->bind_param('s', $NroCuenta);
             $stmt->execute();
             
-            $resultCan = $this->connection->query('CALL SP_insertComplejosPagos( @pIdComplejo, @pCBU, @pNroCuenta);');
+            if($idComplejo == null){
+                $resultCan = $this->connection->query('CALL SP_insertComplejosPagos( @pIdComplejo, @pCBU, @pNroCuenta);');
+            }
+            else
+            {
+                $resultCan = $this->connection->query('CALL SP_updateComplejosPagos( @pIdComplejo, @pCBU, @pNroCuenta);');
+            }
             
             /*Alta de Dias*/
-            foreach ($diasComplejo as $dia) {
+            /*foreach ($diasComplejo as $dia) {
                 
                 $HoraDesde = $this->connection->real_escape_string($dia['horaDesde']);
                 $HoraHasta = $this->connection->real_escape_string($dia['horaHasta']);
@@ -204,12 +336,18 @@ class Complejo
                 $rcan = $this->connection->query('SELECT @outDia as res');
                 $row = $rcan->fetch_assoc();               
                 $resCan = $row['res'] ;
-            }
+            }*/
+            
+            $this->connection->commit();
+            //$this->connection->rollback();
+            
+            //$dat= array($res);
+            //sendResult($dat, 'OK' );
         }
         catch (Exception $e){
             
             $this->connection->rollback();
-            echo 'Something fails: ',  $e->getMessage() . 'error loco', "\n";
+            echo 'Something fails: ',  $e->getMessage() . '  entro excepcion    error loco', "\n";
         }
     }
     

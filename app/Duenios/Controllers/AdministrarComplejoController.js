@@ -151,6 +151,8 @@ DiasServices.query().$promise.then(function(data){
 this.traerDatosComplejos = function(){
     
         DueniosComplejosService.query({idDuenio: self.Complejo.idDuenio}).$promise.then(function(data){
+            
+            
             self.Complejo.apellidoDuenio = data[0].Apellido;
             self.Complejo.nombreDuenio = data[0].Nombre;
             self.Complejo.nombreComplejo = data[0].nombreComplejo;
@@ -165,6 +167,8 @@ this.traerDatosComplejos = function(){
             self.Complejo.altura = parseInt(data[0].Altura);
             self.Complejo.idLoc = data[0].IdLocalidad;
             self.Complejo.idProv = data[0].IdProvincia;
+            
+            
             //self.localidades.selectedOption = {IdLocalidad: self.Complejo.idLoc}; 
             //self.provincias.selectedOption = {IdProvincia: self.Complejo.idProv};
         });
@@ -352,7 +356,9 @@ this.getLocalidades = function(){
     {
         var complejoData = new AdministrarComplejoService();
      
-        complejoData.data = self.Complejo;  
+        complejoData.data = self.Complejo; 
+        
+        console.log("Datos del complejo: " + complejoData.data);
         
         
         AdministrarComplejoService.save(complejoData.data, function(reponse){
@@ -439,20 +445,14 @@ this.getLocalidades = function(){
            
         var AdministrarComplejo = new AdministrarComplejoService();
         
-        for(i=0; i<$scope.diasComplejo.length; i++){
-
-            self.Complejo.diasComplejo.push({ "diaDesde": self.diasDesde.tipos[i]['iddia'], "diaHasta": HoraDesde , "horaDesde": HoraHasta, "horaHasta": HoraDesde });
-            
-        };
-
-        AdministrarComplejo.data= self.Torneo;
-        console.log("Estamos en el hacerCambiosComplejo ");
+        AdministrarComplejo.data = self.Complejo;
+        console.log("Estamos en el hacerCambiosComplejo, Datos:  " + AdministrarComplejo.data);
         
         AdministrarComplejoService.save(AdministrarComplejo.data, function(reponse){
-            idComplejo = reponse.data[0];
+            /*idComplejo = reponse.data[0];
             self.open('sm', true, idComplejo);
           },function(errorResponse){
-             self.open('sm', false,0);
+             self.open('sm', false,0);*/
          });
     }
     
