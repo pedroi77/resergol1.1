@@ -12,6 +12,7 @@ require_once("modelos/canchas.php");
 require_once("modelos/complejos.php");
 require_once("modelos/reservas.php");
 require_once("modelos/tarjetasClientes.php");
+require_once("modelos/torneosLiga.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -399,6 +400,12 @@ $app->get('/duenios/torneos/equipos/:idTorneo', function($idTorneo){
     }
 });
 
+//get de posiciones de liga por torneo
+$app->get('/common/torneo/liga/tabla/:idTorneo', function($idTorneo){
+        $tabla = new TorneoLiga();
+        $data = $tabla->getTablaDePosiciones($idTorneo);
+        sendResult($data);
+});
 
 
 //alta imagenes

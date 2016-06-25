@@ -39,6 +39,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
             if(cliente[0] != '-1'){
                 self.Usuario.passInvalida = false;
                 self.Usuario.login = true;
+                self.Usuario.id = cliente[0].IdCliente;
                 store.set('token',  cliente[1]); //guardo el token
                 self.guardarSession();
                 if(!(form == null)){
@@ -86,6 +87,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
             if(admin[0] != '-1'){
                 self.Usuario.passInvalida = false;
                 self.Usuario.login = true;
+                self.Usuario.id = admin[0].id;
                 store.set('token',  admin[1]); //guardo el token
                 self.guardarSession();
                 $state.go('Admin.administracion');
