@@ -12,6 +12,7 @@ require_once("modelos/canchas.php");
 require_once("modelos/complejos.php");
 require_once("modelos/reservas.php");
 require_once("modelos/tarjetasClientes.php");
+require_once("modelos/listasNegras.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -623,6 +624,17 @@ $app->get('/clientes/tarjetas/', function(){
     
     $tarjeta = new TarjetaCliente();
     $data = $tarjeta->getTarjetaCliente();
+	sendResult($data);
+    
+});
+
+
+//-**********************************LISTA NEGRA*************************************************************--//
+//Get fecha de ingreso a la lista negra si es que el cliente está en la lista negra.
+$app->get('/listaNegra/:idCliente/:idComplejo', function($idCliente, $idComplejo){
+    
+    $listaNegra = new ListaNegra();
+    $data = $listaNegra->verificarClienteListaNegra($idCliente, $idComplejo);
 	sendResult($data);
     
 });

@@ -1,7 +1,7 @@
 /*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("VerCanchaController", function($scope, $state, $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService){
+resergolApp.controller("VerCanchaController", function($scope, $state, $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService){
 	
     var self = this;
     
@@ -38,6 +38,8 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     $scope.HorasDisponibles = [];
     $scope.HorasReservasDia = [];
     
+    $scope.fechaIngresoListaNegra = 0; //Si es 0, no está en la lista negra. Si está, guardo la fecha que ingresó a la misma.
+    
     this.Reserva ={
                         idCliente:sessionStorage.id,
                         idComplejo: $scope.idComplejo,
@@ -71,12 +73,31 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                 DuenioDiasService.query({idDuenio:$scope.idDuenio}).$promise.then(function(data) {
                     self.diasComplejo = data;
                 }); 
+                
+                self.verificarListaNegra();
    
             });
 	};
     
     
    self.getCancha();
+  
+    
+  this.verificarListaNegra = function(){
+			ListasNegrasService.query({idCliente:sessionStorage.id, idComplejo:$scope.idComplejo}).$promise.then(function(data){
+                 if(data != null && data != undefined && data[0] != undefined)
+                 {
+                     if(data[0].FechaIngreso != null && data[0].FechaIngreso != undefined)
+                        $scope.fechaIngresoListaNegra = data[0].FechaIngreso;
+                     else
+                        $scope.fechaIngresoListaNegra = 0;     
+                 }
+                else
+                    $scope.fechaIngresoListaNegra = 0;
+                 
+            });
+	};
+        
     
     
     this.getHorasDisponiblesByFecha = function(fecha/*, horaActual*/){
@@ -203,8 +224,8 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                 }
             }
                 
-            console.log('SELECTED D-> ' + self.selectedHoraDId);
-            console.log('SELECTED H-> ' + self.selectedHoraHId);
+            //console.log('SELECTED D-> ' + self.selectedHoraDId);
+            //console.log('SELECTED H-> ' + self.selectedHoraHId);
             self.calcularPrecioReservar();
                      
         });
@@ -214,30 +235,31 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
    
     
     this.mostrarReservar = function(){
+        if($scope.fechaIngresoListaNegra == 0)
              $state.go('Clientes.verCancha.Reservar');  
+        else
+            {
+                alert('No podés reservar ya que estás en la lista negra del complejo desde el ' + $scope.fechaIngresoListaNegra);
+            }
     };
 
     
     //Si el cliente tiene tarjeta guardada, traigo los datos de la misma...
     this.getTarjeta = function(){
             var id = sessionStorage.id;
-            console.log(id);
 			TarjetasClienteService.query({idCliente:id, idAux:0}).$promise.then(function(data){
-                    //$scope.cancha = data;
-                    //$scope.idDuenio = data[0].IdDuenio; 
-                    //id="expMonth"                  
-                
-                    /*if(data[0].nroTarjeta != null && data[0].nroTarjeta != undefined)
-                         document.getElementById("expMonth").value = ; */
-                       
-                    if(data[0].NroTarjeta != null && data[0].NroTarjeta != undefined)
-                         document.getElementById("cardNumber").value = data[0].NroTarjeta;
-                
-                    if(data[0].Anio != null && data[0].Anio != undefined)
-                         document.getElementById("expYear").value = data[0].Anio;
-                
-                    if(data[0].Mes != null && data[0].Mes != undefined)
-                         document.getElementById("expMonth").value = data[0].Mes;
+                    
+                    if(data != null && data != undefined)
+                    {
+                        if(data[0].NroTarjeta != null && data[0].NroTarjeta != undefined)
+                             document.getElementById("cardNumber").value = data[0].NroTarjeta;
+
+                        if(data[0].Anio != null && data[0].Anio != undefined)
+                             document.getElementById("expYear").value = data[0].Anio;
+
+                        if(data[0].Mes != null && data[0].Mes != undefined)
+                             document.getElementById("expMonth").value = data[0].Mes;
+                    }
                         
             });
 	};
@@ -308,9 +330,13 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
         if(confirm('¿Seguro desea realizar el pago?'))
         {
             $('ul.setup-panel li:eq(2)').removeClass('disabled');
+            
             $('ul.setup-panel li a[href="#step-3"]').trigger('click');
             //$(this).remove();
             $(this).prop('disabled', true);
+            $('ul.setup-panel li:eq(0)').addClass('disabled');
+            $('ul.setup-panel li:eq(1)').addClass('disabled');
+            
             
             //Preparo los parametros para reservar la cancha.
             function pad(n) {return n < 10 ? "0"+n : n;}
