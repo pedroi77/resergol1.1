@@ -57,17 +57,17 @@
 
             
 
-        </div>
+    </div>
         <!-- /.row -->
         
        <div class="container" ui-view></div>
 
       
         <hr>
-    <div class="row">
-        <div class="col-lg-6">
+    <div class="row" class="col-md-12">
+        <div class="col-md-5">
             <h3>Tabla de posiciones</h3>
-            <table ng-table="tor.tabla"class="table table-hover" > <!-- class table hover-->
+           <table ng-table="tor.table" class="table table-hover" > <!-- class table hover-->
                 <tr ng-repeat="equipo in tor.tabla"  >
                     <td title="'Pos'"  >{{equipo.pos}}</td>    
                     <td title="'Puntos'"  >{{equipo.CantPuntos}}</td>
@@ -79,61 +79,55 @@
                 </tr>
             </table>
         </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <h3>Mira aca el fixture!!</h3>
-                <div>
-                    <button type="button" class="btn btn-default btn-sm">1</button>
-                    <button type="button" class="btn btn-default btn-sm">2</button>
-                    <button type="button" class="btn btn-default btn-sm">3</button>
-                    <button type="button" class="btn btn-default btn-sm">4</button>
-                    <button type="button" class="btn btn-default btn-sm">5</button>
-                    <button type="button" class="btn btn-default btn-sm">6</button>
-                    <button type="button" class="btn btn-default btn-sm">7</button>
-                    <button type="button" class="btn btn-default btn-sm">8</button>
-                    <button type="button" class="btn btn-default btn-sm">9</button>
-                    <button type="button" class="btn btn-default btn-sm">10</button>
-                    <button type="button" class="btn btn-default btn-sm">11</button>
-                    <button type="button" class="btn btn-default btn-sm">12</button>
-                    <button type="button" class="btn btn-default btn-sm">13</button>
-                    <button type="button" class="btn btn-default btn-sm">14</button>
-                    <button type="button" class="btn btn-default btn-sm">15</button>
-                </div>
-                
-                <!-- class table hover-->
-                <table class="table table-hover"> 
-                    <tbody>
-                        <!-- Row 1 -->
-                        <tr>
-                            <td>Juan FC</td>
-                            <td>-</td>
-                            <td>VS</td>
-                            <td>-</td>
-                            <td>A.C. Milanesas</td>
-                            <td>14:00Hs</td>
-                        </tr>
-                        <!-- Row 2 -->
-                        <tr>
-                            <td>C.A.Brones</td>
-                            <td>-</td>
-                            <td>VS</td>
-                            <td>-</td>
-                            <td>Juan FC</td>
-                            <td>14:00Hs</td>
-                        </tr>
-                        <!-- Row 2 -->
-                        <tr>
-                            <td>A.C. Milanesas</td>
-                            <td>-</td>
-                            <td>VS</td>
-                            <td>-</td>
-                            <td>C.A.Brones</td>
-                            <td>14:00Hs</td>
-                        </tr>
-                    </tbody>
-                </table>
+        
+        <div class="col-md-7">
+            <h3>Mira aca el fixture!</h3>
+
+            <table  ng-table="tor.table" class="table table-hover" > 
+                <tr ng-repeat="partido in tor.fixture"  >
+                    <td title="'Fecha'"  >{{partido.fecha}}</td>    
+                    <td title="'Hora'"  >{{partido.horaInicio}}</td>
+                    <td title=""  >{{partido.equipo1}}</td>    
+                    <td title="" ng-switch="true" style="width:15%">
+                        <span ng-switch-default class="editable-text">{{partido.gol1}}</span>
+                        <div class="controls" ng-class="" ng-switch-when="true">
+                            <input type="number" 
+                                   name="gol1" 
+                                   ng-model="partido.gol1" 
+                                   min=0 max=500
+                                   class="editable-input form-control" required/>
+                        </div>
+                    </td>
+
+                    <td title=""  >{{partido.VS}}</td>
+
+                    <td title="" ng-switch="true" style="width:15%">
+                        <span ng-switch-default class="editable-text">{{partido.gol2}}</span>
+                        <div class="controls" ng-class="" ng-switch-when="true">
+                            <input type="number" 
+                                   name="gol2" 
+                                   ng-model="partido.gol2" 
+                                   min=0 max=500
+                                   class="editable-input form-control" required/>
+                        </div>
+                    </td>
+
+                    <td title=""  >{{partido.equipo2}}</td>
+                    <td title="'Cancha'"  >{{partido.cancha}}</td>
+                    <td>
+                         <button class="btn btn-primary btn-sm" ng-click="demo.save(row, rowForm)" ng-if="partido.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>
+                        <button class="btn btn-default btn-sm" ng-click="demo.cancel(row, rowForm)" ng-if="partido.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
+                        <button class="btn btn-default btn-sm" ng-click="partido.isEditing = true" ng-if="main.Usuario.tipo=='D' && !partido.isEditing"><span class="glyphicon glyphicon-pencil"></span></button>
+                    </td>
+                </tr>
+            </table>
+           
+            <h4>Fechas</h4>
+            <div>
+                <button ng-repeat="fecha in tor.fechas" type="button" class="btn btn-default btn-sm" ng-click="tor.cargarFixture(fecha.idFecha)">{{fecha.idFecha}}</button>
             </div>
         </div>
+        
     </div>
 <!-- /.row -->
       <!-- Related Projects Row -->

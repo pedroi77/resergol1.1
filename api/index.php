@@ -408,6 +408,21 @@ $app->get('/common/torneo/liga/tabla/:idTorneo', function($idTorneo){
 });
 
 
+//get de posiciones de liga por torneo
+$app->get('/common/torneo/liga/fechas/:idTorneo', function($idTorneo){
+        $fechas = new TorneoLiga();
+        $data = $fechas->getFechasBytorneo($idTorneo);
+        sendResult($data);
+});
+
+//
+$app->get('/common/torneo/liga/fixture/:idTorneo/:idFecha', function($idTorneo, $idfecha){
+    $fixture = new TorneoLiga();
+    $data = $fixture->getFixtureByFecha($idTorneo, $idfecha);
+	sendResult($data);
+});
+
+
 //alta imagenes
 $app->post('/duenios/torneos/imagen', function(){
     $headers = apache_request_headers();
