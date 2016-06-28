@@ -11,7 +11,6 @@ class TorneoLiga
     
        
      public function getTablaDePosiciones($IdTorneo){  
-
         $stmt = $this->connection->prepare('SET @IdTorneo := ?');
         $stmt->bind_param('i', $IdTorneo);
         $stmt->execute(); 
@@ -28,5 +27,42 @@ class TorneoLiga
         return $equipos;
     }
     
+    public function getFechasBytorneo($IdTorneo){  
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getfechasLigaByIdTorneo(@IdTorneo);";
+        $fechas= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $fechas[] = $fila;
+            }
+            $result->free();
+        }
+        return $fechas;
+    }
+    
+     public function getFixtureByFecha($IdTorneo, $IdFecha){  
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute(); 
+         
+        $stmt = $this->connection->prepare('SET @IdFecha := ?');
+        $stmt->bind_param('i', $IdFecha);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getFixtureByFecha(@IdTorneo, @IdFecha);";
+        $fixture= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $fixture[] = $fila;
+            }
+            $result->free();
+        }
+        return $fixture;
+    }
 }
 
