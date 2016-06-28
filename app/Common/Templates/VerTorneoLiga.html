@@ -16,21 +16,16 @@
     <div class="row">
 
         <div class="col-md-6">
-            <img class="img-responsive" src="/../resergol1.1/images/torneos/torneo1.jpg" alt="">
-        </div>
-
-        <div class="col-md-6">
-            <h3>Descripcion del torneo</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
-            <h3>Caracteristicas del torneo</h3>
-            <ul>
-                <li>Torneo de tipo Liga</li>
-                <li>4 canchas a jugar</li>
-                <li>7 jugadores maximo por equipo</li>
-                <li>20 equipos maximo</li>
-                <li>Otros</li>
-            </ul>
-
+            <br> </br>
+            <uib-carousel active="tor.active" interval="tor.myInterval" no-wrap="tor.noWrapSlides">
+                <uib-slide ng-repeat="img in tor.imagenes" index="img.id">
+                    <img ng-src="{{img.imagen}}" style="margin:auto;">
+                    <div class="carousel-caption">
+                    </div>
+                </uib-slide>
+            </uib-carousel>
+            
+            <br> </br>
             <div class="col-sm-12" ng-controller= "ClientesController as cli">
                 <button class="btn btn-md btn-primary btn-block" ng-click= "cli.inscripcionTorneoLiga()">
                     Inscribite! <i class="glyphicon glyphicon-hand-right"></i>
@@ -38,125 +33,101 @@
             </div> 
         </div>
 
+        <div class="col-md-6">
+            <h3>Descripción del torneo</h3>
+            <p>{{tor.torneo.Descripcion}}</p>
+            <h3>Reglas</h3>
+            <p>{{tor.torneo.Reglas}}</p>
+            <h3>Caracteristicas del torneo</h3>
+            <ul>
+                <li>Tipo de torneo {{tor.torneo.tipo}}.</li>
+                <li>Cantidad de equipos {{tor.torneo.CantEquipos}}.</li>
+                <li>{{tor.torneo.CantJugadores}} jugadores por equipo (en cancha).</li>
+                <li>Superficie {{tor.torneo.superficie}}.</li>
+                <li>{{(tor.torneo.idaYvuelta==1)?'Ida y vuelta.':'Solo ida.'; }}</li>
+                <li>Duración del partido {{tor.torneo.tiempoPartido}} (Minutos).</li>
+                <li>Precio de inscripción {{tor.torneo.PrecioInscripcion}}$.</li>
+                <li>Fechas de inscripcion {{tor.torneo.FecIniInscripcion}} al {{tor.torneo.FecFinInscripcion}}.</li>
+                <li>Inicio y fin del torneo {{tor.torneo.FechaInicio}} al {{tor.torneo.FechaFin}}.</li>
+                <li>Horas de aviso de cancelación {{tor.torneo.HorasCancelacion}}.</li>
+            </ul>
+
+           
+        </div>
+
             
 
-        </div>
+    </div>
         <!-- /.row -->
         
        <div class="container" ui-view></div>
 
       
         <hr>
-    <div class="row">
-        <div class="col-lg-6">
-            <h3>Equipos anotados en este torneo</h3>
-            <table class="table table-hover"> <!-- class table hover-->
-                <!-- table head-->
-                <thead>
-                    <tr>
-                        <th>Pos</th>
-                        <th>Equipo</th>
-                        <th>PJ</th>
-                        <th>PG</th>
-                        <th>PE</th>
-                        <th>PP</th>
-                        <th>GF</th>
-                        <th>GC</th>
-                    </tr>
-                </thead>
-            
-                <tbody>
-                    <!-- Row 1 -->
-                    <tr>
-                        <td>1</td>
-                        <td>Juan FC</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <!-- Row 2 -->
-                    <tr>
-                    <td>2</td>
-                        <td>C.A.Brones</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <!-- Row 3 -->
-                    <tr>
-                    <td>3</td>
-                        <td>A C Milanesas</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
+    <div class="row" class="col-md-12">
+        <div class="col-md-5">
+            <h3>Tabla de posiciones</h3>
+           <table ng-table="tor.table" class="table table-hover" > <!-- class table hover-->
+                <tr ng-repeat="equipo in tor.tabla"  >
+                    <td title="'Pos'"  >{{equipo.pos}}</td>    
+                    <td title="'Puntos'"  >{{equipo.CantPuntos}}</td>
+                    <td title="'Equipo'">{{equipo.nombre}}</td>
+                    <td title="'PJ'"  >{{equipo.Jugados}}</td>
+                    <td title="'PG'"  >{{equipo.Ganados}}</td>
+                    <td title="'PE'"  >{{equipo.Empatados}}</td>
+                    <td title="'PP'"  >{{equipo.Perdidos}}</td>
+                </tr>
             </table>
         </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <h3>Mira aca el fixture!!</h3>
-                <div>
-                    <button type="button" class="btn btn-default btn-sm">1</button>
-                    <button type="button" class="btn btn-default btn-sm">2</button>
-                    <button type="button" class="btn btn-default btn-sm">3</button>
-                    <button type="button" class="btn btn-default btn-sm">4</button>
-                    <button type="button" class="btn btn-default btn-sm">5</button>
-                    <button type="button" class="btn btn-default btn-sm">6</button>
-                    <button type="button" class="btn btn-default btn-sm">7</button>
-                    <button type="button" class="btn btn-default btn-sm">8</button>
-                    <button type="button" class="btn btn-default btn-sm">9</button>
-                    <button type="button" class="btn btn-default btn-sm">10</button>
-                    <button type="button" class="btn btn-default btn-sm">11</button>
-                    <button type="button" class="btn btn-default btn-sm">12</button>
-                    <button type="button" class="btn btn-default btn-sm">13</button>
-                    <button type="button" class="btn btn-default btn-sm">14</button>
-                    <button type="button" class="btn btn-default btn-sm">15</button>
-                </div>
-                
-                <!-- class table hover-->
-                <table class="table table-hover"> 
-                    <tbody>
-                        <!-- Row 1 -->
-                        <tr>
-                            <td>Juan FC</td>
-                            <td>-</td>
-                            <td>VS</td>
-                            <td>-</td>
-                            <td>A.C. Milanesas</td>
-                            <td>14:00Hs</td>
-                        </tr>
-                        <!-- Row 2 -->
-                        <tr>
-                            <td>C.A.Brones</td>
-                            <td>-</td>
-                            <td>VS</td>
-                            <td>-</td>
-                            <td>Juan FC</td>
-                            <td>14:00Hs</td>
-                        </tr>
-                        <!-- Row 2 -->
-                        <tr>
-                            <td>A.C. Milanesas</td>
-                            <td>-</td>
-                            <td>VS</td>
-                            <td>-</td>
-                            <td>C.A.Brones</td>
-                            <td>14:00Hs</td>
-                        </tr>
-                    </tbody>
-                </table>
+        
+        <div class="col-md-7">
+            <h3>Mira aca el fixture!</h3>
+
+            <table  ng-table="tor.table" class="table table-hover" > 
+                <tr ng-repeat="partido in tor.fixture"  >
+                    <td title="'Fecha'"  >{{partido.fecha}}</td>    
+                    <td title="'Hora'"  >{{partido.horaInicio}}</td>
+                    <td title=""  >{{partido.equipo1}}</td>    
+                    <td title="" ng-switch="true" style="width:15%">
+                        <span ng-switch-default class="editable-text">{{partido.gol1}}</span>
+                        <div class="controls" ng-class="" ng-switch-when="true">
+                            <input type="number" 
+                                   name="gol1" 
+                                   ng-model="partido.gol1" 
+                                   min=0 max=500
+                                   class="editable-input form-control" required/>
+                        </div>
+                    </td>
+
+                    <td title=""  >{{partido.VS}}</td>
+
+                    <td title="" ng-switch="true" style="width:15%">
+                        <span ng-switch-default class="editable-text">{{partido.gol2}}</span>
+                        <div class="controls" ng-class="" ng-switch-when="true">
+                            <input type="number" 
+                                   name="gol2" 
+                                   ng-model="partido.gol2" 
+                                   min=0 max=500
+                                   class="editable-input form-control" required/>
+                        </div>
+                    </td>
+
+                    <td title=""  >{{partido.equipo2}}</td>
+                    <td title="'Cancha'"  >{{partido.cancha}}</td>
+                    <td>
+                         <button class="btn btn-primary btn-sm" ng-click="demo.save(row, rowForm)" ng-if="partido.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>
+                        <button class="btn btn-default btn-sm" ng-click="demo.cancel(row, rowForm)" ng-if="partido.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
+                        <button class="btn btn-default btn-sm" ng-click="partido.isEditing = true" ng-if="main.Usuario.tipo=='D' && !partido.isEditing"><span class="glyphicon glyphicon-pencil"></span></button>
+                    </td>
+                </tr>
+            </table>
+           
+            <h4>Fechas</h4>
+            <div>
+                <button ng-repeat="fecha in tor.fechas" type="button" class="btn btn-default btn-sm" ng-click="tor.cargarFixture(fecha.idFecha)">{{fecha.idFecha}}</button>
             </div>
         </div>
+        
     </div>
 <!-- /.row -->
       <!-- Related Projects Row -->

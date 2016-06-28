@@ -12,6 +12,10 @@ require_once("modelos/canchas.php");
 require_once("modelos/complejos.php");
 require_once("modelos/reservas.php");
 require_once("modelos/tarjetasClientes.php");
+require_once("modelos/listasNegras.php");
+require_once("modelos/torneosLiga.php");
+require_once("modelos/reservasFijas.php");
+require_once("modelos/reservasTemp.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -399,6 +403,27 @@ $app->get('/duenios/torneos/equipos/:idTorneo', function($idTorneo){
     }
 });
 
+//get de posiciones de liga por torneo
+$app->get('/common/torneo/liga/tabla/:idTorneo', function($idTorneo){
+        $tabla = new TorneoLiga();
+        $data = $tabla->getTablaDePosiciones($idTorneo);
+        sendResult($data);
+});
+
+
+//get de posiciones de liga por torneo
+$app->get('/common/torneo/liga/fechas/:idTorneo', function($idTorneo){
+        $fechas = new TorneoLiga();
+        $data = $fechas->getFechasBytorneo($idTorneo);
+        sendResult($data);
+});
+
+//
+$app->get('/common/torneo/liga/fixture/:idTorneo/:idFecha', function($idTorneo, $idfecha){
+    $fixture = new TorneoLiga();
+    $data = $fixture->getFixtureByFecha($idTorneo, $idfecha);
+	sendResult($data);
+});
 
 
 //alta imagenes
@@ -648,6 +673,73 @@ $app->get('/clientes/tarjetas/', function(){
 	sendResult($data);
     
 });
+
+
+//-**********************************LISTA NEGRA*************************************************************--//
+//Get fecha de ingreso a la lista negra si es que el cliente está en la lista negra.
+$app->get('/listaNegra/:idCliente/:idComplejo', function($idCliente, $idComplejo){
+    
+    $listaNegra = new ListaNegra();
+    $data = $listaNegra->verificarClienteListaNegra($idCliente, $idComplejo);
+	sendResult($data);
+    
+});
+
+
+//-***********************************RESERVA FIJA**************************************************************--//
+//Trae las fechas de las reservas fijas que quiere hacer un cliente de la fecha seleccionada hasta que termine el año.
+//Tanto las disponibles como las que no, y estás las indica a traves del campo noDisponible.
+$app->get('/clientes/reservasFijas/:pidCancha/:pIdComplejo/:pHoraDesde/:pIdDia/:pAnio/:pFechaPrimerReserva', function($pIdCancha, $pIdComplejo, $pHoraDesde, $pIdDia, $pAnio, $pFechaPrimerReserva){
+    
+    $fechasResFijas = new ReservaFija();
+    $data = $fechasResFijas->getFechasReservaFija($pIdCancha, $pIdComplejo, $pHoraDesde, $pIdDia, $pAnio, $pFechaPrimerReserva);
+	sendResult($data);
+    
+});
+
+
+//alta
+$app->post('/clientes/reservasFijas/', function(){
+    
+    //$headers = apache_request_headers();
+    //$token = explode(" ", $headers["Authorization"]);
+    //$tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    //$reserva = new Reserva();
+    //$tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    //if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $reservaF = new ReservaFija();
+        $result = $reservaF->create($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al crear la reserva fija");
+        };
+        
+    //}
+	//else{
+    //    sendError("token invalido");
+    //}
+    
+});
+
+//-***********************************RESERVAS TEMPORALES**************************************************************--//
+$app->get('/clientes/reservasTemp/:idCancha/:idComplejo', function($pIdCancha, $pIdComplejo){
+    
+    $resTemp = new ReservaTemp();
+    $data = $resTemp->getReservaTemp($pIdCancha, $pIdComplejo);
+	sendResult($data);
+    
+});
+
+
+
+
 
 
 $app->run();

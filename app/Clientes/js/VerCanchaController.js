@@ -1,7 +1,7 @@
 /*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("VerCanchaController", function($scope, $state, $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService){
+resergolApp.controller("VerCanchaController", function($scope, $state, $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService){
 	
     var self = this;
     
@@ -11,6 +11,14 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     $scope.idDuenio = -1;
     this.diasComplejo = [];
     $scope.dt = null;
+    $scope.FechasReservaFija = [];
+    $scope.aceptaReservaFija = 0;
+    /*$scope.listasReservasFijas = [];*/
+    
+    $scope.listasReservasFijas = [
+        /*{  }*/
+      ];
+    
     
     this.horaDesde = 0;
     this.horasDesde = [];
@@ -38,6 +46,8 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     $scope.HorasDisponibles = [];
     $scope.HorasReservasDia = [];
     
+    $scope.fechaIngresoListaNegra = 0; //Si es 0, no está en la lista negra. Si está, guardo la fecha que ingresó a la misma.
+    
     this.Reserva ={
                         idCliente:sessionStorage.id,
                         idComplejo: $scope.idComplejo,
@@ -49,6 +59,19 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                         pagado: 800,
                         porcentajePago: 100,
                         estadoReserva: 2 //1-Señado 2-PagoCompleto
+                      };
+    
+    this.ReservaFija ={
+                        idCliente:sessionStorage.id,
+                        idComplejo: $scope.idComplejo,
+                        idCancha: $scope.idCancha,
+                        fechaPartido: null,
+                        horaD: '18:00:00',
+                        horaH: '19:00:00',
+                        importeAPagar: 0,
+                        pagado: 0,
+                        porcentajePago: 0,
+                        estadoReserva: 3 //1-Señado 2-PagoCompleto 3-Fija
                       };
     
     this.Tarjeta ={
@@ -71,12 +94,70 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                 DuenioDiasService.query({idDuenio:$scope.idDuenio}).$promise.then(function(data) {
                     self.diasComplejo = data;
                 }); 
+                
+                self.verificarListaNegra();
    
             });
 	};
     
     
    self.getCancha();
+
+    
+    this.imprimirComprobante = function() {
+      //Traigo el horario de la reserva.    
+      var horario = self.selectedHoraDId + ":00 hs. a " + self.selectedHoraHId + ":00 hs.";
+
+      //Configuro el PDF.    
+      var doc = new jsPDF();
+      doc.setFontStyle("bolditalic");
+      doc.setFontSize(16);
+      doc.text(50, 20, 'RESERGOL - COMPROBANTE DE RESERVA');
+      doc.setFontSize(14);
+      doc.setFontStyle("italic");
+      doc.text(20, 30, 'Usuario: ' + sessionStorage.usuario);
+      doc.text(20, 40, 'Complejo: ' + $scope.cancha[0].Complejo);
+      doc.text(20, 50, $scope.cancha[0].Calle + " " + $scope.cancha[0].Altura + ", " + $scope.cancha[0].Localidad + " - " + $scope.cancha[0].Provincia);
+      doc.text(20, 60, 'Cancha: ' + $scope.cancha[0].nombre);
+      doc.text(20, 70, 'Fecha: ' + $scope.fechaPartido + " " + horario);
+      doc.line(20, 85, 200, 85);
+      doc.setFontStyle("bolditalic");
+      doc.setFontSize(18);
+      doc.text(20, 100, 'A Pagar: $' + parseFloat($scope.precioAPagar + $scope.restante));
+      doc.text(85, 100, 'Pagado: $' + $scope.precioAPagar); 
+      doc.text(150, 100, 'Restante: $' + $scope.restante);
+      doc.line(20, 110, 200, 110);
+      doc.setFontSize(12);
+      doc.text(40, 130, 'www.resergol.com.ar - 2016 - Todos los derechos reservados.');
+
+      var string = doc.output('datauristring');
+        
+      var leftPosition = (window.screen.width / 2) - ((500 / 2) + 10);
+      var topPosition = (window.screen.height / 2) - ((500 / 2) + 50);
+        
+      window.open(string, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top="+topPosition+",left="+leftPosition+",width=500,height=500");
+      
+        
+    };
+    
+     
+
+    
+  this.verificarListaNegra = function(){
+			ListasNegrasService.query({idCliente:sessionStorage.id, idComplejo:$scope.idComplejo}).$promise.then(function(data){
+                 if(data != null && data != undefined && data[0] != undefined)
+                 {
+                     if(data[0].FechaIngreso != null && data[0].FechaIngreso != undefined)
+                        $scope.fechaIngresoListaNegra = data[0].FechaIngreso;
+                     else
+                        $scope.fechaIngresoListaNegra = 0;     
+                 }
+                else
+                    $scope.fechaIngresoListaNegra = 0;
+                 
+            });
+	};
+        
     
     
     this.getHorasDisponiblesByFecha = function(fecha/*, horaActual*/){
@@ -172,6 +253,7 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                         {
                             //console.log('no agrego');
                             bAgrego = false;
+                            console.log('NO AGREGO A ' + i);
                             return;
                         }	
 
@@ -180,14 +262,18 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                     if(bAgrego)
                     {
                         var sDesc = i + ':00 hs.';
-                        //console.log('agregooooo');
+                        console.log('AGREGO A ' + i);
                         self.horasH.push({id: i, desc: sDesc});
                         
                         //console.log('se agregaron--> ' + self.horasH.length);
                         self.selectedHoraHId = self.horasH[0].id; 
                     }
-                    //else
-                        //return; //Ya tengo que salir del for principal acá...
+                    else
+                        {
+                            self.calcularPrecioReservar();
+                            return; //Ya tengo que salir del for principal acá...
+                        }
+                        
                 }
                 
             }
@@ -203,41 +289,126 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                 }
             }
                 
-            console.log('SELECTED D-> ' + self.selectedHoraDId);
-            console.log('SELECTED H-> ' + self.selectedHoraHId);
+            //console.log('SELECTED D-> ' + self.selectedHoraDId);
+            //console.log('SELECTED H-> ' + self.selectedHoraHId);
             self.calcularPrecioReservar();
                      
         });
         
         
     };
+    
+    this.getFechasReservaFija = function(hDesde, idDia, anio, fprimerReserva){
+			ReservasFijasService.query({pIdCancha:$scope.idCancha, pIdComplejo:$scope.idComplejo, pHoraDesde:hDesde, pIdDia:idDia, pAnio:anio, pFechaPrimerReserva:fprimerReserva}).$promise.then(function(data){
+                    $scope.FechasReservaFija = data;
+                    console.log('PRIMERA FECHA FIJA->' + $scope.FechasReservaFija[0].fecha);
+                
+                var noDisponibles = [];
+                console.log(data);
+                var hHasta = self.selectedHoraHId + ":00:00";
+                if($scope.FechasReservaFija.length == 0)
+                {
+                    alert('La reserva fija no se hará ya que no hay días disponibles en lo que resta del año para el horario seleccionado...');
+                }
+                else
+                {
+                    var noDispEnString = "";
+                    var importeTotal = parseFloat($scope.precioAPagar + $scope.restante);
+                    var horaHasta = self.selectedHoraHDId + ":00:00";
+                     angular.forEach($scope.FechasReservaFija, function(aux) {
+                         //Guardo las fechas no disponibles para la reserva fija, asi se las muestro al cliente.
+                        if(aux.NoDisponible != undefined && aux.NoDisponible != null && aux.NoDisponible != "")
+                        {
+                            noDisponibles.push(aux.NoDisponible); 
+                            noDispEnString += aux.NoDisponible + "\n";
+                        }
+                        else
+                        {
+                            $scope.listasReservasFijas.push({idCliente: sessionStorage.id, idComplejo: $scope.idComplejo, idCancha: $scope.idCancha, fechaPartido: aux.fecha, horaD: hDesde, horaH: hHasta, importeAPagar: importeTotal, pagado: 0, porcentajePago: 0, estadoReserva: 3 });
+                            
+                        }
+                         
+                     });
+                    
+                    if(noDisponibles.length > 0)
+                    {
+                        var mensaje = 'La reserva fija se realizará para el día y horario elegido en lo que resta del año. \n ';
+                        mensaje += 'Sin embargo las siguientes fechas no se podrán reservar ya que no están disponibles: \n ';
+                        mensaje += noDispEnString + "\n \n" + '¿Desea realizar la reserva fija igualmente?';
+                        if(confirm(mensaje))
+                        {
+                            alert('Por favor completá el pago de la reserva (sólo se paga lo correspondiente a la primer reserva), las fechas restantes las reservará el sistema, y se pagarán personalmente en el complejo correspondiente. ');
+                            
+                            $scope.aceptaReservaFija = 1;
+                        }
+                        else
+                            $scope.aceptaReservaFija = 0;
+                        
+                    }
+                    else
+                    {
+                        //Se puede hacer la reserva fija por el resto del año para todos los dias!.
+                        var mensaje = 'La reserva fija se realizará para el día y horario elegido en lo que resta del año. \n ';
+                        mensaje += noDispEnString + "\n \n" + '¿Desea realizar la reserva fija?';
+                        if(confirm(mensaje))
+                        {
+                            alert('Por favor completá el pago de la reserva (sólo se paga lo correspondiente a la primer reserva), las fechas restantes las reservará el sistema, y se pagarán personalmente en el complejo correspondiente. ');
+                            
+                            $scope.aceptaReservaFija = 1;
+                        }
+                        else
+                            $scope.aceptaReservaFija = 0;
+                    }
+                }
+                
+	       });
+        
+        };
    
     
     this.mostrarReservar = function(){
-             $state.go('Clientes.verCancha.Reservar');  
+        if($scope.fechaIngresoListaNegra == 0)
+        {
+          ReservasTempService.query({idCancha:$scope.idCancha, idComplejo:$scope.idComplejo}).$promise.then(function(data){
+              console.log(data[0].existe);
+              if(data[0].existe == 1)
+              {
+                alert("La cancha está siendo reservada por otra persona. \n Por favor volvé a intentarlo en unos segundos...");
+                return false;  
+              }
+              else
+              {
+                  $('html,body').animate({scrollTop:1000},'slow');
+                  $state.go('Clientes.verCancha.Reservar');  
+              }
+                
+          });
+
+
+        }
+        else
+        {
+            alert('No podés reservar ya que estás en la lista negra del complejo desde el ' + $scope.fechaIngresoListaNegra);
+        }
     };
 
     
     //Si el cliente tiene tarjeta guardada, traigo los datos de la misma...
     this.getTarjeta = function(){
             var id = sessionStorage.id;
-            console.log(id);
 			TarjetasClienteService.query({idCliente:id, idAux:0}).$promise.then(function(data){
-                    //$scope.cancha = data;
-                    //$scope.idDuenio = data[0].IdDuenio; 
-                    //id="expMonth"                  
-                
-                    /*if(data[0].nroTarjeta != null && data[0].nroTarjeta != undefined)
-                         document.getElementById("expMonth").value = ; */
-                       
-                    if(data[0].NroTarjeta != null && data[0].NroTarjeta != undefined)
-                         document.getElementById("cardNumber").value = data[0].NroTarjeta;
-                
-                    if(data[0].Anio != null && data[0].Anio != undefined)
-                         document.getElementById("expYear").value = data[0].Anio;
-                
-                    if(data[0].Mes != null && data[0].Mes != undefined)
-                         document.getElementById("expMonth").value = data[0].Mes;
+                    
+                    if(data != null && data != undefined)
+                    {
+                        if(data[0].NroTarjeta != null && data[0].NroTarjeta != undefined)
+                             document.getElementById("cardNumber").value = data[0].NroTarjeta;
+
+                        if(data[0].Anio != null && data[0].Anio != undefined)
+                             document.getElementById("expYear").value = data[0].Anio;
+
+                        if(data[0].Mes != null && data[0].Mes != undefined)
+                             document.getElementById("expMonth").value = data[0].Mes;
+                    }
                         
             });
 	};
@@ -259,8 +430,27 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
         function pad(n) {return n < 10 ? "0"+n : n;}
             $scope.fechaPartido = pad($scope.fechaElegida.getDate())+"/"+pad($scope.fechaElegida.getMonth()+1)+"/"+$scope.fechaElegida.getFullYear();
         
+        
         if(sessionStorage.id != undefined && sessionStorage.id != 0)
             self.getTarjeta();
+        
+        /////////
+        
+        if(document.getElementById('chkReservaFija').checked)
+        {
+            //Si quiere reserva fija, traigo todos los días que se van a reservar de acá a fin de año.
+            var hDesde = self.selectedHoraDId + ":00:00";
+            var idDeDia = $scope.fechaElegida.getDay() == 0 ? 7 : $scope.fechaElegida.getDay();
+            var anio = $scope.fechaElegida.getFullYear();
+            function pad(n) {return n < 10 ? "0"+n : n;}
+            var fPrimerReser = pad($scope.fechaElegida.getFullYear()+"-"+pad($scope.fechaElegida.getMonth()+1)+"-"+$scope.fechaElegida.getDate());
+            
+            self.getFechasReservaFija(hDesde, idDeDia, anio, fPrimerReser);
+            
+        }
+        //*****//
+        
+        
     };
     
     
@@ -269,7 +459,6 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     this.reservar = function(){
     
         var ReservaNueva = new ReservasService();
-        
         
         self.Reserva.fechaPartido = $scope.fechaPartido;
         self.Reserva.horaD = $scope.hDesdePartido;
@@ -290,17 +479,32 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                 idReserva = reponse.data[0];
                 console.log('idReserva -->' + idReserva);
             
-                if (document.getElementById('chkGuardaTarjeta').checked)
-                {
-                   //Si existe una tarjeta para el idCliente, hacer update! ya que el idCliente es PK. 
-                   self.guardarTarjeta();
-                }
+        //Si realizó reserva fija, hago todas las reservas despues de haber reservado la primera normalmente.
+        if($scope.aceptaReservaFija == 1)
+        {//ivo
+            var ReservaFijaNueva = new ReservasFijasService();
+            ReservaFijaNueva.data = $scope.listasReservasFijas;
+            console.log(ReservaFijaNueva.data[0]);
+            ReservasFijasService.save(ReservaFijaNueva.data, function(reponse){    
+                //idReservaFija = reponse.data[0];
+                //console.log('idReserva -->' + idReservaFija);                      
+            },function(errorResponse){
+                console.log('ERROR res fija...'); 
+            });
+        }    
             
-              },function(errorResponse){
-                console.log('ERROR...'); 
-             });
+         if(document.getElementById('chkGuardaTarjeta').checked)
+             self.guardarTarjeta();
+        
+            
+          },function(errorResponse){
+            console.log('ERROR...'); 
+         });
+        
+        
+        
+        
     };
-    
     
     
     this.pagarYReservar = function(){
@@ -308,16 +512,19 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
         if(confirm('¿Seguro desea realizar el pago?'))
         {
             $('ul.setup-panel li:eq(2)').removeClass('disabled');
+            
             $('ul.setup-panel li a[href="#step-3"]').trigger('click');
             //$(this).remove();
             $(this).prop('disabled', true);
+            $('ul.setup-panel li:eq(0)').addClass('disabled');
+            $('ul.setup-panel li:eq(1)').addClass('disabled');
+            
             
             //Preparo los parametros para reservar la cancha.
             function pad(n) {return n < 10 ? "0"+n : n;}
             //$scope.fechaPartido = pad($scope.fechaElegida.getDate())+"/"+pad($scope.fechaElegida.getMonth()+1)+"/"+$scope.fechaElegida.getFullYear();
             //var fechaPartido = $scope.fechaElegida.toLocaleDateString();
             $scope.hDesdePartido = self.selectedHoraDId + ":00:00";
-            
             $scope.hHastaPartido = self.selectedHoraHId + ":00:00";        
             //console.log(fechaPartido);
             
@@ -587,14 +794,6 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
         var fecha = document.getElementById("fecha").value;
         if(fecha == "" || fecha == null || fecha == undefined)
             return false;
-        
-        /*var hdes = self.horaDesde;
-        if(hdes == "" || hdes == null || hdes == undefined)
-            return false;
-        
-        var hhas = self.horaDesde2; 
-        if(hhas == "" || hhas == null || hhas == undefined)
-            return false;*/
         
         if(self.selectedHoraDId == null || self.selectedHoraHId == null)
             return false;

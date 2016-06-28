@@ -71,8 +71,10 @@
                                                         <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                                                       </span>
                                    </p>
-                                    </div>   
-                                    
+                                    </div> 
+                                    <label class="checkbox-inline"><input id="chkReservaFija" type="checkbox" value="" >Reserva fija.
+                                    </label>
+                                    <label class="glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title="La reserva fija se realizará para el resto del año, a partir del día y horario seleccionado. En caso de aumentos o modificaciones será notificado y podrá cancelar las reservas. Sólo se pagará la primer reserva a través de Resergol, el resto se irá pagando en el complejo." ></label>
                                 </div>
                                 </div>
 
@@ -302,7 +304,8 @@
                          </header>
                           <ul class="liSeparados">
                               <li>
-                            <button id="" class="btn btn-success btn-md view-pdf" href="https://www.polyu.edu.hk/iaee/files/pdfsample.pdf">IMPRIMIR COMPROBANTE</button>
+                            <!--<button id="btnImpComprobante" ng-click="can.imprimirComprobante()" class="btn btn-success btn-md view-pdf" href="https://www.polyu.edu.hk/iaee/files/pdfsample.pdf">IMPRIMIR COMPROBANTE</button>-->
+                            <button id="btnImpComprobante" ng-click="can.imprimirComprobante()" class="btn btn-success btn-md " >IMPRIMIR COMPROBANTE</button>      
                               </li>
                               <li>
                                 <button id="" ui-sref="Clientes.misReservas" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-primary btn-md">IR A MIS RESERVAS</button> 
