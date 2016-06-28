@@ -1,15 +1,16 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("AdministrarComplejoController", function($scope, $state, DueniosComplejosService, DiasServices, DocumentosService, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DueniosService, AdministrarComplejoService, $uibModal,  $uibModalStack){
+resergolApp.controller("AdministrarComplejoController", function($scope, $state, DueniosComplejosService, DiasServices, DocumentosService, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DueniosService, AdministrarComplejoService, ComplejosDiasServices, EmailComplejoService, EmailDuenioService, $uibModal,  $uibModalStack){
 
 var self = this;
 this.tiposDoc = [];
 this.provincias = [];
 this.localidades = [];
 this.dias = [];
-this.provinciaSeleccionada = {IdProvincia: '-1', Nombre: 'Otra'} ;
-this.localidadSeleccionada = {IdLocalidad: '-1', Nombre: 'Otra'} ;
-this.tipoDocSeleccionado = {IdTipoDoc: '-1', Descripcion: 'Otro'} ;
+this.provinciaSeleccionada = {IdProvincia: '-1', Nombre: 'Otra'}; 
+this.localidadSeleccionada = {IdLocalidad: '-1', Nombre: 'Otra'};
+this.tipoDocSeleccionado = {IdTipoDoc: '-1', Descripcion: 'Otro'};
+this.horaLuz = {IdTipoDoc: '-1', Descripcion: 'Otro'};
 //this.superficies = []; 
 this.Complejo = { 
 
@@ -25,8 +26,9 @@ this.Complejo = {
         nroDoc:'',                              //duenio
         existeDni:false,                        //duenio
         existe:false,                           //duenio
-        existeMail: false,                      //duenio
+        existeMailDuenio: false,                //duenio
         contraseniasIguales: true,              //duenio
+        estadoDuenio:3,                         //duenio
         diasComplejo: [],                       //diasComplejo
         calle: '',                              //complejoDireccion
         altura: '',                             //complejoDireccion
@@ -34,6 +36,7 @@ this.Complejo = {
         idLoc:0,                                //complejoDireccion
         X: 0,                                   //complejoDireccion
         Y: 0,                                   //complejoDireccion
+        existeMailComplejo: false,              //Complejo
         idComplejo: sessionStorage.idComplejo,  //Complejo
         nombreComplejo: '',                     //Complejo
         descripcionComplejo: '',                //Complejo
@@ -48,7 +51,7 @@ this.Complejo = {
         horasCancelacion:0,                     //Complejo
         tiempoReserva:0,                        //Complejo
         emailComplejo: '',                      //Complejo
-        idEstadoComplejo: -1,                   //Complejo
+        idEstadoComplejo: 1,                   //Complejo
         nroCelular: '',                         //Complejo
         nroTelefono: '',                        //Complejo
         imagenes: [],                           //ComplejoImagenes
@@ -105,6 +108,8 @@ $scope.diasComplejo = [{
     'diaHasta': '',
     'horaDesde': '',
     'horaHasta': '',
+    'idHoraDesde': 0,
+    'idHotaHasta': 0
 }];
     
 this.horasComplejo ={
@@ -152,35 +157,75 @@ this.traerDatosComplejos = function(){
     
         DueniosComplejosService.query({idDuenio: self.Complejo.idDuenio}).$promise.then(function(data){
             
-            
+            //datos si el dueño es aceptado
             self.Complejo.apellidoDuenio = data[0].Apellido;
-            self.Complejo.nombreDuenio = data[0].Nombre;
-            self.Complejo.nombreComplejo = data[0].nombreComplejo;
+            self.Complejo.nombreDuenio = data[0].NombrePersona;
+            self.Complejo.nombreComplejo = data[0].NombreComplejo;
             self.Complejo.nroDoc = parseInt(data[0].NroDoc);
-            self.Complejo.emailDuenio = data[0].Email;
+            self.Complejo.emailDuenio = data[0].EmailPersona;
             self.Complejo.idTipoDoc = data[0].IdTipoDoc;
             self.Complejo.usuario = data[0].Usuario;
             self.Complejo.contrasenia = data[0].Contrasenia;
             self.Complejo.contrasenia2 = data[0].Contrasenia;
-            self.Complejo.nroTelefono = data[0].NroTelef;
+            self.Complejo.nroTelefono = parseInt(data[0].nroTelefono);
             self.Complejo.calle = data[0].Calle;
             self.Complejo.altura = parseInt(data[0].Altura);
             self.Complejo.idLoc = data[0].IdLocalidad;
             self.Complejo.idProv = data[0].IdProvincia;
+            self.Complejo.estadoDuenio = data[0].estadoDuenio;
             
+            console.log("Descripcion: " + data[0].Descripcion.length);
+            //datos si el dueño es activo
+            if(data[0].estadoDuenio == 3){
+                
+                self.Complejo.descripcionComplejo = data[0].Descripcion;
+                self.Complejo.estacionamiento = data[0].Estacionamiento;
+                //document.getElementById("conDuchas").checked = self.Complejo.estacionamiento;
+                self.Complejo.buffet = data[0].Buffet;
+                self.Complejo.duchas = data[0].Duchas;
+                self.Complejo.parrilla = data[0].Parrillas;
+                self.Complejo.wifi = data[0].WiFi;
+                //,com.HoraCobroLuz*/
+                self.Complejo.porcentajeSenia = parseInt(data[0].PorcentajeSeña);
+                self.Complejo.horasCancelacion = parseInt(data[0].HorasCancelacion);
+                //,com.TiempoReserva
+                self.Complejo.emailComplejo = data[0].EmailComplejo;
+                self.Complejo.porcentajeLuz = parseInt(data[0].PorcentajeLuz);
+                self.Complejo.nroCelular = parseInt(data[0].nroCelular);
+                self.Complejo.CBU = parseInt(data[0].CBU);
+                self.Complejo.nroCuenta = parseInt(data[0].NroCuenta);
+                self.Complejo.X = data[0].X;
+                self.Complejo.Y = data[0].Y;
+                
+                console.log("antes de getDiasComplejos");
+                self.getDiasComplejos();
+                console.log("despues de getDiasComplejos");
+            }
             
             //self.localidades.selectedOption = {IdLocalidad: self.Complejo.idLoc}; 
             //self.provincias.selectedOption = {IdProvincia: self.Complejo.idProv};
         });
 };
     
-self.traerDatosComplejos();    
+this.getDiasComplejos = function(){
+    console.log("ID: "  + self.Complejo.idComplejo);
+    ComplejosDiasServices.query({idComplejo:self.Complejo.idComplejo, aux:0}).$promise.then(function(data){
+        
+        console.log("ID: "  + self.Complejo.idComplejo);
+        console.log("Dentro de getDiasComplejos");
+        self.Complejo.diasComplejo = data;  
+        
+        console.log("Data--> " + data[0]);
+    });
+};
+    
+self.traerDatosComplejos(); 
+//self.getDiasComplejos();
 
 DocumentosService.query().$promise.then(function(data) {
     self.tiposDoc.tipos = data;
     //self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
     self.tiposDoc.tipos.splice(0, 0, {IdTipoDoc: '-3', Descripcion: '-Tipo doc.-'});
-    
     
     angular.forEach(self.tiposDoc.tipos, function(aux) {
              if(aux.IdTipoDoc == self.tiposDoc.tipos.IdTipoDoc)    
@@ -197,58 +242,6 @@ TiposSuperficiesService.query().$promise.then(function(data) {
         self.superficies.sup.splice(0, 0, {IdSuperficie: '-1', Descripcion: '-Superficie-'});
     });
 
-   this.mostrarDatos = function()
-   {
-       alert("usuario: " + self.Duenio.usuario
-             + '\n' + "email: " + self.Duenio.email
-             + '\n'+ "contrasenia: " + self.Duenio.contrasenia
-             + '\n'+ "contrasenia2: " + self.Duenio.contrasenia2
-             + '\n'+ "nombre: " + self.Duenio.nombre
-             + '\n'+ "apellido: " + self.Duenio.apellido
-             + '\n'+ "tipoDoc: " + self.tiposDoc.selectedOption.IdTipoDoc
-             + '\n'+ "nroDoc: " + self.Duenio.nroDoc
-             + '\n'+ "nombreComplejo: " + self.Duenio.nombreComplejo
-             + '\n'+ "NroTelef: " + self.Duenio.NroTelef
-             + '\n'+ "prov: " + self.provincias.selectedProv.IdProvincia
-             + '\n'+ "loc: " + self.localidades.selectedOption.IdLocalidad
-             + '\n'+ "direccion: " + self.Duenio.direccion
-             + '\n'+ "nroCalle: " + self.Duenio.nroCalle
-            
-            ); 
-   };
-    
-    this.getDuenio = function(){
-        DueniosService.query({user:sessionStorage.usuario, pass:sessionStorage.pass}).$promise.then(function(data){
-            duenio = {};
-            duenio = data;       
-
-            if(duenio[0] != '-1'){
-                self.Duenio.apellido = duenio[0].Apellido;
-                self.Duenio.contrasenia = duenio[0].Contrasenia;
-                self.Duenio.direccion = duenio[0].direccion;
-                self.Duenio.apellido = duenio[0].Apellido;
-                self.Duenio.apellido = duenio[0].Apellido;
-                self.Duenio.apellido = duenio[0].Apellido;
-                self.Duenio.apellido = duenio[0].Apellido;
-                self.Duenio.apellido = duenio[0].Apellido;
-                self.Duenio.apellido = duenio[0].Apellido;
-                self.Duenio.apellido = duenio[0].Apellido;
-                self.Duenio.apellido = duenio[0].Apellido;
-                self.Duenio.apellido = duenio[0].Apellido;
-                self.Duenio.apellido = duenio[0].Apellido;
-                
-                
-                //self.Usuario.passInvalida = false;
-                //self.Usuario.login = true;
-                //store.set('token',  duenio[1]);
-            }
-            else{
-                self.Usuario.login = false;
-                self.Usuario.passInvalida = true;
-            }
-        });
-    };
-
 ////////////////////////////******************************/////////////////////////////
 //se busca la provincias y las localidades de la misma
 ProvinciasService.query().$promise.then(function(data) {
@@ -257,7 +250,7 @@ ProvinciasService.query().$promise.then(function(data) {
         angular.forEach(self.provincias.prov, function(aux) {
              if(aux.IdProvincia == self.Complejo.idProv)    
              {
-                 console.log('te entro');
+                 console.log('Parte de provinciasServices');
                  self.provinciaSeleccionada.IdProvincia = aux.IdProvincia;
                  self.provinciaSeleccionada.Nombre = aux.Nombre;
              }
@@ -304,26 +297,37 @@ this.getLocalidades = function(){
         
         var t = document.getElementById("diaDesde");
         var selectedText = t.options[t.selectedIndex].text;
+        var idDiaDesde = t.options[t.selectedIndex].value;
         $scope.diaDesde = selectedText;
         
         t = document.getElementById("diaHasta");
         selectedText = t.options[t.selectedIndex].text;
+        var idDiaHasta = t.options[t.selectedIndex].value;
         $scope.diaHasta = selectedText;
         
         t = document.getElementById("horaDesde");
-        selectedText = t.options[t.selectedIndex].text;
+        selectedText = self.formatearHora(t.options[t.selectedIndex].text);
         $scope.horaDesde = selectedText;
         
         t = document.getElementById("horaHasta");
-        selectedText = t.options[t.selectedIndex].text;
+        selectedText = self.formatearHora(t.options[t.selectedIndex].text);
         $scope.horaHasta = selectedText;
         
-        self.Complejo.diasComplejo.push({ 'diaDesde':$scope.diaDesde, 'diaHasta': $scope.diaHasta, 'horaDesde':$scope.horaDesde, 'horaHasta':$scope.horaHasta });
+        self.Complejo.diasComplejo.push({ 'diaDesde':$scope.diaDesde, 'diaHasta': $scope.diaHasta, 'horaDesde':$scope.horaDesde, 'horaHasta':$scope.horaHasta, 'idDiaDesde': idDiaDesde, 'idDiaHasta': idDiaHasta });
         $scope.diaDesde='';
         $scope.diaHasta='';
         $scope.horaDesde='';
         $scope.horaHasta='';
     };
+    
+    this.formatearHora = function(hora){
+        
+        var horaFormateada = hora.substring(0,5);
+        
+        horaFormateada += ':00';
+        
+        return horaFormateada;
+    }
     
     this.mostrarDatosFila = function()
     {
@@ -356,9 +360,12 @@ this.getLocalidades = function(){
     {
         var complejoData = new AdministrarComplejoService();
      
+        self.Complejo.idProv = self.provinciaSeleccionada;
+        self.Complejo.idLoc = self.localidadSeleccionada;
+        
         complejoData.data = self.Complejo; 
         
-        console.log("Datos del complejo: " + complejoData.data);
+        console.log("Datos del complejo: " + self.Complejo.idLoc + self.Complejo.idProv );
         
         
         AdministrarComplejoService.save(complejoData.data, function(reponse){
@@ -381,43 +388,60 @@ this.getLocalidades = function(){
     
     this.validarDatosHorarios = function(){
         
-        var t = document.getElementById("diaDesde");
-        var selectedText = t.options[t.selectedIndex].text;
+        var dDesde = document.getElementById("diaDesde");
+        var dHasta = document.getElementById("diaHasta");
+        var hDesde = document.getElementById("horaDesde");
+        var hHasta = document.getElementById("horaHasta");
+        var idDiaDesde = dDesde.options[dDesde.selectedIndex].value;
+        var idDiaHasta = dHasta.options[dHasta.selectedIndex].value;
+        var selectedText; 
         var hayError = 0;
         var mensaje = '';
         
+        selectedText = dDesde.options[dDesde.selectedIndex].text;
         if(selectedText.length == 0)
         {
             mensaje += 'No se ha seleccionado un Dia desde! \n';
             hayError = 1;
         }
         
-        t = document.getElementById("diaHasta");
-        selectedText = t.options[t.selectedIndex].text;
-        
+        selectedText = dHasta.options[dHasta.selectedIndex].text;
         if(selectedText.length == 0)
         {
             mensaje += 'No se ha seleccionado un Dia hasta! \n';
             hayError = 1;
         }
         
-        t = document.getElementById("horaDesde");
-        selectedText = t.options[t.selectedIndex].text;
-        
+        selectedText = hDesde.options[hDesde.selectedIndex].text;
         if(selectedText.length == 0)
         {
             mensaje += 'No se ha seleccionado un Hora desde! \n';
             hayError = 1;
         }
         
-        t = document.getElementById("horaHasta");
-        selectedText = t.options[t.selectedIndex].text;
-        
+        selectedText = hHasta.options[hHasta.selectedIndex].text;
         if(selectedText.length == 0)
         {
             mensaje += 'No se ha seleccionado un Hora hasta!';
             hayError = 1;
         }
+        
+        angular.forEach(self.Complejo.diasComplejo, function(aux){
+         
+            if(aux.idDiaDesde <= idDiaDesde && aux.idDiaHasta >= idDiaDesde){
+                
+                mensaje += 'No se puede guardar ya que existen dias agregados! \n';
+                hayError = 1;
+                return;
+            }
+            
+            if(aux.idDiaDesde <= idDiaHasta && aux.idDiaHasta >= idDiaHasta){
+                
+                mensaje += 'No se puede guardar ya que existen dias agregados!';
+                hayError = 1;
+                return;
+            }
+        });
         
         if(hayError == 0)
         {
@@ -445,7 +469,16 @@ this.getLocalidades = function(){
            
         var AdministrarComplejo = new AdministrarComplejoService();
         
+        /*self.Complejo.idProv = self.provinciaSeleccionada;
+        self.Complejo.idLoc = self.localidadSeleccionada;*/
+        self.Complejo.idProv = self.provinciaSeleccionada.IdProvincia;
+        self.Complejo.idTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
+        self.Complejo.idLoc = self.localidadSeleccionada.IdLocalidad;
+        
         AdministrarComplejo.data = self.Complejo;
+        
+        console.log("Datos del complejo: " + self.Complejo.idLoc + self.Complejo.idProv);
+        
         console.log("Estamos en el hacerCambiosComplejo, Datos:  " + AdministrarComplejo.data);
         
         AdministrarComplejoService.save(AdministrarComplejo.data, function(reponse){
@@ -458,7 +491,61 @@ this.getLocalidades = function(){
     
     this.validarDatos = function(){
         
+        var hayError = 0;
+        var mensaje = '';
+        
+        if(self.Complejo.diasComplejo.length == 0){
+            
+            mensaje += 'No ha ingresado ningún dia';  
+            hayError = 1;
+        }
+        
+        if(self.Complejo.porcentajeSenia == 0){
+            mensaje += 'El porcentaje de la seña no puede ser 0';  
+            hayError = 1; 
+        }
+        
         return true;
+        
+    }
+    
+    this.existeEmailDuenio = function(){
+        
+        if(self.Complejo.emailDuenio!=undefined){
+            EmailDuenioService.query({email:self.Complejo.emailDuenio, idDuenio:self.Complejo.idDuenio}).$promise.then(function(data){
+                  
+                console.log(data[0].resultado);
+                var bExisteEmail = data[0].resultado; 
+                
+                if(bExisteEmail == 1){
+                    self.Complejo.existeMailDuenio = true;  
+                }
+                else{
+                    self.Complejo.existeMailDuenio = false;
+                }
+            });
+            
+        }
+        
+    }
+    
+    this.existeEmailComplejo = function(){
+        
+        if(self.Complejo.emailComplejo!=undefined){
+            EmailComplejoService.query({email:self.Complejo.emailComplejo, idComplejo:self.Complejo.idComplejo}).$promise.then(function(data){
+                  
+                console.log(data[0].resultado);
+                var bExisteEmail = data[0].resultado; 
+                
+                if(bExisteEmail == 1){
+                    self.Complejo.existeMailComplejo = true;  
+                }
+                else{
+                    self.Complejo.existeMailComplejo = false;
+                }
+            });
+            
+        }
         
     }
     

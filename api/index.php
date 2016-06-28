@@ -501,6 +501,7 @@ $app->post('/duenios/administrarComplejo', function(){
         $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
         
         $complejo = new Complejo();
+        //$result = $complejo->createComplejo($data);
         $result = $complejo->createComplejo($data);
 	
         if($result){
@@ -514,6 +515,27 @@ $app->post('/duenios/administrarComplejo', function(){
         sendError("token invalido");
     }
     
+});
+
+//Get de dueños pendientes.
+$app->get('/duenios/complejosDias/:idComplejo/:aux', function($idComplejo, $aux){
+    $diasComplejo = new Complejo();
+    $data = $diasComplejo->getDiasComplejo($idComplejo, $aux);
+	sendResult($data);
+});
+
+//Verifica si el mail del dueño ya existe
+$app->get('/duenios/emailDuenio/:email/:idDuenio', function($email, $idDuenio){
+    $emailDuenio = new Common();
+    $data = $emailDuenio->existeEmailPersona($email, $idDuenio);
+	sendResult($data);
+});
+
+//Verifica si el mail del complejo ya existe
+$app->get('/duenios/emailComplejo/:email/:idComplejo', function($email, $idComplejo){
+    $emailComplejo = new Common();
+    $data = $emailComplejo->existeEmailComplejo($email, $idComplejo);
+	sendResult($data);
 });
 
 /******************************RESERVAS****************************************************************/

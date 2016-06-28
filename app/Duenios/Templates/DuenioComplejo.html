@@ -41,11 +41,11 @@
                                 
                                 <div class="form-group" style="margin-bottom:15px;">
                                     <div class="col-sm-12">
-                                        <label class="checkbox-inline"><input ng-model="admCom.Complejo.estacionamiento" type="checkbox" value="">Estacionamiento</label>
-                                        <label class="checkbox-inline"><input ng-model="admCom.Complejo.duchas" type="checkbox" value="">Duchas</label>
-                                        <label class="checkbox-inline"><input ng-model="admCom.Complejo.buffet" type="checkbox" value="">Buffet</label>
-                                        <label class="checkbox-inline"><input ng-model="admCom.Complejo.parrilla" type="checkbox" value="">Parrilla</label>
-                                        <label class="checkbox-inline"><input ng-model="admCom.Complejo.wifi" type="checkbox" value="">WiFi</label>
+                                        <label class="checkbox-inline"><input id="estacionamiento" ng-model="admCom.Complejo.estacionamiento" type="checkbox">Estacionamiento</label>
+                                        <label class="checkbox-inline"><input id="duchas" ng-model="admCom.Complejo.duchas" type="checkbox">Duchas</label>
+                                        <label class="checkbox-inline"><input id="buffet" ng-model="admCom.Complejo.buffet" type="checkbox">Buffet</label>
+                                        <label class="checkbox-inline"><input id="parrilla" ng-model="admCom.Complejo.parrilla" type="checkbox">Parrilla</label>
+                                        <label class="checkbox-inline"><input id="wifi" ng-model="admCom.Complejo.wifi" type="checkbox">WiFi</label>
                                     <div>
                                 </div>
                                 
@@ -56,7 +56,7 @@
                                 
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <textarea placeholder="Descripción breve del complejo." class="form-control" rows="3"></textarea>
+                                        <textarea ng-model="admCom.Complejo.descripcionComplejo" placeholder="Descripción breve del complejo." class="form-control" rows="3"></textarea>
                                     </div>
                                 </div>
                                 
@@ -100,28 +100,18 @@
                                 </div>
                                 
                                 <div class="table-responsive col-md-12 row" style="margin-bottom:5px;">          
-                                    <table class="table table-striped table-bordered table-hover" style= "background-color:white;">
-                                        <tr>
-                                            <th>De
-                                            </th>
-                                            <th>A
-                                            </th>
-                                            <th>De
-                                            </th>
-                                            <th>A
-                                            </th>
-                                        </tr>
-                                        <tr ng-repeat="dias in admCom.Complejo.diasComplejo">
-                                            <td> {{dias.diaDesde}}
-                                            </td>
-                                            <td> {{dias.diaHasta}}
-                                            </td>
-                                            <td> {{dias.horaDesde}}
-                                            </td>
-                                            <td> {{dias.horaHasta}}
-                                            </td>
+                                    
+                                    <table ng-table="adm.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+                                        <tr ng-repeat="dias in admCom.Complejo.diasComplejo" style="background-color:white;">
+                                            <td class="text-center" title="'DE'">{{dias.diaDesde}}</td>
+                                            <td class="text-center" title="'A'"  >{{dias.diaHasta}}</td>
+                                            <td class="text-center" title="'DE'">{{dias.horaDesde}}</td>
+                                            <td class="text-center" title="'A'">{{dias.horaHasta}}</td>
+                                            <td class="text-center" title="'IdDiaDesde'"  ng-if='false'>{{dias.idDiaDesde}}</td>
+                                            <td class="text-center" title="'IdDiaHasta'"  ng-if='false'>{{dias.idDiaHasta}}</td>
                                         </tr>
                                     </table>
+                                    
                                 </div>
                                     </div>
                                 </div>
@@ -143,21 +133,21 @@
                                 <div class="form-group" style="margin-bottom:15px;">
                                     <label for="porcentajeExtra" class="control-label col-sm-6">Porcentaje extra por jugar con luz</label>
                                     <div class="col-xs-12 col-sm-3">  
-                                        <input style="margin-bottom:15px;" id="porcentajeLuz" ng-model="admCom.Complejo.porcentajeLuz" class="form-control input-transparent" type="number" value="{{admCom.Complejo.porcentajeLuz}}" name="porcentajeLuz"> 
+                                        <input style="margin-bottom:15px;" id="porcentajeLuz" ng-model="admCom.Complejo.porcentajeLuz" class="form-control input-transparent" type="number" value="admCom.Complejo.porcentajeLuz" name="porcentajeLuz"> 
                                     </div>    
                                 </div>
                                 
                                  <div class="form-group" style="margin-bottom:15px;">
                                     <label for="porcentajeSeña" class="control-label col-sm-6">Porcentaje de seña para reservar</label>
                                     <div class="col-xs-12 col-sm-3">  
-                                        <input style="margin-bottom:15px;" id="porcentajeSenia" placeholder="24 Hs" ng-model="admCom.Complejo.porcentajeSenia" class="form-control input-transparent" type="number" value="{{admCom.Complejo.porcentajeSenia}}" name="porcentajeSenia">
+                                        <input style="margin-bottom:15px;" id="porcentajeSenia" required="required" placeholder="24 Hs" ng-model="admCom.Complejo.porcentajeSenia" class="form-control input-transparent" type="number" value="admCom.Complejo.porcentajeSenia" name="porcentajeSenia">
                                     </div>    
                                 </div>
                                 
                                 <div class="form-group" style="margin-bottom:15px;">
                                     <label for="horasAviso" class="control-label col-sm-6">Tiempo de aviso de cancelación de cancha (horas)</label>
                                     <div style="color: black;" class="col-xs-12 col-sm-4">
-                                        <input style="margin-bottom:15px;" id="horasAviso" placeholder="24 Hs" class="form-control input-transparent" type="number" ng-model="admCom.Complejo.horasCancelacion" value="{{admCom.Complejo.horasCancelacion}}" name="horasAviso">
+                                        <input style="margin-bottom:15px;" id="horasAviso" required="required" placeholder="24 Hs" class="form-control input-transparent" type="number" ng-model="admCom.Complejo.horasCancelacion" value="admCom.Complejo.horasCancelacion" name="horasAviso">
                                     </div>
                                 </div>
                             </fieldset>
@@ -171,8 +161,11 @@
                                 <div class="form-group">
                                     <label id="email-label" for="email" class="control-label col-sm-4">Correo electrónico <span class="required">*</span></label>
                                     <div class="col-xs-12 col-sm-8">
-                                        <input style="margin-bottom:5px;" id="email" type="email" required="required"
-                                        ng-model="admCom.Complejo.emailComplejo" class="form-control input-transparent" name="email" placeholder="Correo electrónico" value="{{admCom.Complejo.emailComplejo}}">
+                                        <input style="margin-bottom:5px;" id="email" type="email"
+                                        ng-model="admCom.Complejo.emailComplejo" class="form-control input-transparent form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" name="email" placeholder="Correo electrónico" value="admCom.Complejo.emailComplejo" required ng-class="{ error:frmDatosUsuario.email.$error.required && frmDatosUsuario.email.$dirty, warning:frmDatosUsuario.email.$error.email }" ng-blur="admCom.Complejo.existeEmailDuenio()">
+                                        <span ng-show="!frmDatosUsuario.$pristine && admCom.Complejo.existeMailDuenio" class= "msjError">
+                                            EMail existente.
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -231,7 +224,7 @@
                                     <label for="localidades" class="control-label col-sm-2">Localidad</label>
                                     <div class="col-xs-12 col-sm-10">    
                                         <select style="margin-bottom:5px;" class="form-control" ng-model="admCom.localidadSeleccionada" 
-                                                ng-options="localidad.Nombre for localidad in admCom.localidades.loc track by                localidad.Nombre" ng-seleted="3">
+                                                ng-options="localidad.Nombre for localidad in admCom.localidades.loc track by localidad.Nombre" ng-seleted="3">
                                         </select>
                                     </div>
                                 </div>
@@ -349,7 +342,7 @@
                                 <div class="form-group" style="margin-bottom:50px;">
                                     <label for="email" class="control-label col-sm-4">Mail <span class="required">*</span></label>
                                     <div class="col-sm-8">
-                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="email" type="email" placeholder="example@email.com" name="email" ng-model="admCom.Complejo.emailDuenio" ng-blur="due.existeEmail()" value="{{admCom.Complejo.emailDuenio}}">
+                                        <input class="form-control input-transparent form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" style="margin-bottom:5px;" id="email" type="email" placeholder="example@email.com" name="email" ng-model="admCom.Complejo.emailDuenio" ng-blur="due.existeEmail()" value="{{admCom.Complejo.emailDuenio}}" required ng-class="{ error:frmDatosUsuario.email.$error.required && frmDatosUsuario.email.$dirty, warning:frmDatosUsuario.email.$error.email }">
                                     </div>
                                 </div>
                                 
@@ -381,14 +374,14 @@
                                 <div class="form-group">
                                     <label for="CBU" class="control-label col-sm-4">CBU</label>
                                     <div class="col-xs-12 col-sm-8">    
-                                        <input id="CBU" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder="CBU"  name="cbu" ng-model="admCom.Complejo.CBU"/>
+                                        <input id="CBU" required="required" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder="CBU"  name="cbu" ng-model="admCom.Complejo.CBU"/>
                                     </div>    
                                 </div>  
                                 
                                 <div class="form-group">
                                 <label for="nroCuenta" class="control-label col-sm-4">Nro de cuenta</label>
                                     <div class="col-xs-12 col-sm-8">    
-                                        <input id="nroCuenta" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder="Nro de cuenta"  name="" ng-model="admCom.Complejo.nroCuenta"/>
+                                        <input required="required" id="nroCuenta" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder="Nro de cuenta"  name="" ng-model="admCom.Complejo.nroCuenta"/>
                                     </div>    
                                 </div> 
 

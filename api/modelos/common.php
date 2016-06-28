@@ -188,6 +188,61 @@ class Common
         mail($destino, $asunto, $mensaje, $opcional);
     }
    
+    //Existe Email Persona
+    public function existeEmailPersona($email, $idDuenio){  
+        $resultado='';
+        
+        $stmt = $this->connection->prepare('SET @pEmail := ?');
+        $stmt->bind_param('s', $email);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pIdDuenio := ?');
+        $stmt->bind_param('i', $idDuenio);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @resultado := ?');
+        $stmt->bind_param('i', $resultado);
+        $stmt->execute(); 
+         
+        $query = "CALL SP_existeEmailPersona(@pEmail, @pIdDuenio, @resultado);";
     
+        $res = array();
+        
+        if( $result = $this->connection->query($query) ){
+            $r = $this->connection->query('SELECT @resultado as resultado');
+            $res[] = $r->fetch_assoc();               
+        }
+        
+        return $res;
+    }
+    
+    //Existe Email Complejo
+    public function existeEmailComplejo($email, $idComplejo){  
+        $resultado='';
+        
+        $stmt = $this->connection->prepare('SET @pEmail := ?');
+        $stmt->bind_param('s', $email);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $idPersona);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @resultado := ?');
+        $stmt->bind_param('i', $resultado);
+        $stmt->execute(); 
+        
+         
+        $query = "CALL SP_existeEmailComplejo(@pEmail, @pIdComplejo, @resultado);";
+    
+        $res = array();
+        
+        if( $result = $this->connection->query($query) ){
+            $r = $this->connection->query('SELECT @resultado as resultado');
+            $res[] = $r->fetch_assoc();               
+        }
+        
+        return $res;
+    }
     
 }
