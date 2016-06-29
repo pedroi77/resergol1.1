@@ -39,6 +39,25 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
         }
     }
     
+    this.updateFixture = function(indice)
+    {   
+        
+        var fixture = new TorneoLigaFixtureService();
+     
+        fixture.data = {
+                        "IdTorneo": 13,//SACAR ESTO
+                        "IdFecha": 1,
+                        "Idreserva": 1401,
+                        "gol1": self.fixture[indice]['gol1'],
+                        "gol2": self.fixture[indice]['gol2']
+  	                   };   
+
+        TorneoLigaFixtureService.update(fixture.data, function(reponse){
+           
+          },function(errorResponse){
+                console.log("Error");
+         });
+    };
     
     this.init = function(){
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {

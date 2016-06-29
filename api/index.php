@@ -418,12 +418,34 @@ $app->get('/common/torneo/liga/fechas/:idTorneo', function($idTorneo){
         sendResult($data);
 });
 
-//
+//get de fixture por fechas
 $app->get('/common/torneo/liga/fixture/:idTorneo/:idFecha', function($idTorneo, $idfecha){
     $fixture = new TorneoLiga();
     $data = $fixture->getFixtureByFecha($idTorneo, $idfecha);
 	sendResult($data);
 });
+
+$app->put('/common/torneo/liga/fixture', function(){
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();   
+        $data = json_decode($request->getBody(), true);
+        $fixture = new TorneoLiga();
+
+        $result = $fixture->updateFixture($data);
+        //el metodo envia el resultado
+    }
+	else{
+        sendError("token invalido");
+    }
+});
+
 
 
 //alta imagenes
