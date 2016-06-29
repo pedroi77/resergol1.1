@@ -29,6 +29,17 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
         }); 
     }
     
+    this.validaGol = function(indice){
+           
+        if( self.fixture[indice]['gol1']  == undefined){
+            self.fixture[indice]['gol1'] = 0;
+        }
+        if(  self.fixture[indice]['gol2']  == undefined){
+             self.fixture[indice]['gol2'] = 0;
+        }
+    }
+    
+    
     this.init = function(){
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
             self.torneo = data[0];

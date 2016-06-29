@@ -88,12 +88,13 @@
                     <td title="'Fecha'"  >{{partido.fecha}}</td>    
                     <td title="'Hora'"  >{{partido.horaInicio}}</td>
                     <td title=""  >{{partido.equipo1}}</td>    
-                    <td title="" ng-switch="true" style="width:15%">
+                    <td title="" ng-switch="partido.isEditing" style="width:15%"  demo-tracked-table-cell>
                         <span ng-switch-default class="editable-text">{{partido.gol1}}</span>
                         <div class="controls" ng-class="" ng-switch-when="true">
                             <input type="number" 
                                    name="gol1" 
                                    ng-model="partido.gol1" 
+                                   ng-blur="tor.validaGol($index)"
                                    min=0 max=500
                                    class="editable-input form-control" required/>
                         </div>
@@ -101,12 +102,13 @@
 
                     <td title=""  >{{partido.VS}}</td>
 
-                    <td title="" ng-switch="true" style="width:15%">
+                    <td title="" ng-switch="partido.isEditing" style="width:15%">
                         <span ng-switch-default class="editable-text">{{partido.gol2}}</span>
                         <div class="controls" ng-class="" ng-switch-when="true">
                             <input type="number" 
                                    name="gol2" 
                                    ng-model="partido.gol2" 
+                                   ng-blur="tor.validaGol($index)"
                                    min=0 max=500
                                    class="editable-input form-control" required/>
                         </div>
@@ -116,7 +118,7 @@
                     <td title="'Cancha'"  >{{partido.cancha}}</td>
                     <td>
                          <button class="btn btn-primary btn-sm" ng-click="demo.save(row, rowForm)" ng-if="partido.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>
-                        <button class="btn btn-default btn-sm" ng-click="demo.cancel(row, rowForm)" ng-if="partido.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
+                        <button class="btn btn-default btn-sm" ng-click="partido.isEditing = false" ng-if="partido.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
                         <button class="btn btn-default btn-sm" ng-click="partido.isEditing = true" ng-if="main.Usuario.tipo=='D' && !partido.isEditing"><span class="glyphicon glyphicon-pencil"></span></button>
                     </td>
                 </tr>
