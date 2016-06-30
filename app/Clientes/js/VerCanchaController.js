@@ -1,7 +1,7 @@
 /*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("VerCanchaController", function($scope, $state, $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService){
+resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $state, $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService, ComplejosDiasServices){
 	
     var self = this;
     
@@ -13,12 +13,13 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     $scope.dt = null;
     $scope.FechasReservaFija = [];
     $scope.aceptaReservaFija = 0;
-    /*$scope.listasReservasFijas = [];*/
+    $scope.tooltipDiasComplejo = "";
     
     $scope.listasReservasFijas = [
         /*{  }*/
       ];
     
+    $scope.DiasYHorariosTooltip = "";
     
     this.horaDesde = 0;
     this.horasDesde = [];
@@ -83,6 +84,39 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
                       };
     
     
+    $scope.counter = 30;
+    var mytimeout = null;
+    
+    $scope.onTimeout = function() {
+        if($scope.counter ===  0) {
+            $scope.$broadcast('timer-stopped', 0);
+            $timeout.cancel(mytimeout);
+            return;
+        }
+        $scope.counter--;
+        mytimeout = $timeout($scope.onTimeout, 1000);
+    };
+    
+    $scope.startTimer = function() {
+        mytimeout = $timeout($scope.onTimeout, 1000);
+    };
+ 
+    // stops and resets the current timer
+    $scope.stopTimer = function() {
+        $scope.$broadcast('timer-stopped', $scope.counter);
+        $scope.counter = 30;
+        $timeout.cancel(mytimeout);
+    };
+    
+    $scope.$on('timer-stopped', function(event, remaining) {
+        if(remaining === 0) {
+            //console.log('your time ran outttttttttttttttttttttttttttt!');
+            alert('Tiempo máximo de reserva alcanzado.');
+            $state.go('Clientes.verCancha'); 
+            $('html,body').animate({scrollTop:10},'slow');return false;
+        }
+    });
+    
     
     this.getCancha = function(){
         
@@ -102,7 +136,28 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
     
     
    self.getCancha();
-
+    
+    this.setDiasComplejoAMostrar = function(){
+        //IVO
+        var texto = "";
+        ComplejosDiasServices.query({idComplejo:$scope.idComplejo, aux:0}).$promise.then(function(data){
+            angular.forEach(data,function(aux){
+                if(aux.diaDesde != aux.diaHasta)
+                {
+                    texto += '<div class="label label-success">' + aux.diaDesde.substring(0,3) + '   a   '+aux.diaHasta.substring(0,3)+' de   ' + aux.horaDesde.substring(0,5) + 'hs    a   '+ aux.horaHasta.substring(0,5) + 'hs</div><br>';
+                }
+                else
+                {
+                    texto += '<div class="label label-success">' + aux.diaDesde.substring(0,3) + '   de    ' + aux.horaDesde.substring(0,5) + 'hs a ' + aux.horaHasta.substring(0,5) + 'hs </div><br> ';
+                }
+                
+             });
+            
+            $scope.DiasYHorariosTooltip = $sce.trustAsHtml(texto);
+        });
+    };
+                                                                          
+    self.setDiasComplejoAMostrar();
     
     this.imprimirComprobante = function() {
       //Traigo el horario de la reserva.    
@@ -378,7 +433,26 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
               }
               else
               {
+                  $scope.stopTimer();
+                  $scope.startTimer();
                   $('html,body').animate({scrollTop:1000},'slow');
+                  
+                  var resTempNueva = new ReservasTempService();
+                    resTempNueva.data = {
+                        "idCancha": $scope.idCancha,
+                        "idComplejo": $scope.idComplejo,
+                        "valor": 0
+                    };  
+        
+        
+                ReservasTempService.save(resTempNueva.data, function(reponse){
+                        idRetorno = reponse.data[0];
+                        console.log('se guardo la res TEMP -->' + idRetorno);
+                        //Acá iniciar el TIMER!!!
+                      },function(errorResponse){
+                        console.log('ERROR res temp...' + errorResponse); 
+                     });
+                  
                   $state.go('Clientes.verCancha.Reservar');  
               }
                 
@@ -392,6 +466,13 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
         }
     };
 
+    this.borrarReservaTemp = function(){
+            ReservasTempService.delete({idCancha: $scope.idCancha, idComplejo: $scope.idComplejo}, function(reponse){
+                    console.log('Se borro la res TEMP ->' + reponse.data);
+                  },function(errorResponse){
+                    console.log('ERROR al borrar res TEMP ->' + reponse.data);
+                 });
+    }; 
     
     //Si el cliente tiene tarjeta guardada, traigo los datos de la misma...
     this.getTarjeta = function(){
@@ -481,7 +562,7 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
             
         //Si realizó reserva fija, hago todas las reservas despues de haber reservado la primera normalmente.
         if($scope.aceptaReservaFija == 1)
-        {//ivo
+        {
             var ReservaFijaNueva = new ReservasFijasService();
             ReservaFijaNueva.data = $scope.listasReservasFijas;
             console.log(ReservaFijaNueva.data[0]);
@@ -496,6 +577,7 @@ resergolApp.controller("VerCanchaController", function($scope, $state, $statePar
          if(document.getElementById('chkGuardaTarjeta').checked)
              self.guardarTarjeta();
         
+            self.borrarReservaTemp();
             
           },function(errorResponse){
             console.log('ERROR...'); 
