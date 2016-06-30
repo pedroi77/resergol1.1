@@ -760,7 +760,53 @@ $app->get('/clientes/reservasTemp/:idCancha/:idComplejo', function($pIdCancha, $
 });
 
 
+//alta
+ $app->post('/clientes/reservasTemp', function(){
+     
+     //$headers = apache_request_headers();
+     //$token = explode(" ", $headers["Authorization"]);
+     //$tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+     
+     //$reserva = new Reserva();
+     //$tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+ 
+     //if($tokenOK){
+         $request = Slim\Slim::getInstance()->request();
+         $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+         
+         $resTemp = new ReservaTemp();
+         $result = $resTemp->create($data);
+  
+         if($result){
+            sendResult($result);
+         }else{
+             sendError("Error al insertar res Temp...");
+         };
+         
+     //}
+  //else{
+     //    sendError("token invalido");
+     //}
+     
+ });
 
+//delete de imagens
+$app->delete('/clientes/reservasTemp/:idCancha/:idComplejo', function($idCancha, $idComplejo){
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);*/
+
+    //if($tokenOK){
+        $resTemp = new ReservaTemp();
+        $result = $resTemp->delete($idCancha, $idComplejo);
+    /*}
+	else{
+        sendError("token invalido");
+    }*/
+});
 
 
 
