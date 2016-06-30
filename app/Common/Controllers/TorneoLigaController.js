@@ -19,6 +19,7 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
     this.cargarFixture = function(idFecha){
         TorneoLigaFixtureService.query({idTorneo:self.idTorneo, idFecha:idFecha }).$promise.then(function(data) {
             self.fixture = data;
+            console.log(self.fixture);
             var contador = 0;
             //Esto lo hago para que los goles sean numeros
             angular.forEach(data, function(aux) {
@@ -45,15 +46,17 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
         var fixture = new TorneoLigaFixtureService();
      
         fixture.data = {
-                        "IdTorneo": 13,//SACAR ESTO
-                        "IdFecha": 1,
-                        "Idreserva": 1401,
+                        "IdTorneo": self.fixture[indice]['IdTorneo'],
+                        "IdFecha": self.fixture[indice]['IdFecha'],
+                        "Idreserva": self.fixture[indice]['idreserva'],
+                        "IdEquipo1":self.fixture[indice]['idEquipo1'],
                         "gol1": self.fixture[indice]['gol1'],
+                        "IdEquipo2":self.fixture[indice]['idEquipo2'],
                         "gol2": self.fixture[indice]['gol2']
   	                   };   
 
         TorneoLigaFixtureService.update(fixture.data, function(reponse){
-           
+                $state.reload("Duenios.verTorneoLiga", {idTorneo:self.fixture[indice]['IdTorneo']})
           },function(errorResponse){
                 console.log("Error");
          });

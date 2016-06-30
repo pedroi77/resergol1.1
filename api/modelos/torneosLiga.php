@@ -69,7 +69,9 @@ class TorneoLiga
         $IdTorneo = $this->connection->real_escape_string($data['IdTorneo']);
         $IdFecha = $this->connection->real_escape_string($data['IdFecha']);
         $IdReserva = $this->connection->real_escape_string($data['Idreserva']);
+        $IdEquipo1 = $this->connection->real_escape_string($data['IdEquipo1']);
         $gol1 = $this->connection->real_escape_string($data['gol1']);
+        $IdEquipo2 = $this->connection->real_escape_string($data['IdEquipo2']);
         $gol2 = $this->connection->real_escape_string($data['gol2']);
           
         $resultado = 0;
@@ -86,8 +88,16 @@ class TorneoLiga
         $stmt->bind_param('i', $IdReserva);
         $stmt->execute(); 
         
+        $stmt = $this->connection->prepare('SET @IdEquipo1 := ?');
+        $stmt->bind_param('i', $IdEquipo1);
+        $stmt->execute(); 
+        
         $stmt = $this->connection->prepare('SET @gol1 := ?');
         $stmt->bind_param('i', $gol1);
+        $stmt->execute(); 
+        
+         $stmt = $this->connection->prepare('SET @IdEquipo2 := ?');
+        $stmt->bind_param('i', $IdEquipo2);
         $stmt->execute(); 
         
         $stmt = $this->connection->prepare('SET @gol2 := ?');
@@ -100,7 +110,7 @@ class TorneoLiga
         $stmt->bind_param('i', $resultado);
         $stmt->execute(); 
         
-        $query = "CALL sp_updateFixture(@IdTorneo, @IdFecha, @IdReserva, @gol1, @gol2, @resultado);";
+        $query = "CALL sp_updateFixture(@IdTorneo, @IdFecha, @IdReserva,  @IdEquipo1, @gol1,  @IdEquipo2, @gol2, @resultado);";
     
         
         if( $result = $this->connection->query($query) ){
