@@ -23,11 +23,17 @@
                             <b>Direccion:</b> <label>{{canc.Calle}} {{canc.Altura}}</label>  
                           </li>
                           <li>
-                           <b>Teléfono:</b> <label>{{canc.NroTelef}}</label>  
+                           <b>Tel.:</b> <label>{{canc.nroTelefono}} {{canc.nroCelular}}</label>  
                           </li>
-                          <li class="glyphicon glyphicon-time">
-                            <label class="letraHorarios">L a V - 12hs - 18hs. falta!!.</label>
+                          <li class="glyphicon glyphicon-time" uib-popover-html="DiasYHorariosTooltip" popover-placement="right" popover-trigger="mouseenter">
                           </li>
+                          <!--<li>
+                           <label class="glyphicon glyphicon-time" data-html="true" data-toggle="tooltip" data-placement="right" 
+                                  title="{{tooltipDiasComplejo}}">
+                           </label>
+                          </li>-->
+                          
+                          
                           <!--<li class="glyphicon glyphicon-time">
                             <label class="letraHorarios">S a D - 16hs - 22:30hs.</label>
                           </li>-->
@@ -234,10 +240,10 @@
              
            
                           
-                          
+           <div><h4 class="fa fa-user titul">{{counter}}</h4></div>                
          </div>
                           
-                          
+                         
     <div class="container" ui-view></div>
        
  

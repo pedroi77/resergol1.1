@@ -10,6 +10,13 @@ app.service("TorneoLigaFixtureService", function($http, $resource){
                         return angular.fromJson(data).data;
                     },
                 isArray: true
+                },
+        update: {method: 'PUT',
+                transformResponse: function(data) {
+                        //alert(angular.fromJson(data).data[0].resultado);
+                        return angular.fromJson(data).data;
+                    },
+                isArray: true
                 }
     });
 }); 

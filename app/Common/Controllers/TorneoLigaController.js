@@ -19,6 +19,7 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
     this.cargarFixture = function(idFecha){
         TorneoLigaFixtureService.query({idTorneo:self.idTorneo, idFecha:idFecha }).$promise.then(function(data) {
             self.fixture = data;
+            console.log(self.fixture);
             var contador = 0;
             //Esto lo hago para que los goles sean numeros
             angular.forEach(data, function(aux) {
@@ -28,6 +29,38 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
             });
         }); 
     }
+    
+    this.validaGol = function(indice){
+           
+        if( self.fixture[indice]['gol1']  == undefined){
+            self.fixture[indice]['gol1'] = 0;
+        }
+        if(  self.fixture[indice]['gol2']  == undefined){
+             self.fixture[indice]['gol2'] = 0;
+        }
+    }
+    
+    this.updateFixture = function(indice)
+    {   
+        
+        var fixture = new TorneoLigaFixtureService();
+     
+        fixture.data = {
+                        "IdTorneo": self.fixture[indice]['IdTorneo'],
+                        "IdFecha": self.fixture[indice]['IdFecha'],
+                        "Idreserva": self.fixture[indice]['idreserva'],
+                        "IdEquipo1":self.fixture[indice]['idEquipo1'],
+                        "gol1": self.fixture[indice]['gol1'],
+                        "IdEquipo2":self.fixture[indice]['idEquipo2'],
+                        "gol2": self.fixture[indice]['gol2']
+  	                   };   
+
+        TorneoLigaFixtureService.update(fixture.data, function(reponse){
+                $state.reload("Duenios.verTorneoLiga", {idTorneo:self.fixture[indice]['IdTorneo']})
+          },function(errorResponse){
+                console.log("Error");
+         });
+    };
     
     this.init = function(){
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {

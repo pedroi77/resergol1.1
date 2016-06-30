@@ -149,7 +149,8 @@
                                             <button id="activate-step-2" ng-click="can.paso1Click()" ng-disabled="!can.paso1Completo" class="btn btn-primary btn-md">Reservar</button>
                                         </div>
                                             <div class="col-md-6">
-                                            <button id="" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-md">CANCELAR / VOLVER</button>
+                                            <!--<button id="" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-md">CANCELAR / VOLVER</button>-->
+                                            <button id="" ui-sref="Clientes.verCancha" ng-click="can.borrarReservaTemp()" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-md">CANCELAR / VOLVER</button>    
                                         </div>
                                             
                                         </div>

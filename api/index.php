@@ -418,12 +418,34 @@ $app->get('/common/torneo/liga/fechas/:idTorneo', function($idTorneo){
         sendResult($data);
 });
 
-//
+//get de fixture por fechas
 $app->get('/common/torneo/liga/fixture/:idTorneo/:idFecha', function($idTorneo, $idfecha){
     $fixture = new TorneoLiga();
     $data = $fixture->getFixtureByFecha($idTorneo, $idfecha);
 	sendResult($data);
 });
+
+$app->put('/common/torneo/liga/fixture', function(){
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();   
+        $data = json_decode($request->getBody(), true);
+        $fixture = new TorneoLiga();
+
+        $result = $fixture->updateFixture($data);
+        //el metodo envia el resultado
+    }
+	else{
+        sendError("token invalido");
+    }
+});
+
 
 
 //alta imagenes
@@ -802,7 +824,53 @@ $app->get('/clientes/reservasTemp/:idCancha/:idComplejo', function($pIdCancha, $
 });
 
 
+//alta
+ $app->post('/clientes/reservasTemp', function(){
+     
+     //$headers = apache_request_headers();
+     //$token = explode(" ", $headers["Authorization"]);
+     //$tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+     
+     //$reserva = new Reserva();
+     //$tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+ 
+     //if($tokenOK){
+         $request = Slim\Slim::getInstance()->request();
+         $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+         
+         $resTemp = new ReservaTemp();
+         $result = $resTemp->create($data);
+  
+         if($result){
+            sendResult($result);
+         }else{
+             sendError("Error al insertar res Temp...");
+         };
+         
+     //}
+  //else{
+     //    sendError("token invalido");
+     //}
+     
+ });
 
+//delete de imagens
+$app->delete('/clientes/reservasTemp/:idCancha/:idComplejo', function($idCancha, $idComplejo){
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);*/
+
+    //if($tokenOK){
+        $resTemp = new ReservaTemp();
+        $result = $resTemp->delete($idCancha, $idComplejo);
+    /*}
+	else{
+        sendError("token invalido");
+    }*/
+});
 
 
 

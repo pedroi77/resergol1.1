@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: localhost    Database: resergol
+-- Host: 127.0.0.1    Database: resergol
 -- ------------------------------------------------------
--- Server version	5.6.26
+-- Server version	5.5.5-10.1.10-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -329,7 +329,7 @@ CREATE TABLE `complejos` (
   PRIMARY KEY (`IdComplejo`),
   KEY `complejos_estados_fk` (`IdEstado`),
   CONSTRAINT `complejos_estados_fk` FOREIGN KEY (`IdEstado`) REFERENCES `complejosestados` (`IdEstado`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -338,7 +338,7 @@ CREATE TABLE `complejos` (
 
 LOCK TABLES `complejos` WRITE;
 /*!40000 ALTER TABLE `complejos` DISABLE KEYS */;
-INSERT INTO `complejos` VALUES (1,'Open Gallo','primer complejo',1,1,1,1,1,'00:00:00',50,24,'00:00:05','open@gmail.com',1,1,0,NULL,NULL),(2,'Todo Fútbol','Las mejores canchas de lomas de zamora, veni a disfrutar del fútbol!',0,1,1,1,1,'18:00:00',50,24,'00:00:05','todofutbol@hotmail.com',1,4,20,NULL,NULL),(3,'Oasis','Viví el fútbol en Banfield en Oasis!',1,1,0,0,0,'18:00:00',40,24,'00:00:05','oasis_banfield@hotmail.com',1,5,0,NULL,NULL),(4,'Maracaná','Puro fútbol en escalada!',0,1,1,0,0,'17:00:00',35,48,'00:00:05','maracana@yahoo.com.ar',1,6,20,NULL,NULL),(5,'Los Lagartos','Excelente para jugar con amigos, vení a Los Lagartos!',0,1,1,0,1,'18:00:00',20,36,'00:00:05','loslagartosfutbol@yahoo.com.ar',1,7,15,NULL,NULL),(6,'Las Heras','Fútbol Las Heras, tierra de cracks!',1,1,1,1,0,'18:00:00',0,48,'00:00:05','flasheras5@hotmail.com',1,8,18,NULL,NULL);
+INSERT INTO `complejos` VALUES (1,'Open Gallo','primer complejo',1,1,1,1,1,'00:00:00',50,24,'00:00:05','open@gmail.com',1,1,0,1532325691,42596320),(2,'Todo Fútbol','Las mejores canchas de lomas de zamora, veni a disfrutar del fútbol!',0,1,1,1,1,'18:00:00',50,24,'00:00:05','todofutbol@hotmail.com',1,4,20,NULL,NULL),(3,'Oasis','Viví el fútbol en Banfield en Oasis!',1,1,0,0,0,'18:00:00',40,24,'00:00:05','oasis_banfield@hotmail.com',1,5,0,NULL,NULL),(4,'Maracaná','Puro fútbol en escalada!',0,1,1,0,0,'17:00:00',35,48,'00:00:05','maracana@yahoo.com.ar',1,6,20,NULL,NULL),(5,'Los Lagartos','Excelente para jugar con amigos, vení a Los Lagartos!',0,1,1,0,1,'18:00:00',20,36,'00:00:05','loslagartosfutbol@yahoo.com.ar',1,7,15,NULL,42450020),(6,'Las Heras','Fútbol Las Heras, tierra de cracks!',1,1,1,1,0,'18:00:00',0,48,'00:00:05','flasheras5@hotmail.com',1,8,18,1130986632,42025633);
 /*!40000 ALTER TABLE `complejos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -811,7 +811,7 @@ CREATE TABLE `fixture` (
 
 LOCK TABLES `fixture` WRITE;
 /*!40000 ALTER TABLE `fixture` DISABLE KEYS */;
-INSERT INTO `fixture` VALUES (12,650,650,1,32,0,0),(12,651,651,2,31,0,0),(12,652,652,3,30,0,0),(12,653,653,4,29,0,0),(12,654,654,14,19,0,0),(12,655,655,13,20,0,0),(12,656,656,12,21,0,0),(12,657,657,11,22,0,0),(12,658,658,10,23,0,0),(12,659,659,9,24,0,0),(12,660,660,8,25,0,0),(12,661,661,7,26,0,0),(12,662,662,6,27,0,0),(12,663,663,5,28,0,0),(12,665,665,15,18,0,0),(12,666,666,16,17,0,0),(13,1,1401,1,2,0,0),(13,1,1402,3,4,0,0),(13,1,1403,5,6,0,0),(13,1,1404,7,8,0,0),(13,2,1405,1,3,0,0),(13,2,1406,2,4,0,0),(13,2,1407,5,7,0,0),(13,2,1408,6,8,0,0),(13,3,1409,1,4,0,0),(13,3,1410,2,3,0,0),(13,3,1411,5,8,0,0),(13,3,1412,6,7,0,0),(13,4,1413,1,5,0,0),(13,4,1414,2,6,0,0),(13,4,1415,3,7,0,0),(13,4,1416,4,8,0,0),(13,5,1417,1,6,0,0),(13,5,1418,2,5,0,0),(13,5,1419,3,8,0,0),(13,5,1420,4,7,0,0),(13,6,1421,1,7,0,0),(13,6,1422,2,8,0,0),(13,6,1423,3,5,0,0),(13,6,1424,4,6,0,0),(13,7,1425,1,8,0,0),(13,7,1426,2,7,0,0),(13,7,1427,3,6,0,0),(13,7,1428,4,5,0,0),(13,8,1429,2,1,0,0),(13,8,1430,4,3,0,0),(13,8,1431,6,5,0,0),(13,8,1432,8,7,0,0),(13,9,1433,3,1,0,0),(13,9,1434,4,2,0,0),(13,9,1435,7,5,0,0),(13,9,1436,8,6,0,0),(13,10,1437,4,1,0,0),(13,10,1438,3,2,0,0),(13,10,1439,8,5,0,0),(13,10,1440,7,6,0,0),(13,11,1441,5,1,0,0),(13,11,1442,6,2,0,0),(13,11,1443,7,3,0,0),(13,11,1444,8,4,0,0),(13,12,1445,6,1,0,0),(13,12,1446,5,2,0,0),(13,12,1447,8,3,0,0),(13,12,1448,7,4,0,0),(13,13,1449,7,1,0,0),(13,13,1450,8,2,0,0),(13,13,1451,5,3,0,0),(13,13,1452,6,4,0,0),(13,14,1453,8,1,0,0),(13,14,1454,7,2,0,0),(13,14,1455,6,3,0,0),(13,14,1456,5,4,0,0);
+INSERT INTO `fixture` VALUES (12,650,650,1,32,0,0),(12,651,651,2,31,0,0),(12,652,652,3,30,0,0),(12,653,653,4,29,0,0),(12,654,654,14,19,0,0),(12,655,655,13,20,0,0),(12,656,656,12,21,0,0),(12,657,657,11,22,0,0),(12,658,658,10,23,0,0),(12,659,659,9,24,0,0),(12,660,660,8,25,0,0),(12,661,661,7,26,0,0),(12,662,662,6,27,0,0),(12,663,663,5,28,0,0),(12,665,665,15,18,0,0),(12,666,666,16,17,0,0),(13,1,1401,1,2,1,2),(13,1,1402,3,4,0,0),(13,1,1403,5,6,0,0),(13,1,1404,7,8,0,0),(13,2,1405,1,3,0,0),(13,2,1406,2,4,0,0),(13,2,1407,5,7,0,0),(13,2,1408,6,8,0,0),(13,3,1409,1,4,0,0),(13,3,1410,2,3,0,0),(13,3,1411,5,8,0,0),(13,3,1412,6,7,0,0),(13,4,1413,1,5,0,0),(13,4,1414,2,6,0,0),(13,4,1415,3,7,0,0),(13,4,1416,4,8,0,0),(13,5,1417,1,6,0,0),(13,5,1418,2,5,0,0),(13,5,1419,3,8,0,0),(13,5,1420,4,7,0,0),(13,6,1421,1,7,0,0),(13,6,1422,2,8,0,0),(13,6,1423,3,5,0,0),(13,6,1424,4,6,0,0),(13,7,1425,1,8,0,0),(13,7,1426,2,7,0,0),(13,7,1427,3,6,0,0),(13,7,1428,4,5,0,0),(13,8,1429,2,1,0,0),(13,8,1430,4,3,0,0),(13,8,1431,6,5,0,0),(13,8,1432,8,7,0,0),(13,9,1433,3,1,0,0),(13,9,1434,4,2,0,0),(13,9,1435,7,5,0,0),(13,9,1436,8,6,0,0),(13,10,1437,4,1,0,0),(13,10,1438,3,2,0,0),(13,10,1439,8,5,0,0),(13,10,1440,7,6,0,0),(13,11,1441,5,1,0,0),(13,11,1442,6,2,0,0),(13,11,1443,7,3,0,0),(13,11,1444,8,4,0,0),(13,12,1445,6,1,0,0),(13,12,1446,5,2,0,0),(13,12,1447,8,3,0,0),(13,12,1448,7,4,0,0),(13,13,1449,7,1,0,0),(13,13,1450,8,2,0,0),(13,13,1451,5,3,0,0),(13,13,1452,6,4,0,0),(13,14,1453,8,1,0,0),(13,14,1454,7,2,0,0),(13,14,1455,6,3,0,0),(13,14,1456,5,4,0,0);
 /*!40000 ALTER TABLE `fixture` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -969,426 +969,6 @@ INSERT INTO `personas` VALUES (2,'unCliente','unApellido',2,99999999,'cliente@ho
 UNLOCK TABLES;
 
 --
--- Table structure for table `pma_bookmark`
---
-
-DROP TABLE IF EXISTS `pma_bookmark`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_bookmark` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dbase` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `user` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `label` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `query` text COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Bookmarks';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_bookmark`
---
-
-LOCK TABLES `pma_bookmark` WRITE;
-/*!40000 ALTER TABLE `pma_bookmark` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_bookmark` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_column_info`
---
-
-DROP TABLE IF EXISTS `pma_column_info`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_column_info` (
-  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
-  `db_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `table_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `column_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `comment` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `mimetype` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `transformation` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `transformation_options` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `db_name` (`db_name`,`table_name`,`column_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Column information for phpMyAdmin';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_column_info`
---
-
-LOCK TABLES `pma_column_info` WRITE;
-/*!40000 ALTER TABLE `pma_column_info` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_column_info` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_designer_coords`
---
-
-DROP TABLE IF EXISTS `pma_designer_coords`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_designer_coords` (
-  `db_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `table_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `x` int(11) DEFAULT NULL,
-  `y` int(11) DEFAULT NULL,
-  `v` tinyint(4) DEFAULT NULL,
-  `h` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`db_name`,`table_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Table coordinates for Designer';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_designer_coords`
---
-
-LOCK TABLES `pma_designer_coords` WRITE;
-/*!40000 ALTER TABLE `pma_designer_coords` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_designer_coords` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_history`
---
-
-DROP TABLE IF EXISTS `pma_history`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_history` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `db` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `table` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `timevalue` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `sqlquery` text COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `username` (`username`,`db`,`table`,`timevalue`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='SQL history for phpMyAdmin';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_history`
---
-
-LOCK TABLES `pma_history` WRITE;
-/*!40000 ALTER TABLE `pma_history` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_history` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_navigationhiding`
---
-
-DROP TABLE IF EXISTS `pma_navigationhiding`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_navigationhiding` (
-  `username` varchar(64) COLLATE utf8_bin NOT NULL,
-  `item_name` varchar(64) COLLATE utf8_bin NOT NULL,
-  `item_type` varchar(64) COLLATE utf8_bin NOT NULL,
-  `db_name` varchar(64) COLLATE utf8_bin NOT NULL,
-  `table_name` varchar(64) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`username`,`item_name`,`item_type`,`db_name`,`table_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Hidden items of navigation tree';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_navigationhiding`
---
-
-LOCK TABLES `pma_navigationhiding` WRITE;
-/*!40000 ALTER TABLE `pma_navigationhiding` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_navigationhiding` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_pdf_pages`
---
-
-DROP TABLE IF EXISTS `pma_pdf_pages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_pdf_pages` (
-  `db_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `page_nr` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `page_descr` varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  PRIMARY KEY (`page_nr`),
-  KEY `db_name` (`db_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='PDF relation pages for phpMyAdmin';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_pdf_pages`
---
-
-LOCK TABLES `pma_pdf_pages` WRITE;
-/*!40000 ALTER TABLE `pma_pdf_pages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_pdf_pages` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_recent`
---
-
-DROP TABLE IF EXISTS `pma_recent`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_recent` (
-  `username` varchar(64) COLLATE utf8_bin NOT NULL,
-  `tables` text COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Recently accessed tables';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_recent`
---
-
-LOCK TABLES `pma_recent` WRITE;
-/*!40000 ALTER TABLE `pma_recent` DISABLE KEYS */;
-INSERT INTO `pma_recent` VALUES ('root','[{\"db\":\"resergol\",\"table\":\"torneos\"},{\"db\":\"resergol\",\"table\":\"canchas\"},{\"db\":\"resergol\",\"table\":\"complejos\"},{\"db\":\"resergol\",\"table\":\"clientes\"},{\"db\":\"resergol\",\"table\":\"reservas\"},{\"db\":\"resergol\",\"table\":\"TORNEOS\"},{\"db\":\"resergol\",\"table\":\"duenios\"},{\"db\":\"resergol\",\"table\":\"TorneosCanchas\"},{\"db\":\"resergol\",\"table\":\"canchasimagenes\"},{\"db\":\"resergol\",\"table\":\"torneoscanchas\"}]');
-/*!40000 ALTER TABLE `pma_recent` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_relation`
---
-
-DROP TABLE IF EXISTS `pma_relation`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_relation` (
-  `master_db` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `master_table` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `master_field` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `foreign_db` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `foreign_table` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `foreign_field` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  PRIMARY KEY (`master_db`,`master_table`,`master_field`),
-  KEY `foreign_field` (`foreign_db`,`foreign_table`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Relation table';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_relation`
---
-
-LOCK TABLES `pma_relation` WRITE;
-/*!40000 ALTER TABLE `pma_relation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_relation` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_savedsearches`
---
-
-DROP TABLE IF EXISTS `pma_savedsearches`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_savedsearches` (
-  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `db_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `search_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `search_data` text COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `u_savedsearches_username_dbname` (`username`,`db_name`,`search_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Saved searches';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_savedsearches`
---
-
-LOCK TABLES `pma_savedsearches` WRITE;
-/*!40000 ALTER TABLE `pma_savedsearches` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_savedsearches` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_table_coords`
---
-
-DROP TABLE IF EXISTS `pma_table_coords`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_table_coords` (
-  `db_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `table_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `pdf_page_number` int(11) NOT NULL DEFAULT '0',
-  `x` float unsigned NOT NULL DEFAULT '0',
-  `y` float unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`db_name`,`table_name`,`pdf_page_number`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Table coordinates for phpMyAdmin PDF output';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_table_coords`
---
-
-LOCK TABLES `pma_table_coords` WRITE;
-/*!40000 ALTER TABLE `pma_table_coords` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_table_coords` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_table_info`
---
-
-DROP TABLE IF EXISTS `pma_table_info`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_table_info` (
-  `db_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `table_name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `display_field` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
-  PRIMARY KEY (`db_name`,`table_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Table information for phpMyAdmin';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_table_info`
---
-
-LOCK TABLES `pma_table_info` WRITE;
-/*!40000 ALTER TABLE `pma_table_info` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_table_info` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_table_uiprefs`
---
-
-DROP TABLE IF EXISTS `pma_table_uiprefs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_table_uiprefs` (
-  `username` varchar(64) COLLATE utf8_bin NOT NULL,
-  `db_name` varchar(64) COLLATE utf8_bin NOT NULL,
-  `table_name` varchar(64) COLLATE utf8_bin NOT NULL,
-  `prefs` text COLLATE utf8_bin NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`username`,`db_name`,`table_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Tables'' UI preferences';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_table_uiprefs`
---
-
-LOCK TABLES `pma_table_uiprefs` WRITE;
-/*!40000 ALTER TABLE `pma_table_uiprefs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_table_uiprefs` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_tracking`
---
-
-DROP TABLE IF EXISTS `pma_tracking`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_tracking` (
-  `db_name` varchar(64) COLLATE utf8_bin NOT NULL,
-  `table_name` varchar(64) COLLATE utf8_bin NOT NULL,
-  `version` int(10) unsigned NOT NULL,
-  `date_created` datetime NOT NULL,
-  `date_updated` datetime NOT NULL,
-  `schema_snapshot` text COLLATE utf8_bin NOT NULL,
-  `schema_sql` text COLLATE utf8_bin,
-  `data_sql` longtext COLLATE utf8_bin,
-  `tracking` set('UPDATE','REPLACE','INSERT','DELETE','TRUNCATE','CREATE DATABASE','ALTER DATABASE','DROP DATABASE','CREATE TABLE','ALTER TABLE','RENAME TABLE','DROP TABLE','CREATE INDEX','DROP INDEX','CREATE VIEW','ALTER VIEW','DROP VIEW') COLLATE utf8_bin DEFAULT NULL,
-  `tracking_active` int(1) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`db_name`,`table_name`,`version`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPACT COMMENT='Database changes tracking for phpMyAdmin';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_tracking`
---
-
-LOCK TABLES `pma_tracking` WRITE;
-/*!40000 ALTER TABLE `pma_tracking` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_tracking` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_userconfig`
---
-
-DROP TABLE IF EXISTS `pma_userconfig`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_userconfig` (
-  `username` varchar(64) COLLATE utf8_bin NOT NULL,
-  `timevalue` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `config_data` text COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='User preferences storage for phpMyAdmin';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_userconfig`
---
-
-LOCK TABLES `pma_userconfig` WRITE;
-/*!40000 ALTER TABLE `pma_userconfig` DISABLE KEYS */;
-INSERT INTO `pma_userconfig` VALUES ('root','2016-05-06 01:31:05','{\"lang\":\"es\",\"collation_connection\":\"utf8mb4_unicode_ci\"}');
-/*!40000 ALTER TABLE `pma_userconfig` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_usergroups`
---
-
-DROP TABLE IF EXISTS `pma_usergroups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_usergroups` (
-  `usergroup` varchar(64) COLLATE utf8_bin NOT NULL,
-  `tab` varchar(64) COLLATE utf8_bin NOT NULL,
-  `allowed` enum('Y','N') COLLATE utf8_bin NOT NULL DEFAULT 'N',
-  PRIMARY KEY (`usergroup`,`tab`,`allowed`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='User groups with configured menu items';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_usergroups`
---
-
-LOCK TABLES `pma_usergroups` WRITE;
-/*!40000 ALTER TABLE `pma_usergroups` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_usergroups` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pma_users`
---
-
-DROP TABLE IF EXISTS `pma_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pma_users` (
-  `username` varchar(64) COLLATE utf8_bin NOT NULL,
-  `usergroup` varchar(64) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`username`,`usergroup`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Users and their assignments to user groups';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pma_users`
---
-
-LOCK TABLES `pma_users` WRITE;
-/*!40000 ALTER TABLE `pma_users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pma_users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `provincias`
 --
 
@@ -1497,7 +1077,7 @@ CREATE TABLE `reservas` (
   CONSTRAINT `Reservas_Canchas_fk` FOREIGN KEY (`IdComplejo`, `IdCancha`) REFERENCES `canchas` (`IdComplejo`, `IdCancha`),
   CONSTRAINT `Reservas_Clientes_fk` FOREIGN KEY (`IdCliente`) REFERENCES `clientes` (`IdCliente`),
   CONSTRAINT `Reservas_Estados_fk` FOREIGN KEY (`IdEstado`) REFERENCES `reservasestados` (`IdEstado`)
-) ENGINE=InnoDB AUTO_INCREMENT=1482 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1563 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1506,7 +1086,7 @@ CREATE TABLE `reservas` (
 
 LOCK TABLES `reservas` WRITE;
 /*!40000 ALTER TABLE `reservas` DISABLE KEYS */;
-INSERT INTO `reservas` VALUES (1,5,12,20,'2016-06-26','16:00:00','18:00:00',500,20,1,'2016-05-25 00:00:00',0,NULL),(18,6,16,20,'2016-06-19','18:00:00','19:00:00',800,110,2,'2016-06-03 00:00:00',800,NULL),(650,1,1,32,'2016-06-18','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(651,1,1,32,'2016-06-18','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(652,1,2,32,'2016-06-18','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(653,1,2,32,'2016-06-18','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(654,1,1,32,'2016-06-19','17:00:00','18:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(655,1,1,32,'2016-06-19','18:00:00','19:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(656,1,1,32,'2016-06-19','19:00:00','20:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(657,1,1,32,'2016-06-19','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(658,1,1,32,'2016-06-19','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(659,1,2,32,'2016-06-19','17:00:00','18:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(660,1,2,32,'2016-06-19','18:00:00','19:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(661,1,2,32,'2016-06-19','19:00:00','20:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(662,1,2,32,'2016-06-19','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(663,1,2,32,'2016-06-19','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(664,1,1,32,'2016-06-25','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(665,1,1,32,'2016-06-25','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(666,1,2,32,'2016-06-25','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(667,1,2,32,'2016-06-25','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(668,1,1,32,'2016-06-26','17:00:00','18:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(669,1,1,32,'2016-06-26','18:00:00','19:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(670,1,1,32,'2016-06-26','19:00:00','20:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(671,1,1,32,'2016-06-26','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(672,1,1,32,'2016-06-26','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(673,1,2,32,'2016-06-26','17:00:00','18:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(674,1,2,32,'2016-06-26','18:00:00','19:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(675,1,2,32,'2016-06-26','19:00:00','20:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(676,1,2,32,'2016-06-26','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(677,1,2,32,'2016-06-26','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(678,1,1,32,'2016-07-02','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(679,1,1,32,'2016-07-02','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(680,1,2,32,'2016-07-02','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(681,1,2,32,'2016-07-02','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(1401,1,1,32,'2016-06-16','10:00:00','11:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1402,1,1,32,'2016-06-16','11:00:00','12:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1403,1,1,32,'2016-06-16','12:00:00','13:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1404,1,1,32,'2016-06-16','13:00:00','14:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1405,1,1,32,'2016-06-16','14:00:00','15:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1406,1,1,32,'2016-06-16','15:00:00','16:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1407,1,1,32,'2016-06-16','16:00:00','17:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1408,1,1,32,'2016-06-16','17:00:00','18:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1409,1,1,32,'2016-06-16','18:00:00','19:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1410,1,1,32,'2016-06-16','19:00:00','20:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1411,1,1,32,'2016-06-16','20:00:00','21:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1412,1,1,32,'2016-06-16','21:00:00','22:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1413,1,2,32,'2016-06-16','10:00:00','11:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1414,1,2,32,'2016-06-16','11:00:00','12:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1415,1,2,32,'2016-06-16','12:00:00','13:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1416,1,2,32,'2016-06-16','13:00:00','14:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1417,1,2,32,'2016-06-16','14:00:00','15:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1418,1,2,32,'2016-06-16','15:00:00','16:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1419,1,2,32,'2016-06-16','16:00:00','17:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1420,1,2,32,'2016-06-16','17:00:00','18:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1421,1,2,32,'2016-06-16','18:00:00','19:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1422,1,2,32,'2016-06-16','19:00:00','20:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1423,1,2,32,'2016-06-16','20:00:00','21:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1424,1,2,32,'2016-06-16','21:00:00','22:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1425,1,1,32,'2016-06-22','10:00:00','11:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1426,1,1,32,'2016-06-22','11:00:00','12:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1427,1,1,32,'2016-06-22','12:00:00','13:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1428,1,1,32,'2016-06-22','13:00:00','14:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1429,1,1,32,'2016-06-22','14:00:00','15:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1430,1,1,32,'2016-06-22','15:00:00','16:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1431,1,1,32,'2016-06-22','16:00:00','17:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1432,1,1,32,'2016-06-22','17:00:00','18:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1433,1,1,32,'2016-06-22','18:00:00','19:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1434,1,1,32,'2016-06-22','19:00:00','20:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1435,1,1,32,'2016-06-22','20:00:00','21:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1436,1,1,32,'2016-06-22','21:00:00','22:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1437,1,2,32,'2016-06-22','10:00:00','11:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1438,1,2,32,'2016-06-22','11:00:00','12:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1439,1,2,32,'2016-06-22','12:00:00','13:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1440,1,2,32,'2016-06-22','13:00:00','14:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1441,1,2,32,'2016-06-22','14:00:00','15:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1442,1,2,32,'2016-06-22','15:00:00','16:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1443,1,2,32,'2016-06-22','16:00:00','17:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1444,1,2,32,'2016-06-22','17:00:00','18:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1445,1,2,32,'2016-06-22','18:00:00','19:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1446,1,2,32,'2016-06-22','19:00:00','20:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1447,1,2,32,'2016-06-22','20:00:00','21:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1448,1,2,32,'2016-06-22','21:00:00','22:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1449,1,1,32,'2016-06-23','10:00:00','11:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1450,1,1,32,'2016-06-23','11:00:00','12:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1451,1,1,32,'2016-06-23','12:00:00','13:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1452,1,1,32,'2016-06-23','13:00:00','14:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1453,1,1,32,'2016-06-23','14:00:00','15:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1454,1,1,32,'2016-06-23','15:00:00','16:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1455,1,1,32,'2016-06-23','16:00:00','17:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1456,1,1,32,'2016-06-23','17:00:00','18:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1471,6,16,2,'2016-06-30','14:00:00','15:00:00',800,100,2,'2016-06-23 00:00:00',800,NULL),(1472,6,16,2,'2016-06-25','18:00:00','19:00:00',800,100,2,'2016-06-23 00:00:00',800,NULL),(1473,6,16,2,'2016-06-25','21:00:00','22:00:00',800,100,2,'2016-06-23 20:55:57',800,NULL),(1474,6,16,2,'2016-06-25','19:00:00','20:00:00',885,100,2,'2016-06-23 21:22:30',885,NULL),(1475,5,12,2,'2016-06-25','22:00:00','23:00:00',747.5,20,1,'2016-06-23 21:25:32',149.5,NULL),(1476,5,12,2,'2016-06-25','21:00:00','22:00:00',747.5,100,2,'2016-06-23 21:27:53',747.5,NULL),(1477,6,16,2,'2016-06-25','20:00:00','21:00:00',885,100,2,'2016-06-23 22:53:14',885,NULL),(1478,6,16,2,'2016-07-01','14:00:00','15:00:00',750,100,2,'2016-06-23 23:40:54',750,NULL),(1479,6,16,2,'2016-07-02','14:00:00','15:00:00',750,100,2,'2016-06-23 23:45:42',750,NULL),(1480,6,16,2,'2016-06-25','22:00:00','23:00:00',885,100,2,'2016-06-23 23:47:32',885,NULL),(1481,6,16,2,'2016-07-01','15:00:00','16:00:00',750,100,2,'2016-06-23 23:53:41',750,NULL);
+INSERT INTO `reservas` VALUES (1,5,12,20,'2016-06-26','16:00:00','18:00:00',500,20,1,'2016-05-25 00:00:00',0,NULL),(18,6,16,20,'2016-06-19','18:00:00','19:00:00',800,110,2,'2016-06-03 00:00:00',800,NULL),(650,1,1,32,'2016-06-18','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(651,1,1,32,'2016-06-18','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(652,1,2,32,'2016-06-18','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(653,1,2,32,'2016-06-18','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(654,1,1,32,'2016-06-19','17:00:00','18:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(655,1,1,32,'2016-06-19','18:00:00','19:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(656,1,1,32,'2016-06-19','19:00:00','20:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(657,1,1,32,'2016-06-19','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(658,1,1,32,'2016-06-19','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(659,1,2,32,'2016-06-19','17:00:00','18:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(660,1,2,32,'2016-06-19','18:00:00','19:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(661,1,2,32,'2016-06-19','19:00:00','20:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(662,1,2,32,'2016-06-19','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(663,1,2,32,'2016-06-19','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(664,1,1,32,'2016-06-25','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(665,1,1,32,'2016-06-25','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(666,1,2,32,'2016-06-25','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(667,1,2,32,'2016-06-25','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(668,1,1,32,'2016-06-26','17:00:00','18:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(669,1,1,32,'2016-06-26','18:00:00','19:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(670,1,1,32,'2016-06-26','19:00:00','20:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(671,1,1,32,'2016-06-26','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(672,1,1,32,'2016-06-26','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(673,1,2,32,'2016-06-26','17:00:00','18:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(674,1,2,32,'2016-06-26','18:00:00','19:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(675,1,2,32,'2016-06-26','19:00:00','20:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(676,1,2,32,'2016-06-26','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(677,1,2,32,'2016-06-26','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(678,1,1,32,'2016-07-02','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(679,1,1,32,'2016-07-02','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(680,1,2,32,'2016-07-02','20:00:00','21:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(681,1,2,32,'2016-07-02','21:00:00','22:00:00',0,0,1,'2016-06-08 00:00:00',0,12),(1401,1,1,32,'2016-06-16','10:00:00','11:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1402,1,1,32,'2016-06-16','11:00:00','12:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1403,1,1,32,'2016-06-16','12:00:00','13:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1404,1,1,32,'2016-06-16','13:00:00','14:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1405,1,1,32,'2016-06-16','14:00:00','15:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1406,1,1,32,'2016-06-16','15:00:00','16:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1407,1,1,32,'2016-06-16','16:00:00','17:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1408,1,1,32,'2016-06-16','17:00:00','18:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1409,1,1,32,'2016-06-16','18:00:00','19:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1410,1,1,32,'2016-06-16','19:00:00','20:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1411,1,1,32,'2016-06-16','20:00:00','21:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1412,1,1,32,'2016-06-16','21:00:00','22:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1413,1,2,32,'2016-06-16','10:00:00','11:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1414,1,2,32,'2016-06-16','11:00:00','12:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1415,1,2,32,'2016-06-16','12:00:00','13:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1416,1,2,32,'2016-06-16','13:00:00','14:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1417,1,2,32,'2016-06-16','14:00:00','15:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1418,1,2,32,'2016-06-16','15:00:00','16:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1419,1,2,32,'2016-06-16','16:00:00','17:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1420,1,2,32,'2016-06-16','17:00:00','18:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1421,1,2,32,'2016-06-16','18:00:00','19:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1422,1,2,32,'2016-06-16','19:00:00','20:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1423,1,2,32,'2016-06-16','20:00:00','21:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1424,1,2,32,'2016-06-16','21:00:00','22:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1425,1,1,32,'2016-06-22','10:00:00','11:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1426,1,1,32,'2016-06-22','11:00:00','12:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1427,1,1,32,'2016-06-22','12:00:00','13:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1428,1,1,32,'2016-06-22','13:00:00','14:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1429,1,1,32,'2016-06-22','14:00:00','15:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1430,1,1,32,'2016-06-22','15:00:00','16:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1431,1,1,32,'2016-06-22','16:00:00','17:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1432,1,1,32,'2016-06-22','17:00:00','18:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1433,1,1,32,'2016-06-22','18:00:00','19:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1434,1,1,32,'2016-06-22','19:00:00','20:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1435,1,1,32,'2016-06-22','20:00:00','21:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1436,1,1,32,'2016-06-22','21:00:00','22:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1437,1,2,32,'2016-06-22','10:00:00','11:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1438,1,2,32,'2016-06-22','11:00:00','12:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1439,1,2,32,'2016-06-22','12:00:00','13:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1440,1,2,32,'2016-06-22','13:00:00','14:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1441,1,2,32,'2016-06-22','14:00:00','15:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1442,1,2,32,'2016-06-22','15:00:00','16:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1443,1,2,32,'2016-06-22','16:00:00','17:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1444,1,2,32,'2016-06-22','17:00:00','18:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1445,1,2,32,'2016-06-22','18:00:00','19:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1446,1,2,32,'2016-06-22','19:00:00','20:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1447,1,2,32,'2016-06-22','20:00:00','21:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1448,1,2,32,'2016-06-22','21:00:00','22:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1449,1,1,32,'2016-06-23','10:00:00','11:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1450,1,1,32,'2016-06-23','11:00:00','12:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1451,1,1,32,'2016-06-23','12:00:00','13:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1452,1,1,32,'2016-06-23','13:00:00','14:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1453,1,1,32,'2016-06-23','14:00:00','15:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1454,1,1,32,'2016-06-23','15:00:00','16:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1455,1,1,32,'2016-06-23','16:00:00','17:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1456,1,1,32,'2016-06-23','17:00:00','18:00:00',0,0,1,'2016-06-09 00:00:00',0,13),(1471,6,16,2,'2016-06-30','14:00:00','15:00:00',800,100,2,'2016-06-23 00:00:00',800,NULL),(1472,6,16,2,'2016-06-25','18:00:00','19:00:00',800,100,2,'2016-06-23 00:00:00',800,NULL),(1473,6,16,2,'2016-06-25','21:00:00','22:00:00',800,100,2,'2016-06-23 20:55:57',800,NULL),(1474,6,16,2,'2016-06-25','19:00:00','20:00:00',885,100,2,'2016-06-23 21:22:30',885,NULL),(1475,5,12,2,'2016-06-25','22:00:00','23:00:00',747.5,20,1,'2016-06-23 21:25:32',149.5,NULL),(1476,5,12,2,'2016-06-25','21:00:00','22:00:00',747.5,100,2,'2016-06-23 21:27:53',747.5,NULL),(1477,6,16,2,'2016-06-25','20:00:00','21:00:00',885,100,2,'2016-06-23 22:53:14',885,NULL),(1478,6,16,2,'2016-07-01','14:00:00','15:00:00',750,100,2,'2016-06-23 23:40:54',750,NULL),(1479,6,16,2,'2016-07-02','14:00:00','15:00:00',750,100,2,'2016-06-23 23:45:42',750,NULL),(1480,6,16,2,'2016-06-25','22:00:00','23:00:00',885,100,2,'2016-06-23 23:47:32',885,NULL),(1481,6,16,2,'2016-07-01','15:00:00','16:00:00',750,100,2,'2016-06-23 23:53:41',750,NULL),(1482,6,16,2,'2016-07-01','17:00:00','20:00:00',2520,100,2,'2016-06-28 01:41:28',2520,NULL),(1483,6,16,2,'2016-07-08','20:00:00','22:00:00',1770,100,2,'2016-06-28 01:42:30',1770,NULL),(1509,6,16,2,'2016-07-09','18:00:00','20:00:00',1770,100,2,'2016-06-28 01:44:42',1770,NULL),(1510,6,16,2,'2016-07-16','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1511,6,16,2,'2016-07-23','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1512,6,16,2,'2016-07-30','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1513,6,16,2,'2016-08-06','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1514,6,16,2,'2016-08-13','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1515,6,16,2,'2016-08-20','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1516,6,16,2,'2016-08-27','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1517,6,16,2,'2016-09-03','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1518,6,16,2,'2016-09-10','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1519,6,16,2,'2016-09-17','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1520,6,16,2,'2016-09-24','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1521,6,16,2,'2016-10-01','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1522,6,16,2,'2016-10-08','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1523,6,16,2,'2016-10-15','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1524,6,16,2,'2016-10-22','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1525,6,16,2,'2016-10-29','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1526,6,16,2,'2016-11-05','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1527,6,16,2,'2016-11-12','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1528,6,16,2,'2016-11-19','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1529,6,16,2,'2016-11-26','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1530,6,16,2,'2016-12-03','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1531,6,16,2,'2016-12-10','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1532,6,16,2,'2016-12-17','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1533,6,16,2,'2016-12-24','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1534,6,16,2,'2016-12-31','18:00:00','20:00:00',1770,0,3,'2016-06-28 01:44:42',0,NULL),(1535,6,16,2,'2016-06-30','18:00:00','19:00:00',885,100,2,'2016-06-28 22:42:10',885,NULL),(1536,6,16,2,'2016-07-07','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1537,6,16,2,'2016-07-14','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1538,6,16,2,'2016-07-21','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1539,6,16,2,'2016-07-28','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1540,6,16,2,'2016-08-04','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1541,6,16,2,'2016-08-11','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1542,6,16,2,'2016-08-18','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1543,6,16,2,'2016-08-25','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1544,6,16,2,'2016-09-01','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1545,6,16,2,'2016-09-08','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1546,6,16,2,'2016-09-15','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1547,6,16,2,'2016-09-22','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1548,6,16,2,'2016-09-29','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1549,6,16,2,'2016-10-06','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1550,6,16,2,'2016-10-13','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1551,6,16,2,'2016-10-20','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1552,6,16,2,'2016-10-27','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1553,6,16,2,'2016-11-03','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1554,6,16,2,'2016-11-10','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1555,6,16,2,'2016-11-17','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1556,6,16,2,'2016-11-24','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1557,6,16,2,'2016-12-01','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1558,6,16,2,'2016-12-08','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1559,6,16,2,'2016-12-15','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1560,6,16,2,'2016-12-22','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1561,6,16,2,'2016-12-29','18:00:00','19:00:00',885,0,3,'2016-06-28 22:42:10',0,NULL),(1562,6,16,2,'2016-07-01','16:00:00','17:00:00',750,100,2,'2016-06-29 23:10:19',750,NULL);
 /*!40000 ALTER TABLE `reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1521,7 +1101,7 @@ CREATE TABLE `reservasestados` (
   `IdEstado` int(11) NOT NULL AUTO_INCREMENT,
   `Descripcion` varchar(30) NOT NULL,
   PRIMARY KEY (`IdEstado`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1530,8 +1110,31 @@ CREATE TABLE `reservasestados` (
 
 LOCK TABLES `reservasestados` WRITE;
 /*!40000 ALTER TABLE `reservasestados` DISABLE KEYS */;
-INSERT INTO `reservasestados` VALUES (1,'Señada'),(2,'Pagada completa');
+INSERT INTO `reservasestados` VALUES (1,'Señada'),(2,'Pagada completa'),(3,'Fija');
 /*!40000 ALTER TABLE `reservasestados` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reservastemporal`
+--
+
+DROP TABLE IF EXISTS `reservastemporal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reservastemporal` (
+  `idComplejo` int(11) NOT NULL,
+  `idCancha` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reservastemporal`
+--
+
+LOCK TABLES `reservastemporal` WRITE;
+/*!40000 ALTER TABLE `reservastemporal` DISABLE KEYS */;
+INSERT INTO `reservastemporal` VALUES (6,16);
+/*!40000 ALTER TABLE `reservastemporal` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1731,7 +1334,7 @@ CREATE TABLE `torneoscanchas` (
 
 LOCK TABLES `torneoscanchas` WRITE;
 /*!40000 ALTER TABLE `torneoscanchas` DISABLE KEYS */;
-INSERT INTO `torneoscanchas` VALUES (12,1,1),(13,1,1),(12,1,2),(13,1,2);
+INSERT INTO `torneoscanchas` VALUES (12,1,1),(12,1,2),(13,1,1),(13,1,2);
 /*!40000 ALTER TABLE `torneoscanchas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2365,6 +1968,61 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_deleteComplejosDias` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_deleteComplejosDias`(IN `pIdComplejo` INT)
+BEGIN
+
+    DELETE FROM complejosdias 
+    WHERE IdComplejo = pIdComplejo;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_deleteReservaTemp` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_deleteReservaTemp`(IN `pIdCancha` INT(11), IN `pIdComplejo` INT(11), OUT `pValor` INT)
+BEGIN 
+
+    DECLARE Error INT DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+
+        DELETE FROM reservastemporal
+        WHERE idComplejo = pIdComplejo and idCancha = pIdCancha;
+
+    IF Error=-1 THEN
+
+        SET pValor = -1; 
+
+    ELSE
+        SET pValor = 1; 
+    END IF;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `SP_deleteTorneosImagenes` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -2460,6 +2118,75 @@ BEGIN
 
 
 
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_existeComplejo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existeComplejo`(IN `pIdComplejo` INT(11))
+BEGIN
+
+SELECT COUNT(*) as existe 
+FROM complejos
+where IdComplejo = pIdComplejo;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_existeComplejoDireccion` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existeComplejoDireccion`(IN `pIdComplejoDireccion` INT)
+BEGIN
+
+SELECT COUNT(*) AS existe
+FROM complejosdireccion
+where IdComplejo = pIdComplejoDireccion;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_existeComplejoPagos` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existeComplejoPagos`(IN `pIdComplejoPagos` INT(11))
+BEGIN
+
+SELECT COUNT(*) AS existe
+from complejospagos
+where idComplejo = pIdComplejoPagos;
 
 END ;;
 DELIMITER ;
@@ -2989,6 +2716,73 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_existeEmailComplejo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existeEmailComplejo`(IN `pEmail` VARCHAR(60), IN `idComplejo` INT, OUT `resultado` INT)
+BEGIN 
+
+    DECLARE Aux INT;
+    SET resultado = 0;
+    SET Aux = -1;
+
+	SELECT IFNULL(IdComplejo, -1) INTO Aux 
+	FROM complejos 
+	WHERE Email = pEmail
+    AND IdComplejo != idComplejo;
+
+    IF Aux > -1 THEN
+        SET resultado = 1;
+    END IF;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_existeEmailDuenio` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existeEmailDuenio`(IN `pEmail` VARCHAR(60), IN `pIdDuenio` INT, OUT `resultado` INT)
+    NO SQL
+BEGIN 
+
+    DECLARE Aux INT;
+    SET resultado = 0;
+    SET Aux = -1;
+
+	SELECT IFNULL(per.idPersona, -1) INTO Aux 
+	FROM personas per
+    INNER JOIN duenios due
+    ON per.IdPersona = due.IdDuenio
+	WHERE per.Email = pEmail
+    AND due.IdDuenio != pIdDuenio;
+
+    IF Aux > -1 THEN
+        SET resultado = 1;
+    END IF;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `SP_existeUsuario` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -3466,247 +3260,216 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getCancha`(IN `idCancha` INT(11), IN `idComplejo` INT(11))
-BEGIN 
+BEGIN 
 
-
 
-
 
-
 
-
 
-
 
-SELECT CO.IdDuenio, CA.IdCancha, CA.nombre, CO.IdComplejo, CO.Nombre as Complejo, P.Nombre AS Provincia, L.Nombre as Localidad,
 
-
 
-
 
-
 
-
 
-
+SELECT CO.IdDuenio, CA.IdCancha, CA.nombre, CO.IdComplejo, CO.Nombre as Complejo, P.Nombre AS Provincia, L.Nombre as Localidad,
 
-       CD.Calle, CD.Altura, DP.NroTelef, CA.CantJugadores, TS.Descripcion as Superficie, CA.Techada, CA.Luz,
 
-
 
-
 
-
 
-
 
-
 
-       CA.Precio, CO.PorcentajeSeña as PorcentSenia, CO.Buffet, CO.Parrillas, CO.Duchas, CO.WiFi, CO.Estacionamiento, CO.HoraCobroLuz,
 
-CO.PorcentajeLuz
 
-
 
-
 
-
+       CD.Calle, CD.Altura, CO.nroTelefono, CO.nroCelular, CA.CantJugadores, TS.Descripcion as Superficie, CA.Techada, CA.Luz,
 
-
 
-
 
-       
 
-
 
-
 
-
 
-
 
-
 
-FROM CANCHAS CA
 
-
 
-
+       CA.Precio, CO.PorcentajeSeña as PorcentSenia, CO.Buffet, CO.Parrillas, CO.Duchas, CO.WiFi, CO.Estacionamiento, CO.HoraCobroLuz,
 
-
+CO.PorcentajeLuz
 
-
 
-
 
-INNER JOIN COMPLEJOS CO
 
-
 
-
 
-
 
-
 
-
 
-	ON CA.IdComplejo = CO.IdComplejo
 
-
 
-
+       
 
-
 
-
 
-
 
-INNER JOIN complejosdireccion CD
 
-
 
-
 
-
 
-
 
-
 
-	ON CD.IdComplejo = CO.IdComplejo
 
-
+FROM CANCHAS CA
 
-
 
-
 
-
 
-
 
-INNER JOIN provincias p
 
-
 
-
 
-
 
-
 
-
 
-	ON P.IdProvincia = CD.IdProvincia
+INNER JOIN COMPLEJOS CO
 
-
 
-
 
-
 
-
 
-
 
-INNER JOIN localidades L
 
-
 
-
 
-
 
-
 
-
+	ON CA.IdComplejo = CO.IdComplejo
 
-	ON L.IdProvincia = CD.IdProvincia AND L.IdLocalidad = CD.IdLocalidad
 
-
 
-
 
-
 
-
 
-
 
-INNER JOIN dueniospendientes DP
 
-
 
-
 
-
 
-
+INNER JOIN complejosdireccion CD
 
-
 
-	ON DP.IdDuenio = CO.IdDuenio
 
-
 
-
 
-
 
-
 
-
 
-INNER JOIN tipossuperficie TS
 
-
 
-
 
-
+	ON CD.IdComplejo = CO.IdComplejo
 
-
 
-
 
-	ON TS.IdSuperficie = CA.IdSuperficie
 
-
 
-
 
-
 
-
 
-
 
-WHERE CA.IdEstado = 1 and CO.IdEstado = 1 AND
 
-
 
-
+INNER JOIN provincias p
 
-
 
-
 
-
 
-CA.IdCancha = idCancha AND CO.IdComplejo = idComplejo;
 
-
 
-
 
-
 
-
 
-
+
+
+	ON P.IdProvincia = CD.IdProvincia
+
+
+
+
+
+
+
+
+
+
+
+INNER JOIN localidades L
+
+
+
+
+
+
+
+
+
+
+
+	ON L.IdProvincia = CD.IdProvincia AND L.IdLocalidad = CD.IdLocalidad
+
+
+
+
+INNER JOIN tipossuperficie TS
+
+
+
+
+
+
+
+
+
+
+
+	ON TS.IdSuperficie = CA.IdSuperficie
+
+
+
+
+
+
+
+
+
+
+
+WHERE CA.IdEstado = 1 and CO.IdEstado = 1 AND
+
+
+
+
+
+
+
+
+
+
+
+CA.IdCancha = idCancha AND CO.IdComplejo = idComplejo;
+
+
+
+
+
+
+
+
+
+
 
   END ;;
 DELIMITER ;
@@ -4878,6 +4641,39 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_getComplejosDias` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getComplejosDias`(IN `pIdComplejo` INT)
+BEGIN
+
+    SELECT 
+    	cd.IdDiaDesde idDiaDesde
+        ,cd.IdDiaHasta idDiaHasta
+        ,cd.HoraDesde horaDesde
+        ,cd.HoraHasta horaHasta
+        ,dDesde.Nombre diaDesde
+        ,dHasta.Nombre diaHasta
+    FROM complejosdias cd
+    inner join dias dDesde
+    on cd.IdDiaDesde = dDesde.IdDia
+    inner join dias dHasta
+    on cd.IdDiaHasta = dHasta.IdDia
+    where IdComplejo = pIdComplejo;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `SP_getDias` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -5205,6 +5001,93 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_getfechasLigaByIdTorneo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getfechasLigaByIdTorneo`(
+	pIdTorneo	INT
+)
+BEGIN
+	SELECT DISTINCT idFecha 
+    FROM fixture 
+    WHERE idtorneo =pIdTorneo;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_getFechasReservaFija` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getFechasReservaFija`(pIdCancha INT(11), pIdComplejo INT(11), pHoraDesde VARCHAR(8), pIdDia INT, pAnio INT, pFechaPrimerReserva DATE)
+SELECT date_format(c.fecha, '%d/%m/%Y') as fecha, c.idDia, d.nombre, NoDisp.fecha as NoDisponible
+
+FROM complejos co
+
+INNER JOIN canchas ca ON ca.idcomplejo = co.idcomplejo
+INNER JOIN complejosdias td ON td.idComplejo = co.idComplejo
+INNER JOIN calendario c
+		ON c.idDia BETWEEN td.IdDiaDesde AND td.IdDiaHasta
+INNER JOIN dias d ON d.iddia = c.iddia
+LEFT JOIN (SELECT fecha, idcomplejo, idcancha
+ FROM reservas WHERE idCancha = pIdCancha AND idcomplejo = pIdComplejo AND pHoraDesde >= HoraInicio AND pHoraDesde < HoraFin) AS NoDisp
+ 
+ON NoDisp.idCancha = ca.idCancha and NoDisp.idComplejo = co.idComplejo
+ AND NoDisp.fecha = c.fecha
+
+WHERE ca.idcancha = pIdCancha AND co.idComplejo = pIdComplejo
+AND d.iddia = pIdDia AND YEAR(c.fecha) = pAnio 
+AND c.fecha > pFechaPrimerReserva ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_getFixtureByFecha` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getFixtureByFecha`(
+	pIdTorneo	INT,
+    pIdFecha	INT
+)
+BEGIN 
+	SELECT  fi.IdTorneo, fi.IdFecha, fi.idreserva, fi.idEquipo1, eq1.nombre as 'equipo1', fi.gol1, 'VS' as 'VS',
+			fi.idEquipo2, eq2.nombre as 'equipo2', fi.gol2, SUBSTRING(r.horaInicio,1,5) as 'horaInicio', c.nombre as 'cancha', 
+             Date_format(r.fecha,'%d/%m/%Y') as 'fecha'
+	FROM  fixture AS fi
+	INNER JOIN reservas AS r ON fi.idreserva = r.idreserva
+	INNER JOIN equipos AS eq1 ON eq1.idEquipo = fi.idEquipo1
+	INNER JOIN equipos AS eq2 ON eq2.idEquipo = fi.idEquipo2
+	INNER JOIN canchas AS c ON c.idcancha = r.idcancha and c.idcomplejo = r.idComplejo
+	WHERE  fi.idtorneo = pIdTorneo and fi.idfecha =pIdFecha;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `SP_getHorariosReservasByDia` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -5215,28 +5098,14 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getHorariosReservasByDia`(IN `pIdComplejo` INT(11), IN `pIdCancha` INT(11), IN `pFecha` DATE)
-BEGIN 
-
-
-
-
-
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getHorariosReservasByDia`(pIdComplejo INT(11), pIdCancha INT(11), pFecha DATE)
 SELECT r.HoraInicio, r.HoraFin
-
+
 FROM reservas r
-
+
 WHERE r.IdComplejo = pIdComplejo and r.IdCancha = pIdCancha
-
-AND R.Fecha = pFecha;
-
 
-
-
-
-
-
-  END ;;
+AND R.Fecha = pFecha ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -5246,48 +5115,36 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getHorasDisponiblesByFecha`(IN `pIdCancha` INT(11), IN `pIdComplejo` INT(11), IN `pFecha` DATE)
-BEGIN 
-
-
-
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getHorasDisponiblesByFecha`(pIdCancha INT(11), IN pIdComplejo INT(11), pFecha DATE)
 SELECT DISTINCT h.hora
-
+
 	FROM complejos c
-
+
     INNER JOIN complejosdias td ON td.idComplejo = c.idComplejo
-
+
     INNER JOIN canchas can on can.idComplejo = c.idComplejo
-
+
 	INNER JOIN horas as H ON H.hora >= td.HoraDesde and H.hora < td.HoraHasta
-
+
 	WHERE c.idComplejo = pIdComplejo and can.idCancha = pIdCancha
-
+
 		AND not exists(select idcomplejo
-
+
 						from reservas R
-
+
 						where R.idcomplejo = c.IdComplejo
-
+
 						and R.idCancha = can.idcancha
-
+
 						and R.fecha = pFecha
-
-						and h.hora >= HoraInicio and h.hora < horafin);
-
 
-
-
-
-
-
-END ;;
+						and h.hora >= HoraInicio and h.hora < horafin) ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -5486,6 +5343,25 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_getReservaTemp` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getReservaTemp`(pIdCancha INT(11), pIdComplejo INT(11))
+select count(*) as existe
+from reservastemporal
+where idComplejo = pIdComplejo and idCancha = pIdCancha ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `SP_getSuperficies` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -5655,26 +5531,18 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getTarjetaCliente`(IN `pIdCliente` INT(11))
-BEGIN 
-
-
-
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getTarjetaCliente`(pIdCliente INT(11))
 SELECT NroTarjeta, Mes, Anio
-
-from clientespagos
-
-where IdCliente = pIdCliente;
-
 
-
-END ;;
+from clientespagos
+
+where IdCliente = pIdCliente ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -8490,6 +8358,79 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_InsertReservaTemp` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_InsertReservaTemp`(IN `pIdCancha` INT(11), IN `pIdComplejo` INT(11), OUT `pValor` INT)
+BEGIN 
+
+    DECLARE Error INT DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+
+ 
+
+    
+
+    
+
+
+        INSERT INTO reservastemporal(idComplejo, idCancha)
+
+
+
+        VALUES( pIdComplejo, pIdCancha);
+
+	
+
+    IF Error=-1 THEN
+
+        SET pValor = -1; 
+
+    ELSE
+
+
+
+        SET pValor = 1; 
+
+
+
+    END IF;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `SP_insertTarjeta` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -9846,6 +9787,167 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_setComplejosDias` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_setComplejosDias`(IN `pIdComplejo` INT, IN `pIdDiaDesde` INT, IN `pIdDiaHasta` INT, IN `pHoraDesde` TIME, IN `pHoraHasta` TIME)
+BEGIN 
+
+	DECLARE EXISTE INT DEFAULT 0;
+
+	SET EXISTE = (SELECT count(*) FROM complejosdireccion where IdComplejo = pIdComplejoDireccion);
+
+	IF(EXISTE = 1) THEN
+    
+        INSERT INTO complejosdias 
+        (
+            IdComplejo
+            ,IdDiaDesde
+            ,IdDiaHasta
+            ,HoraDesde
+            ,HoraHasta
+        ) 
+        VALUES 
+        (
+            pIdComplejo
+            ,pIdDiaDesde
+            ,pIdDiaHasta
+            ,pHoraDesde
+            ,pHoraHasta
+        );
+            
+	ELSE
+    
+        UPDATE complejosdias SET 
+            HoraDesde = pHoraDesde
+            ,HoraHasta = pHoraHasta
+        WHERE IdComplejo = pIdComplejo
+        AND IdDiaDesde = pIdDiaDesde
+        AND IdDiaHasta = pIdDiaHasta;
+    
+    END IF;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_setComplejosDireccion` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_setComplejosDireccion`(IN `pIdComplejoDireccion` INT, IN `pCalle` VARCHAR(40), IN `pAltura` INT, IN `pIdLocalidad` INT, IN `pIdProvincia` INT, IN `pX` INT, IN `pY` INT)
+BEGIN
+
+	DECLARE EXISTE INT DEFAULT 0;
+
+	set EXISTE = (SELECT count(*) FROM complejosdireccion where IdComplejo = pIdComplejoDireccion);
+
+	IF(EXISTE = 1) THEN
+    
+        UPDATE complejosdireccion SET 
+            Calle = pCalle
+            ,Altura = pAltura
+            ,IdLocalidad = pIdLocalidad
+            ,IdProvincia = pIdProvincia
+            ,X = pX
+            ,Y = pY
+        WHERE 
+            IdComplejo = pIdComplejoDireccion;
+            
+	ELSE
+    
+        INSERT INTO complejosdireccion 
+        (
+            IdComplejo
+            ,Calle
+            ,Altura
+            ,IdLocalidad
+            ,IdProvincia
+            ,X
+            ,Y
+        ) 
+        VALUES 
+        (
+            pIdComplejoDireccion
+            ,pCalle
+            ,pAltura
+            ,pIdLocalidad
+            ,pIdProvincia
+            ,pX
+            ,pY
+        );
+    
+    END IF;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_setComplejosPagos` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_setComplejosPagos`(IN `pIdComplejoPagos` INT, IN `pCBU` INT, IN `pNroCuenta` INT)
+BEGIN 
+
+	DECLARE EXISTE INT DEFAULT 0;
+
+	set EXISTE = (SELECT count(*) FROM complejospagos where IdComplejo = pIdComplejoPagos);
+
+	IF(EXISTE = 1) THEN
+    
+        UPDATE  complejospagos  SET 
+        	CBU = pCBU
+        	,NroCuenta = pNroCuenta 
+        WHERE 
+        	IdComplejo = pIdComplejoPagos;
+            
+	ELSE
+    
+        INSERT INTO complejospagos
+        (
+            IdComplejo
+            ,CBU
+            ,NroCuenta
+        ) 
+        VALUES 
+        (
+            pIdComplejoPagos
+            ,pCBU
+            ,pNroCuenta
+        );
+    
+    END IF;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `SP_updateComplejo` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -10023,6 +10125,26 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SP_verificarClienteListaNegra` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_verificarClienteListaNegra`(pIdCliente INT(11), pIdComplejo INT(11))
+SELECT FechaIngreso
+from listanegra
+where IdCliente = pIdCliente
+and IdComplejo = pIdComplejo ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -10033,4 +10155,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-25  9:37:33
+-- Dump completed on 2016-06-29 23:54:19
