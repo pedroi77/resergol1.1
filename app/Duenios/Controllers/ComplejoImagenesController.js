@@ -1,21 +1,21 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoImgController", function($scope, $state , $stateParams, TorneoImgService, $compile, Upload, TorneoImgDBService,TorneoimgAltaService){
+resergolApp.controller("ComplejoImagenesController", function($scope, $state , $stateParams, ComplejoImagenesServices, $compile, Upload, ComplejoImagenesDBService,ComplejoImagenesAltaServices){
     self = this;
     
-    this.idTorneo = $stateParams.idTorneo;
-    this.idDuenio = $stateParams.idDuenio;
+    this.idComplejo = sessionStorage.idComplejo;
+    this.idDuenio = sessionStorage.id;
     this.msjPantalla ="" ;
     this.archivoInvalido = true;
     this.bMensaje = false;
     this.imagenes = {
         tipos: [],
-        selectedOption: {idtorneo: '1', nombre: '', url:'', imagen:''} 
+        selectedOption: {idComplejo: '1', nombre: '', url:'', imagen:''} 
     };    
     
     this.init = function(){
         this.imagenes.tipos=[]; 
-        TorneoImgDBService.query({idTorneo: self.idTorneo}).$promise.then(function(data) {
+        ComplejoImagenesDBService.query({idComplejo: self.idComplejo}).$promise.then(function(data) {
             var i;
             for(i=0; i< data.length; i++){
                 self.imagenes.tipos.push(data[i]);
@@ -23,37 +23,36 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
 
             self.imagenes.selectedOption = self.imagenes.tipos[0];
             $scope.imgSelect =  self.imagenes.selectedOption.imagen;
-            self.msjPantalla="Imagenes del torneo " + self.imagenes.selectedOption.nombre;
+            self.msjPantalla = "Imagenes del torneo " + self.imagenes.selectedOption.nombre;
         });
     };
     
     self.init();
     
-  
-    
-    
-    
     $scope.uploadFile = function()
 	{
 		var file = $scope.file;
+        console.log(file);
         
-		TorneoImgService.uploadFile(file).then(function(res)
+		ComplejoImagenesServices.uploadFile(file).then(function(res)
 		{
+            console.log("Abajo del TorneoImgService.uploadFile(file)");
             var vURL = res.data;
             //guardar el resultado e insertar la imagen
             dataimg={
-                        idTorneo: self.idTorneo,
+                        idComplejo: self.idComplejo,
                         url: vURL,
                         aux :'alta',
                     }   
     
-            TorneoimgAltaService.save(dataimg, function(reponse){
+            console.log(dataimg);
+            ComplejoImagenesAltaServices.save(dataimg, function(reponse){
+                console.log("Abajo del ComplejoImagenesAltaServices");
                 self.init();
              },function(errorResponse){
                  console.log('Error');
              });
 		})
-        
 	}
     
      $scope.onChange = function (files) {
@@ -76,7 +75,7 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
         
     this.borrar = function(){
         if(confirm("¿Esta seguro que desea borrar la imagen seleccionada?")){
-            TorneoImgDBService.delete({idTorneo: self.imagenes.selectedOption.idtorneo, url:self.imagenes.selectedOption.url}, function(reponse){
+            ComplejoImagenesDBService.delete({idComplejo: self.imagenes.selectedOption.idtorneo, url:self.imagenes.selectedOption.url}, function(reponse){
                     console.log(reponse.data);
                     self.init();
                   },function(errorResponse){

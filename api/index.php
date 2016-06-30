@@ -542,7 +542,7 @@ $app->post('/duenios/administrarComplejo', function(){
     
 });
 
-//Get de dueños pendientes.
+//Get dias del complejo.
 $app->get('/duenios/complejosDias/:idComplejo/:aux', function($idComplejo, $aux){
     $diasComplejo = new Complejo();
     $data = $diasComplejo->getDiasComplejo($idComplejo, $aux);
@@ -563,8 +563,72 @@ $app->get('/duenios/emailComplejo/:email/:idComplejo', function($email, $idCompl
 	sendResult($data);
 });
 
-/******************************RESERVAS****************************************************************/
+//get de imagenes por complejo
+$app->get('/duenios/complejos/imagen/:idComplejo', function($idComplejo){
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    echo '', '' , '\n';
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
 
+    if($tokenOK){
+        $imagenes = new Complejo();
+        $data = $imagenes->getImagenesByComplejo($idComplejo);
+        sendResult($data);
+    }
+	else{
+        sendError("token invalido");
+    }
+});
+
+//alta imagenes
+$app->post('/duenios/complejos/imagen', function(){
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $complejo = new Complejo();
+        $result = $complejo->agregarComplejoImagen($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al guardar la imagen");
+        };
+    }
+	else{
+        sendError("token invalido");
+    } 
+});
+
+//delete de imagens
+$app->delete('/duenios/complejo/imagen/:idComplejo/:url', function($idComplejo, $url){
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $complejo = new Complejo();
+        $result = $complejo->deleteImagen($idComplejo, $url);
+    }
+	else{
+        sendError("token invalido");
+    }
+});
+
+/******************************RESERVAS****************************************************************/
 
 //Get horarios no disponibles para reservar por dia para una cancha.
 $app->get('/clientes/reservas/:idCancha/:idComplejo/:fecha', function($idCancha, $idComplejo, $fecha){

@@ -101,7 +101,7 @@
                                 
                                 <div class="table-responsive col-md-12 row" style="margin-bottom:5px;">          
                                     
-                                    <table ng-table="adm.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+                                    <table id="dtDias" ng-table="adm.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
                                         <tr ng-repeat="dias in admCom.Complejo.diasComplejo" style="background-color:white;">
                                             <td class="text-center" title="'DE'">{{dias.diaDesde}}</td>
                                             <td class="text-center" title="'A'"  >{{dias.diaHasta}}</td>
@@ -109,6 +109,12 @@
                                             <td class="text-center" title="'A'">{{dias.horaHasta}}</td>
                                             <td class="text-center" title="'IdDiaDesde'"  ng-if='false'>{{dias.idDiaDesde}}</td>
                                             <td class="text-center" title="'IdDiaHasta'"  ng-if='false'>{{dias.idDiaHasta}}</td>
+                                            <td class="text-center" title="''">
+                                                <button type="button" ng-click="admCom.deleteRow(dias)" class="btn btn-sm btn-danger">
+                                                    <i class="glyphicon glyphicon-remove-circle">
+                                                    </i>
+                                                </button>
+                                            </td>
                                         </tr>
                                     </table>
                                     
@@ -162,8 +168,8 @@
                                     <label id="email-label" for="email" class="control-label col-sm-4">Correo electrónico <span class="required">*</span></label>
                                     <div class="col-xs-12 col-sm-8">
                                         <input style="margin-bottom:5px;" id="email" type="email"
-                                        ng-model="admCom.Complejo.emailComplejo" class="form-control input-transparent form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" name="email" placeholder="Correo electrónico" value="admCom.Complejo.emailComplejo" required ng-class="{ error:frmDatosUsuario.email.$error.required && frmDatosUsuario.email.$dirty, warning:frmDatosUsuario.email.$error.email }" ng-blur="admCom.Complejo.existeEmailDuenio()">
-                                        <span ng-show="!frmDatosUsuario.$pristine && admCom.Complejo.existeMailDuenio" class= "msjError">
+                                        ng-model="admCom.Complejo.emailComplejo" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" name="email" placeholder="Correo electrónico" value="admCom.Complejo.emailComplejo" required ng-class="{ error:frmAdminDuenio.email.$error.required && frmAdminDuenio.email.$dirty, warning:frmAdminDuenio.email.$error.email }" ng-blur="admCom.existeEmailComplejo()">
+                                        <span ng-show="!frmAdminDuenio.$pristine && admCom.Complejo.existeMailComplejo" class= "msjError">
                                             EMail existente.
                                         </span>
                                     </div>
@@ -342,7 +348,7 @@
                                 <div class="form-group" style="margin-bottom:50px;">
                                     <label for="email" class="control-label col-sm-4">Mail <span class="required">*</span></label>
                                     <div class="col-sm-8">
-                                        <input class="form-control input-transparent form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" style="margin-bottom:5px;" id="email" type="email" placeholder="example@email.com" name="email" ng-model="admCom.Complejo.emailDuenio" ng-blur="due.existeEmail()" value="{{admCom.Complejo.emailDuenio}}" required ng-class="{ error:frmDatosUsuario.email.$error.required && frmDatosUsuario.email.$dirty, warning:frmDatosUsuario.email.$error.email }">
+                                        <input class="form-control input-transparent form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" style="margin-bottom:5px;" id="email" type="email" placeholder="example@email.com" name="email" ng-model="admCom.Complejo.emailDuenio" ng-blur="admCom.existeEmailDuenio()" value="{{admCom.Complejo.emailDuenio}}" required ng-class="{ error:frmAdminDuenio.email.$error.required && frmAdminDuenio.email.$dirty, warning:frmAdminDuenio.email.$error.email }">
                                     </div>
                                 </div>
                                 

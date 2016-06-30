@@ -190,7 +190,7 @@ class Common
    
     //Existe Email Persona
     public function existeEmailPersona($email, $idDuenio){  
-        $resultado='';
+        $resultado=0;
         
         $stmt = $this->connection->prepare('SET @pEmail := ?');
         $stmt->bind_param('s', $email);
@@ -218,7 +218,7 @@ class Common
     
     //Existe Email Complejo
     public function existeEmailComplejo($email, $idComplejo){  
-        $resultado='';
+        $resultado=0;
         
         $stmt = $this->connection->prepare('SET @pEmail := ?');
         $stmt->bind_param('s', $email);
@@ -242,6 +242,7 @@ class Common
             $res[] = $r->fetch_assoc();               
         }
         
+        //echo 'Something fails: ', 'resultado ' . $res, "\n";
         return $res;
     }
     

@@ -1,18 +1,17 @@
 var app = angular.module("resergolApp");
 
-app.service("TorneoImgService", function($http,$q, $resource){
+app.service("ComplejoImagenesServices", function($http, $q, $resource){
     
-    var TORNEOIMG_URI = "http://localhost:8080/resergol1.1/api/Imagenes/torneosImagenes.php";
+    var COMPLEJO_IMAGENES_URI = "http://localhost:8080/resergol1.1/api/Imagenes/dueniosImagenes.php";
     
-   this.uploadFile = function(file, name)
-	{
+    this.uploadFile = function(file, name)
+    {
         var deferred = $q.defer();
         var formData = new FormData();
-          
-        //formData.append("name", name);
+
         formData.append("file", file);
-     
-        return $http.post(TORNEOIMG_URI, formData, {
+
+        return $http.post(COMPLEJO_IMAGENES_URI, formData, {
             headers: {
                 "Content-type": undefined
             },
@@ -27,7 +26,6 @@ app.service("TorneoImgService", function($http,$q, $resource){
             deferred.reject(msg);
         })
         return deferred.promise;
-	}	
-
-  
+    }	
+   
 });

@@ -10,7 +10,7 @@ this.dias = [];
 this.provinciaSeleccionada = {IdProvincia: '-1', Nombre: 'Otra'}; 
 this.localidadSeleccionada = {IdLocalidad: '-1', Nombre: 'Otra'};
 this.tipoDocSeleccionado = {IdTipoDoc: '-1', Descripcion: 'Otro'};
-this.horaLuz = {IdTipoDoc: '-1', Descripcion: 'Otro'};
+this.horaLuzSeleccionada = {IdHora: '-1', Descripcion: '08:00:00'};
 //this.superficies = []; 
 this.Complejo = { 
 
@@ -122,12 +122,12 @@ this.horasComplejo ={
 self.provincias = {
         prov: [],
         //selectedOption:{IdProvincia: '-1', Nombre: '-Provincia-'} 
-        selectedOption:{IdProvincia: '1', Nombre: '-Buenos Aires-'} 
+        selectedOption:{IdProvincia: '-1', Nombre: '-Provincia-'} 
     }; 
      
 self.localidades = {
     loc: [],
-    selectedOption:{IdLocalidad: '-1', Nombre: '-Localidad-'} 
+    selectedOption:{IdLocalidad: '-1', Nombre: '-Localidad-'}  
 };
     
 self.superficies = {
@@ -142,7 +142,8 @@ this.tiposDoc = {
     
 this.dias = {
     dia: [],
-    selectedOption: {idDia: '-1', Nombre: '-Dia-'} 
+    //selectedOption: {idDia: '-1', Nombre: '-Dia-'} 
+    selectedOption: {idDia: '1', Nombre: 'Lunes'}
 }; 
     
 self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
@@ -150,7 +151,7 @@ self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
 DiasServices.query().$promise.then(function(data){
     self.dias.dia = data;
     
-    self.dias.dia.splice(0, 0, {idDia: '-1', Nombre: '-Dia-'});
+    self.dias.dia.splice(0, 0, {idDia: '1', Nombre: 'Lunes'});
 });
     
 this.traerDatosComplejos = function(){
@@ -180,11 +181,25 @@ this.traerDatosComplejos = function(){
                 
                 self.Complejo.descripcionComplejo = data[0].Descripcion;
                 self.Complejo.estacionamiento = data[0].Estacionamiento;
-                //document.getElementById("conDuchas").checked = self.Complejo.estacionamiento;
+                if(self.Complejo.estacionamiento == 1)
+                    document.getElementById("estacionamiento").checked = true;
+                
                 self.Complejo.buffet = data[0].Buffet;
+                if(self.Complejo.buffet == 1)
+                    document.getElementById("buffet").checked = true;
+                    
                 self.Complejo.duchas = data[0].Duchas;
+                if(self.Complejo.duchas == 1)
+                    document.getElementById("duchas").checked = true;
+                
                 self.Complejo.parrilla = data[0].Parrillas;
+                if(self.Complejo.parrilla == 1)
+                    document.getElementById("parrilla").checked = true;
+                    
                 self.Complejo.wifi = data[0].WiFi;
+                if(self.Complejo.wifi == 1)
+                    document.getElementById("wifi").checked = true;
+                
                 //,com.HoraCobroLuz*/
                 self.Complejo.porcentajeSenia = parseInt(data[0].PorcentajeSeña);
                 self.Complejo.horasCancelacion = parseInt(data[0].HorasCancelacion);
@@ -314,10 +329,10 @@ this.getLocalidades = function(){
         $scope.horaHasta = selectedText;
         
         self.Complejo.diasComplejo.push({ 'diaDesde':$scope.diaDesde, 'diaHasta': $scope.diaHasta, 'horaDesde':$scope.horaDesde, 'horaHasta':$scope.horaHasta, 'idDiaDesde': idDiaDesde, 'idDiaHasta': idDiaHasta });
-        $scope.diaDesde='';
-        $scope.diaHasta='';
-        $scope.horaDesde='';
-        $scope.horaHasta='';
+        $scope.diaDesde = {idDia: '-1', Nombre: '-Dia-'};
+        $scope.diaHasta = {idDia: '-1', Nombre: '-Dia-'};
+        $scope.horaDesde = 8;
+        $scope.horaHasta = 9;
     };
     
     this.formatearHora = function(hora){
@@ -327,7 +342,7 @@ this.getLocalidades = function(){
         horaFormateada += ':00';
         
         return horaFormateada;
-    }
+    };
     
     this.mostrarDatosFila = function()
     {
@@ -373,7 +388,7 @@ this.getLocalidades = function(){
           },function(errorResponse){
               console.log(errorResponse.data.message);  
          });
-    }
+    };
     
     this.cambiaHasta = function(){
         
@@ -384,7 +399,7 @@ this.getLocalidades = function(){
         }
         $scope.selectedHoraIdHasta = $scope.selectedHoraIdDesde + 1;
         console.log('llegue al cambia hasta');
-    }
+    };
     
     this.validarDatosHorarios = function(){
         
@@ -451,43 +466,32 @@ this.getLocalidades = function(){
         {
              alert(mensaje);   
         }
-    }
-    
-    this.validarPorcentajes = function(){
-        
-        var t = document.getElementById("diaDesde");
-        
-        
-        if(t.length > 3)
-        {
-            t = 100;
-        }
-        
-    }
+    };
     
     this.hacerCambiosComplejo = function(){
            
-        var AdministrarComplejo = new AdministrarComplejoService();
-        
-        /*self.Complejo.idProv = self.provinciaSeleccionada;
-        self.Complejo.idLoc = self.localidadSeleccionada;*/
-        self.Complejo.idProv = self.provinciaSeleccionada.IdProvincia;
-        self.Complejo.idTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
-        self.Complejo.idLoc = self.localidadSeleccionada.IdLocalidad;
-        
-        AdministrarComplejo.data = self.Complejo;
-        
-        console.log("Datos del complejo: " + self.Complejo.idLoc + self.Complejo.idProv);
-        
-        console.log("Estamos en el hacerCambiosComplejo, Datos:  " + AdministrarComplejo.data);
-        
-        AdministrarComplejoService.save(AdministrarComplejo.data, function(reponse){
-            /*idComplejo = reponse.data[0];
-            self.open('sm', true, idComplejo);
-          },function(errorResponse){
-             self.open('sm', false,0);*/
-         });
-    }
+        if(self.validarDatos()){
+            var AdministrarComplejo = new AdministrarComplejoService();
+
+            /*self.Complejo.idProv = self.provinciaSeleccionada;
+            self.Complejo.idLoc = self.localidadSeleccionada;*/
+            self.Complejo.idProv = self.provinciaSeleccionada.IdProvincia;
+            self.Complejo.idTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
+            self.Complejo.idLoc = self.localidadSeleccionada.IdLocalidad;
+            //self.Complejo.horaCobroLuz = self.horaLuz.
+
+            AdministrarComplejo.data = self.Complejo;
+
+            console.log("Datos del complejo: " + self.Complejo.idLoc + self.Complejo.idProv);
+
+            console.log("Estamos en el hacerCambiosComplejo, Datos:  " + AdministrarComplejo.data);
+
+            AdministrarComplejoService.save(AdministrarComplejo.data, function(reponse){
+                self.Complejo.idComplejo = reponse.data[0];
+                sessionStorage.idComplejo = reponse.data[0];
+            });
+        }
+    };
     
     this.validarDatos = function(){
         
@@ -507,14 +511,16 @@ this.getLocalidades = function(){
         
         return true;
         
-    }
+    };
     
     this.existeEmailDuenio = function(){
+        
+        console.log("Entro al existeEmailDuenio");
         
         if(self.Complejo.emailDuenio!=undefined){
             EmailDuenioService.query({email:self.Complejo.emailDuenio, idDuenio:self.Complejo.idDuenio}).$promise.then(function(data){
                   
-                console.log(data[0].resultado);
+                console.log("email: " + self.Complejo.emailDuenio + " idDuenio " + self.Complejo.idDuenio + ", " + data[0].resultado);
                 var bExisteEmail = data[0].resultado; 
                 
                 if(bExisteEmail == 1){
@@ -527,14 +533,16 @@ this.getLocalidades = function(){
             
         }
         
-    }
+    };
     
     this.existeEmailComplejo = function(){
+        
+        console.log("Entro al existeEmailComplejo");
         
         if(self.Complejo.emailComplejo!=undefined){
             EmailComplejoService.query({email:self.Complejo.emailComplejo, idComplejo:self.Complejo.idComplejo}).$promise.then(function(data){
                   
-                console.log(data[0].resultado);
+                console.log("email: " + self.Complejo.emailComplejo + " idComplejo " + self.Complejo.idComplejo + ", " + data[0].resultado);
                 var bExisteEmail = data[0].resultado; 
                 
                 if(bExisteEmail == 1){
@@ -544,9 +552,52 @@ this.getLocalidades = function(){
                     self.Complejo.existeMailComplejo = false;
                 }
             });
-            
         }
+    };
+    
+    
+    this.EliminarDiaComplejo = function(idDiaDesde, idDiaHasta, fila){
         
-    }
+        var cont = 1;
+        
+        angular.forEach(self.Complejo.diasComplejo, function(aux) {
+                 if(aux.idDiaDesde == idDiaDesde && aux.idDiaHasta == idDiaHasta)    
+                 {
+                     console.log('row --->' + cont);
+                     delete self.Complejo.diasComplejo[cont-1];
+                     fila.remove();
+                     //document.getElementById("dtDias").cle();
+                     
+                     //console.log(self.Complejo.diasComplejo[cont]);
+                     //return;
+                }
+                cont++;
+            });   
+    };
+    
+    this.deleteRow = function(dia) {
+
+        try {
+
+            var index = -1;
+            var productArray = self.Complejo.diasComplejo;
+
+            for (var i = 0; i < productArray.length; i++) {
+                if (productArray[i].idDiaDesde == dia.idDiaDesde && productArray[i].idDiaHasta == dia.idDiaHasta) {
+                    index = i;
+
+                console.log(productArray[i].productName);
+                }
+            }
+            if (index === -1) {
+                alert("something broke");
+            }
+
+            self.Complejo.diasComplejo.splice(index, 1);
+            
+       }catch(e) {
+            alert(e);
+       }
+    };
     
 });

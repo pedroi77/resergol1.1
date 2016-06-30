@@ -56,8 +56,8 @@ class Complejo
     //guarda todo lo relacionado con el torneo(Actualiza el objeto persona, el objeto dueño)
     public function createComplejo($complejo){
         
-        $idPersona;
-        $resultado;
+        $idPersona = 0;
+        $resultado = 0;
         $this->connection->autocommit(false);
         //echo 'entro al create complejo', 'otro mensaje', '\n';
         try{
@@ -92,7 +92,6 @@ class Complejo
             $nroCelular = $this->connection->real_escape_string($complejo['nroCelular']);
             $nroTelefono = $this->connection->real_escape_string($complejo['nroTelefono']);
 
-            //echo 'entro al create complejo', 'otro mensaje', '\n';
             // Parametros
             $stmt = $this->connection->prepare('SET @pIdDuenio := ?');
             $stmt->bind_param('i', $idDuenio);
@@ -111,6 +110,7 @@ class Complejo
             $stmt->bind_param('i', $idPersona);
             $stmt->execute();
             
+            echo 'entro al create complejo', '$idDuenio ' . $idDuenio . ' $usuario ' . $usuario . ' $contrasenia ' . $contrasenia . ' $idPersona ' . $idPersona, '\n';
             $resultCan = $this->connection->query('CALL SP_updateDuenio( @pIdDuenio, @pUsuario, @pContrasenia, @pIdPersona);');
             //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN UPDATE DUEÑO-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
             
@@ -426,17 +426,134 @@ class Complejo
             }
             //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN COMPLEJOS DIAS-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
             
-            //$this->connection->commit();
-            /*$dat= array($idComplejo);
-            sendResult($dat, 'OK' );*/
-            
         }catch(Exception $e){
             
             $this->connection->rollback();
-            //echo 'Something fails: ',  $e->getMessage() . '  hizo rollback ', "\n";
         }
 
     }
+    
+    /*****************RELACIONADO A LAS IMAGENES****************************/
+    
+    public function deleteImagen($idComplejo, $url){  
+        
+        $this->connection->autocommit(false);
+
+        try {
+
+            $salida='';
+            $archivo = "C:\\xampp\\htdocs\\resergol1.1\\api\\Imagenes\\complejos\\" . $url;    
+
+            // Parametros
+            $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+            $stmt->bind_param('i', $idComplejo);
+            $stmt->execute();
+
+            $stmt = $this->connection->prepare('SET @pUrl := ?');
+            $stmt->bind_param('s', $url);
+            $stmt->execute();
+
+            //Salida
+            $stmt = $this->connection->prepare('SET @salida := ?');
+            $stmt->bind_param('s', $salida);
+            $stmt->execute();
+
+            $result = $this->connection->query('CALL SP_deleteComplejosImagenes( @pIdComplejo, @pUrl , @salida);');
+
+            // getting the value of the OUT parameter
+            $r = $this->connection->query('SELECT @salida as res');
+            $row = $r->fetch_assoc();               
+            $res = $row['res'] ;
+
+            if($res > -1){
+                unlink($archivo);
+                $this->connection->commit(); 
+                $dat= array($res);
+                sendResult($dat, 'OK' );
+
+        }else{
+           sendError("Error, no se pudo eliminar la imagen." . $res ); //por algun motivo pincha aca
+        }
+
+        } catch (Exception $e) {
+            $this->connection->rollback();
+            sendError("Error de transaccion");
+        }
+    }
+    
+    /***************************************************/
+    
+    public function agregarComplejoImagen($complejoimg){
+        
+        $this->connection->autocommit(false);
+        
+        try {
+            
+            $idComplejo = $this->connection->real_escape_string($complejoimg['idComplejo']);
+            $url = $this->connection->real_escape_string($complejoimg['url']);
+            $salida='';
+
+            echo '','ID COmplejo: ' . $idComplejo . ' url: ' . $url, "\n";
+            
+            // Parametros
+            $stmt = $this->connection->prepare('SET @idComplejo := ?');
+            $stmt->bind_param('i', $idComplejo);
+            $stmt->execute();
+
+            $stmt = $this->connection->prepare('SET @url := ?');
+            $stmt->bind_param('s', $url);
+            $stmt->execute();
+
+            //Salida
+            $stmt = $this->connection->prepare('SET @salida := ?');
+            $stmt->bind_param('s', $salida);
+            $stmt->execute();
+
+            $result = $this->connection->query('CALL SP_insertComplejosImagenes( @idComplejo, @url , @salida);');
+
+            $r = $this->connection->query('SELECT @salida as res');
+            $row = $r->fetch_assoc();               
+            $res = $row['res'] ;
+
+            if($res > -1){
+                $this->connection->commit();
+                $dat= array($res);
+                sendResult($dat, 'OK' );
+
+            }else{
+               sendError("Error, no se pudo agregar la imagen." . $res );
+            }
+    
+    } catch (Exception $e) {
+            $this->connection->rollback();
+            //echo 'Something fails: ',  $e->getMessage(), "\n";
+        }
+    }
+    
+    /*************************************************/
+    
+    public function getImagenesByComplejo($IdComplejo){  
+
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $IdComplejo);
+        $stmt->execute(); 
+        
+        //echo '', 'Id Complejo: ' . $IdComplejo, "\n";
+
+        $query = "CALL SP_getComplejosImagenes(@pIdComplejo);";
+        $imagenes= array();
+
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $imagenes[] = $fila;
+                //echo '', 'Fila: ' . $fila, "\n";
+            }
+            $result->free();
+        }
+        return $imagenes; 
+    }
+    
+    /*****************FIN IMAGENES****************************/
     
 }
 
