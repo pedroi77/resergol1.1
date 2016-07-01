@@ -1,10 +1,12 @@
-/*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $state, $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService, ComplejosDiasServices){
+resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService, ComplejosDiasServices){
 	
     var self = this;
     
+    this.estaLogueado = false;
+    $scope.tiempoTimer = 300;
+    $rootScope.$state = $state;
     $scope.cancha = [];
     $scope.idCancha = $stateParams.idCan;
     $scope.idComplejo = $stateParams.idComp;
@@ -15,9 +17,7 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
     $scope.aceptaReservaFija = 0;
     $scope.tooltipDiasComplejo = "";
     
-    $scope.listasReservasFijas = [
-        /*{  }*/
-      ];
+    $scope.listasReservasFijas = [];
     
     $scope.DiasYHorariosTooltip = "";
     
@@ -84,7 +84,19 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
                       };
     
     
-    $scope.counter = 30;
+         var token = store.get("token") || null;
+         var sesion = sessionStorage.usuario  || null;
+        
+         if(!token || !sesion ){
+             self.estaLogueado = false;
+         }    
+         else{
+             self.estaLogueado = true;
+         }   
+    
+    
+    
+    $scope.counter = $scope.tiempoTimer;
     var mytimeout = null;
     
     $scope.onTimeout = function() {
@@ -104,17 +116,21 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
     // stops and resets the current timer
     $scope.stopTimer = function() {
         $scope.$broadcast('timer-stopped', $scope.counter);
-        $scope.counter = 30;
+        $scope.counter = $scope.tiempoTimer;
         $timeout.cancel(mytimeout);
     };
     
     $scope.$on('timer-stopped', function(event, remaining) {
-        if(remaining === 0) {
-            //console.log('your time ran outttttttttttttttttttttttttttt!');
-            alert('Tiempo máximo de reserva alcanzado.');
+        if(remaining === 0 && $state.current.name == 'Clientes.verCancha.Reservar') {
+             self.borrarReservaTemp();
+
+             bootbox.alert("Tiempo máximo de reserva alcanzado.", function() {
+             });
+            
             $state.go('Clientes.verCancha'); 
             $('html,body').animate({scrollTop:10},'slow');return false;
         }
+        
     });
     
     
@@ -129,8 +145,9 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
                     self.diasComplejo = data;
                 }); 
                 
-                self.verificarListaNegra();
-   
+                if(self.estaLogueado)
+                    self.verificarListaNegra();
+                
             });
 	};
     
@@ -222,7 +239,7 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
                 
                 if($scope.HorasDisponibles.length == 0)
                 {
-                    alert('No existen horarios disponibles para la fecha seleccionada...')
+                    bootbox.alert("No existen horarios disponibles para la fecha seleccionada...", function() {});
                     self.horasD = [];
                     self.horasH = [];
                     $scope.dt = null;
@@ -363,7 +380,7 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
                 var hHasta = self.selectedHoraHId + ":00:00";
                 if($scope.FechasReservaFija.length == 0)
                 {
-                    alert('La reserva fija no se hará ya que no hay días disponibles en lo que resta del año para el horario seleccionado...');
+                    bootbox.alert("No existen horarios disponibles para la fecha seleccionada...", function() {});
                 }
                 else
                 {
@@ -390,14 +407,21 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
                         var mensaje = 'La reserva fija se realizará para el día y horario elegido en lo que resta del año. \n ';
                         mensaje += 'Sin embargo las siguientes fechas no se podrán reservar ya que no están disponibles: \n ';
                         mensaje += noDispEnString + "\n \n" + '¿Desea realizar la reserva fija igualmente?';
-                        if(confirm(mensaje))
+                        
+                        bootbox.confirm(mensaje, function(result) {
+                        if(result)
                         {
-                            alert('Por favor completá el pago de la reserva (sólo se paga lo correspondiente a la primer reserva), las fechas restantes las reservará el sistema, y se pagarán personalmente en el complejo correspondiente. ');
+                            bootbox.alert("Por favor completá el pago de la reserva (sólo se paga lo correspondiente a la primer reserva), las fechas restantes las reservará el sistema, y se pagarán personalmente en el complejo correspondiente. ", function() {});
                             
                             $scope.aceptaReservaFija = 1;
+            
                         }
                         else
+                        {
                             $scope.aceptaReservaFija = 0;
+                        }
+
+                        }); 
                         
                     }
                     else
@@ -405,14 +429,17 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
                         //Se puede hacer la reserva fija por el resto del año para todos los dias!.
                         var mensaje = 'La reserva fija se realizará para el día y horario elegido en lo que resta del año. \n ';
                         mensaje += noDispEnString + "\n \n" + '¿Desea realizar la reserva fija?';
-                        if(confirm(mensaje))
+                        bootbox.confirm(mensaje, function(result) {
+                        if(result)
                         {
-                            alert('Por favor completá el pago de la reserva (sólo se paga lo correspondiente a la primer reserva), las fechas restantes las reservará el sistema, y se pagarán personalmente en el complejo correspondiente. ');
+                            bootbox.alert("Por favor completá el pago de la reserva (sólo se paga lo correspondiente a la primer reserva), las fechas restantes las reservará el sistema, y se pagarán personalmente en el complejo correspondiente. ", function() {});
                             
                             $scope.aceptaReservaFija = 1;
                         }
                         else
                             $scope.aceptaReservaFija = 0;
+                            
+                        });
                     }
                 }
                 
@@ -422,13 +449,14 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
    
     
     this.mostrarReservar = function(){
+        
         if($scope.fechaIngresoListaNegra == 0)
         {
           ReservasTempService.query({idCancha:$scope.idCancha, idComplejo:$scope.idComplejo}).$promise.then(function(data){
               console.log(data[0].existe);
               if(data[0].existe == 1)
               {
-                alert("La cancha está siendo reservada por otra persona. \n Por favor volvé a intentarlo en unos segundos...");
+                bootbox.alert("La cancha está siendo reservada por otra persona. \n Por favor volvé a intentarlo en unos segundos...", function() {});  
                 return false;  
               }
               else
@@ -453,7 +481,7 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
                         console.log('ERROR res temp...' + errorResponse); 
                      });
                   
-                  $state.go('Clientes.verCancha.Reservar');  
+                  $state.go('Clientes.verCancha.Reservar');                    
               }
                 
           });
@@ -462,7 +490,8 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
         }
         else
         {
-            alert('No podés reservar ya que estás en la lista negra del complejo desde el ' + $scope.fechaIngresoListaNegra);
+            var msj = 'No podés reservar ya que estás en la lista negra del complejo desde el ' + $scope.fechaIngresoListaNegra;
+            bootbox.alert(msj, function() {});
         }
     };
 
@@ -472,7 +501,19 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
                   },function(errorResponse){
                     console.log('ERROR al borrar res TEMP ->' + reponse.data);
                  });
-    }; 
+    };
+    
+    
+    //Evento destroy del controller.
+    $scope.$on("$destroy", function(){
+        //Si se estaba reservando y se cambia de pagina o se cierra la pestaña,
+        //borro la reserva temporal para que no quede bloqueada.
+        console.log($state.current.name);
+        if($state.current.name != 'Clientes.verCancha' && $state.current.name != 'Clientes.verCancha.Reservar.ok')
+            self.borrarReservaTemp();
+    });
+    
+    
     
     //Si el cliente tiene tarjeta guardada, traigo los datos de la misma...
     this.getTarjeta = function(){
@@ -579,6 +620,8 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
         
             self.borrarReservaTemp();
             
+            $state.go('Clientes.verCancha.Reservar.ok'); 
+            
           },function(errorResponse){
             console.log('ERROR...'); 
          });
@@ -588,10 +631,15 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
         
     };
     
+    this.cancelarPaso = function(){
+        $scope.stopTimer();
+        self.borrarReservaTemp();
+    };
     
     this.pagarYReservar = function(){
         
-        if(confirm('¿Seguro desea realizar el pago?'))
+        bootbox.confirm("¿Seguro desea realizar el pago?", function(result) {
+        if(result)
         {
             $('ul.setup-panel li:eq(2)').removeClass('disabled');
             
@@ -613,8 +661,11 @@ resergolApp.controller("VerCanchaController", function($scope, $sce, $timeout, $
             //******************************************************************************************************************//
             
             self.reservar();
-             
+            
         }
+  
+        }); 
+
     };
     
     

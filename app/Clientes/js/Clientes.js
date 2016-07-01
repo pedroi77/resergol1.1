@@ -61,6 +61,12 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
                             controllerAs : "cli"
                         })
     
+        .state("Clientes.verCancha.Reservar.ok",{
+                            url : "/OK",
+                            templateUrl : "app/Clientes/Templates/ReservarCancha.html",
+                            controllerAs : "cli"
+                        })
+    
         .state("Clientes.misReservas",{
                 url : "/misReservas",
                 templateUrl : "app/Clientes/Templates/MisReservas.html",
