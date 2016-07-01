@@ -1,7 +1,7 @@
 
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $state, TorneoService, TorneoImgDBService,TorneoLigaTablaService, TorneoLigaFechasService,TorneoLigaFixtureService ){
+resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $state, TorneoService, TorneoImgDBService ){
 
     var self = this;
     this.torneo;
@@ -15,7 +15,7 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
     this.idTorneo = $stateParams.idTorneo;
     this.editando = false;
         
-  
+  /*
     this.cargarFixture = function(idFecha){
         TorneoLigaFixtureService.query({idTorneo:self.idTorneo, idFecha:idFecha }).$promise.then(function(data) {
             self.fixture = data;
@@ -28,6 +28,7 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
             });
         }); 
     }
+    */
     
     this.validaGol = function(indice){
            
@@ -39,32 +40,13 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
         }
     }
     
-    this.updateFixture = function(indice)
-    {   
-        
-        var fixture = new TorneoLigaFixtureService();
-     
-        fixture.data = {
-                        "IdTorneo": self.fixture[indice]['IdTorneo'],
-                        "IdFecha": self.fixture[indice]['IdFecha'],
-                        "Idreserva": self.fixture[indice]['idreserva'],
-                        "IdEquipo1":self.fixture[indice]['idEquipo1'],
-                        "gol1": self.fixture[indice]['gol1'],
-                        "IdEquipo2":self.fixture[indice]['idEquipo2'],
-                        "gol2": self.fixture[indice]['gol2']
-  	                   };   
-
-        TorneoLigaFixtureService.update(fixture.data, function(reponse){
-                $state.reload("Duenios.verTorneoLiga", {idTorneo:self.fixture[indice]['IdTorneo']})
-          },function(errorResponse){
-                console.log("Error");
-         });
-    };
+    
     
     this.init = function(){
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
             self.torneo = data[0];
         }); 
+        
         
         TorneoImgDBService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
             self.imagenes = data;
@@ -82,28 +64,7 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
                 self.imagenes.push({ "imagen": "http://localhost:8080/resergol1.1/api/Imagenes/torneos/default.jpg", "id":0});
             };   
         }); 
-        
-        TorneoLigaTablaService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
-            self.tabla = data;
-            
-            if (self.tabla.length > 0){
-                var contador = 0;
-                //Esto lo hago para agregar las posiciones
-                angular.forEach(data, function(aux) {
-                    self.tabla[contador]["pos"]=contador+1;
-                    aux.contador = contador;
-                    contador++;
-                });
-            }
-            
-        });
-        
-        TorneoLigaFechasService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
-            self.fechas = data;
-        }); 
-        
-       self.cargarFixture(1);
-        
+
         
     }
     
