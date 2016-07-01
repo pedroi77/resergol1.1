@@ -854,7 +854,7 @@ $app->get('/clientes/reservasTemp/:idCancha/:idComplejo', function($pIdCancha, $
      
  });
 
-//delete de imagens
+//delete de reservasTemp
 $app->delete('/clientes/reservasTemp/:idCancha/:idComplejo', function($idCancha, $idComplejo){
     /*$headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
