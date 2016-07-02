@@ -151,8 +151,10 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
     };
     
     this.desloguearse = function(){
-        if(confirm('Seguro desea cerrar sesión?'))
-        {
+        
+         bootbox.confirm('¿Seguro desea cerrar sesión?', function(result) {
+         if(result)
+         {
             store.set('token', undefined);    
             sessionStorage.tipo = '';
             sessionStorage.usuario = '';
@@ -160,7 +162,9 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
             sessionStorage.id = '';
             self.init();
             $state.go('Clientes.buscarCanchas');
-        }
+         }
+             
+         });
     };
     
     

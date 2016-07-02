@@ -16,6 +16,8 @@ require_once("modelos/listasNegras.php");
 require_once("modelos/torneosLiga.php");
 require_once("modelos/reservasFijas.php");
 require_once("modelos/reservasTemp.php");
+require_once("modelos/puntuaciones.php");
+require_once("modelos/comentarios.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -872,6 +874,98 @@ $app->delete('/clientes/reservasTemp/:idCancha/:idComplejo', function($idCancha,
     }*/
 });
 
+
+//-***********************************PUNTUACIONES CANCHA**************************************************************--//
+
+
+//Get puntuacion de un cliente a una cancha
+$app->get('/puntuacionesCancha/:idCancha/:idComplejo/:idCliente', function($pIdCancha, $pIdComplejo, $pIdCliente){
+    
+    $punt = new Puntuacion();
+    $data = $punt->getPuntuacionCanchaCliente($pIdCancha, $pIdComplejo, $pIdCliente);
+	sendResult($data);
+    
+});
+
+//Get puntuacion de una cancha
+$app->get('/puntuacionesCancha/:idCancha/:idComplejo', function($pIdCancha, $pIdComplejo){
+    
+    $punt = new Puntuacion();
+    $data = $punt->getPuntuacionCancha($pIdCancha, $pIdComplejo);
+	sendResult($data);
+    
+});
+
+//Puntuar cancha
+$app->post('/puntuacionesCancha', function(){
+    
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $punt = new Puntuacion();
+        $result = $punt->puntuarCancha($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al insertar puntuacion cancha...");
+        };
+        
+    /*}
+	else{
+        sendError("token invalido");
+    }*/
+    
+});
+
+
+//-***********************************COMENTARIOS CANCHA**************************************************************--//
+
+//Get comentarios de una cancha
+$app->get('/comentariosCancha/:idCancha/:idComplejo', function($pIdCancha, $pIdComplejo){
+    
+    $comment = new Comentario();
+    $data = $comment->getComentariosCancha($pIdCancha, $pIdComplejo);
+    sendResult($data);
+    
+});
+
+
+//Comentar cancha
+$app->post('/comentariosCancha', function(){
+    
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $comment = new Comentario();
+        $result = $comment->comentarCancha($data);
+    
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al insertar comentario cancha...");
+        };
+        
+    /*}
+    else{
+        sendError("token invalido");
+    }*/
+    
+});
 
 
 $app->run();

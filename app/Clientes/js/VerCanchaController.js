@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService, ComplejosDiasServices){
+resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService, ComplejosDiasServices, PuntuacionesCanchaService, ComentariosCanchaService){
 	
     var self = this;
     
@@ -11,6 +11,33 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
     $scope.idCancha = $stateParams.idCan;
     $scope.idComplejo = $stateParams.idComp;
     $scope.idDuenio = -1;
+    //Puntuacion que hizo el cliente si es que puntuó.
+    this.PuntuacionCliente = 0;
+    this.Puntuacion = {
+                        idCancha:$scope.idCancha,
+                        idComplejo:$scope.idComplejo,
+                        idCliente:sessionStorage.id,
+                        puntaje: 0
+                     };
+
+    this.PuntajeDesc = "";//"":
+    this.PuntajeClass = "button-md label-warning";//"";
+
+    this.seVoto5 = false;
+    this.seVoto4 = false;
+    this.seVoto3 = false;
+    this.seVoto2 = false;
+    this.seVoto1 = false;
+    
+    $scope.ComentariosCancha = []; //usuario,comentario y fecha.   
+    this.Comentario = {
+                        idCancha:$scope.idCancha,
+                        idComplejo:$scope.idComplejo,
+                        idCliente:sessionStorage.id,
+                        comentario: ''
+                     };
+    this.comment = "";
+
     this.diasComplejo = [];
     $scope.dt = null;
     $scope.FechasReservaFija = [];
@@ -96,6 +123,7 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
     
     
     
+    
     $scope.counter = $scope.tiempoTimer;
     var mytimeout = null;
     
@@ -133,6 +161,135 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
         
     });
     
+    this.desactivarBotonPuntuacion = function(punt){
+        switch(punt) {
+            case 1:
+                self.seVoto1 = true;
+                self.seVoto2 = false;
+                self.seVoto3 = false;
+                self.seVoto4 = false;
+                self.seVoto5 = false;
+                break;
+            case 2:
+                self.seVoto1 = false;
+                self.seVoto2 = true;
+                self.seVoto3 = false;
+                self.seVoto4 = false;
+                self.seVoto5 = false;
+                break;
+            case 3:
+                self.seVoto1 = false;
+                self.seVoto2 = false;
+                self.seVoto3 = true;
+                self.seVoto4 = false;
+                self.seVoto5 = false;
+                break;
+            case 4:
+                self.seVoto1 = false;
+                self.seVoto2 = false;
+                self.seVoto3 = false;
+                self.seVoto4 = true;
+                self.seVoto5 = false;
+                break;
+            case 5:
+                self.seVoto1 = false;
+                self.seVoto2 = false;
+                self.seVoto3 = false;
+                self.seVoto4 = false;
+                self.seVoto5 = true;
+                break;
+        }
+    };
+    
+    //Traigo la puntuacion que hizo el cliente, para darle algun efecto al botón que votó.
+    this.getPuntuacionCliente = function(){
+			PuntuacionesCanchaService.query({idCancha: $scope.idCancha, idComplejo: $scope.idComplejo, idCliente:sessionStorage.id}).$promise.then(function(data){
+                    if(data != null && data != undefined && data.length > 0)
+                    {
+                        if(data[0].Puntaje != null && data[0].Puntaje != 0)
+                        {
+                        	self.PuntuacionCliente = parseInt(data[0].Puntaje);
+                            self.desactivarBotonPuntuacion(self.PuntuacionCliente);
+                        }
+                        else
+                        {
+                            self.seVoto1 = false;
+                            self.seVoto2 = false;
+                            self.seVoto3 = false;
+                            self.seVoto4 = false;
+                            self.seVoto5 = false;
+                        }
+                    }
+                        
+            });
+	};
+    
+    //Traigo la puntuacion que de la cancha.
+    this.getPuntuacionCancha = function(){
+            PuntuacionesCanchaService.query({idCancha: $scope.idCancha, idComplejo: $scope.idComplejo}).$promise.then(function(data){       
+                    if(data != null && data != undefined)
+                    {
+                        console.log('ENTRE 22222222222222');
+                        if(data[0].Puntaje != null)
+                        {
+                           var punt = parseFloat(data[0].Puntaje);
+                           console.log('3333 PUNTAJE-->' + punt);
+
+                                if(punt == 0){
+                                    self.PuntajeDesc = 'Sin votos.';
+                                    self.PuntajeClass = "btn-xs label-info";
+                                }
+                                else
+                                    if(punt > 0 && punt <= 1){
+                                        self.PuntajeDesc = 'Muy mala';
+                                        self.PuntajeClass = "btn-xs label-danger";
+                                    }
+                                     else
+                                        if(punt > 1 && punt <= 2){ 
+                                            self.PuntajeDesc = 'No me gustan';
+                                            self.PuntajeClass = "btn-xs label-warning";
+                                        }
+                                    else
+                                        if(punt > 2 && punt <= 3){
+                                            self.PuntajeDesc = 'Mas o menos';
+                                            self.PuntajeClass = "btn-xs label-info";
+                                        }
+                                        else
+                                            if(punt > 3 && punt <= 4){
+                                                self.PuntajeDesc = 'Muy buena';
+                                                self.PuntajeClass = "btn-xs label-primary";
+                                            }
+                                            else
+                                                if(punt > 4 && punt <= 5){
+                                                    console.log('555555555555555');
+                                                    self.PuntajeDesc = 'Una fantasía';
+                                                    self.PuntajeClass = "btn-xs block label-success";
+                                                }
+                        }
+                    }
+                    else
+                    {
+                        self.PuntajeDesc = 'Sin votos.';
+                        self.PuntajeClass = "btn-xs label-info";
+                    }
+
+            });
+    };
+
+    self.getPuntuacionCancha();
+    
+    //Traigo los comentarios de la cancha.
+    this.getComentariosCancha = function(){
+                ComentariosCanchaService.query({idCancha: $scope.idCancha, idComplejo: $scope.idComplejo}).$promise.then(function(data){
+                        if(data != null && data != undefined)
+                            $scope.ComentariosCancha = data;
+                });
+        };
+
+    
+
+    self.getComentariosCancha();
+    
     
     this.getCancha = function(){
         
@@ -146,7 +303,10 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
                 }); 
                 
                 if(self.estaLogueado)
+                {
+                    self.getPuntuacionCliente();
                     self.verificarListaNegra();
+                }
                 
             });
 	};
@@ -155,7 +315,6 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
    self.getCancha();
     
     this.setDiasComplejoAMostrar = function(){
-        //IVO
         var texto = "";
         ComplejosDiasServices.query({idComplejo:$scope.idComplejo, aux:0}).$promise.then(function(data){
             angular.forEach(data,function(aux){
@@ -175,6 +334,54 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
     };
                                                                           
     self.setDiasComplejoAMostrar();
+    
+    
+    //Si el cliente ya puntuó la cancha, el SP hace un update.
+    this.puntuar = function(puntaje){
+
+        var puntuacionNueva = new PuntuacionesCanchaService();
+        self.Puntuacion.puntaje = puntaje;
+        
+        console.log(self.Puntuacion.puntaje);
+        puntuacionNueva.data=self.Puntuacion;
+        
+        PuntuacionesCanchaService.save(puntuacionNueva.data, function(reponse){
+                idPunt = reponse.data[0];
+                console.log('idPunt -->' + idPunt);
+            
+            self.getPuntuacionCliente();
+            self.getPuntuacionCancha();
+            
+          },function(errorResponse){
+            console.log('ERROR...'); 
+         });
+
+    };
+    
+    this.comentar = function(){
+        if(self.comment != null && self.comment != '' && self.comment != undefined)
+        {
+            var comentarioNuevo = new ComentariosCanchaService();
+            self.Comentario.comentario = self.comment;
+            
+            comentarioNuevo.data=self.Comentario;
+            
+            ComentariosCanchaService.save(comentarioNuevo.data, function(reponse){
+                    idComm = reponse.data[0];
+                    console.log('idComm -->' + idComm);
+                
+                self.comment = "";
+                //Actualizo los comentarios...
+                self.getComentariosCancha();
+                
+              },function(errorResponse){
+                console.log('ERROR...'); 
+             });
+
+         }
+
+    };
+    
     
     this.imprimirComprobante = function() {
       //Traigo el horario de la reserva.    
@@ -380,7 +587,7 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
                 var hHasta = self.selectedHoraHId + ":00:00";
                 if($scope.FechasReservaFija.length == 0)
                 {
-                    bootbox.alert("No existen horarios disponibles para la fecha seleccionada...", function() {});
+                    bootbox.alert("La reserva fija no se hará ya que no hay días disponibles en lo que resta del año para el horario seleccionado...", function() {});
                 }
                 else
                 {
@@ -553,7 +760,7 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
             $scope.fechaPartido = pad($scope.fechaElegida.getDate())+"/"+pad($scope.fechaElegida.getMonth()+1)+"/"+$scope.fechaElegida.getFullYear();
         
         
-        if(sessionStorage.id != undefined && sessionStorage.id != 0)
+        if(self.estaLogueado)
             self.getTarjeta();
         
         /////////

@@ -10,6 +10,7 @@ class Cliente
         $this->connection = Connection::getInstance();
     }
     
+    
     public function getCliente($usuario,$contrasenia ){
         $stmt = $this->connection->prepare('SET @usuario := ?');
         $stmt->bind_param('s', $usuario);
