@@ -245,8 +245,6 @@ class Cancha
             $url = $this->connection->real_escape_string($canchaImg['url']);
             $salida='';
 
-            echo '','ID COmplejo: ' . $idComplejo . ' url: ' . $url . ' idCancha: ' . $idCancha, "\n";
-            
             // Parametros
             $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
             $stmt->bind_param('i', $idComplejo);
@@ -286,5 +284,78 @@ class Cancha
         }
     }
         
+    public function getImagenesCancha($idComplejo, $idCancha){
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $idComplejo);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pIdCancha := ?');
+        $stmt->bind_param('i', $idCancha);
+        $stmt->execute();
+
+        $query = "CALL SP_getCanchasImagenes(@pIdComplejo, @pIdCancha);";
+        $canchas= array();
+
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $canchas[] = $fila;
+            }
+            $result->free();
+        }
+        return $canchas;
+        
+    }
+    
+    public function deleteImagen($idComplejo, $idCancha, $url){
+        
+        $this->connection->autocommit(false);
+
+        try {
+            
+            $salida='';
+            $archivo ="C:\\xampp\\htdocs\\resergol1.1\\api\\Imagenes\\canchas\\".$url;    
+
+            // Parametros
+            $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+            $stmt->bind_param('i', $idComplejo);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pIdCancha := ?');
+            $stmt->bind_param('i', $idCancha);
+            $stmt->execute();
+
+            $stmt = $this->connection->prepare('SET @pUrl := ?');
+            $stmt->bind_param('s', $url);
+            $stmt->execute();
+
+            //Salida
+            $stmt = $this->connection->prepare('SET @vResultado := ?');
+            $stmt->bind_param('s', $salida);
+            $stmt->execute();
+
+            $result = $this->connection->query('CALL SP_deleteCanchasImagenes(@pIdComplejo, @pIdCancha, @pUrl, @vResultado);');
+
+            // getting the value of the OUT parameter
+            $r = $this->connection->query('SELECT @vResultado as res');
+            $row = $r->fetch_assoc();               
+            $res = $row['res'] ;
+
+            if($res > -1){
+                unlink($archivo);
+                $this->connection->commit(); 
+                $dat= array($res);
+                sendResult($dat, 'OK' );
+
+            }else{
+               sendError("Error, no se pudo eliminar la imagen." . $res ); //por algun motivo pincha aca
+            }
+
+        } catch (Exception $e) {
+            $this->connection->rollback();
+            sendError("Error de transaccion"); //por algun motivo pincha aca
+        }
+    }
+    
     
 }

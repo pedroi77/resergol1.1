@@ -72,7 +72,7 @@
                                             <div class="form-group" style="margin-top:20px;">
                                                 <div class="col-md-4"> 
                                                     <div class="form-group">
-                                                        <button class="btn  btn-md btn-danger btn-block" style="border-radius: 7px;" ng-click="admCan.inactivarCancha()">
+                                                        <button ng-disabled="!admCan.CanchaSeleccionada.guardoCancha" class="btn  btn-md btn-danger btn-block" style="border-radius: 7px;" ng-click="!admCan.CanchaSeleccionada.guardoCancha || admCan.inactivarCancha()">
                                                             <i class="glyphicon glyphicon-trash"></i>
                                                             Eliminar
                                                         </button>   
@@ -81,10 +81,10 @@
 
                                                 <div class="col-md-4"> 
                                                     <div class="form-group">
-                                                        <a  ui-sref="Duenios.canchaImagenes" class="btn  btn-md btn-info btn-block"  style="border-radius: 7px;" role="button">
+                                                        <button ng-disabled="!admCan.CanchaSeleccionada.guardoCancha" class="btn  btn-md btn-info btn-block"  style="border-radius: 7px;" role="button" ng-click="!admCan.CanchaSeleccionada.guardoCancha || admCan.irImagenes()">
                                                             <i class="glyphicon glyphicon-camera"></i>
                                                             Imagenes
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
 

@@ -9,11 +9,11 @@ this.cantJugadores = [
           
       ];
     
-this.Canchas = [];
+this.Canchas = [];    
     
 this.CanchaSeleccionada = {
                     
-    IdComplejo: sessionStorage.idComplejo
+    IdComplejo: parseInt(sessionStorage.idComplejo)
     ,IdCancha: 0
     ,nombre: ''
     ,CantJugadores: 0
@@ -22,11 +22,13 @@ this.CanchaSeleccionada = {
     ,Luz: 0
     ,Precio: 0
     ,IdEstado: 1    
-        
+    ,guardoCancha: false    
+    
 };
     
 this.selectedCantJugadoresId = -1;
 this.superficies = [];
+$scope.idCancha = 7;
     
 //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
 
@@ -81,6 +83,7 @@ this.guardarCancha = function(){
         //no hace nada
     });
 
+    self.blanquearDatos();
     self.init();
     
 }
@@ -92,19 +95,19 @@ this.validarDatos = function(){
     
     if(self.CanchaSeleccionada.nombre.length == 0){
             
-            mensaje += 'Tiene que ingresar un nombre';  
+            mensaje += '* Tiene que ingresar un nombre. <br>'; 
             hayError = 1;
     }
     
     if(self.CanchaSeleccionada.Precio.length == 0){
             
-            mensaje += 'Tiene que ingresar un precio por hora';  
+            mensaje += '* Tiene que ingresar un precio por hora. <br>'; 
             hayError = 1;
     }
     
     if(self.CanchaSeleccionada.Precio <= 0){
             
-            mensaje += 'Tiene que ingresar un precio por hora';  
+            mensaje += '* Tiene que ingresar un precio por hora. <br>';  
             hayError = 1;
     }
     
@@ -140,9 +143,12 @@ this.elegirCancha = function(cancha){
     
     self.superficies.selectedOption.IdSuperficie = cancha.IdSuperficie;
     self.cantJugadores.selectedOption.id = cancha.CantJugadores;
-    self.CanchaSeleccionada.IdCancha = cancha.IdCancha;
+    self.CanchaSeleccionada.IdCancha = parseInt(cancha.IdCancha);
+    self.CanchaSeleccionada.guardoCancha = true;
+    $scope.idCancha = parseInt(cancha.IdCancha);
 
     console.log(cancha);
+    console.log(self.CanchaSeleccionada);
 }
 
 this.inactivarCancha = function(){
@@ -163,7 +169,7 @@ this.inactivarCancha = function(){
     });
 
     self.init();
-}
+};
 
 this.blanquearDatos = function(){
     
@@ -176,11 +182,18 @@ this.blanquearDatos = function(){
     self.CanchaSeleccionada.Luz = 0;
     self.CanchaSeleccionada.Precio = 0;
     self.CanchaSeleccionada.IdEstado = 1;
+    self.CanchaSeleccionada.guardoCancha = false;
     document.getElementById("luz").checked = false;
     document.getElementById("techada").checked = false;
-    
+       
     self.init();
-}
+};
+
+this.irImagenes = function(){
+    
+    $state.go('Duenios.canchaImagenes', {idComplejo: self.CanchaSeleccionada.IdComplejo, idCancha: self.CanchaSeleccionada.IdCancha});
+    
+};
 
 //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
 

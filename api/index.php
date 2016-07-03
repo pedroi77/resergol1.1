@@ -570,7 +570,7 @@ $app->get('/duenios/administrarCanchas/:idComplejo/:aux', function($idComplejo, 
 /********ADMINISTRACION IMAGENES DE LAS CANCHAS************/
 
 //get de imagenes por cancha
-$app->get('/duenios/canchas/imagen/:idComplejo/:idCancha', function($idComplejo){
+$app->get('/duenios/canchas/imagen/:idComplejo/:idCancha', function($idComplejo, $idCancha){
     /*$headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     echo '', '' , '\n';
@@ -581,7 +581,7 @@ $app->get('/duenios/canchas/imagen/:idComplejo/:idCancha', function($idComplejo)
 
     if($tokenOK){*/
         $imagenes = new Cancha();
-        $data = $imagenes->getImagenesByComplejo($idComplejo);
+        $data = $imagenes->getImagenesCancha($idComplejo, $idCancha);
         sendResult($data);
     /*}
 	else{
@@ -617,21 +617,21 @@ $app->post('/duenios/canchas/imagen', function(){
 });
 
 //delete de imagens
-$app->delete('/duenios/complejo/imagen/:idComplejo/:url', function($idComplejo, $url){
-    $headers = apache_request_headers();
+$app->delete('/duenios/canchas/imagen/:idComplejo/:idCancha/:url', function($idComplejo, $idCancha, $url){
+    /*$headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
     
     $duenio = new Duenio();
     $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
 
-    if($tokenOK){
-        $complejo = new Complejo();
-        $result = $complejo->deleteImagen($idComplejo, $url);
-    }
+    if($tokenOK){*/
+        $cancha = new Cancha();
+        $result = $cancha->deleteImagen($idComplejo, $idCancha, $url);
+    /*}
 	else{
         sendError("token invalido");
-    }
+    }*/
 });
 
 /******************************COMPLEJOS****************************************************************/
@@ -698,7 +698,7 @@ $app->get('/duenios/emailComplejo/:email/:idComplejo', function($email, $idCompl
 $app->get('/duenios/complejos/imagen/:idComplejo', function($idComplejo){
     $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
-    echo '', '' , '\n';
+
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
     
     $duenio = new Duenio();

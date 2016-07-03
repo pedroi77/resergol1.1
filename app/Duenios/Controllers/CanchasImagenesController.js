@@ -4,14 +4,14 @@ resergolApp.controller("CanchasImagenesController", function($scope, $state , $s
     self = this;
     
     this.idComplejo = sessionStorage.idComplejo;
-    this.idCancha = 7;
+    this.idCancha = $stateParams.idCancha;
     this.idDuenio = sessionStorage.id;
     this.msjPantalla ="" ;
     this.archivoInvalido = true;
     this.bMensaje = false;
     this.imagenes = {
         tipos: [],
-        selectedOption: {idComplejo: '1', nombre: '', url:'', imagen:''} 
+        selectedOption: {idComplejo: '1', idCancha:'1', nombre: '', url:'', imagen:''} 
     };    
     
     this.init = function(){
@@ -22,9 +22,13 @@ resergolApp.controller("CanchasImagenesController", function($scope, $state , $s
                 self.imagenes.tipos.push(data[i]);
             };
 
-            self.imagenes.selectedOption = self.imagenes.tipos[0];
-            $scope.imgSelect =  self.imagenes.selectedOption.imagen;
-            self.msjPantalla = "Imagenes del torneo " + self.imagenes.selectedOption.nombre;
+            if(self.imagenes.length > 0){
+                
+                self.imagenes.selectedOption = self.imagenes.tipos[0];
+                $scope.imgSelect =  self.imagenes.selectedOption.imagen;
+                self.msjPantalla = "Imagenes del torneo " + self.imagenes.selectedOption.nombre;
+            }
+            
         });
     };
     
@@ -49,7 +53,7 @@ resergolApp.controller("CanchasImagenesController", function($scope, $state , $s
     
             console.log(dataimg);
             CanchaImagenesAltaServices.save(dataimg, function(reponse){
-                console.log("Abajo del CacnhasImagenesAltaServices");
+                console.log("Abajo del CanchaImagenesAltaServices");
                 self.init();
              },function(errorResponse){
                  console.log('Error');
@@ -77,7 +81,7 @@ resergolApp.controller("CanchasImagenesController", function($scope, $state , $s
         
     this.borrar = function(){
         if(confirm("¿Esta seguro que desea borrar la imagen seleccionada?")){
-            CanchaImagenesDBServices.delete({idComplejo: self.imagenes.selectedOption.idtorneo, url:self.imagenes.selectedOption.url}, function(reponse){
+            CanchaImagenesDBServices.delete({idComplejo: self.idComplejo, idCancha: self.idCancha, url:self.imagenes.selectedOption.url}, function(reponse){
                     console.log(reponse.data);
                     self.init();
                   },function(errorResponse){
