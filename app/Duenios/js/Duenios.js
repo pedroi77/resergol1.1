@@ -43,6 +43,7 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
         .state("Duenios.verTorneoCopa",{
 			url : "/Torneo/Copa",
 			templateUrl : "app/Common/Templates/VerTorneoCopa.html",
+            params: {idTorneo:{value:'defaultValue'}},
             controller : "",	
             controllerAs : "due"
 		}) 
