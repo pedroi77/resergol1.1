@@ -509,7 +509,7 @@ class Complejo
             $stmt->bind_param('s', $salida);
             $stmt->execute();
 
-            $result = $this->connection->query('CALL SP_insertComplejosImagenes( @idComplejo, @url , @salida);');
+            $result = $this->connection->query('CALL SP_insertComplejosImagenes(@idComplejo, @url , @salida);');
 
             $r = $this->connection->query('SELECT @salida as res');
             $row = $r->fetch_assoc();               
