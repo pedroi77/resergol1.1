@@ -80,15 +80,20 @@ resergolApp.controller("CanchasImagenesController", function($scope, $state , $s
     
         
     this.borrar = function(){
-        if(confirm("¿Esta seguro que desea borrar la imagen seleccionada?")){
-            CanchaImagenesDBServices.delete({idComplejo: self.idComplejo, idCancha: self.idCancha, url:self.imagenes.selectedOption.url}, function(reponse){
-                    console.log(reponse.data);
-                    self.init();
-                  },function(errorResponse){
+        bootbox.confirm('¿Esta seguro que desea borrar la imagen seleccionada?', function(result) {
+         
+            if(result)
+            {
+                CanchaImagenesDBServices.delete({idComplejo: self.idComplejo, idCancha: self.idCancha, url:self.imagenes.selectedOption.url}, function(reponse){
+                console.log(reponse.data);
+                self.init();
+            },function(errorResponse){
              
-                 });
-        }
-    };    
+            });
+            }
+             
+         });
+    };  
 });
   
 resergolApp.directive('uploaderModel', ["$parse", function ($parse) {

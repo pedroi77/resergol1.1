@@ -83,9 +83,8 @@ this.guardarCancha = function(){
         //no hace nada
     });
 
-    self.blanquearDatos();
     self.init();
-    
+  
 }
 
 this.validarDatos = function(){
