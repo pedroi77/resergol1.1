@@ -89,7 +89,11 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			controllerAs : "due"
 		})
         .state("Duenios.canchaImagenes",{
-			url : "/Cancha/Imagenes",
+			url : "/Cancha/Imagenes/:idComplejo/:idCancha",
+            params: {
+                    idComplejo:{value:'defaultValue'},
+                    idCancha:{value:'defaultValue'}
+                },	
 			templateUrl : "app/Duenios/Templates/DuenioCanchaImg.html",
 			controllerAs : "due"
 		})
