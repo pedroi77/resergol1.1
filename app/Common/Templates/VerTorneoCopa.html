@@ -68,32 +68,43 @@
 
         <div id="save" class="row">
             <div class="demo">
-                <div class="jQBracket lr"  style="height: 168px; width: 800px;" > <!-- style="height: 168px; width: 320px;" --> 
+                <div class="jQBracket lr"  style="height: 168px; width: 1200px;" > <!-- style="height: 168px; width: 320px;" --> 
                     
                     <div class="bracket" > <!-- style="height: 128px;" -->
                         <!--Ronda 16avos --> 
                         <div class="round">
-                            <h3>{{tor.nombreFase1}}</h3>
+                            <h3 style="color:white;"><i>{{tor.nombreFase1}}</i></h3>
+                            <h6 style="text-align: right;"><strong>{{tor.msjIdaVuelta}}</strong></h6>
                             <div class="match" style="height: 64px; "  ng-repeat="partido in tor.fixtureFase1">
                                 <div class="teamContainer" style="top: 5.5px;">
-                                    <div class="team" data-resultid="team-0" data-teamid="0" style="width: 110px;">
-                                       <div class="label editable" style ="color:black;">
+                                    <div class="team" data-resultid="team-0" data-teamid="0" style="width: 145px;">
+                                       <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo1}}
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
                                             <input placeholder="" id="nombreD" 
-                                                  ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px;" type="number" name="" >
+                                                  ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
+                                        </div>
+                                         
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                     </div>
-                                    <div class="team" data-resultid="team-0" data-teamid="0" style="width: 110px;">
-                                       <div class="label editable" style ="color:black;">
+                                    <div class="team" data-resultid="team-0" data-teamid="0" style="width: 145px;">
+                                       <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo2}}
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
                                             <input placeholder="" id="nombreD" 
-                                                  ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px;" type="number" name="" >
+                                                  ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
+                                        </div>
+                                         
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                     </div>
                                     <div class="connector" style="{{partido.conectorStyle}}">
@@ -109,23 +120,38 @@
                         
                         <!--Ronda Octavos --> 
                         <div class="round">
-                            <h3>{{tor.nombreFase2}}</h3>
+                            <h3 style="color:white;"><i>{{tor.nombreFase2}}</i></h3>
+                            <h6 style="text-align: right;"><strong>{{tor.msjIdaVuelta}}</strong></h6>
                             <div class="match" style="height: 64px;" ng-repeat="partido in tor.fixtureFase2">
                                 <div class="teamContainer np" style="margin-top: 37.0px; margin-bottom: 37.0px;" >
-                                    <div class="team" data-teamid="0">
-                                        <div class="label editable" style ="color:black">
+                                    <div class="team" data-teamid="0" style="width: 145px;">
+                                        <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo1}}
                                         </div>
-                                        <div class="score editable" data-resultid="result-4">
-                                            {{partido.gol1}}
+                                        
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
+                                        </div>
+                                         
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                     </div>
-                                    <div class="team" data-teamid="3">
-                                        <div class="label editable" style ="color:black">
+                                    <div class="team" data-teamid="3" style="width: 145px;">
+                                        <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo2}}
                                         </div>
-                                        <div class="score editable" data-resultid="result-5">
-                                            {{partido.gol2}}
+                                        
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
+                                        </div>
+                                         
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                     </div>
                                     <div class="connector"  style="{{partido.conectorStyle}}" >
@@ -141,23 +167,38 @@
                         
                         <!--Ronda Cuartos --> 
                         <div class="round">
-                            <h3>{{tor.nombreFase3}}</h3>
+                            <h3 style="color:white;"><i>{{tor.nombreFase3}}</i></h3>
+                            <h6 style="text-align: right;"><strong>{{tor.msjIdaVuelta}}</strong></h6>
                             <div class="match" style="height: 64px;" ng-repeat="partido in tor.fixtureFase3">
                                 <div class="teamContainer np" style="margin-top: 100.5px; margin-bottom: 100.5px;" >
-                                    <div class="team" data-teamid="0">
-                                        <div class="label editable" style ="color:black">
+                                    <div class="team" data-teamid="0" style="width: 145px;">
+                                         <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo1}}
                                         </div>
-                                        <div class="score editable" data-resultid="result-4">
-                                            {{partido.gol1}}
+                                        
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
+                                        </div>
+                                         
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                     </div>
-                                    <div class="team" data-teamid="3">
-                                        <div class="label editable" style ="color:black">
+                                    <div class="team" data-teamid="3" style="width: 145px;">
+                                         <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo2}}
                                         </div>
-                                        <div class="score editable" data-resultid="result-5">
-                                            {{partido.gol2}}
+                                        
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
+                                        </div>
+                                         
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                     </div>
                                     <div class="connector"  style="{{partido.conectorStyle}}" >
@@ -173,23 +214,38 @@
                         
                         <!--Ronda Semis --> 
                         <div class="round">
-                            <h3>{{tor.nombreFase4}}</h3>
+                            <h3 style="color:white;"><i>{{tor.nombreFase4}}</i></h3>
+                            <h6 style="text-align: right;"><strong>{{tor.msjIdaVuelta}}</strong></h6>
                             <div class="match" style="height: 64px;" ng-repeat="partido in tor.fixtureFase4">
                                 <div class="teamContainer np" style="margin-top: 227.5px; margin-bottom: 227.5px;">
-                                    <div class="team" data-teamid="0">
-                                        <div class="label editable" style ="color:black">
+                                    <div class="team" data-teamid="0" style="width: 145px;">
+                                         <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo1}}
                                         </div>
-                                        <div class="score editable" data-resultid="result-4">
-                                            {{partido.gol1}}
+                                        
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
+                                        </div>
+                                         
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                     </div>
-                                    <div class="team" data-teamid="3">
-                                        <div class="label editable" style ="color:black">
+                                    <div class="team" data-teamid="3" style="width: 145px;">
+                                         <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo2}}
                                         </div>
-                                        <div class="score editable" data-resultid="result-5">
-                                            {{partido.gol2}}
+                                        
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
+                                        </div>
+                                         
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                     </div>
                                     <div class="connector"  style="{{partido.conectorStyle}}" >
@@ -206,23 +262,38 @@
                      
                           <!--Ronda Final --> 
                         <div class="round">
-                            <h3>{{tor.nombreFase5}}</h3>
+                            <h3 style="color:white;"><i>{{tor.nombreFase5}}</i></h3>
+                            <h6 style="text-align: right;"><strong>{{tor.msjIdaVuelta}}</strong></h6>
                             <div class="match" style="height: 64px;" ng-repeat="partido in tor.fixtureFase5">
                                 <div class="teamContainer np" style="margin-top: 508.0px; margin-bottom: 455.0px;">
-                                    <div class="team" data-teamid="0">
-                                        <div class="label editable" style ="color:black">
+                                    <div class="team" data-teamid="0" style="width: 145px;">
+                                         <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo1}}
                                         </div>
-                                        <div class="score editable" data-resultid="result-4">
-                                            {{partido.gol1}}
+                                        
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
+                                        </div>
+                                         
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                     </div>
-                                    <div class="team" data-teamid="3">
-                                        <div class="label editable" style ="color:black">
+                                    <div class="team" data-teamid="3" style="width: 145px;">
+                                         <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo2}}
                                         </div>
-                                        <div class="score editable" data-resultid="result-5">
-                                            {{partido.gol2}}
+                                        
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
+                                        </div>
+                                         
+                                        <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                     </div>
                                 </div>
@@ -233,7 +304,14 @@
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
-                    
+                        
+                      <div class="col-sm-2 col-xs-2"  style="margin-top: 508.0px; margin-bottom: 455.0px;">
+                        <a href="#">
+                            <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/CopaMundo.jpg" alt="" >
+                        </a>
+                        <h5>Independiente!!</h5>
+                    </div>
+                        
                     
                     
                         

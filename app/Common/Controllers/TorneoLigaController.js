@@ -14,6 +14,7 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
     this.active = 0;
     this.idTorneo = $stateParams.idTorneo;
     this.editando = false;
+  
         
   
     this.cargarFixture = function(idFecha){

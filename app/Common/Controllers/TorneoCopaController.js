@@ -23,6 +23,10 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
     this.active = 0;
     this.idTorneo = $stateParams.idTorneo;
     this.editando = false;
+    this.msjIdaVuelta= "";
+    this.bIdayVuelta = true;
+    
+    
     
     /*
      function saveFn(data, userData) {
@@ -54,6 +58,12 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
             self.torneo = data[0];
             self.cargarLlaves(parseInt(self.torneo["CantEquipos"]));
             
+            if(self.bIdayVuelta) {
+                self.msjIdaVuelta = "Ida  Vuelta"
+            }else{
+                self.msjIdaVuelta = "Ida"
+            }
+                
              
         }); 
         
