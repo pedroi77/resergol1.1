@@ -73,12 +73,14 @@
                     <div class="bracket" > <!-- style="height: 128px;" -->
                         <!--Ronda 16avos --> 
                         <div class="round">
-                            <h3 style="color:white;"><i>{{tor.nombreFase1}}</i></h3>
+                            <h3 style="color:white; text-align: center;"><i>{{tor.nombreFase1}}</i></h3>
                             <h6 style="text-align: right;"><strong>{{tor.msjIdaVuelta}}</strong></h6>
                             <div class="match" style="height: 64px; "  ng-repeat="partido in tor.fixtureFase1">
-                                <div class="teamContainer" style="top: 5.5px;">
+                                <div class="teamContainer" style="top: 5.5px;" 
+                                     tooltip-placement="left" 
+                                     uib-tooltip="{{partido.info}}">
                                     <div class="team" data-resultid="team-0" data-teamid="0" style="width: 145px;">
-                                       <div class="label editable" style ="color:black; text-align: center;">
+                                       <div class="label editable" style ="color:black; text-align: center;"  >
                                             {{partido.equipo1}}
                                         </div>
                                         
@@ -113,17 +115,19 @@
                                 </div>
                             </div>
                         
-                            <button class="btn btn-md btn-primary btn-block" ng-click= "">
+                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase1()">
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
                         
                         <!--Ronda Octavos --> 
                         <div class="round">
-                            <h3 style="color:white;"><i>{{tor.nombreFase2}}</i></h3>
+                            <h3 style="color:white; text-align: center;"><i>{{tor.nombreFase2}}</i></h3>
                             <h6 style="text-align: right;"><strong>{{tor.msjIdaVuelta}}</strong></h6>
                             <div class="match" style="height: 64px;" ng-repeat="partido in tor.fixtureFase2">
-                                <div class="teamContainer np" style="margin-top: 37.0px; margin-bottom: 37.0px;" >
+                                <div class="teamContainer np" style="margin-top: 37.0px; margin-bottom: 37.0px;"
+                                       tooltip-placement="left" 
+                                     uib-tooltip="{{partido.info}}">
                                     <div class="team" data-teamid="0" style="width: 145px;">
                                         <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo1}}
@@ -167,10 +171,12 @@
                         
                         <!--Ronda Cuartos --> 
                         <div class="round">
-                            <h3 style="color:white;"><i>{{tor.nombreFase3}}</i></h3>
+                            <h3 style="color:white; text-align: center;"><i>{{tor.nombreFase3}}</i></h3>
                             <h6 style="text-align: right;"><strong>{{tor.msjIdaVuelta}}</strong></h6>
                             <div class="match" style="height: 64px;" ng-repeat="partido in tor.fixtureFase3">
-                                <div class="teamContainer np" style="margin-top: 100.5px; margin-bottom: 100.5px;" >
+                                <div class="teamContainer np" style="margin-top: 100.5px; margin-bottom: 100.5px;"
+                                      tooltip-placement="left" 
+                                     uib-tooltip="{{partido.info}}">
                                     <div class="team" data-teamid="0" style="width: 145px;">
                                          <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo1}}
@@ -214,10 +220,12 @@
                         
                         <!--Ronda Semis --> 
                         <div class="round">
-                            <h3 style="color:white;"><i>{{tor.nombreFase4}}</i></h3>
+                            <h3 style="color:white; text-align: center;"><i>{{tor.nombreFase4}}</i></h3>
                             <h6 style="text-align: right;"><strong>{{tor.msjIdaVuelta}}</strong></h6>
                             <div class="match" style="height: 64px;" ng-repeat="partido in tor.fixtureFase4">
-                                <div class="teamContainer np" style="margin-top: 227.5px; margin-bottom: 227.5px;">
+                                <div class="teamContainer np" style="margin-top: 227.5px; margin-bottom: 227.5px;"
+                                     tooltip-placement="left" 
+                                     uib-tooltip="{{partido.info}}">
                                     <div class="team" data-teamid="0" style="width: 145px;">
                                          <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo1}}
@@ -262,10 +270,12 @@
                      
                           <!--Ronda Final --> 
                         <div class="round">
-                            <h3 style="color:white;"><i>{{tor.nombreFase5}}</i></h3>
+                            <h3 style="color:white; text-align: center;"><i>{{tor.nombreFase5}}</i></h3>
                             <h6 style="text-align: right;"><strong>{{tor.msjIdaVuelta}}</strong></h6>
                             <div class="match" style="height: 64px;" ng-repeat="partido in tor.fixtureFase5">
-                                <div class="teamContainer np" style="margin-top: 508.0px; margin-bottom: 455.0px;">
+                                <div class="teamContainer np" style="margin-top: 508.0px; margin-bottom: 455.0px;"
+                                     tooltip-placement="left" 
+                                     uib-tooltip="{{partido.info}}">
                                     <div class="team" data-teamid="0" style="width: 145px;">
                                          <div class="label editable" style ="color:black; text-align: center;">
                                             {{partido.equipo1}}
@@ -305,12 +315,17 @@
                             </button>   
                         </div>
                         
-                      <div class="col-sm-2 col-xs-2"  style="margin-top: 508.0px; margin-bottom: 455.0px;">
-                        <a href="#">
-                            <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/CopaMundo.jpg" alt="" >
-                        </a>
-                        <h5>Independiente!!</h5>
-                    </div>
+                        <div class="round">
+                            	 
+							<a href="#" >
+								<img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/CopaMundo.jpg" alt="" style="margin-top: 508.0px;">
+							</a>
+							<h5>Independiente!!</h5>
+                    
+
+
+                        </div>
+
                         
                     
                     

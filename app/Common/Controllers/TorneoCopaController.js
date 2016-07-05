@@ -1,7 +1,7 @@
 
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $state, TorneoService, TorneoImgDBService, TorneoLigaFixtureService ){
+resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $state, TorneoService, TorneoImgDBService, TorneoLigaFixtureService,TorneoCopaFixtureService ){
 
     var self = this;
     this.torneo;
@@ -27,19 +27,7 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
     this.bIdayVuelta = true;
     
     
-    
-    /*
-     function saveFn(data, userData) {
-                };
 
-            $(function() {
-              var container = $('div#save .demo')
-              container.bracket({
-                init: self.fixtureFase1,
-                save: saveFn
-                })
-            })
-    */
     
     this.validaGol = function(indice){
            
@@ -56,7 +44,11 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
     this.init = function(){
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
             self.torneo = data[0];
+            
+            self.bIdayVuelta =  self.torneo['idaYvuelta']=='0' ? false:true;
+            
             self.cargarLlaves(parseInt(self.torneo["CantEquipos"]));
+            
             
             if(self.bIdayVuelta) {
                 self.msjIdaVuelta = "Ida  Vuelta"
@@ -156,6 +148,10 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
             angular.forEach(data, function(aux) {
                 self.fixtureFase1[contador1]["gol1"]=parseInt(self.fixtureFase1[contador1]["gol1"]) ;
                 self.fixtureFase1[contador1]["gol2"]=parseInt(self.fixtureFase1[contador1]["gol2"]) ;
+                self.fixtureFase1[contador1]["info"]= "Ida " +
+                                                      self.fixtureFase1[contador1]["fecha"] + ", "+
+                                                      self.fixtureFase1[contador1]["horaInicio"] + " Hs, cancha " +
+                                                      self.fixtureFase1[contador1]["cancha"] + ".";
                 
                 if((contador1 % 2 ) == 0){
                     stilo1="height: 65px; width: 20px; right: -22px; top: 26.0px; border-bottom-style: none;" ;
@@ -177,6 +173,11 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
             angular.forEach(data, function(aux) {
                 self.fixtureFase2[contador2]["gol1"]=parseInt(self.fixtureFase2[contador2]["gol1"]) ;
                 self.fixtureFase2[contador2]["gol2"]=parseInt(self.fixtureFase2[contador2]["gol2"]) ;
+                self.fixtureFase2[contador2]["info"]= "Ida " +
+                                                      self.fixtureFase2[contador2]["fecha"] + ", "+
+                                                      self.fixtureFase2[contador2]["horaInicio"] + " Hs, cancha " +
+                                                      self.fixtureFase2[contador2]["cancha"] + ".";
+
                 
                  
                 if(contador2 %2 == 0){
@@ -201,7 +202,11 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
             angular.forEach(data, function(aux) {
                 self.fixtureFase3[contador3]["gol1"]=parseInt(self.fixtureFase3[contador3]["gol1"]) ;
                 self.fixtureFase3[contador3]["gol2"]=parseInt(self.fixtureFase3[contador3]["gol2"]) ;
-                
+                self.fixtureFase3[contador3]["info"]= "Ida " +
+                                      self.fixtureFase3[contador3]["fecha"] + ", "+
+                                      self.fixtureFase3[contador3]["horaInicio"] + " Hs, cancha " +
+                                      self.fixtureFase3[contador3]["cancha"] + ".";
+     
                  if(contador3 %2 == 0){
                     stilo3="height: 256px; width: 20px; right: -22px; top: 26.0px; border-bottom-style: none;" ;
                 }else{
@@ -223,6 +228,12 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
             angular.forEach(data, function(aux) {
                 self.fixtureFase4[contador4]["gol1"]=parseInt(self.fixtureFase4[contador4]["gol1"]) ;
                 self.fixtureFase4[contador4]["gol2"]=parseInt(self.fixtureFase4[contador4]["gol2"]) ;
+                self.fixtureFase4[contador4]["info"]= "Ida " +
+                                      self.fixtureFase4[contador4]["fecha"] + ", "+
+                                      self.fixtureFase4[contador4]["horaInicio"] + " Hs, cancha " +
+                                      self.fixtureFase4[contador4]["cancha"] + ".";
+
+                
                 
                  if(contador4 %2 == 0){
                     stilo4="height: 510px; width: 20px; right: -22px; top: 26.0px; border-bottom-style: none;" ;
@@ -245,10 +256,45 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
             angular.forEach(data, function(aux) {
                 self.fixtureFase5[contador]["gol1"]=parseInt(self.fixtureFase5[contador]["gol1"]) ;
                 self.fixtureFase5[contador]["gol2"]=parseInt(self.fixtureFase5[contador]["gol2"]) ;
+                self.fixtureFase5[contador]["info"]= "Ida " +
+                              self.fixtureFase5[contador]["fecha"] + ", "+
+                              self.fixtureFase5[contador]["horaInicio"] + " Hs, cancha " +
+                              self.fixtureFase5[contador]["cancha"] + ".";
+               
                 contador++;
             });
         }); 
 
+    };
+    
+    this.updateFixtureFase1 = function()
+    {   
+        //self.fixtureFase1.length
+        console.log(self.fixtureFase1.length);
+        console.log(self.fixtureFase1);
+        for(var indice = 0; indice < self.fixtureFase1.length ; indice++ ){ //esto falla
+            
+            if(self.fixtureFase1[indice]['gol1'] != self.fixtureFase1[indice]['gol2']){
+
+                var fixture = new TorneoLigaFixtureService();
+
+                fixture.data = {
+                                "IdTorneo": self.fixtureFase1[indice]['IdTorneo'],
+                                "IdFecha": self.fixtureFase1[indice]['IdFecha'],
+                                "Idreserva": self.fixtureFase1[indice]['idreserva'],
+                                "gol1": self.fixtureFase1[indice]['gol1'],
+                                "gol2": self.fixtureFase1[indice]['gol2']
+                               };   
+
+                TorneoCopaFixtureService.update(fixture.data, function(reponse){
+
+                  },function(errorResponse){
+                        console.log("Error");
+                 });
+            }
+        }
+        $state.reload("Duenios.verTorneoCopa", {idTorneo:self.fixture[indice]['IdTorneo']})
+        
     };
     
     

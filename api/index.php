@@ -14,6 +14,7 @@ require_once("modelos/reservas.php");
 require_once("modelos/tarjetasClientes.php");
 require_once("modelos/listasNegras.php");
 require_once("modelos/torneosLiga.php");
+require_once("modelos/torneosCopas.php");
 require_once("modelos/reservasFijas.php");
 require_once("modelos/reservasTemp.php");
 require_once("modelos/puntuaciones.php");
@@ -448,6 +449,27 @@ $app->put('/common/torneo/liga/fixture', function(){
     }
 });
 
+
+$app->put('/common/torneo/copa/fixture', function(){
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();   
+        $data = json_decode($request->getBody(), true);
+        $fixture = new TorneoCopa();
+
+        $result = $fixture->updateFixture($data);
+        //el metodo envia el resultado
+    }
+	else{
+        sendError("token invalido");
+    }
+});
 
 
 //alta imagenes
