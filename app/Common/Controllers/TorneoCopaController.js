@@ -267,15 +267,11 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
 
     };
     
-    this.updateFixtureFase1 = function()
-    {   
-        //self.fixtureFase1.length
-        console.log(self.fixtureFase1.length);
-        console.log(self.fixtureFase1);
+    this.updateFixtureFase1 = function(){   
+        
         for(var indice = 0; indice < self.fixtureFase1.length ; indice++ ){ //esto falla
             
             if(self.fixtureFase1[indice]['gol1'] != self.fixtureFase1[indice]['gol2']){
-
                 var fixture = new TorneoLigaFixtureService();
 
                 fixture.data = {
@@ -293,9 +289,114 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
                  });
             }
         }
-        $state.reload("Duenios.verTorneoCopa", {idTorneo:self.fixture[indice]['IdTorneo']})
+        $state.reload("Duenios.verTorneoCopa", {idTorneo:self.torneo['IdTorneo']})
         
     };
+    
+    this.updateFixtureFase2 = function(){   
+        
+        for(var indice = 0; indice < self.fixtureFase2.length ; indice++ ){ //esto falla
+            
+            if(self.fixtureFase2[indice]['gol1'] != self.fixtureFase2[indice]['gol2']){
+                var fixture = new TorneoLigaFixtureService();
+
+                fixture.data = {
+                                "IdTorneo": self.fixtureFase2[indice]['IdTorneo'],
+                                "IdFecha": self.fixtureFase2[indice]['IdFecha'],
+                                "Idreserva": self.fixtureFase2[indice]['idreserva'],
+                                "gol1": self.fixtureFase2[indice]['gol1'],
+                                "gol2": self.fixtureFase2[indice]['gol2']
+                               };   
+
+                TorneoCopaFixtureService.update(fixture.data, function(reponse){
+
+                  },function(errorResponse){
+                        console.log("Error");
+                 });
+            }
+        }
+        $state.reload("Duenios.verTorneoCopa", {idTorneo:self.torneo['IdTorneo']})
+        
+    };
+    
+    this.updateFixtureFase3 = function(){   
+        
+        for(var indice = 0; indice < self.fixtureFase3.length ; indice++ ){ //esto falla
+            
+            if(self.fixtureFase3[indice]['gol1'] != self.fixtureFase3[indice]['gol2']){
+                var fixture = new TorneoLigaFixtureService();
+
+                fixture.data = {
+                                "IdTorneo": self.fixtureFase3[indice]['IdTorneo'],
+                                "IdFecha": self.fixtureFase3[indice]['IdFecha'],
+                                "Idreserva": self.fixtureFase3[indice]['idreserva'],
+                                "gol1": self.fixtureFase3[indice]['gol1'],
+                                "gol2": self.fixtureFase3[indice]['gol2']
+                               };   
+
+                TorneoCopaFixtureService.update(fixture.data, function(reponse){
+
+                  },function(errorResponse){
+                        console.log("Error");
+                 });
+            }
+        }
+        $state.reload("Duenios.verTorneoCopa", {idTorneo:self.torneo['IdTorneo']})
+        
+    };
+    
+    this.updateFixtureFase4 = function(){   
+        
+        for(var indice = 0; indice < self.fixtureFase4.length ; indice++ ){ //esto falla
+            
+            if(self.fixtureFase4[indice]['gol1'] != self.fixtureFase4[indice]['gol2']){
+                var fixture = new TorneoLigaFixtureService();
+
+                fixture.data = {
+                                "IdTorneo": self.fixtureFase4[indice]['IdTorneo'],
+                                "IdFecha": self.fixtureFase4[indice]['IdFecha'],
+                                "Idreserva": self.fixtureFase4[indice]['idreserva'],
+                                "gol1": self.fixtureFase4[indice]['gol1'],
+                                "gol2": self.fixtureFase4[indice]['gol2']
+                               };   
+
+                TorneoCopaFixtureService.update(fixture.data, function(reponse){
+
+                  },function(errorResponse){
+                        console.log("Error");
+                 });
+            }
+        }
+        $state.reload("Duenios.verTorneoCopa", {idTorneo:self.torneo['IdTorneo']})
+        
+    };
+    
+    this.updateFixtureFase5 = function(){   
+        
+        for(var indice = 0; indice < self.fixtureFase5.length ; indice++ ){ //esto falla
+            
+            if(self.fixtureFase5[indice]['gol1'] != self.fixtureFase5[indice]['gol2']){
+                var fixture = new TorneoLigaFixtureService();
+
+                fixture.data = {
+                                "IdTorneo": self.fixtureFase5[indice]['IdTorneo'],
+                                "IdFecha": self.fixtureFase5[indice]['IdFecha'],
+                                "Idreserva": self.fixtureFase5[indice]['idreserva'],
+                                "gol1": self.fixtureFase5[indice]['gol1'],
+                                "gol2": self.fixtureFase5[indice]['gol2']
+                               };   
+
+                TorneoCopaFixtureService.update(fixture.data, function(reponse){
+
+                  },function(errorResponse){
+                        console.log("Error");
+                 });
+            }
+        }
+        $state.reload("Duenios.verTorneoCopa", {idTorneo:self.torneo['IdTorneo']})
+        
+    };
+    
     
     
     self.init();
