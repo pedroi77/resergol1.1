@@ -147,7 +147,77 @@ class Reserva
     }
     
     
+    public function getReservasByCliente($pIdCliente, $todos, $pagosCompletos, $seniadas, $fijas){
+        
+        
+        $stmt = $this->connection->prepare('SET @pIdCliente := ?');
+        $stmt->bind_param('i', $pIdCliente);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pTodos := ?');
+        $stmt->bind_param('i', $todos);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pPagosCompletos := ?');
+        $stmt->bind_param('i', $pagosCompletos);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pSeniadas := ?');
+        $stmt->bind_param('i', $seniadas);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pFijas := ?');
+        $stmt->bind_param('i', $fijas);
+        $stmt->execute();
+        
+        $query = "CALL SP_getReservasByCliente(@pIdCliente, @pTodos, @pPagosCompletos, @pSeniadas, @pFijas);";
+        
+        $reservas = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $reservas[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $reservas;
+    }
     
+    
+    //Al cancelar la reserva, luego de ingresar la devolucion, borro la reserva.
+    /*public function delete($idReserva){
+        
+        $valor='';
+       
+        // Parametros
+        $stmt = $this->connection->prepare('SET @idReserva := ?');
+        $stmt->bind_param('i', $idReserva);
+        $stmt->execute();
+        
+        
+        //Salida
+        $stmt = $this->connection->prepare('SET @valor := ?');
+        $stmt->bind_param('i', $valor);
+        $stmt->execute();
+        
+    
+        $result = $this->connection->query('CALL SP_DeleteReserva(@idReserva, @valor);');
+        
+        // getting the value of the OUT parameter
+        $r = $this->connection->query('SELECT @valor as valor');
+        $row = $r->fetch_assoc();               
+        $res = $row['valor'] ;
+        
+        if($res > -1){
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+        }else{
+           sendError("Error, no se pudo borrar la reserva" . $res );
+        }
+   
+            
+    }*/
     
     
 

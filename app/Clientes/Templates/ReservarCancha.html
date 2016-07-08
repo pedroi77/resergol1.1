@@ -25,7 +25,7 @@
                     <section class="widget2 boxInfoReserva">
                         <div class="row">
                          <header>
-                            <h3 class="fa fa-user titul">Estás reservando...</h3>
+                             <h3 class="fa fa-user titul">Estás reservando...</h3>
                              <h5 class="fa fa-user titul">"{{canc.nombre}}", en {{canc.Complejo}}.</a></h5>
                          </header>
 
@@ -63,7 +63,8 @@
                             <form action="" class="">
                                 <div class="form-group">
                                     <label for="diaReserva" class="control-label col-sm-1">Día:<span class="required"></span></label>
-                                    <div class='col-sm-4 input-group date'>
+                                    <div class="row">
+                                    <div class='col-sm-4 date'>
                                     <p class="input-group">
                                                       <input type="text" id="fecha" readonly='true' class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-change="can.cambiaFecha(dt)" ng-required="false" close-text="Cerrar" alt-input-formats="altInputFormats" />
                                         
@@ -71,11 +72,14 @@
                                                         <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                                                       </span>
                                    </p>
-                                    </div> 
+                                    </div>
+                                    <div class='col-sm-4'>
                                     <label class="checkbox-inline"><input id="chkReservaFija" type="checkbox" value="" >Reserva fija.
                                     </label>
                                     <label class="glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title="La reserva fija se realizará para el resto del año, a partir del día y horario seleccionado. En caso de aumentos o modificaciones será notificado y podrá cancelar las reservas. Sólo se pagará la primer reserva a través de Resergol, el resto se irá pagando en el complejo." ></label>
                                 </div>
+                                </div>
+                                </div>        
                                 </div>
 
                                 
@@ -308,7 +312,7 @@
                             <button id="btnImpComprobante" ng-click="can.imprimirComprobante()" class="btn btn-success btn-md " >IMPRIMIR COMPROBANTE</button>      
                               </li>
                               <li>
-                                <button id="" ui-sref="Clientes.misReservas" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-primary btn-md">IR A MIS RESERVAS</button> 
+                                <button id="" ui-sref="Clientes.misReservas({idCli:'{{idCliente}}'})" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-primary btn-md">IR A MIS RESERVAS</button> 
                               </li>
                               <li>
                                <button id="" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-md">VOLVER</button>  
@@ -329,7 +333,7 @@
                 <h3>Reserva exitosa, ¡El equipo de Resergol desea que disfrutes el partido! Gracias por confiar en nosotros.<h3>
                 </div>
                 <div class="text-center" ng-show="cancha[0].HorasCancelacion > 0">
-                    <h5>Contás con {{cancha[0].HorasCancelacion}}hs para cancelar la reserva y que se te reintegre el importe.<h5>
+                    <h5>En caso de ser posible, esta reserva podrá ser cancelada con devolución de importe, {{cancha[0].HorasCancelacion}}hs antes del partido.<h5>
                 </div>    
                     
             </div>

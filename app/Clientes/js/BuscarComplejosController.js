@@ -1,9 +1,8 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("BuscarCanchasController", function($scope, $state, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService){
+resergolApp.controller("BuscarComplejosController", function($scope, $state, ProvinciasService, LocalidadesService, ComplejosService, TiposSuperficiesService ){
 
 var self = this;
-this.tiposDoc = [];
 this.provincias = [];   
 this.localidades = [];
 this.superficies = [];
@@ -18,7 +17,7 @@ this.cantJugadores = [
           { id: 9, desc: '9 vs 9' },
           { id: 10, desc: '10 vs 10' },
           { id: 11, desc: '11 vs 11' }
-      ];
+      ];  
     
 this.horas = [
           { id: -1, desc: '-Todas-'},
@@ -38,16 +37,16 @@ this.horas = [
           { id: 21, desc: '21:00 hs.' },
           { id: 22, desc: '22:00 hs.' },
           { id: 23, desc: '23:00 hs.' }
-      ];
-    
+      ];    
+   
 $scope.diaSemana = -1;
 $scope.selectedCantJugadoresId = -1;
 $scope.selectedHoraId = -1;
-$scope.canchas = []; 
-$scope.canchasTOP = [];
-$scope.puntajeCancha = 0;
+$scope.complejos = []; 
+$scope.complejosTOP = [];
+$scope.puntajeComplejo = 0;
     
-$scope.canchasPaginadas = [];     
+$scope.complejosPaginados = [];     
 $scope.totalItems = 0;
 $scope.itemsPerPage = 8;
 //$scope.currentPage = 1;
@@ -57,6 +56,7 @@ $scope.pagination = {
 };
     
 $scope.filtros = {
+    NombreComplejo : "",
     IdProvincia : -1,
     IdLocalidad : -1,
     CantJugadores : '',
@@ -70,29 +70,11 @@ $scope.filtros = {
     Duchas : null,
     Buffet : null,
     Parrilla : null,
-    Wifi : null
+    Wifi : null 
 };    
     
-
-    
- /*this.cancha = { 
-                    idCancha: -1,
-                    idComplejo: -1,
-                    nombreCancha: '',
-                    nombreComplejo: '',
-                    provincia: -1,
-                    localidad: -1,
-                    cantJugadores: '',
-                    Techada: '',
-                    Luz: '',
-                    Precio: ''
-                  }; */
-
-
-
 self.provincias = {
         prov: [],
-        //selectedOption:{IdProvincia: '-1', Nombre: '-Provincia-'} 
         selectedOption : {IdProvincia: '1', Nombre: 'Buenos Aires'} 
     }; 
      
@@ -106,6 +88,7 @@ self.superficies = {
     selectedOption:{IdSuperficie: '-1', Descripcion: '-Todas-'} 
 };
     
+  
 self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
     
 ProvinciasService.query().$promise.then(function(data) {
@@ -133,17 +116,14 @@ this.getLocalidades = function(){
         
     };    
     
-    
-TiposSuperficiesService.query().$promise.then(function(data) {
+    TiposSuperficiesService.query().$promise.then(function(data) {
         self.superficies.sup = data;
-        //self.tiposDoc.tipos.push({IdTipoDoc: '-3', Descripcion: 'Tipo doc.'});
         self.superficies.sup.splice(0, 0, {IdSuperficie: '-1', Descripcion: '-Todas-'});
     });
     
-
-
+    
     this.limpiarFiltros = function(){
-      
+        document.getElementById("nombreComplejo").value = '';
         self.provincias.selectedOption.IdProvincia = 1;
         self.getLocalidades();
         $scope.dt = null;
@@ -161,72 +141,66 @@ TiposSuperficiesService.query().$promise.then(function(data) {
         document.getElementById("conWifi").checked = false;
         
     };
-/***************************CANCHAS************************************************************/
-    this.getCanchas = function(){
+/***************************COMPLEJOS************************************************************/
+    this.getComplejos = function(){
             self.getFiltros();
               
-			CanchasService.query({pIdProv:$scope.filtros.IdProvincia, pIdLoc:$scope.filtros.IdLocalidad, pCantJug:$scope.filtros.CantJugadores, pIdSuperficie:$scope.filtros.TipoSuperficie, pPrecioMax:$scope.filtros.PrecioMaximo, pTechada:$scope.filtros.Techada, pConLuz:$scope.filtros.Luz, pConEstac:$scope.filtros.Estacionamiento, pConDuchas:$scope.filtros.Duchas, pConBuffet:$scope.filtros.Buffet, pConParrilla:$scope.filtros.Parrilla, pConWifi:$scope.filtros.Wifi, pFecha:$scope.filtros.Fecha, pHora:$scope.filtros.Hora, pDiaSemana:$scope.filtros.DiaSemana }).$promise.then(function(data){
+ComplejosService.query({pNombreComplejo: $scope.filtros.NombreComplejo, pIdProv:$scope.filtros.IdProvincia, pIdLoc:$scope.filtros.IdLocalidad, pCantJug:$scope.filtros.CantJugadores, pIdSuperficie:$scope.filtros.TipoSuperficie, pPrecioMax:$scope.filtros.PrecioMaximo, pTechada:$scope.filtros.Techada, pConLuz:$scope.filtros.Luz,pConEstac:$scope.filtros.Estacionamiento, pConDuchas:$scope.filtros.Duchas, pConBuffet:$scope.filtros.Buffet, pConParrilla:$scope.filtros.Parrilla, pConWifi:$scope.filtros.Wifi, pFecha:$scope.filtros.Fecha, pHora:$scope.filtros.Hora, pDiaSemana:$scope.filtros.DiaSemana }).$promise.then(function(data){
 				
-                    $scope.canchas = data;
+                    $scope.complejos = data;
                     self.seBusco = true;  
                      angular.forEach(data, function(aux) {
-                         
-                        aux.muestroPConLuz = false;
-                        if($scope.filtros.HoraCompleta != -1 && aux.Luz == 1)
-                            if($scope.filtros.HoraCompleta >= aux.HoraCobroLuz)
-                                aux.muestroPConLuz = true;
-                            
-                         
+                      
                         if(aux.Puntaje == 0){
                             aux.PuntajeDesc = 'Sin votos.';
-                            aux.PuntajeClass = "btn-xs label-default";
+                            aux.PuntajeClass = "btn-xs btn-default";
                             }
                         else
                         if(aux.Puntaje > 0 && aux.Puntaje <= 1){
                             aux.PuntajeDesc = 'Muy mala';
-                            aux.PuntajeClass = "btn-xs label-danger";
+                            aux.PuntajeClass = "btn-xs btn-danger";
                             }
                          else
                             if(aux.Puntaje > 1 && aux.Puntaje <= 2){ 
                                 aux.PuntajeDesc = 'No me gustan';
-                                aux.PuntajeClass = "btn-xs label-warning";
+                                aux.PuntajeClass = "btn-xs btn-warning";
                             }
                             else
                                 if(aux.Puntaje > 2 && aux.Puntaje <= 3){
                                     aux.PuntajeDesc = 'Mas o menos';
-                                    aux.PuntajeClass = "btn-xs label-info";
+                                    aux.PuntajeClass = "btn-xs btn-info";
                                 }
                                 else
                                     if(aux.Puntaje > 3 && aux.Puntaje <= 4){
                                         aux.PuntajeDesc = 'Muy buena';
-                                        aux.PuntajeClass = "btn-xs label-primary";
+                                        aux.PuntajeClass = "btn-xs btn-primary";
                                     }
                                     else
                                         if(aux.Puntaje > 4 && aux.Puntaje <= 5){
                                             aux.PuntajeDesc = 'Una fantasía';
-                                            aux.PuntajeClass = "btn-xs block label-success";
+                                            aux.PuntajeClass = "btn-xs block btn-success";
                                         }
                             
                         if(aux.Imagen != null)
                         {
                             aux.Imagen = "data:image/jpg;base64," + aux.Imagen;
                         }
+
                     }); 
                 
                     
-                    $scope.totalItems = $scope.canchas.length;
+                    $scope.totalItems = $scope.complejos.length;
                     $scope.pagination.currentPage = 1;
 
                     $scope.numPages = function () {
-                        return Math.ceil($scope.canchas.length / $scope.itemsPerPage);
+                        return Math.ceil($scope.complejos.length / $scope.itemsPerPage);
                     };
     
                     $scope.$watch('currentPage + numPerPage', function() {
                         var begin = (($scope.pagination.currentPage - 1) * $scope.itemsPerPage)
                             , end = begin + $scope.itemsPerPage;
 
-                        $scope.canchasPaginadas = $scope.canchas.slice(begin, end);
-                        //console.log($scope.canchasPaginadas);
+                        $scope.complejosPaginados = $scope.complejos.slice(begin, end);
 
                     });
                 
@@ -239,6 +213,7 @@ TiposSuperficiesService.query().$promise.then(function(data) {
   
 this.getFiltros = function(){
    
+    $scope.filtros.NombreComplejo = document.getElementById("nombreComplejo").value;
     $scope.filtros.IdProvincia = self.provincias.selectedOption.IdProvincia;
     $scope.filtros.IdLocalidad = self.localidades.selectedOption.IdLocalidad;
     $scope.filtros.CantJugadores = $scope.selectedCantJugadoresId;
@@ -288,44 +263,30 @@ this.getFiltros = function(){
                 $scope.filtros.HoraCompleta = $scope.selectedHoraId + ':00:00';    
             }
         }
+    
     console.log('hora -> ' + $scope.filtros.Hora);
 
     $scope.filtros.PrecioMaximo = document.getElementById("precioMaximo").value == "" ? -1 : document.getElementById("precioMaximo").value ;
     
     $scope.filtros.Techada = document.getElementById("techada").checked ? 1 : 0;
     $scope.filtros.Luz = document.getElementById("conLuz").checked ? 1 : 0;
+    
+    
     $scope.filtros.Estacionamiento = document.getElementById("conEstac").checked ? 1 : 0;
     $scope.filtros.Duchas = document.getElementById("conDuchas").checked ? 1 : 0;
     $scope.filtros.Buffet = document.getElementById("conBuffet").checked ? 1 : 0;
     $scope.filtros.Parrilla = document.getElementById("conParrilla").checked ? 1 : 0;
     $scope.filtros.Wifi = document.getElementById("conWifi").checked ? 1 : 0;
-    
-    
-    /*alert('prov ->' + $scope.filtros.IdProvincia + '\n' +
-          'loc ->' + $scope.filtros.IdLocalidad + '\n' +
-          'jug ->' + $scope.filtros.CantJugadores + '\n' +
-          'sup ->' + $scope.filtros.TipoSuperficie + '\n' +
-          'p max ->' + $scope.filtros.PrecioMaximo + '\n' + 
-          'techada ->' + $scope.filtros.Techada + '\n' + 
-          'luz ->' + $scope.filtros.Luz + '\n' +
-          'est ->' + $scope.filtros.Estacionamiento + '\n' +
-          'duchas ->' + $scope.filtros.Duchas + '\n' +
-          'buffet ->' + $scope.filtros.Buffet + '\n' +
-          'parrilla ->' + $scope.filtros.Parrilla + '\n' +
-          'wifi ->' + $scope.filtros.Wifi + '\n' +
-          'fecha ->' + $scope.filtros.Fecha + '\n' +
-          'hora ->' + $scope.filtros.Hora + '\n' +
-          'diaSemana ->' + $scope.filtros.DiaSemana
-         );*/
-    
+
 };    
 
     
 
-this.getCanchasTOP = function(){
+this.getComplejosTOP = function(){
               
-			CanchasService.query().$promise.then(function(data){
-                    $scope.canchasTOP = data;
+			ComplejosService.query().$promise.then(function(data){
+                    console.log('DATA TAMANIO-> ' + data.length);
+                    $scope.complejosTOP = data;
                      var activo = 0;
                      var contador = 0;
                      angular.forEach(data, function(aux) {
@@ -371,41 +332,32 @@ this.getCanchasTOP = function(){
                                             aux.PuntajeClass = "btn-xs block btn-success";
                                         }
                             
-                        if(aux.Imagen != null)
+                        /*if(aux.Imagen != null)
                         {
                             aux.Imagen = "data:image/jpg;base64," + aux.Imagen;
-                        }            
+                        }*/           
             });	
                 
         });
 	};    
     
     
-self.getCanchasTOP();
+self.getComplejosTOP();
   
 $scope.pageChanged = function(currentPage)
 {
-    
     $scope.$watch('currentPage + numPerPage', function() {
             var begin = ((currentPage - 1) * $scope.itemsPerPage)
                 , end = begin + $scope.itemsPerPage;
             
-          $scope.canchasPaginadas = $scope.canchas.slice(begin, end);
-          console.log($scope.canchasPaginadas);
-                
+          $scope.complejosPaginados = $scope.complejos.slice(begin, end);
+          console.log($scope.complejosPaginados);
     });
 }
 /*********************************************************************************************/
 
-    
-    
-    
-    
-    
-    
-    
-    
-    /*INICIO FECHAS*/
+
+ /*INICIO FECHAS*/
     /*PARA FECHAS*/
 
      $scope.today = function() {
@@ -512,33 +464,5 @@ $scope.pageChanged = function(currentPage)
 
         return '';
       }
-    /*FIN FECHAS*/
-    
-    
-   /* this.init = function(){
-        //LEER sacar el 2 HARCODE
-        TipoTorneosService.query({idTorneo:-1}).$promise.then(function(data) {
-            self.tiposTorneos.tipos = data;
-            self.tiposTorneos.selectedOption = self.tiposTorneos.tipos[0];
-        }); 
-    
-        DueniosSuperficiesService.query({idDuenio:2}).$promise.then(function(data) {
-            self.superficies.tipos = data;
-            self.superficies.selectedOption = self.superficies.tipos[0];
-        }); 
-        
-        DueniosJugadoresService.query({idDuenio:2}).$promise.then(function(data) {
-            self.cantJugadores.tipos = data;
-            self.cantJugadores.selectedOption = self.cantJugadores.tipos[0];
-        }); 
-        
-    };
-    
-    self.init();*/
-[]});
-
-
-
-
-
-
+ 
+});

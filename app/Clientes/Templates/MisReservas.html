@@ -1,43 +1,61 @@
 
-    <div class="container-fluid">
+    <div class="container-fluid" ng-controller="MisReservasController as mres">
         
         <header class="row widget" >
             <div style = "color: white" class="container">
                 <h6  style=" font-size: 30px; text-align:center;  font-style:italic;" ></span>Mis Reservas</h6>
             </div>
         </header>
+
+        <header>
+                <h4><i class="fa fa-user"></i><p class="mensajeExplicacion">Seleccione los estados de las reservas que desea visualizar</h4>
+        </header>
+
+            <div class="col-sm-12"> 
+                <label class="checkbox-inline"><input type="checkbox" id="pagadaCompleta" ng-model="mres.pagoCompleto" >Pago Completo</label>
+                <label class="checkbox-inline"><input type="checkbox" id="seniada" ng-model="mres.seniada" >Señadas</label>
+                <label class="checkbox-inline"><input type="checkbox" id="fija" ng-model="mres.fija">Fijas</label>
+                <label class="checkbox-inline"><input type="checkbox" id="todos" ng-model="mres.todos" ng-click= "mres.setTodos()">Todos</label>
+                <button class="btn btn-md btn-info  " style="margin-left:15px;" ng-click="mres.init()">
+                    <i class="fa fa-plus glyphicon glyphicon-search"></i>Buscar
+                </button>
+            </div>
+            
+            <br> <br/>
+            <br> <br/>
         
         
-        <div class="table-responsive col-md-12 ">     
+        <div class="table-responsive col-md-12">     
                     <section class="widget">
                         <table  class="table table-bordered table-striped tabla-listaNegra table-hover text-center " style= "table-layout: fixed; vertical-align:center;">
                             <tr>
                                 <th class="col-md-2 " style="text-align:center;">Realizada</th>
                                 <th class="col-md-3 " style="text-align:center;">Día del partido</th>
                                 <th class="col-md-2 " style="text-align:center;">Complejo</th>
-                                <th class="col-md-2 " style="text-align:center;">Dirección</th>
+                                <!--<th class="col-md-2 " style="text-align:center;">Dirección</th>-->
                                 <th class="col-md-2 " style="text-align:center;">Cancha</th>
-                                <th class="col-md-1 " style="text-align:center;">Señado</th>
-                                <th class="col-md-1 " style="text-align:center;">Pagado</th>
+                                <th class="col-md-1 text-center " style="text-align:center;">Pagado</th>
+                                <th class="col-md-1 " style="text-align:center;">Resta</th>
+                                <th class="col-md-2 " style="text-align:center;">Estado</th>
                                 <th class="col-md-2 " style="text-align:center;"></th><!--COMPROBANTE-->
                                 <th class="col-md-2 " style="text-align:center;"></th> <!--CANCELAR RESERVA-->
                             </tr>
                             
-                            <tr style="font-size: 13px;">
-                                <td>10/04/2016 12:49</td>
-                                <td>16/04/2016 (20hs a 21hs)</td>
+                            <tr style="font-size: 13px;" ng-repeat="res in misRes">
+                                <td>{{res.FechaReservaFormateada}}</td>
+                                <td>{{res.DiaDePartidoFormat}}</td>
                                 <td><a ui-sref="Clientes.verComplejo"
-                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Todo Fútbol</a></td>
-                                <td>Laprida 952, Lomas de Zamora</td>
-                                <td><a ui-sref="Clientes.verCancha"
-                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Cancha N° 1</a></td>
-                                <td>-</td>
-                                <td>$550.00</td>
-                                <td><a class="btn btn-primary btn-xs view-pdf" href="https://www.polyu.edu.hk/iaee/files/pdf-sample.pdf">Comprobante</a></td>
-                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la reserva? Se le reembolsará la suma de $550.00');">Cancelar Reserva</button></td>
+                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">{{res.Complejo}}</a></td>
+                                <!--<td>Laprida 952, Lomas de Zamora</td>-->
+                                <td><a ui-sref="Clientes.verCancha({idCan:'{{res.IdCancha}}', idComp:'{{res.IdComplejo}}'})"
+                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">{{res.Cancha}}</a></td>
+                                <td>{{res.PagadoFormat}}</td>
+                                <td>{{res.RestanteFormat}}</td>
+                                <td>{{res.Estado}}</td>
+                                <td><a class="btn btn-primary btn-xs" ng-click="mres.imprimirComprobante(res)">Comprobante</a></td>
+                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" ng-click="mres.borrarReserva(res)" >Cancelar Reserva</button></td>
                             </tr>
-                            
-                            <tr style="font-size: 13px;">
+                            <!--<tr style="font-size: 13px;" ng-repeat="res in misRes">
                                 <td>10/04/2016 12:49</td>
                                 <td>16/04/2016 (20hs a 21hs)</td>
                                 <td><a ui-sref="Clientes.verComplejo"
@@ -49,39 +67,9 @@
                                 <td>$550.00</td>
                                 <td><a class="btn btn-primary btn-xs view-pdf" href="https://www.polyu.edu.hk/iaee/files/pdf-sample.pdf">Comprobante</a></td>
                                 <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la reserva? Se le reembolsará la suma de $550.00');">Cancelar Reserva</button></td>
-                            </tr>
-                            
-                            <tr style="font-size: 13px;">
-                                <td>10/04/2016 12:49</td>
-                                <td>16/04/2016 (20hs a 21hs)</td>
-                                <td><a ui-sref="Clientes.verComplejo"
-                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Todo Fútbol</a></td>
-                                <td>Laprida 952, Lomas de Zamora</td>
-                                <td><a ui-sref="Clientes.verCancha"
-                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Cancha N° 1</a></td>
-                                <td>-</td>
-                                <td>$550.00</td>
-                                <td><a class="btn btn-primary btn-xs view-pdf" href="https://www.polyu.edu.hk/iaee/files/pdf-sample.pdf">Comprobante</a></td>
-                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la reserva? Se le reembolsará la suma de $550.00');">Cancelar Reserva</button></td>
-                            <tr>
-                                
-                            <tr style="font-size: 13px;">
-                                <td>10/04/2016 12:49</td>
-                                <td>16/04/2016 (20hs a 21hs)</td>
-                                <td><a ui-sref="Clientes.verComplejo"
-                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Todo Fútbol</a></td>
-                                <td>Laprida 952, Lomas de Zamora</td>
-                                <td><a ui-sref="Clientes.verCancha"
-                                    onclick="$('html,body').animate({scrollTop:10},'fast');return false;">Cancha N° 1</a></td>
-                                <td>-</td>
-                                <td>$550.00</td>
-                                <td><a class="btn btn-primary btn-xs view-pdf" href="https://www.polyu.edu.hk/iaee/files/pdf-sample.pdf">Comprobante</a></td>
-                                <td><button id="cancelarReserva" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro desea cancelar la reserva? Se le reembolsará la suma de $550.00');">Cancelar Reserva</button></td>
-
-                            <tr>
+                            </tr>--> 
                             
                         </table>
-                          
                     </section>    
         </div>
         

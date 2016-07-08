@@ -24,7 +24,7 @@
                                 <a ui-sref="Clientes.buscarTorneos">Torneos</a>
                             </li>
                             <li ui-sref-active="active" ng-show="main.Usuario.tipo=='C' && main.Usuario.login">
-                                <a ui-sref="Clientes.misReservas" >Mis Reservas</a>
+                                <a ng-click="main.irMisReservas()" href="">Mis Reservas</a> 
                             </li>
                             <li ui-sref-active="active" ng-show="main.Usuario.tipo=='C' && main.Usuario.login">
                                 <a ui-sref="Clientes.misTorneos">Mis Torneos</a>

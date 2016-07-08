@@ -14,12 +14,12 @@ require_once("modelos/reservas.php");
 require_once("modelos/tarjetasClientes.php");
 require_once("modelos/listasNegras.php");
 require_once("modelos/torneosLiga.php");
+require_once("modelos/torneosCopas.php");
 require_once("modelos/reservasFijas.php");
 require_once("modelos/reservasTemp.php");
 require_once("modelos/puntuaciones.php");
 require_once("modelos/comentarios.php");
-require_once("modelos/mails.php");
-require_once("util/jsonResponse.php");
+require_once("modelos/mails.php");require_once("modelos/reservasCancelacion.php");require_once("modelos/devoluciones.php");require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
 Slim\Slim::registerAutoloader();
@@ -466,6 +466,27 @@ $app->put('/common/torneo/liga/fixture', function(){
 });
 
 
+$app->put('/common/torneo/copa/fixture', function(){
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();   
+        $data = json_decode($request->getBody(), true);
+        $fixture = new TorneoCopa();
+
+        $result = $fixture->updateFixture($data);
+        //el metodo envia el resultado
+    }
+	else{
+        sendError("token invalido");
+    }
+});
+
 
 //alta imagenes
 $app->post('/duenios/torneos/imagen', function(){
@@ -783,6 +804,21 @@ $app->delete('/duenios/complejos/imagen/:idComplejo/:url', function($idComplejo,
     }
 });
 
+//Get complejos con filtros.
+$app->get('/complejos/:pNombreComplejo/:pIdProv/:pIdLoc/:pCantJug/:pIdSuperficie/:pPrecioMax/:pTechada/:pConLuz/:pConEstac/:pConDuchas/:pConBuffet/:pConParrilla/:pConWifi/:pFecha/:pHora/:pDiaSemana', function($pNombreComplejo, $pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi, $pFecha, $pHora, $pDiaSemana){
+    $complejos = new Complejo();
+    $data = $complejos->getComplejos($pNombreComplejo, $pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi, $pFecha, $pHora, $pDiaSemana);
+	sendResult($data);
+});
+
+
+//Get TOP 3 complejos mejores votados.
+$app->get('/complejos', function(){
+    $complejos = new Complejo();
+    $data = $complejos->getComplejosTOP();
+	sendResult($data);
+})
+
 /****************************LISTA NEGRA***************************************************************/
 
 //Get de usuarios en lista negra(segun Complejo).
@@ -810,9 +846,7 @@ $app->delete('/duenios/complejo/listaNegra/:idComplejo/:idCliente', function($id
 	else{
         sendError("token invalido");
     }
-});
-
-/******************************RESERVAS****************************************************************/
+});/******************************RESERVAS****************************************************************/
 
 //Get horarios no disponibles para reservar por dia para una cancha.
 $app->get('/clientes/reservas/:idCancha/:idComplejo/:fecha', function($idCancha, $idComplejo, $fecha){
@@ -860,6 +894,14 @@ $app->post('/clientes/reservas', function(){
     //    sendError("token invalido");
     //}
     
+});
+
+
+//Get reservas para el cliente (Mis Reservas)
+$app->get('/clientes/reservas/:idCliente/:todos/:pagosCompletos/:seniadas/:fijas', function($idCliente, $todos, $pagosCompletos, $seniadas, $fijas){
+    $reservas = new Reserva();
+    $data = $reservas->getReservasByCliente($idCliente, $todos, $pagosCompletos, $seniadas, $fijas);
+	sendResult($data);
 });
 
 /*******************************TARJETAS CLIENTES*****************************************************/
@@ -1127,5 +1169,27 @@ $app->post('/comentariosCancha', function(){
     
 });
 
+/**************************RESERVAS CANCELACION**************************************************************/
+
+$app->delete('/cancelacion/:idReserva', function($idReserva){
+        $resCan = new ReservaCancelacion();
+        $result = $resCan->deleteReserva($idReserva);
+});
+
+/**************************DEVOLUCIONES*********************************************************************/
+
+$app->post('/devoluciones', function(){
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+
+    $dev = new Devolucion();
+    $result = $dev->insertDevolucion($data);
+
+    if($result){
+       sendResult($result);
+    }else{
+        sendError("Error al insertar devolucion...");
+    };
+});
 
 $app->run();

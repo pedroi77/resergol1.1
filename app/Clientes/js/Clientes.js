@@ -68,7 +68,10 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
                         })
     
         .state("Clientes.misReservas",{
-                url : "/misReservas",
+                url : "/misReservas/:idCli",
+                params: {
+                    idCli:{value:'defaultValue'}
+                },
                 templateUrl : "app/Clientes/Templates/MisReservas.html",
                 controllerAs : "cli"
             })
@@ -93,7 +96,7 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 		});
     
     
-		$urlRouterProvider.otherwise("/clientes/Canchas");
+		$urlRouterProvider.otherwise("/clientes/misCanchas");
     
     
 });
