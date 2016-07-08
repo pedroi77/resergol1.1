@@ -196,6 +196,11 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
          }         
     };
     
+    
+    this.irMisReservas = function(){            
+            $state.go('Clientes.misReservas', {idCli: self.Usuario.id});
+        };
+    
     self.init();
     
 });

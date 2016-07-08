@@ -1083,6 +1083,36 @@ background: #333333;
 
 /*FIN IVAN CAROUSEL CANCHAS*/
 
+/*IVAN CAROUSEL COMPLEJOS*/
+
+.carouselComplejos {
+    margin-bottom: 0;
+	padding: 0 40px 30px 40px;
+}
+/* Reposition the controls slightly */
+.carouselComplejos-control {
+	left: -12px;
+}
+.carouselComplejos-control.right {
+	right: -12px;
+}
+/* Changes the position of the indicators */
+.carouselComplejos-indicators {
+	right: 50%;
+	top: auto;
+	bottom: 0px;
+	margin-right: -19px;
+}
+/* Changes the colour of the indicators */
+.carouselComplejos-indicators li {
+	background: #c0c0c0;
+}
+.carouselComplejos-indicators .active {
+background: #333333;
+}
+
+/*FIN IVAN CAROUSEL COMPLEJOS*/
+
 
 /*****TABLA by Matias*******/
 .features-table {

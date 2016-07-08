@@ -18,6 +18,8 @@ require_once("modelos/reservasFijas.php");
 require_once("modelos/reservasTemp.php");
 require_once("modelos/puntuaciones.php");
 require_once("modelos/comentarios.php");
+require_once("modelos/reservasCancelacion.php");
+require_once("modelos/devoluciones.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -652,6 +654,23 @@ $app->delete('/duenios/complejo/imagen/:idComplejo/:url', function($idComplejo, 
     }
 });
 
+
+//Get complejos con filtros.
+$app->get('/complejos/:pNombreComplejo/:pIdProv/:pIdLoc/:pCantJug/:pIdSuperficie/:pPrecioMax/:pTechada/:pConLuz/:pConEstac/:pConDuchas/:pConBuffet/:pConParrilla/:pConWifi/:pFecha/:pHora/:pDiaSemana', function($pNombreComplejo, $pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi, $pFecha, $pHora, $pDiaSemana){
+    $complejos = new Complejo();
+    $data = $complejos->getComplejos($pNombreComplejo, $pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi, $pFecha, $pHora, $pDiaSemana);
+	sendResult($data);
+});
+
+
+//Get TOP 3 complejos mejores votados.
+$app->get('/complejos', function(){
+    $complejos = new Complejo();
+    $data = $complejos->getComplejosTOP();
+	sendResult($data);
+});
+
+
 /******************************RESERVAS****************************************************************/
 
 //Get horarios no disponibles para reservar por dia para una cancha.
@@ -700,6 +719,14 @@ $app->post('/clientes/reservas', function(){
     //    sendError("token invalido");
     //}
     
+});
+
+
+//Get reservas para el cliente (Mis Reservas)
+$app->get('/clientes/reservas/:idCliente/:todos/:pagosCompletos/:seniadas/:fijas', function($idCliente, $todos, $pagosCompletos, $seniadas, $fijas){
+    $reservas = new Reserva();
+    $data = $reservas->getReservasByCliente($idCliente, $todos, $pagosCompletos, $seniadas, $fijas);
+	sendResult($data);
 });
 
 /*******************************TARJETAS CLIENTES*****************************************************/
@@ -967,5 +994,27 @@ $app->post('/comentariosCancha', function(){
     
 });
 
+/**************************RESERVAS CANCELACION**************************************************************/
+
+$app->delete('/cancelacion/:idReserva', function($idReserva){
+        $resCan = new ReservaCancelacion();
+        $result = $resCan->deleteReserva($idReserva);
+});
+
+/**************************DEVOLUCIONES*********************************************************************/
+
+$app->post('/devoluciones', function(){
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+
+    $dev = new Devolucion();
+    $result = $dev->insertDevolucion($data);
+
+    if($result){
+       sendResult($result);
+    }else{
+        sendError("Error al insertar devolucion...");
+    };
+});
 
 $app->run();

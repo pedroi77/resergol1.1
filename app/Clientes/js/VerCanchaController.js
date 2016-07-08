@@ -11,6 +11,7 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
     $scope.idCancha = $stateParams.idCan;
     $scope.idComplejo = $stateParams.idComp;
     $scope.idDuenio = -1;
+    $scope.idCliente = sessionStorage.id;
     //Puntuacion que hizo el cliente si es que puntuó.
     this.PuntuacionCliente = 0;
     this.Puntuacion = {
@@ -19,7 +20,7 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
                         idCliente:sessionStorage.id,
                         puntaje: 0
                      };
-
+    
     this.PuntajeDesc = "";//"":
     this.PuntajeClass = "button-md label-warning";//"";
 
