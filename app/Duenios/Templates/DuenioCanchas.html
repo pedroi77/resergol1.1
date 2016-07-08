@@ -115,25 +115,25 @@
                         </section>
                     </div>
                     
-                    <div class="principal row">
-                        <div class="col-md-6">
-                            <p>
-                                <img src="/../resergol1.1/images/canchas/cancha1.jpg" class="img-responsive" alt="">
-                            </p>
-                        </div>
+                    <div class="col-md-6" style="height:400px">
+                        <p>
+                            <img id="miImg" src="{{admCan.CanchaSeleccionada.imagenCancha}}" class="img-responsive imgSelect" alt="Image">
+                        </p>
                     </div>
+                    
                 </div>
                 <br>
                 <div class=" principal row " style="margin-bottom: 0px;">
                     <div>
                         <!--section class="widget altoDuenioImg">
-                            <img src="/../resergol1.1/images/canchas/cancha4.jpg" class="img-responsive" alt="" >
-                        </section -->
+                            <img src="{{}}" class="img-responsive" alt="" >
+                        </section-->
                         <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="cancha in admCan.Canchas"> 
                             <div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
                                 <p>
-                                    <img ng-src="{{cancha.Imagen}}">
+                                    <img ng-src="{{cancha.imagen}}" class="img-responsive" alt="">
                                 </p>
+                                
                                 <div class="caption">
                                     <div class="blur"></div>
                                     <div class="caption-text">

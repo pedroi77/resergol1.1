@@ -1,61 +1,32 @@
-
-    <div class="container-fluid">
+<div class="container-fluid">
         
-        <header class="row widget" >
-            <div style = "color: white" class="container">
-                <h3  style=" font-size: 50px; text-align:center;  font-style:italic;" ></span>Lista negra de clientes</h3>
-            </div>
-        </header>
-        
-        
-        <div class="table-responsive col-md-12 ">     
-                    <section class="widget">
-                        <table  class="table table-bordered table-striped tabla-listaNegra table-hover text-center " style= "table-layout: fixed; vertical-align:center;">
-                            <tr>
-                                <th class="col-sm-1 ">Cliente </th>
-                                <th class="col-sm-1 ">Usuario </th>
-                                <th class="col-sm-1 ">Fecha de ingreso</th>
-                                <th class="col-sm-1 ">Quitar de la lista</th>
-                            </tr>
-                            
-                            <tr>
-                                <td>Juan Gomez</td>
-                                <td>Juan77</td>
-                                <td>01/02/2015  </td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                            </tr>
-                            
-                            <tr>
-                                <td>Ivan Fernandez</td>
-                                <td>IvanTaladro</td>
-                                <td>01/02/2015</td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                            </tr>
-                            
-                            <tr>
-                                <td>Matias Maradona</td>
-                                <td>MM86</td>
-                                <td>01/02/2015  </td>
-                                <td><label class="checkbox-inline"><input type="checkbox" value=""></label></td>
-                            </tr>
-                        </table>
-                        
-                        <div class="row">
-                            <button type="button" class="btn btn-primary  btn-lg btn-block" style="border-radius: 8px;">
-                                               
-                                <i class="glyphicon glyphicon-edit"></i>
-                                Actualizar
-                            </button>
-                        </div>    
-                    </section>    
+    <header class="row widget" >
+        <div style = "color: white" class="container">
+            <h3  style=" font-size: 50px; text-align:center;  font-style:italic;" >Lista negra de clientes</h3>
         </div>
+    </header>
         
-        
-      
+    <div class="col-md-12" ng-controller="AdministrarListaNegraController as admLis" style="background-color:white;">
+        <table ng-table="adm.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+            <tr ng-repeat="usu in admLis.listaNegra" style="background-color:white;">
+                <td class="text-center" title="'Cliente'">{{usu.Cliente}}</td>
+                <td class="text-center" title="'Usuario'">{{usu.Usuario}}</td>
+                <td class="text-center" title="'Fecha Ingreso'">{{usu.FechaIngreso}}</td>
+                <td class="text-center" title="'ID-Usuario'" ng-if="false">{{usu.IdCliente}}</td>
+                <td class="text-center" title="'Quitar'">
+                    <button type="button" ng-click="admLis.sacarDeLista(usu)" class="btn btn-sm btn-danger">
+                        <i class="glyphicon glyphicon-remove-circle"></i>
+                    </button>
+				</td>
+            </tr>
+        </table>
     </div>
-    
-    <div class="clearfix"></div>
         
-    <div/>    
+    
+    <div class="clearfix">
+    
+    </div>
+        
+</div>    
  
 	

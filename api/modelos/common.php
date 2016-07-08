@@ -189,27 +189,28 @@ class Common
     }
    
     //Existe Email Persona
-    public function existeEmailPersona($email, $idDuenio){  
-        $resultado=0;
+    public function existeEmailDuenio($email, $idPersona){  
+         
+        $resultado = 0;
         
         $stmt = $this->connection->prepare('SET @pEmail := ?');
         $stmt->bind_param('s', $email);
         $stmt->execute(); 
         
-        $stmt = $this->connection->prepare('SET @pIdDuenio := ?');
-        $stmt->bind_param('i', $idDuenio);
+        $stmt = $this->connection->prepare('SET @pidPersona := ?');
+        $stmt->bind_param('i', $idPersona);
         $stmt->execute(); 
         
         $stmt = $this->connection->prepare('SET @resultado := ?');
         $stmt->bind_param('i', $resultado);
         $stmt->execute(); 
          
-        $query = "CALL SP_existeEmailPersona(@pEmail, @pIdDuenio, @resultado);";
+        $query = "CALL SP_existeEmailDuenio(@pEmail, @pidPersona, @resultado);";
     
         $res = array();
         
         if( $result = $this->connection->query($query) ){
-            $r = $this->connection->query('SELECT @resultado as resultado');
+            $r = $this->connection->query('SELECT @resultado as res');
             $res[] = $r->fetch_assoc();               
         }
         
@@ -218,6 +219,7 @@ class Common
     
     //Existe Email Complejo
     public function existeEmailComplejo($email, $idComplejo){  
+        
         $resultado=0;
         
         $stmt = $this->connection->prepare('SET @pEmail := ?');
@@ -225,7 +227,7 @@ class Common
         $stmt->execute(); 
         
         $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
-        $stmt->bind_param('i', $idPersona);
+        $stmt->bind_param('i', $idComplejo);
         $stmt->execute(); 
         
         $stmt = $this->connection->prepare('SET @resultado := ?');
@@ -238,7 +240,7 @@ class Common
         $res = array();
         
         if( $result = $this->connection->query($query) ){
-            $r = $this->connection->query('SELECT @resultado as resultado');
+            $r = $this->connection->query('SELECT @resultado as res');
             $res[] = $r->fetch_assoc();               
         }
         

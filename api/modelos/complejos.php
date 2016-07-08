@@ -110,7 +110,7 @@ class Complejo
             $stmt->bind_param('i', $idPersona);
             $stmt->execute();
             
-            echo 'entro al create complejo', '$idDuenio ' . $idDuenio . ' $usuario ' . $usuario . ' $contrasenia ' . $contrasenia . ' $idPersona ' . $idPersona, '\n';
+            //echo 'entro al create complejo', '$idDuenio ' . $idDuenio . ' $usuario ' . $usuario . ' $contrasenia ' . $contrasenia . ' $idPersona ' . $idPersona, '\n';
             $resultCan = $this->connection->query('CALL SP_updateDuenio( @pIdDuenio, @pUsuario, @pContrasenia, @pIdPersona);');
             //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN UPDATE DUEÑO-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
             
@@ -225,7 +225,7 @@ class Complejo
             $stmt->bind_param('i', $nroTelefono);
             $stmt->execute();
               
-            echo 'Something fails: ','ID COmplejo: ' . $idComplejo, "\n";
+            //echo 'Something fails: ','ID COmplejo: ' . $idComplejo, "\n";
             
             if($idComplejo === NULL or $idComplejo === 'NULL' or $idComplejo === null or $idComplejo === 'null'){
                 
@@ -433,7 +433,7 @@ class Complejo
 
     }
     
-    /*****************RELACIONADO A LAS IMAGENES****************************/
+/*****************RELACIONADO A LAS IMAGENES****************************/
     
     public function deleteImagen($idComplejo, $url){  
         
@@ -454,14 +454,14 @@ class Complejo
             $stmt->execute();
 
             //Salida
-            $stmt = $this->connection->prepare('SET @salida := ?');
+            $stmt = $this->connection->prepare('SET @vResultado := ?');
             $stmt->bind_param('s', $salida);
             $stmt->execute();
 
-            $result = $this->connection->query('CALL SP_deleteComplejosImagenes( @pIdComplejo, @pUrl , @salida);');
+            $result = $this->connection->query('CALL SP_deleteComplejosImagenes( @pIdComplejo, @pUrl , @vResultado);');
 
             // getting the value of the OUT parameter
-            $r = $this->connection->query('SELECT @salida as res');
+            $r = $this->connection->query('SELECT @vResultado as res');
             $row = $r->fetch_assoc();               
             $res = $row['res'] ;
 
@@ -481,8 +481,6 @@ class Complejo
         }
     }
     
-    /***************************************************/
-    
     public function agregarComplejoImagen($complejoimg){
         
         $this->connection->autocommit(false);
@@ -493,7 +491,7 @@ class Complejo
             $url = $this->connection->real_escape_string($complejoimg['url']);
             $salida='';
 
-            echo '','ID COmplejo: ' . $idComplejo . ' url: ' . $url, "\n";
+            //echo '','ID COmplejo: ' . $idComplejo . ' url: ' . $url, "\n";
             
             // Parametros
             $stmt = $this->connection->prepare('SET @idComplejo := ?');
@@ -530,8 +528,6 @@ class Complejo
         }
     }
     
-    /*************************************************/
-    
     public function getImagenesByComplejo($IdComplejo){  
 
         $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
@@ -553,7 +549,92 @@ class Complejo
         return $imagenes; 
     }
     
-    /*****************FIN IMAGENES****************************/
+    
+/************************LISTA NEGRA************************************/
+    
+    public function getUsuariosListaNegra($idComplejo){
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $idComplejo);
+        $stmt->execute(); 
+
+        $query = "CALL SP_getListaNegraByComplejo(@pIdComplejo);";
+        $usuarios = array();
+
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $usuarios[] = $fila;
+            }
+            $result->free();
+        }
+        return $usuarios; 
+    }
+    
+    public function deleteClienteListaNegra($idComplejo, $idCliente){
+        
+        $valor='';
+       
+        // Parametros
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $idComplejo);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pIdCliente := ?');
+        $stmt->bind_param('i', $idCliente);
+        $stmt->execute();
+        
+        //Salida
+        $stmt = $this->connection->prepare('SET @pValor := ?');
+        $stmt->bind_param('i', $valor);
+        $stmt->execute();
+        
+        //echo 'Something fails: ', 'borro de lista complejo: ' . $idComplejo . ' Cancha: ' . $idCliente, "\n";
+        
+        $result = $this->connection->query('CALL SP_deleteClienteListaNegra(@pIdComplejo, @pIdCliente, @pValor);');
+        
+        // getting the value of the OUT parameter
+        $r = $this->connection->query('SELECT @pValor as valorRetorno');
+        $row = $r->fetch_assoc();               
+        $res = $row['valorRetorno'] ;
+        
+        if($res > -1){
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+        }else{
+           sendError("Error, no se pudo borrar la reserva temp." . $res );
+        }
+    }
+    
+//**********************************************************************************************************************************//
+    
+    public function getUsuarioDuenio($idPersona, $usuario){
+
+        $existe = 0;
+
+        $stmt = $this->connection->prepare('SET @pIdPersona := ?');
+        $stmt->bind_param('i', $idPersona);
+        $stmt->execute(); 
+
+        $stmt = $this->connection->prepare('SET @pUsuario := ?');
+        $stmt->bind_param('s', $usuario);
+        $stmt->execute();
+
+        //Salida
+        $stmt = $this->connection->prepare('SET @existe := ?');
+        $stmt->bind_param('i', $existe);
+        $stmt->execute();
+
+        $query = "CALL SP_existeUsuarioDuenio(@pIdPersona, @pUsuario, @existe);";
+        
+        $usuario= array();
+
+        if( $result = $this->connection->query($query) ){
+            $r = $this->connection->query('SELECT @existe as existe');
+            $usuario[] = $r->fetch_assoc();               
+        }
+        
+        return $usuario;
+    }
     
 }
 

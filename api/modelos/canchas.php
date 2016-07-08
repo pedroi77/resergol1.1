@@ -205,6 +205,8 @@ class Cancha
             $row = $can->fetch_assoc();        
             $cancha = $row['cancha'];
             
+            //echo 'entro al create cancha', ' $idCancha ' . $idCancha, '\n';
+            
             $this->connection->commit();
             $dat= array($cancha);
             //sendResult($dat, 'OK' );
