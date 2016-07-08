@@ -21,9 +21,11 @@ resergolApp.controller("ComplejoImagenesController", function($scope, $state , $
                 self.imagenes.tipos.push(data[i]);
             };
 
-            self.imagenes.selectedOption = self.imagenes.tipos[0];
-            $scope.imgSelect =  self.imagenes.selectedOption.imagen;
-            self.msjPantalla = "Imagenes del torneo " + self.imagenes.selectedOption.nombre;
+            if(self.imagenes.length > 0){
+                self.imagenes.selectedOption = self.imagenes.tipos[0];
+                $scope.imgSelect =  self.imagenes.selectedOption.imagen;
+                self.msjPantalla = "Imagenes del torneo " + self.imagenes.selectedOption.nombre;
+            }
         });
     };
     
@@ -75,7 +77,7 @@ resergolApp.controller("ComplejoImagenesController", function($scope, $state , $
         
     this.borrar = function(){
         if(confirm("¿Esta seguro que desea borrar la imagen seleccionada?")){
-            ComplejoImagenesDBService.delete({idComplejo: self.imagenes.selectedOption.idtorneo, url:self.imagenes.selectedOption.url}, function(reponse){
+            ComplejoImagenesDBService.delete({idComplejo: self.idComplejo, url:self.imagenes.selectedOption.url}, function(reponse){
                     console.log(reponse.data);
                     self.init();
                   },function(errorResponse){

@@ -22,13 +22,13 @@ this.CanchaSeleccionada = {
     ,Luz: 0
     ,Precio: 0
     ,IdEstado: 1    
-    ,guardoCancha: false    
+    ,guardoCancha: false  
+    ,imagenCancha: ''
     
 };
     
 this.selectedCantJugadoresId = -1;
 this.superficies = [];
-$scope.idCancha = 7;
     
 //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
 
@@ -144,6 +144,7 @@ this.elegirCancha = function(cancha){
     self.cantJugadores.selectedOption.id = cancha.CantJugadores;
     self.CanchaSeleccionada.IdCancha = parseInt(cancha.IdCancha);
     self.CanchaSeleccionada.guardoCancha = true;
+    self.CanchaSeleccionada.imagenCancha = cancha.imagen;
     $scope.idCancha = parseInt(cancha.IdCancha);
 
     console.log(cancha);
@@ -181,6 +182,7 @@ this.blanquearDatos = function(){
     self.CanchaSeleccionada.Luz = 0;
     self.CanchaSeleccionada.Precio = 0;
     self.CanchaSeleccionada.IdEstado = 1;
+    self.CanchaSeleccionada.imagenCancha = '';
     self.CanchaSeleccionada.guardoCancha = false;
     document.getElementById("luz").checked = false;
     document.getElementById("techada").checked = false;

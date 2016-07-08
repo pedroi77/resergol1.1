@@ -19,6 +19,7 @@ require_once("modelos/reservasFijas.php");
 require_once("modelos/reservasTemp.php");
 require_once("modelos/puntuaciones.php");
 require_once("modelos/comentarios.php");
+require_once("modelos/mails.php");
 require_once("modelos/reservasCancelacion.php");
 require_once("modelos/devoluciones.php");
 require_once("util/jsonResponse.php");
@@ -126,6 +127,22 @@ $app->get('/duenios/:user/:pass', function($usuario,$contrasenia){
         $result[] = "-1";
         sendResult($result);
     }
+});
+
+/*****EMAILS*******/
+//Alta
+$app->post('/enviarMail', function(){
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+	
+	$mail = new Mails();
+    $result = $mail->mandarMail();
+	
+	if($result){
+		sendResult($result);
+	}else{
+		sendError("No mando mail");
+	}
 });
 
 
@@ -456,7 +473,7 @@ $app->put('/common/torneo/copa/fixture', function(){
     $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
-    
+
     $duenio = new Duenio();
     $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
 
@@ -705,9 +722,9 @@ $app->get('/duenios/complejosDias/:idComplejo/:aux', function($idComplejo, $aux)
 });
 
 //Verifica si el mail del dueño ya existe
-$app->get('/duenios/emailDuenio/:email/:idDuenio', function($email, $idDuenio){
+$app->get('/duenios/emailDuenio/:email/:idPersona', function($email, $idPersona){
     $emailDuenio = new Common();
-    $data = $emailDuenio->existeEmailPersona($email, $idDuenio);
+    $data = $emailDuenio->existeEmailDuenio($email, $idPersona);
 	sendResult($data);
 });
 
@@ -715,6 +732,13 @@ $app->get('/duenios/emailDuenio/:email/:idDuenio', function($email, $idDuenio){
 $app->get('/duenios/emailComplejo/:email/:idComplejo', function($email, $idComplejo){
     $emailComplejo = new Common();
     $data = $emailComplejo->existeEmailComplejo($email, $idComplejo);
+	sendResult($data);
+});
+
+//Verifica si el usuario del dueni del complejo ya existe
+$app->get('/duenios/existeUsuario/:idPersona/:usuario', function($idPersona, $usuario){
+    $usuarioDuenio = new Complejo();
+    $data = $usuarioDuenio->getUsuarioDuenio($idPersona, $usuario);
 	sendResult($data);
 });
 
@@ -766,7 +790,7 @@ $app->post('/duenios/complejos/imagen', function(){
 });
 
 //delete de imagens
-$app->delete('/duenios/complejo/imagen/:idComplejo/:url', function($idComplejo, $url){
+$app->delete('/duenios/complejos/imagen/:idComplejo/:url', function($idComplejo, $url){
     $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
@@ -783,7 +807,6 @@ $app->delete('/duenios/complejo/imagen/:idComplejo/:url', function($idComplejo, 
     }
 });
 
-
 //Get complejos con filtros.
 $app->get('/complejos/:pNombreComplejo/:pIdProv/:pIdLoc/:pCantJug/:pIdSuperficie/:pPrecioMax/:pTechada/:pConLuz/:pConEstac/:pConDuchas/:pConBuffet/:pConParrilla/:pConWifi/:pFecha/:pHora/:pDiaSemana', function($pNombreComplejo, $pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pPrecioMax, $pTechada, $pConLuz, $pConEstac, $pConDuchas, $pConBuffet, $pConParrilla, $pConWifi, $pFecha, $pHora, $pDiaSemana){
     $complejos = new Complejo();
@@ -799,6 +822,34 @@ $app->get('/complejos', function(){
 	sendResult($data);
 });
 
+/****************************LISTA NEGRA***************************************************************/
+
+//Get de usuarios en lista negra(segun Complejo).
+$app->get('/duenios/complejo/listaNegra/:idComplejo', function($idComplejo){
+
+    $usuarios = new Complejo();
+    $data = $usuarios->getUsuariosListaNegra($idComplejo);
+	sendResult($data);
+
+});
+
+//delete usuarios de lista negra
+$app->delete('/duenios/complejo/listaNegra/:idComplejo/:idCliente', function($idComplejo, $idCliente){
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $usuarios = new Complejo();
+        $result = $usuarios->deleteClienteListaNegra($idComplejo, $idCliente);
+    }
+	else{
+        sendError("token invalido");
+    }
+});
 
 /******************************RESERVAS****************************************************************/
 
