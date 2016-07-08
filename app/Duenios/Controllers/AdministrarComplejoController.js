@@ -214,41 +214,41 @@ self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
                     console.log("antes de getDiasComplejos");
                     self.getDiasComplejos();
                     console.log("despues de getDiasComplejos");
-                    
-                    //se busca la provincias y las localidades de la misma
-                    ProvinciasService.query().$promise.then(function(data) {
-
-                        self.provincias.prov = data;
-                        console.log(data);
-                        angular.forEach(self.provincias.prov, function(aux) {
-                            
-                        if(aux.IdProvincia == self.Complejo.idProv)    
-                        {
-                            self.provinciaSeleccionada.IdProvincia = aux.IdProvincia;
-                            self.provinciaSeleccionada.Nombre = aux.Nombre;
-                        }
-                        });
-
-                        self.getLocalidades();
-                    });
-                    
-                    DocumentosService.query().$promise.then(function(data) {
-    
-                        self.tiposDoc.tipos = data;
-                        self.tiposDoc.tipos.splice(0, 0, {IdTipoDoc: '-3', Descripcion: '-Tipo doc.-'});
-
-                        angular.forEach(self.tiposDoc.tipos, function(aux) {
-                            
-                            console.log('AUX:' + aux.IdTipoDoc + 'SELF:' + self.Complejo.idTipoDoc);
-                            
-                             if(aux.IdTipoDoc == self.Complejo.idTipoDoc)    
-                             {
-                                 self.tipoDocSeleccionado.IdTipoDoc = aux.IdTipoDoc;
-                                 self.tipoDocSeleccionado.Descripcion = aux.Descripcion;
-                             }
-                        });
-                    });
                 }
+                
+                //se busca la provincias y las localidades de la misma
+                ProvinciasService.query().$promise.then(function(data) {
+
+                    self.provincias.prov = data;
+                    console.log(data);
+                    angular.forEach(self.provincias.prov, function(aux) {
+
+                    if(aux.IdProvincia == self.Complejo.idProv)    
+                    {
+                        self.provinciaSeleccionada.IdProvincia = aux.IdProvincia;
+                        self.provinciaSeleccionada.Nombre = aux.Nombre;
+                    }
+                    });
+
+                    self.getLocalidades();
+                });
+                    
+                DocumentosService.query().$promise.then(function(data) {
+
+                    self.tiposDoc.tipos = data;
+                    self.tiposDoc.tipos.splice(0, 0, {IdTipoDoc: '-3', Descripcion: '-Tipo doc.-'});
+
+                    angular.forEach(self.tiposDoc.tipos, function(aux) {
+
+                        console.log('AUX:' + aux.IdTipoDoc + 'SELF:' + self.Complejo.idTipoDoc);
+
+                         if(aux.IdTipoDoc == self.Complejo.idTipoDoc)    
+                         {
+                             self.tipoDocSeleccionado.IdTipoDoc = aux.IdTipoDoc;
+                             self.tipoDocSeleccionado.Descripcion = aux.Descripcion;
+                         }
+                    });
+                });
         });
     };
     

@@ -19,7 +19,10 @@ require_once("modelos/reservasFijas.php");
 require_once("modelos/reservasTemp.php");
 require_once("modelos/puntuaciones.php");
 require_once("modelos/comentarios.php");
-require_once("modelos/mails.php");require_once("modelos/reservasCancelacion.php");require_once("modelos/devoluciones.php");require_once("util/jsonResponse.php");
+require_once("modelos/mails.php");
+require_once("modelos/reservasCancelacion.php");
+require_once("modelos/devoluciones.php");
+require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
 Slim\Slim::registerAutoloader();
@@ -817,7 +820,7 @@ $app->get('/complejos', function(){
     $complejos = new Complejo();
     $data = $complejos->getComplejosTOP();
 	sendResult($data);
-})
+});
 
 /****************************LISTA NEGRA***************************************************************/
 
@@ -846,7 +849,9 @@ $app->delete('/duenios/complejo/listaNegra/:idComplejo/:idCliente', function($id
 	else{
         sendError("token invalido");
     }
-});/******************************RESERVAS****************************************************************/
+});
+
+/******************************RESERVAS****************************************************************/
 
 //Get horarios no disponibles para reservar por dia para una cancha.
 $app->get('/clientes/reservas/:idCancha/:idComplejo/:fecha', function($idCancha, $idComplejo, $fecha){
