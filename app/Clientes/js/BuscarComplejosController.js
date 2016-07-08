@@ -214,6 +214,9 @@ ComplejosService.query({pNombreComplejo: $scope.filtros.NombreComplejo, pIdProv:
 this.getFiltros = function(){
    
     $scope.filtros.NombreComplejo = document.getElementById("nombreComplejo").value;
+    if($scope.filtros.NombreComplejo == "" || $scope.filtros.NombreComplejo == null || $scope.filtros.NombreComplejo == undefined)
+        $scope.filtros.NombreComplejo = -1;
+    
     $scope.filtros.IdProvincia = self.provincias.selectedOption.IdProvincia;
     $scope.filtros.IdLocalidad = self.localidades.selectedOption.IdLocalidad;
     $scope.filtros.CantJugadores = $scope.selectedCantJugadoresId;

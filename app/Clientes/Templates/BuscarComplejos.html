@@ -216,7 +216,8 @@
                                     <li>Wifi: {{complejo.Wifi == 1 ? "SI" : "NO"}} </li>
                                 </ul>
                                 <div class="col-md-12 text-center">
-								<a href="#" class="btn btn-success"
+								<a class="btn btn-success" href="#"
+                                   ui-sref="Clientes.verComplejo(idComp:'{{complejo.IdComplejo}}'})"
                                     onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER COMPLEJO</a>
                                 </div>
 							</div>

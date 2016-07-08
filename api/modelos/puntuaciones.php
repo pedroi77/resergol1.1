@@ -105,4 +105,87 @@ class Puntuacion
         
     }
     
+    
+    public function getPuntuacionComplejoCliente($pIdComplejo, $pIdCliente){
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $pIdComplejo);
+        $stmt->execute(); 
+        $stmt = $this->connection->prepare('SET @pIdCliente := ?');
+        $stmt->bind_param('i', $pIdCliente);
+        $stmt->execute(); 
+      
+        $query = "CALL SP_getPuntuacionComplejoCliente(@pIdComplejo, @pIdCliente);";
+        
+        $PuntuacionCliente = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $PuntuacionCliente[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $PuntuacionCliente;
+    }
+    
+     public function getPuntuacionComplejo($pIdComplejo){
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $pIdComplejo);
+        $stmt->execute(); 
+      
+        $query = "CALL SP_getPuntuacionComplejo(@pIdComplejo);";
+        
+        $PuntuacionComp = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $PuntuacionComp[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $PuntuacionComp;
+    }
+    
+    //CREATE -- Metodo para puntuar un complejo
+    public function puntuarComplejo($puntuacion){
+        
+        $idComplejo = $this->connection->real_escape_string($puntuacion['idComplejo']);
+        $idCliente = $this->connection->real_escape_string($puntuacion['idCliente']);
+        $puntaje = $this->connection->real_escape_string($puntuacion['puntaje']);
+        
+        $salida='';
+      
+        // Parametros
+        $stmt = $this->connection->prepare('SET @idComplejo := ?');
+        $stmt->bind_param('i', $idComplejo);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @idCliente := ?');
+        $stmt->bind_param('i', $idCliente);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @puntaje := ?');
+        $stmt->bind_param('i', $puntaje);
+        $stmt->execute();
+        //Salida
+        $stmt = $this->connection->prepare('SET @valor := ?');
+        $stmt->bind_param('s', $valor);
+        $stmt->execute();
+        $result = $this->connection->query('CALL SP_insertPuntuacionComplejo(@idComplejo, @idCliente, @puntaje, @valor);');
+        
+        // getting the value of the OUT parameter
+        $r = $this->connection->query('SELECT @valor as valor');
+        $row = $r->fetch_assoc();               
+        $res = $row['valor'] ;
+        
+        if($res > -1){
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+        }else{
+           sendError("Error, no se pudo registrar la puntuacion del complejo." . $res );
+        }
+        
+    }
+    
 }

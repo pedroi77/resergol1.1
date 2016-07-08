@@ -1146,4 +1146,98 @@ $app->post('/devoluciones', function(){
     };
 });
 
+
+//-***********************************PUNTUACIONES COMPLEJO***********************************************************--//
+//Get puntuacion de un cliente a un complejo
+$app->get('/puntuacionesComplejo/:idComplejo/:idCliente', function($pIdComplejo, $pIdCliente){
+    
+    $punt = new Puntuacion();
+    $data = $punt->getPuntuacionComplejoCliente($pIdComplejo, $pIdCliente);
+	sendResult($data);
+    
+});
+//Get puntuacion de un complejo
+$app->get('/puntuacionesComplejo/:idComplejo', function($pIdComplejo){
+    
+    $punt = new Puntuacion();
+    $data = $punt->getPuntuacionComplejo($pIdComplejo);
+	sendResult($data);
+    
+});
+//Puntuar complejo
+$app->post('/puntuacionesComplejo', function(){
+    
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $punt = new Puntuacion();
+        $result = $punt->puntuarComplejo($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al insertar puntuacion complejo...");
+        };
+        
+    /*}
+	else{
+        sendError("token invalido");
+    }*/
+    
+});
+
+
+//-***********************************COMENTARIOS COMPLEJO***********************************************************--//
+//Get comentarios de un complejo
+$app->get('/comentariosComplejo/:idComplejo', function($pIdComplejo){
+    
+    $comment = new Comentario();
+    $data = $comment->getComentariosComplejo($pIdComplejo);
+    sendResult($data);
+    
+});
+//Comentar complejo
+$app->post('/comentariosComplejo', function(){
+    
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $comment = new Comentario();
+        $result = $comment->comentarComplejo($data);
+    
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al insertar comentario complejo...");
+        };
+        
+    /*}
+    else{
+        sendError("token invalido");
+    }*/
+    
+});
+
+
+//Get de complejo.
+$app->get('/complejo/:idComplejo', function($idComplejo){
+    $complejo = new Complejo();
+    $data = $complejo->getDatosComplejo($idComplejo);
+    sendResult($data);
+});
+
 $app->run();
