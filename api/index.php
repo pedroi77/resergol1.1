@@ -14,6 +14,7 @@ require_once("modelos/reservas.php");
 require_once("modelos/tarjetasClientes.php");
 require_once("modelos/listasNegras.php");
 require_once("modelos/torneosLiga.php");
+require_once("modelos/torneosCopas.php");
 require_once("modelos/reservasFijas.php");
 require_once("modelos/reservasTemp.php");
 require_once("modelos/puntuaciones.php");
@@ -451,6 +452,27 @@ $app->put('/common/torneo/liga/fixture', function(){
 });
 
 
+$app->put('/common/torneo/copa/fixture', function(){
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();   
+        $data = json_decode($request->getBody(), true);
+        $fixture = new TorneoCopa();
+
+        $result = $fixture->updateFixture($data);
+        //el metodo envia el resultado
+    }
+	else{
+        sendError("token invalido");
+    }
+});
+
 
 //alta imagenes
 $app->post('/duenios/torneos/imagen', function(){
@@ -529,6 +551,113 @@ $app->get('/canchas', function(){
 	sendResult($data);
 });
 
+/********ADMINISTRACION DE LAS CANCHAS(ALTA, BAJA MODIFICACION)************/
+
+//alta
+$app->post('/duenios/administrarCanchas', function(){
+    
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);*/
+
+    //poner todo lo comentado --> descomentado
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $cancha = new Cancha();
+        $result = $cancha->setCancha($data);
+	
+        
+        sendResult($result);
+    /*if($result){
+        }else{
+            sendError($cancha);
+        };
+    /*if($tokenOK){
+    }
+	else{
+        sendError("token invalido");
+    }*/
+    
+});
+
+//Trae todas las canchas del complejo seleccionado
+$app->get('/duenios/administrarCanchas/:idComplejo/:aux', function($idComplejo, $aux){
+    $canchas = new Cancha(); //  
+    $data = $canchas->getCanchasByComplejo($idComplejo, $aux); //
+	sendResult($data);
+});
+
+/********ADMINISTRACION IMAGENES DE LAS CANCHAS************/
+
+//get de imagenes por cancha
+$app->get('/duenios/canchas/imagen/:idComplejo/:idCancha', function($idComplejo, $idCancha){
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    echo '', '' , '\n';
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){*/
+        $imagenes = new Cancha();
+        $data = $imagenes->getImagenesCancha($idComplejo, $idCancha);
+        sendResult($data);
+    /*}
+	else{
+        sendError("token invalido");
+    }*/
+});
+
+//alta imagenes
+$app->post('/duenios/canchas/imagen', function(){
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $cancha = new Cancha();
+        $result = $cancha->agregarCanchaImagen($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al guardar la imagen");
+        };
+    /*}
+	else{
+        sendError("token invalido");
+    }*/
+});
+
+//delete de imagens
+$app->delete('/duenios/canchas/imagen/:idComplejo/:idCancha/:url', function($idComplejo, $idCancha, $url){
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){*/
+        $cancha = new Cancha();
+        $result = $cancha->deleteImagen($idComplejo, $idCancha, $url);
+    /*}
+	else{
+        sendError("token invalido");
+    }*/
+});
+
 /******************************COMPLEJOS****************************************************************/
 //Get de dueños pendientes.
 $app->get('/complejos/:idDuenio', function($idDuenio){
@@ -593,7 +722,7 @@ $app->get('/duenios/emailComplejo/:email/:idComplejo', function($email, $idCompl
 $app->get('/duenios/complejos/imagen/:idComplejo', function($idComplejo){
     $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
-    echo '', '' , '\n';
+
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
     
     $duenio = new Duenio();

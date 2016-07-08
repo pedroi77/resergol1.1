@@ -35,7 +35,7 @@ resergolApp.controller("TorneoBuscarController", function($scope, $state, Duenio
         var vIdTorneo= self.torneo.torneos[indice]["idTorneo"];
         var vTipoTorneo = self.torneo.torneos[indice]["tipo"]; 
         
-        if(vTipoTorneo == 'Liga'){
+        if(vTipoTorneo == 'Liga'){  /*Horrible harcode pero no queria traer el tipo para no modificar el SP*/
             $state.go("Duenios.verTorneoLiga",{idTorneo:vIdTorneo});
         }
         else{
