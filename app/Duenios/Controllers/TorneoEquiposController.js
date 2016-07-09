@@ -11,7 +11,7 @@ resergolApp.controller("TorneoEquiposController", function($scope, $stateParams,
     this.insc = $stateParams.inscriptos;
  
     this.init = function(){
-        TorneoEquiposServices.query({idTorneo:13 }).$promise.then(function(data) {
+        TorneoEquiposServices.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
             self.equipos = data;
             console.log(self.equipos);
         }); 

@@ -511,6 +511,26 @@ class Torneo
         return $equipos;
     }
     
+    public function armarFixture($torneo){  
+        
+        $IdTorneo = $this->connection->real_escape_string($torneo['idTorneo']);
+        
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_insertReservasTorneo(@IdTorneo);";
+        $fixture= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $fixture[] = $fila;
+            }
+            $result->free();
+        }
+        return $fixture;
+    }
+    
 }
 
 
