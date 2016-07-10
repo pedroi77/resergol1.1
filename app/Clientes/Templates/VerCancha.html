@@ -48,34 +48,13 @@
        
 
        <div class="col-md-6">
-       
-           <div class="col-md-6 carousel-container anchoCarousel ">
-              <div id="carouselCanchas" class="carousel slide carousel-fade">
-                <!-- Carousel items -->
-                <div class="carousel-inner anchoCarousel">
-                      <div data-slide-no="0" class="item carousel-item active">
-                        <img src="/../resergol1.1/images/complejos/complejo1.jpeg" alt="">
-                        <div class="carousel-caption">
-                        </div>
-                      </div>
-                      <div data-slide-no="1" class="item carousel-item">
-                        <img src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
-                        <div class="carousel-caption">
-                        </div>
-                      </div>
-                      <div data-slide-no="2" class="item carousel-item">
-                        <img src="/../resergol1.1/images/complejos/complejo3.jpg" alt="">
-                        <div class="carousel-caption">
-                        </div>
-                      </div>
-                </div>
-                <!-- Carousel nav -->
-                <!--<a class="carousel-control left"  ui-sref="Clientes.verCancha" href="#carouselComplejos" data-slide="prev">‹</a>
-                <a class="carousel-control right" ui-sref="Clientes.verCancha"  href="#carouselComplejos" data-slide="next">›</a>-->
-                 <a class="carousel-control left" href="#carouselCanchas" data-slide="prev">‹</a>
-                <a class="carousel-control right" href="#carouselCanchas" data-slide="next">›</a>  
-               </div>
-            </div>
+           <uib-carousel active="can.active" interval="can.myInterval" no-wrap="can.noWrapSlides">
+                <uib-slide ng-repeat="img in can.imagenes" index="img.id">
+                    <img ng-src="{{img.imagen}}" style="margin:auto;">
+                    <div class="carousel-caption">
+                    </div>
+                </uib-slide>
+            </uib-carousel>
         </div> 
        
        <div class="col-md-3"> 

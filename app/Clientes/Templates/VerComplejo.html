@@ -25,13 +25,11 @@
                           <li class="glyphicon glyphicon-time" uib-popover-html="DiasYHorariosTooltip" popover-placement="right" popover-trigger="mouseenter">
                           </li>
                       </ul>    
-                        
                     </div>   
                        <div>
-                        <a id="btnVerCanchasComplejo" ng-disabled="!com.estaLogueado" ng-click="!com.estaLogueado || com.mostrarCanchas()"
-                         class="btn btn-success center-block" style="border-radius: 7px;" role="button">VER CANCHAS</a>
+                        <a id="btnVerCanchasComplejo"
+                         class="btn btn-success center-block" onclick="$('html,body').animate({scrollTop:1000},'slow');" style="border-radius: 7px;" role="button">VER CANCHAS</a>
                     </div>
-           
            </section>
            
            
@@ -39,36 +37,13 @@
        
        
        <div class="col-md-6">
-       
-           <div class="col-md-6 carousel-container anchoCarousel ">
-          <div id="carouselComplejos" class="carousel slide carousel-fade">
-            <!-- Carousel items -->
-            <div class="carousel-inner anchoCarousel">
-              <div data-slide-no="0" class="item carousel-item active">
-                <img src="/../resergol1.1/images/complejos/complejo1.jpeg" alt="">
-                <div class="carousel-caption">
-                </div>
-              </div>
-              <div data-slide-no="1" class="item carousel-item">
-                <img src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
-                <div class="carousel-caption">
-                </div>
-              </div>
-              <div data-slide-no="2" class="item carousel-item">
-                <img src="/../resergol1.1/images/complejos/complejo3.jpg" alt="">
-                <div class="carousel-caption">
-                </div>
-              </div>
-            </div>
-            <!-- Carousel nav -->
-            <a class="carousel-control left" ui-sref="VerComplejo" href="#carouselComplejos" data-slide="prev">‹</a>
-            <a class="carousel-control right" ui-sref="VerComplejo" href="#carouselComplejos" data-slide="next">›</a>
-          </div>
-        
-       
-       </div>
-           
-       
+          <uib-carousel active="com.active" interval="com.myInterval" no-wrap="com.noWrapSlides">
+                <uib-slide ng-repeat="img in imagenesComplejo" index="img.id">
+                    <img ng-src="{{img.imagen}}" style="margin:auto;">
+                    <div class="carousel-caption">
+                    </div>
+                </uib-slide>
+            </uib-carousel>
     </div> 
        
        <div class="col-md-3"> 
@@ -78,7 +53,7 @@
                   <div class="row">
                       <div class="col-md-12">
                         <header>
-                                <h4><i class="fa fa-user"></i>Acerca de "{{comp.nombreComplejo}}"</h4>
+                            <h4><i class="fa fa-user"></i>Descripción</h4>
                         </header>
                       <p>{{comp.Descripcion}}</p>
                       </div>
@@ -173,8 +148,7 @@
       <label>Comentarios</label>
     </div>
     <div class="commentBox">
-        
-        <p class="taskDescription">Mirá lo que opina la gente acerca de "{{comp.nombreComplejo}}"</p>
+        <p class="taskDescription">Mirá lo que opina la gente acerca de "{{nombreComplejo}}"</p>
     </div>
     <div class="actionBox">
         <ul class="commentList">
@@ -186,12 +160,12 @@
                     </div>
                 </li>
         </ul>
-        <form class="form-inline" role="form">
+        <form class="form-inline" name="algo" id="algo" role="form">
             <div class="form-group">
-                 <input class="form-control" id="txtComentar" ng-model="com.comment" ng-disabled="!com.estaLogueado" type="text" placeholder="Agregar comentario" />
+                 <input class="form-control" id="txtComentar" ng-maxlength="100" ng-model="com.comment" ng-disabled="!com.estaLogueado" type="text" placeholder="Agregar comentario" />
             </div>
             <div class="form-group">
-                <button class="btn btn-default" id="btnComentar" ng-click="com.comentar() || !com.estaLogueado" ng-disabled="!com.estaLogueado">Comentar</button>
+                <button class="btn btn-default" id="btnComentar" ng-click="com.comentar() || !com.estaLogueado" ng-disabled="!com.estaLogueado || !algo.$valid">Comentar</button>
             </div>
         </form>
     </div>
@@ -202,18 +176,49 @@
         
          </div>
          
+         
 
-        
-       
-    
-    <!--NUEVO><-->
-    <div class="container col-md-12">
+<div class="container col-md-12">
   <div class="row">
     <h2>Nuestras canchas</h2>
         <p><b>Importante: El precio indicado por cada cancha, es el precio base (no incluye luz).</p>
-        <p>Seleccioná la cancha que desees ver más en detalle.</b></p>
+        <p>Seleccioná la cancha que desees reservar o ver más en detalle.</b></p>
   </div>
-    <div class="row">
+    
+    <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="canc in canchas">
+    				<div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
+                        <div class="col-md-12" style="height:400px">
+						<p>
+                            <img  ng-src="{{canc.imagen}}" class="img-responsive" alt="Image">
+                        </p>
+                        </div>
+						<div class="caption">
+							<div class="blur"></div>
+							<div class="caption-text">
+								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:1px;">                       {{canc.nombre}}
+                                </h3>
+                                <h4 style="border-bottom:1px solid white; padding:3px;">
+                                    ${{canc.Precio | currency:''}}
+                                </h4>
+								<ul>
+                                    <li>Tamaño: {{canc.CantJugadores}} vs. {{canc.CantJugadores}} </li>
+                                    <li>Superficie: {{canc.Descripcion}}</li>
+                                    <li>Techada: {{canc.Techada == 1 ? "SI" : "NO"}} </li>
+                                    <li>Luz: {{canc.Luz == 1 ? "SI" : "NO"}}</li>
+                                </ul>
+                                <div class="col-md-12 text-center">
+								<a href="#" class="btn btn-success"
+                                   ui-sref="Clientes.verCancha({idCan:'{{canc.IdCancha}}', idComp:'{{idComplejo}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER CANCHA</a>
+                                </div>
+							</div>
+						</div>
+                        
+                     
+                        
+					</div>
+	           </div>                          
+                          
+    <!--<div class="row">
         <div class="col-lg-3" ng-repeat="canc in canchas">
               <div class="cuadro_intro_hover " style="background-color:#cccccc;">
             <p>
@@ -234,7 +239,7 @@
               </div>
             </div>
           </div>
-      </div>
+      </div>-->
 
    
     </div>
@@ -244,4 +249,5 @@
 
     <hr>
   </div>
-</div><!--/main-->
+</div>
+

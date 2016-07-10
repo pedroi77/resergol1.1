@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService, ComplejosDiasServices, PuntuacionesCanchaService, ComentariosCanchaService){
+resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService, ComplejosDiasServices, PuntuacionesCanchaService, ComentariosCanchaService, CanchaImagenesDBServices){
 	
     var self = this;
     
@@ -12,6 +12,11 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
     $scope.idComplejo = $stateParams.idComp;
     $scope.idDuenio = -1;
     $scope.idCliente = sessionStorage.id;
+    
+    this.myInterval =5000;
+    this.noWrapSlides = false;
+    this.active = 0;
+    
     //Puntuacion que hizo el cliente si es que puntuó.
     this.PuntuacionCliente = 0;
     this.Puntuacion = {
@@ -291,6 +296,24 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
 
     self.getComentariosCancha();
     
+this.getImagenes = function()
+{
+    CanchaImagenesDBServices.query({idComplejo:$scope.idComplejo, idCancha:$scope.idCancha}).$promise.then(function(data) {
+            self.imagenes = data;
+            if (self.imagenes.length > 0){
+                var contador = 0;
+                //Esto lo hago para agregar un id a cada imagen
+                angular.forEach(data, function(aux) {
+                    self.imagenes[contador]["id"]=contador;
+                    aux.contador = contador;
+                    contador++;
+                });	
+            }else{
+                self.imagenes = [];
+                self.imagenes.push({ "imagen": "http://localhost:8080/resergol1.1/api/Imagenes/default-image.jpg", "id":0});
+            };   
+        }); 
+ };
     
     this.getCancha = function(){
         
@@ -303,6 +326,8 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
                     self.diasComplejo = data;
                 }); 
                 
+                self.getImagenes();
+                
                 if(self.estaLogueado)
                 {
                     self.getPuntuacionCliente();
@@ -314,6 +339,9 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
     
     
    self.getCancha();
+    
+    
+
     
     this.setDiasComplejoAMostrar = function(){
         var texto = "";

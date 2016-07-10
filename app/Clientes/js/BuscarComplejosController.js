@@ -8,6 +8,10 @@ this.localidades = [];
 this.superficies = [];
 this.seBusco = false;
     
+this.myInterval =5000;
+this.noWrapSlides = false;
+this.active = 0;    
+    
 this.cantJugadores = [
           { id: -1, desc: '-Todos-'},
           { id: 5, desc: '5 vs 5' },
@@ -180,12 +184,7 @@ ComplejosService.query({pNombreComplejo: $scope.filtros.NombreComplejo, pIdProv:
                                             aux.PuntajeDesc = 'Una fantasía';
                                             aux.PuntajeClass = "btn-xs block btn-success";
                                         }
-                            
-                        if(aux.Imagen != null)
-                        {
-                            aux.Imagen = "data:image/jpg;base64," + aux.Imagen;
-                        }
-
+                        
                     }); 
                 
                     
@@ -311,12 +310,12 @@ this.getComplejosTOP = function(){
                             }
                         else
                         if(aux.Puntaje > 0 && aux.Puntaje <= 1){
-                            aux.PuntajeDesc = 'Muy mala';
+                            aux.PuntajeDesc = 'Muy malo';
                             aux.PuntajeClass = "btn-xs btn-danger";
                             }
                          else
                             if(aux.Puntaje > 1 && aux.Puntaje <= 2){ 
-                                aux.PuntajeDesc = 'No me gustan';
+                                aux.PuntajeDesc = 'No me gusta';
                                 aux.PuntajeClass = "btn-xs btn-warning";
                             }
                             else
@@ -326,7 +325,7 @@ this.getComplejosTOP = function(){
                                 }
                                 else
                                     if(aux.Puntaje > 3 && aux.Puntaje <= 4){
-                                        aux.PuntajeDesc = 'Muy buena';
+                                        aux.PuntajeDesc = 'Muy bueno';
                                         aux.PuntajeClass = "btn-xs btn-primary";
                                     }
                                     else

@@ -1,13 +1,21 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("VerComplejoController", function($scope, $sce, store, $timeout, $state,  $stateParams, ProvinciasService, LocalidadesService, ComplejosService, ComplejoService, CanchasService, TiposSuperficiesService, DuenioDiasService, ComplejosDiasServices, PuntuacionesComplejoService, ComentariosComplejoService){
+resergolApp.controller("VerComplejoController", function($scope, $sce, store, $timeout, $state, $stateParams, ProvinciasService, LocalidadesService, ComplejosService, ComplejoService, CanchasService, TiposSuperficiesService, DuenioDiasService, ComplejosDiasServices, PuntuacionesComplejoService, ComentariosComplejoService, AdministrarCanchasService,
+ComplejoImagenesDBService){
 	
     var self = this;
     
     this.estaLogueado = false;
     $scope.complejo = [];
     $scope.canchas = [];
+    $scope.imagenesComplejo = [];
     $scope.idComplejo = $stateParams.idComp;
+    $scope.nombreComplejo = "";
+    
+    this.myInterval =5000;
+    this.noWrapSlides = false;
+    this.active = 0;
+    
     //Puntuacion que hizo el cliente si es que puntuó.
     this.PuntuacionCliente = 0;
     this.Puntuacion = {
@@ -185,11 +193,44 @@ resergolApp.controller("VerComplejoController", function($scope, $sce, store, $t
     self.getComentariosComplejo();
     
     
+   this.getCanchas = function(){
+            AdministrarCanchasService.query({idComplejo:$scope.idComplejo, aux:0}).$promise.then(function(data){
+                
+                  angular.forEach(data,function(aux){
+                    if(aux.IdEstado == 1 || aux.IdEstado == "1") //Muestro solo las canchas ACTIVAS.
+                      $scope.canchas.push(aux);
+                  });
+                    console.log($scope.canchas);
+            });
+    
+    };
+    
+    
+      ComplejoImagenesDBService.query({idComplejo: $scope.idComplejo}).$promise.then(function(data) {
+            $scope.imagenesComplejo = data;
+            
+            if ($scope.imagenesComplejo.length > 0){
+                var contador = 0;
+                //Esto lo hago para agregar un id a cada imagen
+                angular.forEach(data, function(aux) {
+                    $scope.imagenesComplejo[contador]["id"]=contador;
+                    aux.contador = contador;
+                    contador++;
+                });	
+            }else{
+                $scope.imagenesComplejo = [];
+                $scope.imagenesComplejo.push({ "imagen": "http://localhost:8080/resergol1.1/api/Imagenes/default-image.jpg", "id":0});
+            };
+          
+        });
+    
     this.getComplejo = function(){
         
 			ComplejoService.query({idComplejo:$scope.idComplejo}).$promise.then(function(data){
-                    $scope.complejo = data;
-                
+                $scope.complejo = data;
+                $scope.nombreComplejo = data[0].nombreComplejo;
+                console.log($scope.nombreComplejo);
+                self.getCanchas();
                 if(self.estaLogueado)
                     self.getPuntuacionCliente();
 
@@ -199,14 +240,8 @@ resergolApp.controller("VerComplejoController", function($scope, $sce, store, $t
     
    self.getComplejo();
 
-   this.getCanchas = function(){
-        
-            CanchasService.query({idComplejo:$scope.idComplejo}).$promise.then(function(data){
-                    $scope.complejo = data;
-            });
-    };
 
-    self.getCanchas();
+    
     
     this.setDiasComplejoAMostrar = function(){
         var texto = "";

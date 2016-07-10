@@ -12,3 +12,5 @@ app.service("ComplejoService", function($http, $resource){
                 }
     });
     
+});
+    

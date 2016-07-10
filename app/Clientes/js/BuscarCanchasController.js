@@ -9,6 +9,10 @@ this.localidades = [];
 this.superficies = [];
 this.seBusco = false;
     
+this.myInterval =5000;
+this.noWrapSlides = false;
+this.active = 0;
+    
 this.cantJugadores = [
           { id: -1, desc: '-Todos-'},
           { id: 5, desc: '5 vs 5' },
@@ -206,11 +210,6 @@ TiposSuperficiesService.query().$promise.then(function(data) {
                                             aux.PuntajeDesc = 'Una fantasía';
                                             aux.PuntajeClass = "btn-xs block label-success";
                                         }
-                            
-                        if(aux.Imagen != null)
-                        {
-                            aux.Imagen = "data:image/jpg;base64," + aux.Imagen;
-                        }
                     }); 
                 
                     
@@ -370,11 +369,6 @@ this.getCanchasTOP = function(){
                                             aux.PuntajeDesc = 'Una fantasía';
                                             aux.PuntajeClass = "btn-xs block btn-success";
                                         }
-                            
-                        if(aux.Imagen != null)
-                        {
-                            aux.Imagen = "data:image/jpg;base64," + aux.Imagen;
-                        }            
             });	
                 
         });
