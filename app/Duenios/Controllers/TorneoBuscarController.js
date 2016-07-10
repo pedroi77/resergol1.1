@@ -52,10 +52,10 @@ resergolApp.controller("TorneoBuscarController", function($scope, $state, Duenio
         fixtureNuevo.data= { 'idTorneo' : vIdTorneo};
         
         TorneoFixtureService.save(fixtureNuevo.data, function(reponse){
-            console.log( reponse.data[0]);
-            //self.open('sm', true, idTorneo);
+             bootbox.alert(reponse.data[0]['Res'], function() {});
+             $state.reload("Duenios.torneoBuscar");
           },function(errorResponse){
-             //self.open('sm', false,0);
+             bootbox.alert("Ocurrió un error y no se pudo generar el fixture. Contactese con el administrador de la página.", function() {});
          });
     }
     
