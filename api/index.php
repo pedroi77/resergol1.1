@@ -288,6 +288,38 @@ $app->post('/duenios/torneos', function(){
     
 });
 
+
+//arma fixture
+$app->post('/duenios/torneos/fixture', function(){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        
+        $torneo = new Torneo();
+        $result = $torneo->armarFixture($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al dar de alta el torneo");
+        };
+        
+    }
+	else{
+        sendError("token invalido");
+    }
+    
+});
+
 //get torneos por dueño y estados
 $app->get('/duenios/torneos/:idDuenio/:todos/:activos/:inscriptos/:finalizados', function($idDuenio, $Todos, $Activos, $Inscriptos, $Finalizados){
     
@@ -437,6 +469,13 @@ $app->get('/common/torneo/liga/fixture/:idTorneo/:idFecha', function($idTorneo, 
 	sendResult($data);
 });
 
+//get de fixture por fechas ida y vuelta
+$app->get('/common/torneo/copa/fixture/idaVuelta/:idTorneo/:idFecha', function($idTorneo, $idfecha){
+    $fixture = new TorneoCopa();
+    $data = $fixture->getFixtureByFecha($idTorneo, $idfecha);
+	sendResult($data);
+});
+
 $app->put('/common/torneo/liga/fixture', function(){
     $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
@@ -473,6 +512,28 @@ $app->put('/common/torneo/copa/fixture', function(){
         $fixture = new TorneoCopa();
 
         $result = $fixture->updateFixture($data);
+        //el metodo envia el resultado
+    }
+	else{
+        sendError("token invalido");
+    }
+});
+
+//Ida y vuelta
+$app->put('/common/torneo/copa/fixture/idaVuelta', function(){
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();   
+        $data = json_decode($request->getBody(), true);
+        $fixture = new TorneoCopa();
+
+        $result = $fixture->updateFixtureIdayVuelta($data);
         //el metodo envia el resultado
     }
 	else{

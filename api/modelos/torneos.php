@@ -515,7 +515,6 @@ class Torneo
         return $equipos;
     }
     
-    
     //Se usa en el buscador de torneos del cliente.
     public function getTorneos($pNombre, $pTipo, $pCantEquipos, $pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pInscripcion, $pActivos, $pFinalizados, $pIdaYVuelta){
         
@@ -576,8 +575,32 @@ class Torneo
         }
         return $torneos;
     }
+    
+    
+     public function armarFixture($torneo){  
+        
+        $IdTorneo = $this->connection->real_escape_string($torneo['idTorneo']);
+        
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_insertReservasTorneo(@IdTorneo);";
+        $fixture= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $fixture[] = $fila;
+            }
+            $result->free();
+        }
+        return $fixture;
+    }
+    
    
 }
+
+
 
 /*Ejemplo para el POST
 {

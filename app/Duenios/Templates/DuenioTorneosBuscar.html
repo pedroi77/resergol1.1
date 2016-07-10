@@ -52,7 +52,7 @@
                                 </i>
                             </button>
                             
-                            <button type="button" ng-click="" ng-disabled="torneo.CantEquipos != torneo.Inscriptos || torneo.descripcion!='Activo' " class="btn btn-sm btn-danger">
+                            <button type="button" ng-click="tor.armarFixture($index)" ng-disabled="torneo.CantEquipos != torneo.Inscriptos || torneo.descripcion != 'Inscripcion' " class="btn btn-sm btn-danger">
                                 <i class="glyphicon glyphicon-calendar">
                                     Armar Fixture
                                 </i>
