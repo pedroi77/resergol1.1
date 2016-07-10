@@ -90,9 +90,9 @@
 
                                                 <div class="col-md-4"> 
                                                     <div class="form-group">
-                                                        <button class="btn  btn-md btn-success btn-block" style="border-radius: 7px;" ng-click="admCan.validarDatos()">
+                                                        <button id="guardar" class="btn  btn-md btn-success btn-block" style="border-radius: 7px;" ng-click="admCan.validarDatos()">
                                                             <i class="glyphicon glyphicon-floppy-save"></i>
-                                                            Guardar
+                                                            {{admCan.CanchaSeleccionada.mensajeBoton}}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -146,12 +146,14 @@
                                             <li>Techada: {{cancha.Techada == 1 ? "SI" : "NO"}} </li>
                                             <li>Luz: {{cancha.Luz == 1 ? "SI" : "NO"}}</li>
                                             <li>Precio p/Hora: {{cancha.Precio}} </li>
+                                            <li>Estado: {{cancha.estado}} </li>
                                             <li ng-if="false">superficieID: {{cancha.IdSuperficie}} </li>
                                             <li ng-if="false">canchaID: {{cancha.IdCancha}} </li> 
                                             <li ng-if="false">complejoID: {{cancha.IdComplejo}} </li>
+                                            <li ng-if="false">estadoID: {{cancha.IdEstado}} </li>
                                         </ul>
                                         <div class="col-md-12 text-center">
-                                            <a class="btn btn-success" ng-click="admCan.elegirCancha(cancha)"><span class="glyphicon glyphicon-eye-open"></span> VER CANCHA</a>
+                                            <a class="btn btn-success" ng-click="admCan.elegirCancha(cancha)"><span class="glyphicon icon-edit"></span>Modificar</a>
                                         </div>
                                     </div>
                                 </div>

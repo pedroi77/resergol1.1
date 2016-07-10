@@ -66,31 +66,6 @@ class Complejo
             $idDuenio = $this->connection->real_escape_string($complejo['idDuenio']);
             $usuario = $this->connection->real_escape_string($complejo['usuario']);
             $contrasenia = $this->connection->real_escape_string($complejo['contrasenia']);
-            //datos de la persona(update), modifica las datos base de una persona(dni, nombre, apellido, etc) SP_updatePersona
-            $emailDuenio = $this->connection->real_escape_string($complejo['emailDuenio']);
-            $nombreDuenio = $this->connection->real_escape_string($complejo['nombreDuenio']);
-            $apellidoDuenio = $this->connection->real_escape_string($complejo['apellidoDuenio']);
-            $idTipoDoc = $this->connection->real_escape_string($complejo['idTipoDoc']);
-            $nroDoc = $this->connection->real_escape_string($complejo['nroDoc']);
-            //datos del Complejo(SP_insertComplejos)
-            $idComplejo = $this->connection->real_escape_string($complejo['idComplejo']);
-            $nombreComplejo = $this->connection->real_escape_string($complejo['nombreComplejo']);
-            $descripcionComplejo = $this->connection->real_escape_string($complejo['descripcionComplejo']);
-            $estacionamiento = $this->connection->real_escape_string($complejo['estacionamiento']);
-            $buffet = $this->connection->real_escape_string($complejo['buffet']);
-            $duchas = $this->connection->real_escape_string($complejo['duchas']);
-            $parrilla = $this->connection->real_escape_string($complejo['parrilla']);
-            $wifi = $this->connection->real_escape_string($complejo['wifi']);
-            $horaCobroLuz = $this->connection->real_escape_string($complejo['horaCobroLuz']);
-            $porcentajeSenia = $this->connection->real_escape_string($complejo['porcentajeSenia']);
-            $horasCancelacion = $this->connection->real_escape_string($complejo['horasCancelacion']);
-            $tiempoReserva = $this->connection->real_escape_string($complejo['tiempoReserva']);
-            $emailComplejo = $this->connection->real_escape_string($complejo['emailComplejo']);
-            $idEstadoComplejo = $this->connection->real_escape_string($complejo['idEstadoComplejo']);
-            //$idDuenio = $this->connection->real_escape_string($complejo['idDuenio']);
-            $porcentajeLuz = $this->connection->real_escape_string($complejo['porcentajeLuz']);
-            $nroCelular = $this->connection->real_escape_string($complejo['nroCelular']);
-            $nroTelefono = $this->connection->real_escape_string($complejo['nroTelefono']);
 
             // Parametros
             $stmt = $this->connection->prepare('SET @pIdDuenio := ?');
@@ -113,6 +88,13 @@ class Complejo
             //echo 'entro al create complejo', '$idDuenio ' . $idDuenio . ' $usuario ' . $usuario . ' $contrasenia ' . $contrasenia . ' $idPersona ' . $idPersona, '\n';
             $resultCan = $this->connection->query('CALL SP_updateDuenio( @pIdDuenio, @pUsuario, @pContrasenia, @pIdPersona);');
             //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN UPDATE DUEÑO-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
+            
+            //datos de la persona(update), modifica las datos base de una persona(dni, nombre, apellido, etc) SP_updatePersona
+            $emailDuenio = $this->connection->real_escape_string($complejo['emailDuenio']);
+            $nombreDuenio = $this->connection->real_escape_string($complejo['nombreDuenio']);
+            $apellidoDuenio = $this->connection->real_escape_string($complejo['apellidoDuenio']);
+            $idTipoDoc = $this->connection->real_escape_string($complejo['idTipoDoc']);
+            $nroDoc = $this->connection->real_escape_string($complejo['nroDoc']);
             
             //PARTE UPDATE DE PERSONA
             $person = $this->connection->query('SELECT @pIdPersona as persona');
@@ -152,6 +134,26 @@ class Complejo
             $resultCan = $this->connection->query('CALL SP_updatePersona( @pIdPersona, @pNombre, @pIdTipoDoc, @pApellido, @pNroDoc, @pEmail, @vResultado);');
             //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN UPDATE PERSONA-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
             
+            //datos del Complejo(SP_insertComplejos)
+            $idComplejo = $this->connection->real_escape_string($complejo['idComplejo']);
+            $nombreComplejo = $this->connection->real_escape_string($complejo['nombreComplejo']);
+            $descripcionComplejo = $this->connection->real_escape_string($complejo['descripcionComplejo']);
+            $estacionamiento = $this->connection->real_escape_string($complejo['estacionamiento']);
+            $buffet = $this->connection->real_escape_string($complejo['buffet']);
+            $duchas = $this->connection->real_escape_string($complejo['duchas']);
+            $parrilla = $this->connection->real_escape_string($complejo['parrilla']);
+            $wifi = $this->connection->real_escape_string($complejo['wifi']);
+            $horaCobroLuz = $this->connection->real_escape_string($complejo['horaCobroLuz']);
+            $porcentajeSenia = $this->connection->real_escape_string($complejo['porcentajeSenia']);
+            $horasCancelacion = $this->connection->real_escape_string($complejo['horasCancelacion']);
+            $tiempoReserva = $this->connection->real_escape_string($complejo['tiempoReserva']);
+            $emailComplejo = $this->connection->real_escape_string($complejo['emailComplejo']);
+            $idEstadoComplejo = $this->connection->real_escape_string($complejo['idEstadoComplejo']);
+            //$idDuenio = $this->connection->real_escape_string($complejo['idDuenio']);
+            $porcentajeLuz = $this->connection->real_escape_string($complejo['porcentajeLuz']);
+            $nroCelular = $this->connection->real_escape_string($complejo['nroCelular']);
+            $nroTelefono = $this->connection->real_escape_string($complejo['nroTelefono']);
+            
             //parte complejos
             $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
             $stmt->bind_param('i', $idComplejo);
@@ -186,7 +188,7 @@ class Complejo
             $stmt->execute();
             
             $stmt = $this->connection->prepare('SET @pHoraCobroLuz := ?');
-            $stmt->bind_param('i', $horaCobroLuz);
+            $stmt->bind_param('s', $horaCobroLuz);
             $stmt->execute();
             
             $stmt = $this->connection->prepare('SET @pPorcentajeSeña := ?');

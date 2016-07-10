@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("AdministrarCanchasController", function($scope, $state, AdministrarCanchasService, CanchasService, TiposSuperficiesService, $uibModal,  $uibModalStack){
+resergolApp.controller("AdministrarCanchasController", function($scope, $state, AdministrarCanchasService, CanchasService, TiposSuperficiesService, DueniosReservasAumentoService, $uibModal,  $uibModalStack){
     
 //Seccion de Datos
 var self = this;
@@ -21,9 +21,16 @@ this.CanchaSeleccionada = {
     ,Techada: 0
     ,Luz: 0
     ,Precio: 0
+    ,precioModificado: 0
     ,IdEstado: 1    
     ,guardoCancha: false  
     ,imagenCancha: ''
+    ,mensajeBoton: 'Guardar'
+    
+};
+    
+this.AumentoCancha = {
+    
     
 };
     
@@ -66,7 +73,7 @@ this.init = function(){
     });
     
     self.cantJugadores.selectedOption = self.cantJugadores.jug[0];
-}
+};
 
 this.guardarCancha = function(){
     
@@ -83,9 +90,12 @@ this.guardarCancha = function(){
         //no hace nada
     });
 
-    self.init();
-  
-}
+    bootbox.alert("Cancha guardada con exito! <br>", function() {
+        self.blanquearDatos();
+    });
+    
+    //
+};
 
 this.validarDatos = function(){
     
@@ -118,8 +128,22 @@ this.validarDatos = function(){
     else
     {
         self.guardarCancha();
+        
+        //si el precio de la camcha fue modificado puede pasar 2 cosas
+        //Puede pedir que los que alquilaron las canchas no se les modifique el precio
+        //o el duenio puede optar por cambiar el precio de las canchas aunque la cancha ya fue alquilada
+        if(self.CanchaSeleccionada.precioModificado != self.CanchaSeleccionada.Precio){
+            
+            console.log("Son distintos");
+            bootbox.confirm("¿Desea actualizar el importe de todas las reservas de esta cancha notificando a los clientes que la alquilaron?", function(result) {
+                
+                if(result){
+                    self.cambiarPreciosReservas();
+                }   
+            }); 
+        }
     }
-}
+};
 
 this.elegirCancha = function(cancha){
     
@@ -139,36 +163,50 @@ this.elegirCancha = function(cancha){
         document.getElementById("techada").checked = false;
     
     self.CanchaSeleccionada.Precio = parseInt(cancha.Precio);
+    self.CanchaSeleccionada.precioModificado = parseInt(cancha.Precio);
     
     self.superficies.selectedOption.IdSuperficie = cancha.IdSuperficie;
     self.cantJugadores.selectedOption.id = cancha.CantJugadores;
     self.CanchaSeleccionada.IdCancha = parseInt(cancha.IdCancha);
     self.CanchaSeleccionada.guardoCancha = true;
+    self.CanchaSeleccionada.mensajeBoton = "Guardar";
     self.CanchaSeleccionada.imagenCancha = cancha.imagen;
     $scope.idCancha = parseInt(cancha.IdCancha);
-
-    console.log(cancha);
-    console.log(self.CanchaSeleccionada);
-}
+    
+    if(cancha.IdEstado == 2){
+        
+        self.CanchaSeleccionada.guardoCancha = false;
+        self.CanchaSeleccionada.mensajeBoton = "Activar";
+    } 
+    
+    //console.log(cancha);
+    //console.log(self.CanchaSeleccionada);
+    $('html,body').animate({scrollTop:120},'fast');return false;
+};
 
 this.inactivarCancha = function(){
     
     var AdministrarCancha = new AdministrarCanchasService();
     
-    self.CanchaSeleccionada.IdSuperficie = self.superficies.selectedOption.IdSuperficie;
-    self.CanchaSeleccionada.CantJugadores = self.cantJugadores.selectedOption.id;
-    self.CanchaSeleccionada.IdComplejo = sessionStorage.idComplejo;
-    //self.CanchaSeleccionada.IdCancha = cancha.IdCancha;
-    self.CanchaSeleccionada.IdEstado = 2;
-    
-    console.log("se inactivo la cancha: " + self.CanchaSeleccionada.IdCancha);
-    AdministrarCancha.data = self.CanchaSeleccionada;
+    bootbox.confirm("¿Seguro desea inactivar esta cancha? <br>", function(result) {
+        if(result){
+            
+            self.CanchaSeleccionada.IdSuperficie = self.superficies.selectedOption.IdSuperficie;
+            self.CanchaSeleccionada.CantJugadores = self.cantJugadores.selectedOption.id;
+            self.CanchaSeleccionada.IdComplejo = sessionStorage.idComplejo;
+            //self.CanchaSeleccionada.IdCancha = cancha.IdCancha;
+            self.CanchaSeleccionada.IdEstado = 2;
 
-    AdministrarCanchasService.save(AdministrarCancha.data, function(reponse){
-        //no hace nada
+            console.log("se inactivo la cancha: " + self.CanchaSeleccionada.IdCancha);
+            AdministrarCancha.data = self.CanchaSeleccionada;
+
+            AdministrarCanchasService.save(AdministrarCancha.data, function(reponse){
+                //no hace nada
+            });
+
+            self.init();
+        }
     });
-
-    self.init();
 };
 
 this.blanquearDatos = function(){
@@ -182,6 +220,7 @@ this.blanquearDatos = function(){
     self.CanchaSeleccionada.Luz = 0;
     self.CanchaSeleccionada.Precio = 0;
     self.CanchaSeleccionada.IdEstado = 1;
+    self.CanchaSeleccionada.precioModificado = 0;
     self.CanchaSeleccionada.imagenCancha = '';
     self.CanchaSeleccionada.guardoCancha = false;
     document.getElementById("luz").checked = false;
@@ -194,6 +233,33 @@ this.irImagenes = function(){
     
     $state.go('Duenios.canchaImagenes', {idComplejo: self.CanchaSeleccionada.IdComplejo, idCancha: self.CanchaSeleccionada.IdCancha});
     
+};
+    
+this.cambiarPreciosReservas = function(){
+   
+    var aumento;
+    var porcentaje;
+    var AdministrarAumento = new DueniosReservasAumentoService();
+    
+    //calculo el precio que se aumento(ej. anterior precio 200p. ahora es 250, 250 - 200 = 50, 50 = aumento)
+    aumento = self.CanchaSeleccionada.Precio - self.CanchaSeleccionada.precioModificado;
+    
+    //calculo el porcentaje de aumento para modificar las demas reservas
+    porcentaje = (aumento / self.CanchaSeleccionada.precioModificado) * 100;
+    
+    porcentaje = Math.round(porcentaje*100)/100;
+
+    AdministrarAumento.data = {
+                    "idComplejo": self.CanchaSeleccionada.IdComplejo,
+                    "idCancha": self.CanchaSeleccionada.IdCancha,
+                    "porcentajeAumento": porcentaje
+      }; 
+    
+    DueniosReservasAumentoService.save(AdministrarAumento.data, function(reponse){
+        console.log('Hizo las cosas');
+        },function(errorResponse){
+        console.log('ERROR TARJETA...' + errorResponse); 
+    });
 };
 
 //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//

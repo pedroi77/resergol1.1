@@ -184,6 +184,49 @@ class Reserva
         return $reservas;
     }
     
+    public function updateReservasAumento($aumentoReserva){
+        
+        $vResultado = 0;
+        
+        $idComplejo = $this->connection->real_escape_string($aumentoReserva['idComplejo']);
+        $idCancha = $this->connection->real_escape_string($aumentoReserva['idCancha']);
+        $porcentajeAumento = $this->connection->real_escape_string($aumentoReserva['porcentajeAumento']);
+        
+        // Parametros
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $idComplejo);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @pIdCancha := ?');
+        $stmt->bind_param('i', $idCancha);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @pPorcenjateAumento := ?');
+        $stmt->bind_param('d', $porcentajeAumento);
+        $stmt->execute();
+        
+        //Salida
+        $stmt = $this->connection->prepare('SET @vResultado := ?');
+        $stmt->bind_param('i', $vResultado);
+        $stmt->execute();
+        
+        $result = $this->connection->query('CALL SP_updateReservasAumento( @pIdComplejo, @pIdCancha, @pPorcenjateAumento, @vResultado);');
+        
+        //echo 'Cambios en la reserva: ', '  Complejo: ' . $idComplejo . '  Cancha: ' . $idCancha . '  aumento: ' . $porcentajeAumento, "\n";
+        
+        $r = $this->connection->query('SELECT @vResultado as resul');
+        $row = $r->fetch_assoc();               
+
+        $res = $row['resul'] ;
+        
+        //echo 'Cambios en la reserva: ', '  resultado: ' . $res, "\n";
+        
+        if($res > -1){
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+        }else{
+           sendError("Error, no se actualizaron las reservas." . $res );
+        }
+        
+    }
     
     //Al cancelar la reserva, luego de ingresar la devolucion, borro la reserva.
     /*public function delete($idReserva){

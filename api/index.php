@@ -909,6 +909,20 @@ $app->get('/clientes/reservas/:idCliente/:todos/:pagosCompletos/:seniadas/:fijas
 	sendResult($data);
 });
 
+//alta
+$app->post('/duenios/canchas/reservas', function(){ ///:idComplejo/:idCancha/:porcentajeAumento   $idComplejo, $idCancha, $porcentajeAumento
+    
+    //antes habia una validacion del token
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+
+    $reserva = new Reserva();
+    $result = $reserva->updateReservasAumento($data);
+
+    sendResult($result);
+    
+});
+
 /*******************************TARJETAS CLIENTES*****************************************************/
 
 //alta

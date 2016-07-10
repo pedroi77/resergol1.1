@@ -8,10 +8,11 @@ this.tiposDoc = [];
 this.provincias = [];
 this.localidades = [];
 this.dias = [];
+this.horaLuz = [];
 this.provinciaSeleccionada = {IdProvincia: '-1', Nombre: 'Otra'}; 
 this.localidadSeleccionada = {IdLocalidad: '-1', Nombre: 'Otra'};
 this.tipoDocSeleccionado = {IdTipoDoc: '-1', Descripcion: 'Otro'};
-this.horaLuzSeleccionada = {id: '-1', desc: '08:00:00'};
+this.horaLuzSeleccionada = {id: 17, desc: '17:00:00'};
 //#endregion
 
 this.Complejo = { 
@@ -48,13 +49,13 @@ this.Complejo = {
         duchas: 0,                              //Complejo
         parrilla: 0,                            //Complejo
         wifi: 0,                                //Complejo
-        horaCobroLuz:0,                         //Complejo
+        horaCobroLuz:'',                         //Complejo
         porcentajeLuz:0,                        //Complejo
         porcentajeSenia:0,                      //Complejo
         horasCancelacion:0,                     //Complejo
         tiempoReserva:0,                        //Complejo
         emailComplejo: '',                      //Complejo
-        idEstadoComplejo: 1,                   //Complejo
+        idEstadoComplejo: 1,                    //Complejo
         nroCelular: '',                         //Complejo
         nroTelefono: '',                        //Complejo
         imagenes: [],                           //ComplejoImagenes
@@ -122,6 +123,20 @@ this.horasComplejo ={
     
 };
     
+self.horaLuz = {
+    
+    hora: [
+            { id: 17, desc: '17:00 hs.' },
+            { id: 18, desc: '18:00 hs.' },
+            { id: 19, desc: '19:00 hs.' },
+            { id: 20, desc: '20:00 hs.' },
+            { id: 21, desc: '21:00 hs.' },
+            { id: 22, desc: '22:00 hs.' },
+            { id: 23, desc: '23:00 hs.' }
+      ],
+    selectedOption:{id: 17, desc: '17:00 hs.'}
+};
+    
 self.provincias = {
         prov: [],
         //selectedOption:{IdProvincia: '-1', Nombre: '-Provincia-'} 
@@ -152,105 +167,120 @@ self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
     
 //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FUNCIONES-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
     
-    this.traerDatosComplejos = function(){
+this.traerDatosComplejos = function(){
 
-            DueniosComplejosService.query({idDuenio: self.Complejo.idDuenio}).$promise.then(function(data){
+    DueniosComplejosService.query({idDuenio: self.Complejo.idDuenio}).$promise.then(function(data){
 
-                //datos si el dueño es aceptado
-                self.Complejo.apellidoDuenio = data[0].Apellido;
-                self.Complejo.nombreDuenio = data[0].NombrePersona;
-                self.Complejo.nombreComplejo = data[0].NombreComplejo;
-                self.Complejo.nroDoc = parseInt(data[0].NroDoc);
-                self.Complejo.emailDuenio = data[0].EmailPersona;
-                self.Complejo.idTipoDoc = data[0].IdTipoDoc;
-                self.Complejo.usuario = data[0].Usuario;
-                self.Complejo.contrasenia = data[0].Contrasenia;
-                self.Complejo.contrasenia2 = data[0].Contrasenia;
-                self.Complejo.nroTelefono = parseInt(data[0].nroTelefono);
-                self.Complejo.calle = data[0].Calle;
-                self.Complejo.altura = parseInt(data[0].Altura);
-                self.Complejo.idLoc = data[0].IdLocalidad;
-                self.Complejo.idProv = data[0].IdProvincia;
-                self.Complejo.estadoDuenio = data[0].estadoDuenio;
-                self.Complejo.idPersona = data[0].IdPersona;
+        //datos si el dueño es aceptado
+        self.Complejo.apellidoDuenio = data[0].Apellido;
+        self.Complejo.nombreDuenio = data[0].NombrePersona;
+        self.Complejo.nombreComplejo = data[0].NombreComplejo;
+        self.Complejo.nroDoc = parseInt(data[0].NroDoc);
+        self.Complejo.emailDuenio = data[0].EmailPersona;
+        self.Complejo.idTipoDoc = data[0].IdTipoDoc;
+        self.Complejo.usuario = data[0].Usuario;
+        self.Complejo.contrasenia = data[0].Contrasenia;
+        self.Complejo.contrasenia2 = data[0].Contrasenia;
+        self.Complejo.nroTelefono = parseInt(data[0].nroTelefono);
+        self.Complejo.calle = data[0].Calle;
+        self.Complejo.altura = parseInt(data[0].Altura);
+        self.Complejo.idLoc = data[0].IdLocalidad;
+        self.Complejo.idProv = data[0].IdProvincia;
+        self.Complejo.estadoDuenio = data[0].estadoDuenio;
+        self.Complejo.idPersona = data[0].IdPersona;
 
-                console.log("Descripcion: " + data[0].Descripcion.length);
-                //datos si el dueño es activo
-                if(data[0].estadoDuenio == 3){
+        //console.log("Descripcion: " + data[0].Descripcion.length);
+        //datos si el dueño es activo
+        if(data[0].estadoDuenio == 3){
 
-                    self.Complejo.descripcionComplejo = data[0].Descripcion;
-                    self.Complejo.estacionamiento = data[0].Estacionamiento;
-                    if(self.Complejo.estacionamiento == 1)
-                        document.getElementById("estacionamiento").checked = true;
+            self.Complejo.descripcionComplejo = data[0].Descripcion;
+            self.Complejo.estacionamiento = data[0].Estacionamiento;
+            if(self.Complejo.estacionamiento == 1)
+                document.getElementById("estacionamiento").checked = true;
 
-                    self.Complejo.buffet = data[0].Buffet;
-                    if(self.Complejo.buffet == 1)
-                        document.getElementById("buffet").checked = true;
+            self.Complejo.buffet = data[0].Buffet;
+            if(self.Complejo.buffet == 1)
+                document.getElementById("buffet").checked = true;
 
-                    self.Complejo.duchas = data[0].Duchas;
-                    if(self.Complejo.duchas == 1)
-                        document.getElementById("duchas").checked = true;
+            self.Complejo.duchas = data[0].Duchas;
+            if(self.Complejo.duchas == 1)
+                document.getElementById("duchas").checked = true;
 
-                    self.Complejo.parrilla = data[0].Parrillas;
-                    if(self.Complejo.parrilla == 1)
-                        document.getElementById("parrilla").checked = true;
+            self.Complejo.parrilla = data[0].Parrillas;
+            if(self.Complejo.parrilla == 1)
+                document.getElementById("parrilla").checked = true;
 
-                    self.Complejo.wifi = data[0].WiFi;
-                    if(self.Complejo.wifi == 1)
-                        document.getElementById("wifi").checked = true;
+            self.Complejo.wifi = data[0].WiFi;
+            if(self.Complejo.wifi == 1)
+                document.getElementById("wifi").checked = true;
 
-                    //,com.HoraCobroLuz*/
-                    self.Complejo.porcentajeSenia = parseInt(data[0].PorcentajeSeña);
-                    self.Complejo.horasCancelacion = parseInt(data[0].HorasCancelacion);
-                    //,com.TiempoReserva
-                    self.Complejo.emailComplejo = data[0].EmailComplejo;
-                    self.Complejo.porcentajeLuz = parseInt(data[0].PorcentajeLuz);
-                    self.Complejo.nroCelular = parseInt(data[0].nroCelular);
-                    self.Complejo.CBU = parseInt(data[0].CBU);
-                    self.Complejo.nroCuenta = parseInt(data[0].NroCuenta);
-                    self.Complejo.X = data[0].X;
-                    self.Complejo.Y = data[0].Y;
+            //,com.HoraCobroLuz*/
+            self.Complejo.horaCobroLuz = data[0].HoraCobroLuz;
+            self.Complejo.porcentajeSenia = parseInt(data[0].PorcentajeSeña);
+            self.Complejo.horasCancelacion = parseInt(data[0].HorasCancelacion);
+            //,com.TiempoReserva
+            self.Complejo.emailComplejo = data[0].EmailComplejo;
+            self.Complejo.porcentajeLuz = parseInt(data[0].PorcentajeLuz);
+            self.Complejo.nroCelular = parseInt(data[0].nroCelular);
+            self.Complejo.CBU = parseInt(data[0].CBU);
+            self.Complejo.nroCuenta = parseInt(data[0].NroCuenta);
+            self.Complejo.X = data[0].X;
+            self.Complejo.Y = data[0].Y;
 
-                    console.log("antes de getDiasComplejos");
-                    self.getDiasComplejos();
-                    console.log("despues de getDiasComplejos");
-                }
-                
-                //se busca la provincias y las localidades de la misma
-                ProvinciasService.query().$promise.then(function(data) {
+            //console.log("antes de getDiasComplejos");
+            self.getDiasComplejos();
+            //console.log("despues de getDiasComplejos");
 
-                    self.provincias.prov = data;
-                    console.log(data);
-                    angular.forEach(self.provincias.prov, function(aux) {
+            angular.forEach(self.horaLuz.hora, function(aux) {
 
-                    if(aux.IdProvincia == self.Complejo.idProv)    
-                    {
-                        self.provinciaSeleccionada.IdProvincia = aux.IdProvincia;
-                        self.provinciaSeleccionada.Nombre = aux.Nombre;
-                    }
-                    });
+                console.log('AUX:' + aux.desc.substr(0,5) + 'SELF:' + self.Complejo.horaCobroLuz.substr(0,5));
 
-                    self.getLocalidades();
-                });
+                if(aux.desc.substr(0,5) == self.Complejo.horaCobroLuz.substr(0,5))    
+                {
+                    console.log("entro porque son iguales, descrip: " + aux.desc + " ID: " + aux.id);
+                    self.horaLuzSeleccionada.desc = aux.desc.substr(0,5) + " hs.";
+                    self.horaLuzSeleccionada.id = aux.id;
                     
-                DocumentosService.query().$promise.then(function(data) {
+                    //self.tipoDocSeleccionado.Descripcion = aux.Descripcion;
+                }
+            });
+         }
+                
+        //se busca la provincias y las localidades de la misma
+        ProvinciasService.query().$promise.then(function(data) {
 
-                    self.tiposDoc.tipos = data;
-                    self.tiposDoc.tipos.splice(0, 0, {IdTipoDoc: '-3', Descripcion: '-Tipo doc.-'});
+            self.provincias.prov = data;
+            console.log(data);
+            angular.forEach(self.provincias.prov, function(aux) {
 
-                    angular.forEach(self.tiposDoc.tipos, function(aux) {
+            if(aux.IdProvincia == self.Complejo.idProv)    
+            {
+                self.provinciaSeleccionada.IdProvincia = aux.IdProvincia;
+                self.provinciaSeleccionada.Nombre = aux.Nombre;
+            }
+            });
 
-                        console.log('AUX:' + aux.IdTipoDoc + 'SELF:' + self.Complejo.idTipoDoc);
-
-                         if(aux.IdTipoDoc == self.Complejo.idTipoDoc)    
-                         {
-                             self.tipoDocSeleccionado.IdTipoDoc = aux.IdTipoDoc;
-                             self.tipoDocSeleccionado.Descripcion = aux.Descripcion;
-                         }
-                    });
-                });
+            self.getLocalidades();
         });
-    };
+                    
+        DocumentosService.query().$promise.then(function(data) {
+
+            self.tiposDoc.tipos = data;
+            self.tiposDoc.tipos.splice(0, 0, {IdTipoDoc: '-3', Descripcion: '-Tipo doc.-'});
+
+            angular.forEach(self.tiposDoc.tipos, function(aux) {
+
+                //console.log('AUX:' + aux.IdTipoDoc + 'SELF:' + self.Complejo.idTipoDoc);
+
+                if(aux.IdTipoDoc == self.Complejo.idTipoDoc)    
+                {
+                    self.tipoDocSeleccionado.IdTipoDoc = aux.IdTipoDoc;
+                    self.tipoDocSeleccionado.Descripcion = aux.Descripcion;
+                }
+            });
+        });    
+    });
+};
     
     this.getDiasComplejos = function(){
         console.log("ID: "  + self.Complejo.idComplejo);
@@ -315,8 +345,8 @@ self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
         $scope.horaHasta = selectedText;
 
         self.Complejo.diasComplejo.push({ 'diaDesde':$scope.diaDesde, 'diaHasta': $scope.diaHasta, 'horaDesde':$scope.horaDesde, 'horaHasta':$scope.horaHasta, 'idDiaDesde': idDiaDesde, 'idDiaHasta': idDiaHasta });
-        $scope.diaDesde = {idDia: '-1', Nombre: '-Dia-'};
-        $scope.diaHasta = {idDia: '-1', Nombre: '-Dia-'};
+        $scope.diaDesde = $scope.diaDesde[0]; // {idDia: '1', Nombre: 'Lunes'};
+        $scope.diaHasta = $scope.diaHasta[0]; //{idDia: '-1', Nombre: '-Dia-'};
         $scope.horaDesde = 8;
         $scope.horaHasta = 9;
     };
@@ -363,6 +393,7 @@ self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
      
         self.Complejo.idProv = self.provinciaSeleccionada;
         self.Complejo.idLoc = self.localidadSeleccionada;
+        //self.Complejo.tipoDuenio = 
         
         complejoData.data = self.Complejo; 
         
@@ -450,32 +481,35 @@ self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
         }
         else
         {
-             alert(mensaje);   
+            bootbox.alert(mensaje, function() {
+            });
         }
     };
     
     this.hacerCambiosComplejo = function(){
            
-        if(self.validarDatos()){
-            var AdministrarComplejo = new AdministrarComplejoService();
+        var AdministrarComplejo = new AdministrarComplejoService();
 
-            /*self.Complejo.idProv = self.provinciaSeleccionada;
-            self.Complejo.idLoc = self.localidadSeleccionada;*/
-            self.Complejo.idProv = self.provinciaSeleccionada.IdProvincia;
-            self.Complejo.idTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
-            self.Complejo.idLoc = self.localidadSeleccionada.IdLocalidad;
+        /*self.Complejo.idProv = self.provinciaSeleccionada;
+        self.Complejo.idLoc = self.localidadSeleccionada;*/
+        self.Complejo.idProv = self.provinciaSeleccionada.IdProvincia;
+        self.Complejo.idTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
+        self.Complejo.idLoc = self.localidadSeleccionada.IdLocalidad;
+        self.Complejo.horaCobroLuz = self.horaLuzSeleccionada.desc.substr(0,5) + ":00";
 
-            AdministrarComplejo.data = self.Complejo;
+        AdministrarComplejo.data = self.Complejo;
 
-            console.log("Datos del complejo: " + self.Complejo.idLoc + self.Complejo.idProv);
+        console.log("Datos del complejo: " + self.Complejo.idLoc + self.Complejo.idProv);
 
-            console.log("Estamos en el hacerCambiosComplejo, Datos:  " + AdministrarComplejo.data);
+        console.log("Estamos en el hacerCambiosComplejo, Datos:  " + AdministrarComplejo.data);
 
-            AdministrarComplejoService.save(AdministrarComplejo.data, function(reponse){
-                self.Complejo.idComplejo = reponse.data[0];
-                sessionStorage.idComplejo = reponse.data[0];
-            });
-        }
+        AdministrarComplejoService.save(AdministrarComplejo.data, function(reponse){
+            self.Complejo.idComplejo = reponse.data[0];
+            sessionStorage.idComplejo = reponse.data[0];
+        });
+
+        bootbox.alert("Complejo guardado exitosamente!", function() {
+        });
     };
     
 //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-VALIDACIONES-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
@@ -490,8 +524,33 @@ self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
             hayError = 1;
         }
         
+        if(self.Complejo.porcentajeSenia.length == 0){
+            mensaje += 'Debe ingresar un porcentaje de seña';  
+            hayError = 1; 
+        }
+        
         if(self.Complejo.porcentajeSenia == 0){
             mensaje += 'El porcentaje de la seña no puede ser 0';  
+            hayError = 1; 
+        }
+        
+        if(self.Complejo.porcentajeSenia > 100){
+            mensaje += 'El porcentaje de la seña se exedio del 100%';  
+            hayError = 1; 
+        }
+        
+        if(self.Complejo.porcentajeLuz.length == 0){
+            mensaje += 'Debe ingresar un porcentaje de luz';  
+            hayError = 1; 
+        }
+        
+        if(self.Complejo.porcentajeLuz == 0){
+            mensaje += 'El porcentaje de la seña no puede ser 0';  
+            hayError = 1; 
+        }
+        
+        if(self.Complejo.porcentajeLuz > 100){
+            mensaje += 'El porcentaje de la seña se exedio del 100%';  
             hayError = 1; 
         }
         
@@ -510,8 +569,24 @@ self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
             hayError = 1; 
         }
         
+        if(self.Complejo.CBU.length == 0){
+            mensaje += 'Debe ingresar CBU';  
+            hayError = 1; 
+        }
         
-        return true;
+        if(self.Complejo.nroCuenta.length == 0){
+            mensaje += 'Debe ingresar un Número de Cuenta';  
+            hayError = 1; 
+        }
+        
+        if(hayError == 1){
+            bootbox.alert(mensaje, function() {
+            });
+        }
+        else{
+            
+            self.hacerCambiosComplejo();
+        }
         
     };
     
