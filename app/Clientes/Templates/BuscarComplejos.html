@@ -1,29 +1,8 @@
 <div class="container-fluid">
-
     <br>
-     <!--Filtros
-            A NIVEL CANCHA
-                Localidad
-                provincia
-                dia
-                horario
-                CantJugadores	  INT          NOT NULL,
-                IdSuperficie	  INT          NOT NULL,
-                Techada	        BOOL         NOT NULL,
-                Luz	            BOOL         NOT NULL,
-                Precio	        DECIMAL(6,2) NOT NULL,
-            A NIVEL COMPLEJO
-                Estacionamiento		bool			NOT NULL,
-                Buffet				bool			NOT NULL,
-                Duchas				bool			NOT NULL,
-                Parrillas			bool			NOT NULL,
-                WiFi				bool			NOT NULL
-            -->
-    
     <div class="container" ng-controller="BuscarComplejosController as bus">
         <div class ="principal row">
             <!-- Comienza la clase  row -->
-           
            <div class="col-md-6">
                 <section class="widget">
                     <div class="body">
@@ -140,14 +119,11 @@
                 
             <div class="col-md-6">
                 <div class="text-center"><h4><strong>¡TOP 3 COMPLEJOS MÁS VOTADOS!</strong></h4></div>
-                    <div class="col-md-6 carousel-container anchoCarousel ">
-                        <div id="carouselComplejos" class="carousel slide carousel-fade">
-                            <!-- Carousel items -->
-                            <div class="carousel-inner carousel-altoBusqueda">
-                                <div data-slide-no="{{complejo.contador}}" ng-repeat="complejo in complejosTOP" class="{{complejo.Clase}}">
-                                    <img src="/../resergol1.1/images/complejos/complejo1.jpeg" alt="">
-                                    <div class="carousel-caption text-center">
-                                        <div class="row">
+                    <uib-carousel active="bus.active" interval="bus.myInterval" no-wrap="bus.noWrapSlides">
+                        <uib-slide ng-repeat="complejo in complejosTOP" index="complejo.contador">
+                            <img ng-src="{{complejo.Imagen}}" style="margin:auto;">
+                            <div class="carousel-caption text-center">
+                                <div class="row">
                                         <div class="col-md-8">
                                             <h4 class="fa fa-user titul" style="padding:2px;">
                                                 "{{complejo.NombreComplejo}}"<a style="color:green;" ui-sref="Clientes.verComplejo"></a>             
@@ -164,19 +140,12 @@
                                         </div>
                                         <div class="col-md-4">
                                             <a href="#" class="btn btn-primary"
+                                             ui-sref="Clientes.verComplejo({idComp:'{{complejo.IdComplejo}}'})"
                                              onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span>  VER EN DETALLE</a>
                                         </div>
-                                        
-                                    </div>
-                                </div>
                             </div>
-                            <!-- Carousel nav -->
-                            <a class="carousel-control left" href="/Complejo" data-slide="prev">‹</a>
-                            <a class="carousel-control right" href="/Complejo" data-slide="next">›</a>
-                        </div>
-
-                    </div>
-                
+                        </uib-slide>
+                    </uib-carousel>
             </div> 
         
         
@@ -191,10 +160,10 @@
             <div class ="principal row filtro-Complejos" ng-controller="ClientesController as cli">
                 
                 
-                <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="complejo in complejosPaginados">
+                <div id="divComplejo" class="col-lg-3" style="height:250px;" ng-repeat="complejo in complejosPaginados">
     				<div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
 						<p>
-                            <!--<img ng-src="{{complejo.Imagen}}">-->
+                            <img  ng-src="{{complejo.Imagen}}" class="img-responsive" alt="Image">
                         </p>
 						<div class="caption">
 							<div class="blur"></div>
@@ -210,14 +179,14 @@
                                 <ul>
                                     <li>Estacionamiento: {{complejo.Estacionamiento == 1 ? "SI" : "NO"}} </li>
                                     <li>Duchas: {{complejo.Duchas == 1 ? "SI" : "NO"}} </li>
-                                    <li>Estacionamiento: {{complejo.Estacionamiento == 1 ? "SI" : "NO"}} </li>
                                     <li>Buffet: {{complejo.Buffet == 1 ? "SI" : "NO"}} </li>
                                     <li>Parrillas: {{complejo.Parrillas == 1 ? "SI" : "NO"}} </li>
                                     <li>Wifi: {{complejo.Wifi == 1 ? "SI" : "NO"}} </li>
                                 </ul>
                                 <div class="col-md-12 text-center">
-								<a href="#" class="btn btn-success"
-                                    onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER COMPLEJO</a>
+								<a class="btn btn-success" href="#"
+                                   ui-sref="Clientes.verComplejo({idComp:'{{complejo.IdComplejo}}'})"
+                                    onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER COMPLEJO</a>                           
                                 </div>
 							</div>
 						</div>

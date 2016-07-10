@@ -64,6 +64,7 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
     
     this.init = function(){
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
+            console.log(data[0]);
             self.torneo = data[0];
         }); 
         

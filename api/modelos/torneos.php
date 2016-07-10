@@ -327,7 +327,11 @@ class Torneo
     }
     
     public function getCantJugByTipoTorneo($TipoTorneo){  
-
+        
+        if($TipoTorneo == -1){
+            $TipoTorneo = null;
+        };
+        
         $stmt = $this->connection->prepare('SET @Idtipo := ?');
         $stmt->bind_param('i', $TipoTorneo);
         $stmt->execute(); 
@@ -511,6 +515,89 @@ class Torneo
         return $equipos;
     }
     
+    //Se usa en el buscador de torneos del cliente.
+    public function getTorneos($pNombre, $pTipo, $pCantEquipos, $pIdProv, $pIdLoc, $pCantJug, $pIdSuperficie, $pInscripcion, $pActivos, $pFinalizados, $pIdaYVuelta){
+        
+        $stmt = $this->connection->prepare('SET @pNombre := ?');
+        $stmt->bind_param('s', $pNombre);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pTipo := ?');
+        $stmt->bind_param('i', $pTipo);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pCantEquipos := ?');
+        $stmt->bind_param('i', $pCantEquipos);
+        $stmt->execute();
+
+        $stmt = $this->connection->prepare('SET @pIdProv := ?');
+        $stmt->bind_param('i', $pIdProv);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pIdLoc := ?');
+        $stmt->bind_param('i', $pIdLoc);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pCantJug := ?');
+        $stmt->bind_param('i', $pCantJug);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pIdSuperficie := ?');
+        $stmt->bind_param('i', $pIdSuperficie);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pInscripcion := ?');
+        $stmt->bind_param('i', $pInscripcion);
+        $stmt->execute();
+
+        $stmt = $this->connection->prepare('SET @pActivos := ?');
+        $stmt->bind_param('i', $pActivos);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pFinalizados := ?');
+        $stmt->bind_param('i', $pFinalizados);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pIdaYVuelta := ?');
+        $stmt->bind_param('i', $pIdaYVuelta);
+        $stmt->execute();
+
+        $query = "CALL SP_getTorneos(@pNombre, @pTipo, @pCantEquipos, @pIdProv, @pIdLoc, @pCantJug, @pIdSuperficie, @pInscripcion, @pActivos, @pFinalizados, @pIdaYVuelta);";
+        
+        $torneos = array();
+        
+        if($result = $this->connection->query($query)){
+            while($fila = $result->fetch_assoc()){
+                $torneos[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $torneos;
+    }
+    
+    
+     public function armarFixture($torneo){  
+        
+        $IdTorneo = $this->connection->real_escape_string($torneo['idTorneo']);
+        
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_insertReservasTorneo(@IdTorneo);";
+        $fixture= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $fixture[] = $fila;
+            }
+            $result->free();
+        }
+        return $fixture;
+    }
+    
+   
 }
 
 

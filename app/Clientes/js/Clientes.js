@@ -40,7 +40,10 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
             controllerAs : "cli"
 		}) 
         .state("Clientes.verComplejo",{
-                url : "/VerComplejo",
+                url : "/VerComplejo/:idComp",
+                params: {
+                    idComp:{value:'defaultValue'}
+                },
                 templateUrl : "app/Clientes/Templates/VerComplejo.html",
                 controllerAs : "cli"
             })

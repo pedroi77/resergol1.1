@@ -98,8 +98,6 @@ class Cancha
         $stmt->bind_param('i', $IdDuenio);
         $stmt->execute(); 
         
-        
-              
         $query = "CALL SP_getCanchasByDuenio(@IdDuenio);";
         $canchas= array();
         

@@ -736,5 +736,25 @@ class Complejo
         
     }
     
+    
+      //Get de complejo especifico, en verComplejo.
+    public function getDatosComplejo($IdComplejo){  
+
+        $stmt = $this->connection->prepare('SET @IdComplejo := ?');
+        $stmt->bind_param('i', $IdComplejo);
+        $stmt->execute(); 
+               
+        $query = "CALL SP_getComplejo(@IdComplejo);";
+        $complejos = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $complejos[] = $fila;
+            }
+            $result->free();
+        }
+        return $complejos;
+    }
+    
 }
 

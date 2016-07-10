@@ -1,65 +1,35 @@
-
 <!--main-->
-<div class="container">
+<div class="container" ng-controller="VerComplejoController as com">
     
-   <div class="row">
+   <div class="row" ng-repeat="comp in complejo">
 
-       <!--<div class="col-md-3"> 
-            <section class="widget">
-   			      <div class="panel-body">
-                    <ul class="list-group">
-                        <li class="list-group-item"><b>Provincia:</b> Buenos Aires</li>
-                        <li class="list-group-item"><b>Localidad:</b> Lomas de Zamora</li>
-                        <li class="list-group-item"><b>Dirección:</b> Laprida 954</li>
-                        <li class="list-group-item"><b>Teléfono:</b> 4-244-1552</li>
-                        <li class="list-group-item glyphicon glyphicon-time">
-                            <label class="letraHorarios">L a V - 12hs - 18hs.</label>
-                        </li> 
-                    </ul>
-                  </div>
-           </section>
-           
-           
-          </div>-->
-       
             <div class="col-md-3 boxComplejo"> 
             <section class="widget boxComplejo">
                     <div class="row">
                      <header>
-                        <h3 class="fa fa-user titul">-Todo Fúbol-</h3>
+                        <h3 class="fa fa-user titul">{{comp.nombreComplejo}}</h3>
                      </header>
-                      <!--<div class="imgMiniatura">
-                            <img src="images/complejos/complejo1.jpeg" alt="">
-                      <div>-->
-                          
                       <ul class="liSeparados">
                           <li>
-                        <b>Provincia:</b> <label>Buenos Aires</label>
+                        <b>Provincia:</b> <label>{{comp.Provincia}}</label>
                           </li>
                           <li>
-                            <b>Localidad:</b> <label>Lomas de Zamora</label>  
+                            <b>Localidad:</b> <label>{{comp.Localidad}}</label>  
                           </li>
                           <li>
-                            <b>Direccion:</b> <label>Laprida 950</label>  
+                            <b>Direccion:</b> <label>{{comp.Calle}} {{comp.Altura}}</label>  
                           </li>
                           <li>
-                           <b>Teléfono:</b> <label>4-244-1933</label>  
+                           <b>Tel.:</b> <label>{{comp.nroTelefono}} {{comp.nroCelular}}</label>  
                           </li>
-                          <li>
-                            <b>Cantidad de canchas:</b> <label>4</label>
+                          <li class="glyphicon glyphicon-time" uib-popover-html="DiasYHorariosTooltip" popover-placement="right" popover-trigger="mouseenter">
                           </li>
-                          <li class="glyphicon glyphicon-time">
-                            <label class="letraHorarios">L a V - 12hs - 18hs.</label>
-                          </li>
-                      
                       </ul>    
-                        
                     </div>   
                        <div>
-                        <!--<button class="btn btn-success center-block" id="btnReservarCancha" data-target="#reservasModal">RESERVAR</button>-->
-                        <a id="btnVerCanchasComplejo" onclick="$('html,body').animate({scrollTop:1000},'slow');return false;" class="btn btn-success center-block" style="border-radius: 7px;" role="button">VER CANCHAS</a>
+                        <a id="btnVerCanchasComplejo"
+                         class="btn btn-success center-block" onclick="$('html,body').animate({scrollTop:1000},'slow');" style="border-radius: 7px;" role="button">VER CANCHAS</a>
                     </div>
-           
            </section>
            
            
@@ -67,78 +37,51 @@
        
        
        <div class="col-md-6">
-       
-           <div class="col-md-6 carousel-container anchoCarousel ">
-          <div id="carouselComplejo" class="carousel slide carousel-fade">
-            <!-- Carousel items -->
-            <div class="carousel-inner anchoCarousel">
-              <div data-slide-no="0" class="item carousel-item active">
-                <img src="/../resergol1.1/images/complejos/complejo1.jpeg" alt="">
-                <div class="carousel-caption">
-                </div>
-              </div>
-              <div data-slide-no="1" class="item carousel-item">
-                <img src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
-                <div class="carousel-caption">
-                </div>
-              </div>
-              <div data-slide-no="2" class="item carousel-item">
-                <img src="/../resergol1.1/images/complejos/complejo3.jpg" alt="">
-                <div class="carousel-caption">
-                </div>
-              </div>
-            </div>
-            <!-- Carousel nav -->
-            <!--<a class="carousel-control left" ui-sref="VerComplejo" href="#carouselComplejos" data-slide="prev">‹</a>
-            <a class="carousel-control right" ui-sref="VerComplejo" href="#carouselComplejos" data-slide="next">›</a>-->
-            <a class="carousel-control left"  href="#carouselComplejo" data-slide="prev">‹</a>
-            <a class="carousel-control right" href="#carouselComplejo" data-slide="next">›</a>
-          </div>
-        
-       
-       </div>
-           
-       
+          <uib-carousel active="com.active" interval="com.myInterval" no-wrap="com.noWrapSlides">
+                <uib-slide ng-repeat="img in imagenesComplejo" index="img.id">
+                    <img ng-src="{{img.imagen}}" style="margin:auto;">
+                    <div class="carousel-caption">
+                    </div>
+                </uib-slide>
+            </uib-carousel>
     </div> 
        
        <div class="col-md-3"> 
            
            <section class="widget2">
-   			      <div class="panel-body">
+              <div class="panel-body">
                   <div class="row">
                       <div class="col-md-12">
                         <header>
-                                <h4><i class="fa fa-user"></i>Acerca de "Todo Fúbol"</h4>
+                            <h4><i class="fa fa-user"></i>Descripción</h4>
                         </header>
-                      <p>Contamos con 4 canchas, un gran buffet, y baños de primera calidad!</p>
+                      <p>{{comp.Descripcion}}</p>
                       </div>
                   </div>
                   </div>
                </section>
             
-           
-           
            <section class="widget2 boxServAdicionales">
                 <div class="panel-heading" ><h4>Servicios adicionales</h4></div>
                   <div class="row">
                       <div class="col-md-6">
-                        <label>Buffet </label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
+                        <label>Buffet </label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[comp.Buffet]" aria-hidden="true"></span>    
                       </div>
                       <div class="col-md-6">
-                        <label>Parrilla </label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>  
+                        <label>Parrilla </label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[comp.Parrillas]" aria-hidden="true"></span>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-md-6">
-                        <label>Duchas </label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
+                        <label>Duchas </label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[comp.Duchas]" aria-hidden="true"></span>
                       </div>
                       <div class="col-md-6">
-                        <label>Wifi</label><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>  
+                        <label>Wifi</label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[comp.WiFi]" aria-hidden="true"></span>  
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-md-8">
-                        <label>Estacionamiento</label><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  
+                        <label>Estacionamiento</label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[comp.Estacionamiento]" aria-hidden="true"></span>  
                       </div>
                   </div>   
             </section>
@@ -152,36 +95,37 @@
         
          <div class="widget2">
             <div class="row">
-                      <div class="col-md-2">
-                          <h5>¡Votá al complejo!:</h5>
+                      <div class="col-md-2 text-center">
+                          <h6>Punt. Complejo </h6><h4><span class="label {{com.PuntajeClass}}">{{com.PuntajeDesc}}</span></h4>
                       </div>
+                      <br>
                       <div class="col-md-2">
                         <div class="botonesPuntuacion">
-                            <button class="btn btn-success" id="cinco">"Una fantasía"</button>
+                            <button class="btn btn-success" ng-click="com.puntuar(5) || !com.estaLogueado || com.seVoto5" ng-disabled="!com.estaLogueado || com.seVoto5" id="cinco">"Una fantasía"</button>
                         </div>
                           <br2>
                       </div>
                       <div class="col-md-2">
                         <div class="botonesPuntuacion">
-                            <button class="btn btn-primary" id="cuatro">"Muy buena!"</button>
+                            <button class="btn btn-primary" ng-click="com.puntuar(4) || !com.estaLogueado || com.seVoto4" ng-disabled="!com.estaLogueado || com.seVoto4" id="cuatro">"Muy bueno!"</button>
                         </div>
                           <br2>
                       </div>
                       <div class="col-md-2">
                         <div class="botonesPuntuacion">
-                            <button class="btn btn-info" id="tres">"Mas o menos"</button>
+                            <button class="btn btn-info" ng-click="com.puntuar(3) || !com.estaLogueado || com.seVoto3" ng-disabled="!com.estaLogueado || com.seVoto3" id="tres">"Mas o menos"</button>
                         </div>
                           <br2>
                       </div>
                       <div class="col-md-2">
                         <div class="botonesPuntuacion">
-                            <button class="btn btn-warning" id="dos">"No me gustan"</button>
+                            <button class="btn btn-warning" ng-click="com.puntuar(2) || !com.estaLogueado || com.seVoto2" ng-disabled="!com.estaLogueado || com.seVoto2" id="dos">"No me gusta"</button>
                         </div>
                           <br2>
                       </div>
                       <div class="col-md-2">
                         <div class="botonesPuntuacion">
-                            <button class="btn btn-danger" id="uno">"Las peores canchas"</button>
+                            <button class="btn btn-danger" ng-click="com.puntuar(1) || !com.estaLogueado || com.seVoto1" ng-disabled="!com.estaLogueado || com.seVoto1" id="uno">"Muy malo"</button>
                         </div>
                       </div>
                           </div>
@@ -204,39 +148,24 @@
       <label>Comentarios</label>
     </div>
     <div class="commentBox">
-        
-        <p class="taskDescription">Mirá lo que opina la gente acerca de "Todo Fútbol"</p>
+        <p class="taskDescription">Mirá lo que opina la gente acerca de "{{nombreComplejo}}"</p>
     </div>
     <div class="actionBox">
         <ul class="commentList">
-            <li>
-                <div class="commentText">
-                    <p style="color:gray">Pedro77:  </p>
-                    <p class="">Voy siempre, aguante las canchas de Laprida!</p> <span class="date sub-text">3 de Marzo, 2015</span>
+            <li ng-repeat="comm in ComentariosComplejo">
+                    <div class="commentText">
+                        <p style="color:gray">{{comm.Usuario}}:  </p>
+                        <p class="">{{comm.Comentario}}</p> <span class="date sub-text">{{comm.Fecha}}</span>
 
-                </div>
-            </li>
-            <li>
-                <div class="commentText">
-                    <p style="color:gray">Maty1992:  </p>
-                    <p class="">Muy buenas canchas, excelente para ir a jugar con amigos!</p> <span class="date sub-text">10 de Mayo, 2015</span>
-
-                </div>
-            </li>
-            <li>
-                <div class="commentText">
-                    <p style="color:gray">IvanTaladro:  </p>
-                    <p class="">Excelente! lo mejor de zona sur!</p> <span class="date sub-text">2 de Octubre, 2015</span>
-
-                </div>
-            </li>
+                    </div>
+                </li>
         </ul>
-        <form class="form-inline" role="form">
+        <form class="form-inline" name="algo" id="algo" role="form">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Agregar comentario" />
+                 <input class="form-control" id="txtComentar" ng-maxlength="100" ng-model="com.comment" ng-disabled="!com.estaLogueado" type="text" placeholder="Agregar comentario" />
             </div>
             <div class="form-group">
-                <button class="btn btn-default">Comentar</button>
+                <button class="btn btn-default" id="btnComentar" ng-click="com.comentar() || !com.estaLogueado" ng-disabled="!com.estaLogueado || !algo.$valid">Comentar</button>
             </div>
         </form>
     </div>
@@ -247,111 +176,72 @@
         
          </div>
          
+         
 
-        
-        
-        
-        
-
-       
-       
-    
-    <!--NUEVO><-->
-    <div class="container col-md-12">
-	<div class="row">
-		<h2>Nuestras canchas</h2>
+<div class="container col-md-12">
+  <div class="row">
+    <h2>Nuestras canchas</h2>
         <p><b>Importante: El precio indicado por cada cancha, es el precio base (no incluye luz).</p>
-        <p>Seleccioná la cancha que desees ver más en detalle.</b></p>
-	</div>
-    <div class="row">
-    	<div class="col-lg-3">
-    				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
+        <p>Seleccioná la cancha que desees reservar o ver más en detalle.</b></p>
+  </div>
+    
+    <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="canc in canchas">
+    				<div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
+                        <div class="col-md-12" style="height:400px">
 						<p>
-							<img src="/../resergol1.1/images/canchas/cancha1.jpg" class="img-responsive" alt="">
-						</p>
+                            <img  ng-src="{{canc.imagen}}" class="img-responsive" alt="Image">
+                        </p>
+                        </div>
 						<div class="caption">
 							<div class="blur"></div>
 							<div class="caption-text">
-								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:10px;">CANCHA 1</h3>
+								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:1px;">                       {{canc.nombre}}
+                                </h3>
+                                <h4 style="border-bottom:1px solid white; padding:3px;">
+                                    ${{canc.Precio | currency:''}}
+                                </h4>
 								<ul>
-                                    <li>Cant. Jugadores: 5</li>
-                                    <li>Superficie: Baldosa</li>
-                                    <li>Techada: No </li>
-                                    <li>Luz: Si</li>
-                                    <li>Precio p/Hora: $380</li>
+                                    <li>Tamaño: {{canc.CantJugadores}} vs. {{canc.CantJugadores}} </li>
+                                    <li>Superficie: {{canc.Descripcion}}</li>
+                                    <li>Techada: {{canc.Techada == 1 ? "SI" : "NO"}} </li>
+                                    <li>Luz: {{canc.Luz == 1 ? "SI" : "NO"}}</li>
                                 </ul>
-								<a class=" btn btn-default" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-plus"><label>VER</label></span></a>
+                                <div class="col-md-12 text-center">
+								<a href="#" class="btn btn-success"
+                                   ui-sref="Clientes.verCancha({idCan:'{{canc.IdCancha}}', idComp:'{{idComplejo}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER CANCHA</a>
+                                </div>
 							</div>
 						</div>
+                        
+                     
+                        
 					</div>
-				
-	    </div>
-        <div class="col-lg-3">
-        			<div class="cuadro_intro_hover " style="background-color:#cccccc;">
-						<p>
-							<img src="/../resergol1.1/images/canchas/cancha2.jpg" class="img-responsive" alt="">
-						</p>
-						<div class="caption">
-							<div class="blur"></div>
-							<div class="caption-text">
-								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:10px;">CANCHA 2</h3>
-								<ul>
-                                    <li>Cant. Jugadores: 7</li>
-                                    <li>Superficie: Pasto</li>
-                                    <li>Techada: No </li>
-                                    <li>Luz: Si</li>
-                                    <li>Precio p/Hora: $600</li>
+	           </div>                          
+                          
+    <!--<div class="row">
+        <div class="col-lg-3" ng-repeat="canc in canchas">
+              <div class="cuadro_intro_hover " style="background-color:#cccccc;">
+            <p>
+              <img src="/../resergol1.1/images/canchas/cancha2.jpg" class="img-responsive" alt="">
+            </p>
+            <div class="caption">
+              <div class="blur"></div>
+              <div class="caption-text">
+                <h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:10px;">{{canc.nombre}}</h3>
+                <ul>
+                                    <li>Cant. Jugadores: {{canc.CantJugadores}} vs {{canc.CantJugadores}}</li>
+                                    <li>Superficie: {{canc.descripcion}}</li>
+                                    <li>Techada: {{canc.techada == 1 ? "SI" : "NO"}} </li>
+                                    <li>Luz: {{cancha.luz == 1 ? "SI" : "NO"}}</li>
+                                    <li>Precio p/Hora: ${{canc.precio | currency:''}}</li>
                                 </ul>
-								<a class=" btn btn-default" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-plus"><label>VER</label></span></a>
-							</div>
-						</div>
-					</div>
-				
-	    </div>
-        <div class="col-lg-3">
-        			<div class="cuadro_intro_hover " style="background-color:#cccccc;">
-						<p>
-							<img src="/../resergol1.1/images/canchas/cancha3.jpg" class="img-responsive" alt="">
-						</p>
-						<div class="caption">
-							<div class="blur"></div>
-							<div class="caption-text">
-								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:10px;">CANCHA 3</h3>
-								<ul>
-                                    <li>Cant. Jugadores: 6</li>
-                                    <li>Superficie: Cerámica</li>
-                                    <li>Techada: Si </li>
-                                    <li>Luz: Si</li>
-                                    <li>Precio p/Hora: $450</li>
-                                </ul>
-								<a class=" btn btn-default" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-plus"><label>VER</label></span></a>
-							</div>
-						</div>
-					</div>
-				
-	    </div>
-        <div class="col-lg-3">
-        			<div class="cuadro_intro_hover " style="background-color:#cccccc;">
-						<p>
-							<img src="/../resergol1.1/images/canchas/cancha4.jpg" class="img-responsive" alt="">
-						</p>
-						<div class="caption">
-							<div class="blur"></div>
-							<div class="caption-text">
-								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:10px;">CANCHA 4</h3>
-								<ul>
-                                    <li>Cant. Jugadores: 11</li>
-                                    <li>Superficie: Pasto</li>
-                                    <li>Techada: No </li>
-                                    <li>Luz: Si</li>
-                                    <li>Precio p/Hora: $700</li>
-                                </ul>
-								<a class=" btn btn-default" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-plus"><label>VER</label></span></a>
-							</div>
-						</div>
-					</div>
-				
-	    </div>
+                <a class=" btn btn-default" ui-sref="Clientes.verCancha({idCan:'{{canc.idcancha}}', idComp:'{{idComplejo}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-plus"><label>VER</label></span></a>
+              </div>
+            </div>
+          </div>
+      </div>-->
+
+   
     </div>
 </div>
 
@@ -359,11 +249,5 @@
 
     <hr>
   </div>
-</div><!--/main-->
-             
-             
+</div>
 
-        
-                   
-
-        

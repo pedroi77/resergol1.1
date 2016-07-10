@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoBuscarController", function($scope, $state, DuenioTorneoService){
+resergolApp.controller("TorneoBuscarController", function($scope, $state, DuenioTorneoService, TorneoFixtureService){
 
     var self = this;
     this.torneo =[];
@@ -28,7 +28,7 @@ resergolApp.controller("TorneoBuscarController", function($scope, $state, Duenio
         var vEquipos=self.torneo.torneos[indice]["CantEquipos"];
         var vInscriptos=self.torneo.torneos[indice]["Inscriptos"];
         
-        $state.go("Duenios.torneoEquipos",{idTorneo:vIdTorneo,nombre: vNombre, cantEquipos:vEquipos , inscriptos: vInscriptos});
+        $state.go("Duenios.torneoEquipos",{idTorneo:vIdTorneo, nombre: vNombre, cantEquipos:vEquipos , inscriptos: vInscriptos});
     };
     
     this.cargarFixture = function(indice, valor){
@@ -43,6 +43,21 @@ resergolApp.controller("TorneoBuscarController", function($scope, $state, Duenio
         }
         
     };
+    
+    this.armarFixture = function(indice){
+        
+        var vIdTorneo= self.torneo.torneos[indice]["idTorneo"];
+        var fixtureNuevo = new TorneoFixtureService();
+        
+        fixtureNuevo.data= { 'idTorneo' : vIdTorneo};
+        
+        TorneoFixtureService.save(fixtureNuevo.data, function(reponse){
+             bootbox.alert(reponse.data[0]['Res'], function() {});
+             $state.reload("Duenios.torneoBuscar");
+          },function(errorResponse){
+             bootbox.alert("Ocurrió un error y no se pudo generar el fixture. Contactese con el administrador de la página.", function() {});
+         });
+    }
     
     
     
