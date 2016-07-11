@@ -86,7 +86,7 @@ class Complejo
             $stmt->execute();
             
             //echo 'entro al create complejo', '$idDuenio ' . $idDuenio . ' $usuario ' . $usuario . ' $contrasenia ' . $contrasenia . ' $idPersona ' . $idPersona, '\n';
-            $resultCan = $this->connection->query('CALL SP_updateDuenio( @pIdDuenio, @pUsuario, @pContrasenia, @pIdPersona);');
+            $resultCan = $this->connection->query('CALL SP_updateDuenio(@pIdDuenio, @pUsuario, @pContrasenia, @pIdPersona);');
             //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN UPDATE DUEÑO-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
             
             //datos de la persona(update), modifica las datos base de una persona(dni, nombre, apellido, etc) SP_updatePersona
@@ -131,7 +131,7 @@ class Complejo
             $stmt->bind_param('i', $resultado);
             $stmt->execute();
             
-            $resultCan = $this->connection->query('CALL SP_updatePersona( @pIdPersona, @pNombre, @pIdTipoDoc, @pApellido, @pNroDoc, @pEmail, @vResultado);');
+            $resultCan = $this->connection->query('CALL SP_updatePersona(@pIdPersona, @pNombre, @pIdTipoDoc, @pApellido, @pNroDoc, @pEmail, @vResultado);');
             //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN UPDATE PERSONA-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
             
             //datos del Complejo(SP_insertComplejos)

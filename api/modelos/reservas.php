@@ -169,7 +169,7 @@ class Reserva
         $stmt = $this->connection->prepare('SET @pFijas := ?');
         $stmt->bind_param('i', $fijas);
         $stmt->execute();
-        
+    
         $query = "CALL SP_getReservasByCliente(@pIdCliente, @pTodos, @pPagosCompletos, @pSeniadas, @pFijas);";
         
         $reservas = array();
@@ -227,6 +227,92 @@ class Reserva
         }
         
     }
+    
+    public function getReservasByDuenioFecha($idComplejo, $fecha){
+        
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $idComplejo);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pFecha := ?');
+        $stmt->bind_param('s', $fecha);
+        $stmt->execute();
+        
+        //echo 'Datos para query','ID COmplejo: ' . $idComplejo . ' Fecha: ' . $fecha, "\n";
+        $query = "CALL SP_getReservasDuenio(@pIdComplejo, @pFecha);";
+        
+        $reservas = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $reservas[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $reservas;
+    }
+    
+    public function getReservasByDuenioFechaCancha($idComplejo, $fecha, $idCancha){
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $idComplejo);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pFecha := ?');
+        $stmt->bind_param('s', $fecha);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pIdCancha := ?');
+        $stmt->bind_param('i', $idCancha);
+        $stmt->execute();
+        
+        
+        //echo 'Datos para query','ID COmplejo: ' . $idComplejo . ' Fecha: ' . $fecha, "\n";
+        $query = "CALL SP_getReservasDuenioByCancha(@pIdComplejo, @pIdCancha, @pFecha);";
+        
+        $reservas = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $reservas[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $reservas;
+    }
+    
+    /*public function getReservasByDuenioFecha($idComplejo, $idCancha, $fecha){
+        
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $idComplejo);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $idCancha);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pFecha := ?');
+        $stmt->bind_param('s', $fecha);
+        $stmt->execute();
+        
+        //echo 'Datos para query','ID COmplejo: ' . $idComplejo . ' Fecha: ' . $fecha, "\n";
+        $query = "CALL SP_getReservasDuenio(@pIdComplejo, @pFecha);";
+        
+        $reservas = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $reservas[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $reservas;
+    }*/
     
     //Al cancelar la reserva, luego de ingresar la devolucion, borro la reserva.
     /*public function delete($idReserva){
