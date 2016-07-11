@@ -1,7 +1,7 @@
 
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $state, TorneoService, TorneoImgDBService,TorneoLigaTablaService, TorneoLigaFechasService,TorneoLigaFixtureService ){
+resergolApp.controller("TorneoLigaController", function($scope, $stateParams, store, $state, TorneoService, TorneoImgDBService,TorneoLigaTablaService, TorneoLigaFechasService,TorneoLigaFixtureService ){
 
     var self = this;
     this.torneo;
@@ -15,8 +15,20 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, $s
     this.idTorneo = $stateParams.idTorneo;
     this.editando = false;
   
+    this.estaLogueadoCliente = false;
+    var token = store.get("token") || null;
+         var sesion = sessionStorage.usuario  || null;
         
+         if(!token || !sesion ){
+             self.estaLogueadoCliente = false;
+         }    
+         else if(sessionStorage.tipo == 'C'){
+             self.estaLogueadoCliente = true;
+         }   
   
+    console.log('LOGUEADO->' + self.estaLogueadoCliente);
+    
+    
     this.cargarFixture = function(idFecha){
         TorneoLigaFixtureService.query({idTorneo:self.idTorneo, idFecha:idFecha }).$promise.then(function(data) {
             self.fixture = data;

@@ -21,6 +21,7 @@ require_once("modelos/puntuaciones.php");
 require_once("modelos/comentarios.php");
 require_once("modelos/reservasCancelacion.php");
 require_once("modelos/devoluciones.php");
+require_once("modelos/equipos.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -1331,5 +1332,92 @@ $app->get('/complejo/:idComplejo', function($idComplejo){
     $data = $complejo->getDatosComplejo($idComplejo);
     sendResult($data);
 });
+
+/**********************************EQUIPOS*************************************************************/
+$app->post('/equiposCliente', function(){
+    
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $eq = new Equipo();
+        $result = $eq->create($data);
+    
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al insertar equipo...");
+        };
+        
+    /*}
+    else{
+        sendError("token invalido");
+    }*/
+    
+});
+
+
+//alta imagenes equipos
+$app->post('/clientes/equipos/imagen', function(){
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $eq = new Equipo();
+        $result = $eq->agregarEquipoImagen($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al guardar la imagen del equipo");
+        };
+    /*}
+	else{
+        sendError("token invalido");
+    }*/
+});
+
+/**********************************INSCRIPCION EQUIPOS ATORNEOS*************************************************************/
+$app->post('/equipoTorneo', function(){
+    
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $eq = new Equipo();
+        $result = $eq->inscribirEquipoATorneo($data);
+    
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al insertar equipo en torneo...");
+        };
+        
+    /*}
+    else{
+        sendError("token invalido");
+    }*/
+    
+});
+
 
 $app->run();
