@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoModificarController", function($scope, $state,$stateParams,  TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, DuenioCanchasService, DueniosCantEquiposService, DuenioTorneoService, $uibModal,  $uibModalStack ,TorneoService){
+resergolApp.controller("TorneoModificarController", function($scope, $state,$stateParams,  TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, DuenioCanchasService, DueniosCantEquiposService, DuenioTorneoService, $uibModal,  $uibModalStack ,TorneoService, DuenioTorneoMailService){
 
     var self = this;
     this.tiposTorneos =[];
@@ -144,6 +144,7 @@ resergolApp.controller("TorneoModificarController", function($scope, $state,$sta
         
         TorneoService.query({idTorneo: self.idTorneo}).$promise.then(function(data) {
             torneoAux = data;
+            
             
             self.Torneo.idDuenio= sessionStorage.id,
             self.Torneo.idTipoTorneo=       torneoAux[0]['idTipoTorneo'],
@@ -576,58 +577,46 @@ resergolApp.controller("TorneoModificarController", function($scope, $state,$sta
         return i;
     };
     
-    this.limpiar = function(){
-        $('body,html').animate({scrollTop : 0}, 500);
-        $state.reload("Duenios.torneoNuevo");
+    this.imagenes = function(){ 
+             
+        $state.go("Duenios.torneoImagenes",{idTorneo:self.Torneo.idTorneo, idDuenio:self.Torneo.idDuenio, nombre:self.Torneo.nombre });
     };
     
-    
-    /*Modal*/
-    $scope.animationsEnabled = true;
-    
-    
-    self.open = function (size, res, pidTorneo) {
-        var modalInstance = $uibModal.open({
-          animation: $scope.animationsEnabled,
-          templateUrl: 'myModalContent.html',
-          controller: 'ModalInstanceCtrl',
-          size: size,
-          resolve: { msj : function () {
-                                if (res){
-                                        return 'Se creo el torneo! ¿desea agregar imagenes ahora?';
-                                    }else{
-                                       return 'Se produjo un error.';
-                                    }
-                                },
-                     res : function(){return res},
-                     p_idDuenio: function(){return self.Torneo.idDuenio},
-                     p_idTorneo: function(){return pidTorneo}
-                   }
-            });
+    this.eliminar = function(){
         
+        bootbox.confirm("¿Esta seguro de eliminar el torneo?", function(result) {
+            if(result){
+                
+                DuenioTorneoMailService.query({idTorneo:self.Torneo.idTorneo}).$promise.then(function(data) {
+                    equipos = data;
+                    console.log(equipos);
+                }); 
+                
+                
+                var TorneoEliminar = new DuenioTorneoService();
         
+                TorneoEliminar.data= {'idTorneo':self.Torneo.idTorneo};
+                //TorneoEliminar.data = self.Torneo;
+                console.log(TorneoEliminar.data);
+                //DuenioTorneoService.delete(TorneoEliminar.data, function(reponse){
+
+                
+                
+                
+                DuenioTorneoService.delete(TorneoEliminar.data, function(reponse){
+                    bootbox.alert("Se eliminó el torneo.", function() {});
+                  },function(errorResponse){
+                    bootbox.alert("Ocurrió un error al eliminar el torneo", function() {});
+                 });
+                
+               
+                
+                 
+            }
+        }); 
     };
 
     self.init(); 
 });
 
 
-angular.module('resergolApp').controller('ModalInstanceCtrl', function ($scope,$state, $uibModalInstance, msj, res, p_idDuenio, p_idTorneo) {
-
-  $scope.msj = msj;
-    
- $scope.cargarImagenes = function () {
-     if(res){
-         $state.go("Duenios.torneoImagenes",{idTorneo:p_idTorneo, idDuenio:p_idDuenio});
-     };
-     $('body,html').animate({scrollTop : 0}, 500);
-     $uibModalInstance.close('sm');
-     
-  };
-
-  $scope.cancelar = function () {
-    $('body,html').animate({scrollTop : 0}, 500);
-    $uibModalInstance.dismiss('cancel');
-  };
-  
-});

@@ -29,6 +29,131 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         dias:[]
 
                       };
+    
+ /*   
+this.MyRecCollection = [{
+    "Name": "Alfreds Futterkiste",
+    "City": "Berlin",
+    "Country": "Germany"
+}, {
+    "Name": "Berglunds snabbköp",
+    "City": "Luleå",
+    "Country": "Sweden"
+}, {
+    "Name": "Centro comercial Moctezuma",
+    "City": "México D.F.",
+    "Country": "Mexico"
+}, {
+    "Name": "Ernst Handel",
+    "City": "Graz",
+    "Country": "Austria"
+}, {
+    "Name": "FISSA Fabrica Inter. Salchichas S.A.",
+    "City": "Madrid",
+    "Country": "Spain"
+}, {
+    "Name": "Galería del gastrónomo",
+    "City": "Barcelona",
+    "Country": "Spain"
+}, {
+    "Name": "Island Trading",
+    "City": "Cowes",
+    "Country": "UK"
+}, {
+    "Name": "Königlich Essen",
+    "City": "Brandenburg",
+    "Country": "Germany"
+}, {
+    "Name": "Laughing Bacchus Wine Cellars",
+    "City": "Vancouver",
+    "Country": "Canada"
+}, {
+    "Name": "Magazzini Alimentari Riuniti",
+    "City": "Bergamo",
+    "Country": "Italy"
+}, {
+    "Name": "North/South",
+    "City": "London",
+    "Country": "UK"
+}, {
+    "Name": "Paris spécialités",
+    "City": "Paris",
+    "Country": "France"
+}, {
+    "Name": "Rattlesnake Canyon Grocery",
+    "City": "Albuquerque",
+    "Country": "USA"
+}, {
+    "Name": "Simons bistro",
+    "City": "København",
+    "Country": "Denmark"
+}, {
+    "Name": "The Big Cheese",
+    "City": "Portland",
+    "Country": "USA"
+}, {
+    "Name": "Vaffeljernet",
+    "City": "Århus",
+    "Country": "Denmark"
+}, {
+    "Name": "Wolski Zajazd",
+    "City": "Warszawa",
+    "Country": "Poland"
+}];*/
+    
+this.MyRecCollection = [
+    {
+        "": {usuario: "10:00", datos:{precio:200, notas:'algunas'} },
+        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
+    }, {
+        "": {usuario: "11:00", datos:{precio:200, notas:'algunas'} },
+        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
+    }, {
+        "": {usuario: "12:00", datos:{precio:200, notas:'algunas'} },
+       "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
+    }, {
+       "": {usuario: "13:00", datos:{precio:200, notas:'algunas'} },
+       "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
+    }, {
+       "": {usuario: "14:00", datos:{precio:200, notas:'algunas'} },
+        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
+    }, {
+        "": {usuario: "15:00", datos:{precio:200, notas:'algunas'} },
+         "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
+    }, {
+       "": {usuario: "16:00", datos:{precio:200, notas:'algunas'} },
+        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
+        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
+    }
+];
+      
         
     
     this.tiposTorneos = {

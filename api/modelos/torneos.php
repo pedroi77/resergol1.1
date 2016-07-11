@@ -423,6 +423,34 @@ class Torneo
         }
     }
     
+    public function delete($idTorneo){
+        $this->connection->autocommit(false);
+        
+        try {
+        
+       
+        // Parametros
+        $stmt = $this->connection->prepare('SET @idTorneo := ?');
+        $stmt->bind_param('i', $idTorneo);
+        $stmt->execute();    
+
+      
+         // execute the stored Procedure         SP_insertDuenios
+        $result = $this->connection->query('CALL SP_deleteTorneo(@idTorneo);');
+  
+                
+        $this->connection->commit();
+       
+
+        $dat= array($result);
+        sendResult($dat, 'OK' );
+        
+        } catch (Exception $e) {
+            $this->connection->rollback();
+            echo 'Something fails: ',  $e->getMessage(), "\n";
+        }
+    }
+    
     public function agregarTorneoImagen($torneoimg){
         $this->connection->autocommit(false);
         
@@ -847,6 +875,26 @@ class Torneo
             $result->free();
         }
         return $fixture;
+    }
+    
+    public function getMailsTorneo($IdTorneo){  
+
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute(); 
+        
+        
+              
+        $query = "CALL SP_getMailsTorneo(@IdTorneo);";
+        $mails= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $mails[] = $fila;
+            }
+            $result->free();
+        }
+        return $mails;
     }
     
    

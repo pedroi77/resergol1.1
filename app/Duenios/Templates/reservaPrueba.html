@@ -1,0 +1,15 @@
+<div id="container" ng-controller="TorneoNuevoController as tor">
+    <table  class="table table-bordered text-center " style= "table-layout: fixed; vertical-align:center;">
+        <thead>
+            <tr>
+                <th ng-repeat="(header, value) in tor.MyRecCollection[0]" class="col-sm-1 thReservas">{{header}}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="row in tor.MyRecCollection">
+                <td class="seleccion celdaReserva" style = "celdaReserva" ng-repeat="cell in row">{{cell.usuario}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

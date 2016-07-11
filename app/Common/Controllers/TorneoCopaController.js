@@ -26,6 +26,7 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
     this.msjIdaVuelta= "";
     this.bIdayVuelta = true;
     this.canchas=[];
+    this.tipoUsuario;
     
 
     
@@ -42,6 +43,10 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
     
     
     this.init = function(){
+        
+        self.tipoUsuario = sessionStorage.tipo;
+        console.log( self.tipoUsuario);
+        
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
             self.torneo = data[0];
             

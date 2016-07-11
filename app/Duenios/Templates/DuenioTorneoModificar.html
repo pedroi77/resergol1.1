@@ -304,17 +304,25 @@
                         
                                     
                                     <div class="form-group">
-                                        <div class="col-md-6"> 
+                                        <div class="col-md-4"> 
                                             <div class="form-group"  >
-                                                <button class="btn  btn-md btn-info btn-block" style="border-radius: 7px;" ng-click="tor.limpiar()" >
+                                                <button class="btn  btn-md btn-danger btn-block" style="border-radius: 7px;" ng-click="tor.eliminar()" >
                                                 <i class="fa fa-plus glyphicon glyphicon-erase"></i>
                                                     Anular torneo
                                                 </button>   
                                             </div>
                                         </div>
                                         
+                                         <div class="col-md-4"> 
+                                            <div class="form-group"  >
+                                                <button class="btn  btn-md btn-info btn-block" style="border-radius: 7px;" ng-click="tor.imagenes()" >
+                                                <i class="fa fa-plus glyphicon glyphicon-erase"></i>
+                                                    Imagenes
+                                                </button>   
+                                            </div>
+                                        </div>
                                     
-                                        <div class="col-md-6"> 
+                                        <div class="col-md-4"> 
                                             <div class="form-group">
                                                 <button class="btn  btn-md btn-success btn-block"   ng-disabled="!torneoForm.$valid"  ng-click="tor.modificarTorneo()" style="border-radius: 7px;">
                                                  <i class="glyphicon glyphicon-floppy-save"></i>

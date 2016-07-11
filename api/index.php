@@ -288,7 +288,7 @@ $app->post('/duenios/torneos', function(){
     
 });
 
-//alta
+//update
 $app->put('/duenios/torneos', function(){
     
     $headers = apache_request_headers();
@@ -304,6 +304,33 @@ $app->put('/duenios/torneos', function(){
         
         $torneo = new Torneo();
         $result = $torneo->update($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al actualizar el torneo");
+        };
+        
+    }
+	else{
+        sendError("token invalido");
+    }
+    
+});
+
+//delete del torneo
+$app->delete('/duenios/torneos/:idTorneo', function($idTorneo){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $torneo = new Torneo();
+        $result = $torneo->delete($idTorneo);
 	
         if($result){
            sendResult($result);
@@ -372,7 +399,6 @@ $app->get('/duenios/torneos/:idDuenio/:todos/:activos/:inscriptos/:finalizados',
 
 
 //get torneos por idTorneo
-//get torneos por idTorne
 $app->get('/common/torneo/:idTorneo', function($idTorneo){
     
     $headers = apache_request_headers();
@@ -385,6 +411,26 @@ $app->get('/common/torneo/:idTorneo', function($idTorneo){
     if($tokenOK){
         $torneo = new Torneo();
         $data = $torneo->getTorneosByIdTorneo($idTorneo);
+        sendResult($data);
+    }
+	else{
+        sendError("token invalido");
+    }
+});
+
+//get mails aviso cancelacion por idTorneo
+$app->get('/duenios/torneos/mails/:idTorneo', function($idTorneo){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $torneo = new Torneo();
+        $data = $torneo->getMailsTorneo($idTorneo);
         sendResult($data);
     }
 	else{

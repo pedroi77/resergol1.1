@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                         
-                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase1()">
+                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase1()" ng-show="tor.tipoUsuario=='D'">
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
@@ -169,7 +169,7 @@
                                 </div> 
                             </div>
                              
-                            <button class="btn btn-md btn-primary btn-block"  ng-click= "tor.updateFixtureFase2()">
+                            <button class="btn btn-md btn-primary btn-block"  ng-click= "tor.updateFixtureFase2() " ng-show="tor.tipoUsuario=='D'">
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
@@ -224,7 +224,7 @@
                                 </div>
                             </div>
                             
-                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase3()" ng-show="tor.nombreFase3 != ''">
+                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase3()" ng-show="tor.nombreFase3 != ''  && tor.tipoUsuario=='D'">
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
@@ -278,7 +278,7 @@
                                 
                             </div>
                             
-                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase4()" ng-show="tor.nombreFase4 != ''">
+                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase4()" ng-show="tor.nombreFase4 != '' && tor.tipoUsuario=='D' ">
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
@@ -329,7 +329,7 @@
                                 
                             </div>
                             
-                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase5()" ng-show="tor.nombreFase5 != ''">
+                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase5()" ng-show="tor.nombreFase5 != ''  && tor.tipoUsuario=='D'">
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
