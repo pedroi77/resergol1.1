@@ -1,13 +1,15 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, DuenioCanchasService, DueniosCantEquiposService, DuenioTorneoService, $uibModal,  $uibModalStack){
+resergolApp.controller("TorneoModificarController", function($scope, $state,$stateParams,  TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, DuenioCanchasService, DueniosCantEquiposService, DuenioTorneoService, $uibModal,  $uibModalStack ,TorneoService, DuenioTorneoMailService){
 
     var self = this;
     this.tiposTorneos =[];
     this.superficies =[];
+    this.idTorneo = $stateParams.idTorneo;
     $scope.msj= '';
     
     this.Torneo ={
+                        idTorneo:self.idTorneo,
                         idDuenio:sessionStorage.id,
                         idTipoTorneo: 0,
                         nombre: '',
@@ -29,131 +31,6 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         dias:[]
 
                       };
-    
- /*   
-this.MyRecCollection = [{
-    "Name": "Alfreds Futterkiste",
-    "City": "Berlin",
-    "Country": "Germany"
-}, {
-    "Name": "Berglunds snabbköp",
-    "City": "Luleå",
-    "Country": "Sweden"
-}, {
-    "Name": "Centro comercial Moctezuma",
-    "City": "México D.F.",
-    "Country": "Mexico"
-}, {
-    "Name": "Ernst Handel",
-    "City": "Graz",
-    "Country": "Austria"
-}, {
-    "Name": "FISSA Fabrica Inter. Salchichas S.A.",
-    "City": "Madrid",
-    "Country": "Spain"
-}, {
-    "Name": "Galería del gastrónomo",
-    "City": "Barcelona",
-    "Country": "Spain"
-}, {
-    "Name": "Island Trading",
-    "City": "Cowes",
-    "Country": "UK"
-}, {
-    "Name": "Königlich Essen",
-    "City": "Brandenburg",
-    "Country": "Germany"
-}, {
-    "Name": "Laughing Bacchus Wine Cellars",
-    "City": "Vancouver",
-    "Country": "Canada"
-}, {
-    "Name": "Magazzini Alimentari Riuniti",
-    "City": "Bergamo",
-    "Country": "Italy"
-}, {
-    "Name": "North/South",
-    "City": "London",
-    "Country": "UK"
-}, {
-    "Name": "Paris spécialités",
-    "City": "Paris",
-    "Country": "France"
-}, {
-    "Name": "Rattlesnake Canyon Grocery",
-    "City": "Albuquerque",
-    "Country": "USA"
-}, {
-    "Name": "Simons bistro",
-    "City": "København",
-    "Country": "Denmark"
-}, {
-    "Name": "The Big Cheese",
-    "City": "Portland",
-    "Country": "USA"
-}, {
-    "Name": "Vaffeljernet",
-    "City": "Århus",
-    "Country": "Denmark"
-}, {
-    "Name": "Wolski Zajazd",
-    "City": "Warszawa",
-    "Country": "Poland"
-}];*/
-    
-this.MyRecCollection = [
-    {
-        "": {usuario: "10:00", datos:{precio:200, notas:'algunas'} },
-        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-        "": {usuario: "11:00", datos:{precio:200, notas:'algunas'} },
-        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-        "": {usuario: "12:00", datos:{precio:200, notas:'algunas'} },
-       "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-       "": {usuario: "13:00", datos:{precio:200, notas:'algunas'} },
-       "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-       "": {usuario: "14:00", datos:{precio:200, notas:'algunas'} },
-        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-        "": {usuario: "15:00", datos:{precio:200, notas:'algunas'} },
-         "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-       "": {usuario: "16:00", datos:{precio:200, notas:'algunas'} },
-        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }
-];
-      
         
     
     this.tiposTorneos = {
@@ -194,37 +71,44 @@ this.MyRecCollection = [
    
     this.init = function(){
        
-        self.tiposPartidos.selectedOption = self.tiposPartidos.tipos[0];
+       
         //LEER sacar el 1 HARCODE
         TipoTorneosService.query({idTorneo:-1}).$promise.then(function(data) {
             self.tiposTorneos.tipos = data;
-            self.tiposTorneos.selectedOption = self.tiposTorneos.tipos[0];
         }); 
         
         DueniosCantEquiposService.query({TipoTorneo:self.tiposTorneos.selectedOption.IdTipoTorneo}).$promise.then(function(data) {
             self.cantEquipos.tipos = data;
-            self.cantEquipos.selectedOption = self.cantEquipos.tipos[0];
         }); 
     
         DueniosSuperficiesService.query({idDuenio:this.Torneo.idDuenio}).$promise.then(function(data) {
             self.superficies.tipos = data;
-            self.superficies.selectedOption = self.superficies.tipos[0];
         }); 
         
         DueniosJugadoresService.query({idDuenio:this.Torneo.idDuenio}).$promise.then(function(data) {
             self.cantJugadores.tipos = data;
-            self.cantJugadores.selectedOption = self.cantJugadores.tipos[0];
         }); 
         
         
-        DuenioDiasService.query({idDuenio:this.Torneo.idDuenio}).$promise.then(function(data) {
+        DuenioDiasService.query({idDuenio:this.Torneo.idDuenio, idTorneo:self.idTorneo }).$promise.then(function(data) {
             self.diasDesde.tipos = data;
             var i;
             for(i=0; i<self.diasDesde.tipos.length; i++){
                 self.diasDesde.tipos[i]['HoraDesde'] =new Date(1970, 0, 1, parseInt(self.diasDesde.tipos[i]['HoraDesde'].substring(0,2)), 00, 0);
                 self.diasDesde.tipos[i]['HoraHasta'] =new Date(1970, 0, 1, parseInt(self.diasDesde.tipos[i]['HoraHasta'].substring(0,2)), 00, 0);
-                self.diasDesde.tipos[i]['juega'] = false;
-                self.diasDesde.tipos[i]['siNo'] = 'NO';
+                
+                if(self.diasDesde.tipos[i]['tIdDia'] != 0){
+                    self.diasDesde.tipos[i]['juega'] = true;
+                    self.diasDesde.tipos[i]['siNo'] = 'SI';
+                    self.diasDesde.tipos[i]['HoraDesde'] =new Date(1970, 0, 1, parseInt(self.diasDesde.tipos[i]['tHoraDesde'].substring(0,2)), 00, 0);
+                    self.diasDesde.tipos[i]['HoraHasta'] =new Date(1970, 0, 1, parseInt(self.diasDesde.tipos[i]['tHoraHasta'].substring(0,2)), 00, 0);
+                }else{
+                    self.diasDesde.tipos[i]['juega'] = false;
+                    self.diasDesde.tipos[i]['siNo'] = 'NO';
+                }
+                
+                
+                
                 self.diasDesde.tipos[i]['desdeMin'] =  self.diasDesde.tipos[i]['HoraDesde'].getHours().toString() + ':0' +
                                                        self.diasDesde.tipos[i]['HoraDesde'].getMinutes().toString();
                 
@@ -233,7 +117,7 @@ this.MyRecCollection = [
             };
         }); 
         
-        DuenioCanchasService.query({idDuenio:this.Torneo.idDuenio}).$promise.then(function(data) {
+        DuenioCanchasService.query({idDuenio:this.Torneo.idDuenio, idTorneo: self.idTorneo}).$promise.then(function(data) {
             self.canchas.tipos = data;
             var i;
             for(i=0; i<self.canchas.tipos.length; i++){
@@ -247,12 +131,79 @@ this.MyRecCollection = [
                 else 
                     self.canchas.tipos[i]['conLuz'] = 'NO';
                 
-                self.canchas.tipos[i]['juegaCancha'] = false;
-                self.canchas.tipos[i]['siNo'] = 'NO';
+                if (self.canchas.tipos[i]['tIdCancha'] != 0) {
+                     self.canchas.tipos[i]['juegaCancha'] = true;
+                    self.canchas.tipos[i]['siNo'] = 'SI';
+                }else{
+                    self.canchas.tipos[i]['juegaCancha'] = false;
+                    self.canchas.tipos[i]['siNo'] = 'NO';
+                }
             };
         }); 
        
-    
+        
+        TorneoService.query({idTorneo: self.idTorneo}).$promise.then(function(data) {
+            torneoAux = data;
+            
+            
+            self.Torneo.idDuenio= sessionStorage.id,
+            self.Torneo.idTipoTorneo=       torneoAux[0]['idTipoTorneo'],
+            self.Torneo.nombre=             torneoAux[0]['nombre'],
+            self.Torneo.cantEquipos=        torneoAux[0]['CantEquipos'],
+            self.Torneo.cantJugadores=      torneoAux[0]['CantJugadores'],
+            self.Torneo.idSuperficie=       torneoAux[0]['idSuperficie'],
+            self.Torneo.idaYvuelta=         torneoAux[0]['idaYvuelta'],
+            self.Torneo.tiempoPartido=      parseInt(torneoAux[0]['tiempoPartido']),
+            self.Torneo.precioInscripcion=  parseInt(torneoAux[0]['PrecioInscripcion']),
+            self.Torneo.fecIniInscripcion=  torneoAux[0]['FecIniInscripcion'],
+            self.Torneo.fecFinInscripcion=  torneoAux[0]['FecFinInscripcion'],
+            self.Torneo.horasCancelacion=   parseInt(torneoAux[0]['HorasCancelacion']),
+            self.Torneo.fechaInicio=        torneoAux[0]['FechaInicio'],
+            self.Torneo.fechaFin=           torneoAux[0]['FechaFin'],
+            self.Torneo.descripcion=        torneoAux[0]['Descripcion'],
+            self.Torneo.reglas=             torneoAux[0]['Reglas'],
+            self.Torneo.idEstado=           torneoAux[0]['idTipoTorneo']
+            /*self.Torneo.canchas:torneoAux[0]['idTipoTorneo'],
+            self.Torneo.dias:torneoAux[0]['idTipoTorneo'],*/
+            //console.log(torneoAux[0]['idTipoTorneo']);
+            
+            self.tiposTorneos.selectedOption = self.tiposTorneos.tipos[parseInt(torneoAux[0]['idTipoTorneo'])-1];
+       
+            if(self.Torneo.idaYvuelta=='1'){
+                 self.tiposPartidos.selectedOption = self.tiposPartidos.tipos[1];
+            }else{
+                 self.tiposPartidos.selectedOption = self.tiposPartidos.tipos[0];
+            };
+            
+            self.cantEquipos.selectedOption.cantidad = self.Torneo.cantEquipos;
+            self.cantJugadores.selectedOption.CantJugadores =  self.Torneo.cantJugadores;
+           
+            var i;
+            for(i=0; i<self.superficies.tipos.length; i++){
+                if(self.superficies.tipos[i].IdSuperficie ==  self.Torneo.idSuperficie){
+                    self.superficies.selectedOption = self.superficies.tipos[i];    
+                }    
+            };
+             
+            self.FecInscDesde = new Date( parseInt(self.Torneo.fecIniInscripcion.substring(0,4)), 
+                                  parseInt(self.Torneo.fecIniInscripcion.substring(5,7)-1), 
+                                  parseInt(self.Torneo.fecIniInscripcion.substring(8,10)));
+            
+            self.FecInscHasta =new Date( parseInt(self.Torneo.fecFinInscripcion.substring(0,4)), 
+                                  parseInt(self.Torneo.fecFinInscripcion.substring(5,7)-1), 
+                                  parseInt(self.Torneo.fecFinInscripcion.substring(8,10)));
+            
+            self.TorneoDesde = new Date( parseInt(self.Torneo.fechaInicio.substring(0,4)), 
+                                  parseInt(self.Torneo.fechaInicio.substring(5,7)-1), 
+                                  parseInt(self.Torneo.fechaInicio.substring(8,10)));
+            
+            self.TorneoHasta = new Date( parseInt(self.Torneo.fechaInicio.substring(0,4)), 
+                                  parseInt(self.Torneo.fechaInicio.substring(5,7)-1), 
+                                  parseInt(self.Torneo.fechaInicio.substring(8,10)));;
+            
+            
+        });
+        
         $scope.toggleMin();
         
     };
@@ -533,7 +484,7 @@ this.MyRecCollection = [
     
     
     
-    this.crearTorneo = function(){
+    this.modificarTorneo = function(){
        
         if(this.validarDatos()){
             self.Torneo.idTipoTorneo = self.tiposTorneos.selectedOption.IdTipoTorneo;
@@ -586,18 +537,21 @@ this.MyRecCollection = [
         
         TorneoNuevo.data=self.Torneo;
         
-        DuenioTorneoService.save(TorneoNuevo.data, function(reponse){
-            idTorneo = reponse.data[0];
-            self.open('sm', true, idTorneo);
+        DuenioTorneoService.update(TorneoNuevo.data, function(reponse){
+           // idTorneo = reponse.data[0];
+            bootbox.alert("Se actualizó el torneo!", function() {});
+             $state.reload("Duenios.torneoModificar", {idTorneo:self.idTorneo});
+            //self.open('sm', true, idTorneo);
           },function(errorResponse){
-             self.open('sm', false,0);
+            bootbox.alert("Ocurrió un error al actualizar el torneo", function() {});
          });
         }
     };
     
     this.validarDatos = function(){
         if(!this.tieneDias()){
-            alert("No selecciono días");
+            bootbox.alert("No selecciono días.", function() {});
+            //alert("");
             return false;
         }
                 
@@ -607,7 +561,8 @@ this.MyRecCollection = [
         }
         
         if(!this.superficieValida()){
-            alert("La superficie del torneo no coincide con ninguna de las canchas seleccionadas.");
+            bootbox.alert("La superficie del torneo no coincide con ninguna de las canchas seleccionadas.", function() {});
+            //alert("La superficie del torneo no coincide con ninguna de las canchas seleccionadas.");
             return false;
         }
         
@@ -622,58 +577,46 @@ this.MyRecCollection = [
         return i;
     };
     
-    this.limpiar = function(){
-        $('body,html').animate({scrollTop : 0}, 500);
-        $state.reload("Duenios.torneoNuevo");
+    this.imagenes = function(){ 
+             
+        $state.go("Duenios.torneoImagenes",{idTorneo:self.Torneo.idTorneo, idDuenio:self.Torneo.idDuenio, nombre:self.Torneo.nombre });
     };
     
-    
-    /*Modal*/
-    $scope.animationsEnabled = true;
-    
-    
-    self.open = function (size, res, pidTorneo) {
-        var modalInstance = $uibModal.open({
-          animation: $scope.animationsEnabled,
-          templateUrl: 'myModalContent.html',
-          controller: 'ModalInstanceCtrl',
-          size: size,
-          resolve: { msj : function () {
-                                if (res){
-                                        return 'Se creo el torneo! ¿desea agregar imagenes ahora?';
-                                    }else{
-                                       return 'Se produjo un error.';
-                                    }
-                                },
-                     res : function(){return res},
-                     p_idDuenio: function(){return self.Torneo.idDuenio},
-                     p_idTorneo: function(){return pidTorneo}
-                   }
-            });
+    this.eliminar = function(){
         
+        bootbox.confirm("¿Esta seguro de eliminar el torneo?", function(result) {
+            if(result){
+                
+                DuenioTorneoMailService.query({idTorneo:self.Torneo.idTorneo}).$promise.then(function(data) {
+                    equipos = data;
+                    console.log(equipos);
+                }); 
+                
+                
+                var TorneoEliminar = new DuenioTorneoService();
         
+                TorneoEliminar.data= {'idTorneo':self.Torneo.idTorneo};
+                //TorneoEliminar.data = self.Torneo;
+                console.log(TorneoEliminar.data);
+                //DuenioTorneoService.delete(TorneoEliminar.data, function(reponse){
+
+                
+                
+                
+                DuenioTorneoService.delete(TorneoEliminar.data, function(reponse){
+                    bootbox.alert("Se eliminó el torneo.", function() {});
+                  },function(errorResponse){
+                    bootbox.alert("Ocurrió un error al eliminar el torneo", function() {});
+                 });
+                
+               
+                
+                 
+            }
+        }); 
     };
 
     self.init(); 
 });
 
 
-angular.module('resergolApp').controller('ModalInstanceCtrl', function ($scope,$state, $uibModalInstance, msj, res, p_idDuenio, p_idTorneo) {
-
-  $scope.msj = msj;
-    
- $scope.cargarImagenes = function () {
-     if(res){
-         $state.go("Duenios.torneoImagenes",{idTorneo:p_idTorneo, idDuenio:p_idDuenio});
-     };
-     $('body,html').animate({scrollTop : 0}, 500);
-     $uibModalInstance.close('sm');
-     
-  };
-
-  $scope.cancelar = function () {
-    $('body,html').animate({scrollTop : 0}, 500);
-    $uibModalInstance.dismiss('cancel');
-  };
-  
-});

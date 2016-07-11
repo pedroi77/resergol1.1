@@ -110,6 +110,29 @@ class Cancha
         return $canchas;
     }
     
+     //canchas de un duenio y torneo
+    public function getCanchasByDuenioTorneo($IdDuenio, $IdTorneo){  
+
+        $stmt = $this->connection->prepare('SET @IdDuenio := ?');
+        $stmt->bind_param('i', $IdDuenio);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getCanchasByDuenioTorneo(@IdDuenio, @IdTorneo);";
+        $canchas= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $canchas[] = $fila;
+            }
+            $result->free();
+        }
+        return $canchas;
+    }
+    
      //Get de cancha específica.
     public function getCancha($IdCancha, $IdComplejo){  
 

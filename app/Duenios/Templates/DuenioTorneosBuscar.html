@@ -40,7 +40,7 @@
                         <td title="'Cant de inscriptos'"  >{{torneo.Inscriptos}}</td>
                         <td title="'Cant de jugadores'"  >{{torneo.CantJugadores}}</td>
                         <td title="'Acción'">
-                            <button type="button" ng-click="" ng-disabled="torneo.descripcion=='Activo'" class="btn btn-sm btn-success">
+                            <button type="button" ng-click="tor.modificar($index)" ng-disabled="torneo.descripcion=='Activo'" class="btn btn-sm btn-success">
                                 <i class="glyphicon glyphicon-edit">
                                     Modificar
                                 </i>

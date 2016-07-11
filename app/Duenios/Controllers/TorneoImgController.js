@@ -5,7 +5,7 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
     
     this.idTorneo = $stateParams.idTorneo;
     this.idDuenio = $stateParams.idDuenio;
-    this.msjPantalla ="" ;
+    self.msjPantalla="Imagenes del torneo " + $stateParams.nombre;
     this.archivoInvalido = true;
     this.bMensaje = false;
     this.imagenes = {
@@ -20,10 +20,12 @@ resergolApp.controller("TorneoImgController", function($scope, $state , $statePa
             for(i=0; i< data.length; i++){
                 self.imagenes.tipos.push(data[i]);
             };
-
-            self.imagenes.selectedOption = self.imagenes.tipos[0];
-            $scope.imgSelect =  self.imagenes.selectedOption.imagen;
-            self.msjPantalla="Imagenes del torneo " + self.imagenes.selectedOption.nombre;
+            
+            if( data.length > 0){
+                self.imagenes.selectedOption = self.imagenes.tipos[0];
+                $scope.imgSelect =  self.imagenes.selectedOption.imagen;
+                //self.msjPantalla="Imagenes del torneo " + self.imagenes.selectedOption.nombre;
+            }
         });
     };
     

@@ -131,43 +131,51 @@
         </div>
         
     </div>
-<!-- /.row -->
-      <!-- Related Projects Row -->
-        <div class ="principal row filtro-Complejos" ng-controller="ClientesController as cli">
+    
+<div class="col-lg-12">
+        <h3 class="page-header">En estas canchas se juegan este torneo!!</h3>
+    </div>    
 
-            <div class="col-lg-12">
-                <h3 class="page-header">En estas canchas se juegan este torneo!!</h3>
+
+    <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="cancha in tor.canchas">
+        
+        
+        <div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
+            <div class="col-md-12" style="height:400px">
+            <p>
+                <img  ng-src="{{cancha.Imagen}}" class="img-responsive" alt="" style=" height:249px;">
+            </p>
+            </div>
+            <div class="caption">
+                <div class="blur"></div>
+                <div class="caption-text">
+                    <h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:1px;">                       {{cancha.NombreCancha}}
+                       
+                    </h3>
+                    <h4 class="fa fa-user titul" style="padding:1px;">
+                        en <a style="color:orange;" ui-sref="Clientes.verComplejo">{{cancha.NombreComplejo}}</a>             
+                    </h4>
+                    <h6 style="border-bottom:1px solid white; padding:3px;">
+                    {{cancha.Calle}} {{cancha.Altura}}
+                    </h6>
+                    <ul>
+                        <!--<li>Dirección: {{cancha.Calle}} {{cancha.Altura}}</li>-->
+                        <li>Tamaño: {{cancha.CantJugadores}} vs. {{cancha.CantJugadores}} </li>
+                        <li>Superficie: {{cancha.Superficie}}</li>
+                        <li>Techada: {{cancha.Techada == 1 ? "SI" : "NO"}} </li>
+                        <li>Luz: {{cancha.Luz == 1 ? "SI" : "NO"}}</li>
+                        <li>Precio p/Hora: ${{cancha.muestroPConLuz ? cancha.PrecioConLuz : cancha.Precio | currency:''}} </li>
+                    </ul>
+                    <div class="col-md-12 text-center">
+                    <a href="#" class="btn btn-success"
+                       ui-sref="Clientes.verCancha({idCan:'{{cancha.IdCancha}}', idComp:'{{cancha.IdComplejo}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER CANCHA</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
-                </a>
-                <h5>Titulo o nombre de la cancha</h5>
-            </div>
 
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
-                </a>
-                <h5>Titulo o nombre de la cancha</h5>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
-                </a>
-                <h5>Titulo o nombre de la cancha</h5>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
-                </a>
-                <h5>Titulo o nombre de la cancha</h5>
-            </div>
 
         </div>
-        <!-- /.row -->
+    </div>
     
 </div> 

@@ -288,6 +288,62 @@ $app->post('/duenios/torneos', function(){
     
 });
 
+//update
+$app->put('/duenios/torneos', function(){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $torneo = new Torneo();
+        $result = $torneo->update($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al actualizar el torneo");
+        };
+        
+    }
+	else{
+        sendError("token invalido");
+    }
+    
+});
+
+//delete del torneo
+$app->delete('/duenios/torneos/:idTorneo', function($idTorneo){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $torneo = new Torneo();
+        $result = $torneo->delete($idTorneo);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al dar de alta el torneo");
+        };
+        
+    }
+	else{
+        sendError("token invalido");
+    }
+    
+});
 
 //arma fixture
 $app->post('/duenios/torneos/fixture', function(){
@@ -361,6 +417,26 @@ $app->get('/common/torneo/:idTorneo', function($idTorneo){
         sendError("token invalido");
     }
 });
+
+//get mails aviso cancelacion por idTorneo
+$app->get('/duenios/torneos/mails/:idTorneo', function($idTorneo){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $torneo = new Torneo();
+        $data = $torneo->getMailsTorneo($idTorneo);
+        sendResult($data);
+    }
+	else{
+        sendError("token invalido");
+    }
+});
     
     
 //get tipo de torneo
@@ -409,6 +485,13 @@ $app->get('/dias/:idDuenio', function($idDuenio){
 	sendResult($data);
 });
 
+//get dias y horarios por duenio para modificar
+$app->get('/dias/:idDuenio/:idTorneo', function($idDuenio, $idTorneo){
+    $dias = new Torneo();
+    $data = $dias->getDiasByTorneo($idDuenio,$idTorneo);
+	sendResult($data);
+});
+
 //get de imagenes por torneo
 $app->get('/duenios/torneos/imagen/:idTorneo', function($idTorneo){
     $headers = apache_request_headers();
@@ -426,6 +509,13 @@ $app->get('/duenios/torneos/imagen/:idTorneo', function($idTorneo){
 	else{
         sendError("token invalido");
     }
+});
+
+//get de canchas del torneo
+$app->get('/common/torneo/canchas/:idTorneo', function($idTorneo){
+    $canchas = new Torneo();
+    $data = $canchas->getCanchasByTorneo($idTorneo);
+    sendResult($data);
 });
 
 //get de equipos por torneo
@@ -607,10 +697,17 @@ $app->get('/canchas/:pIdProv/:pIdLoc/:pCantJug/:pIdSuperficie/:pPrecioMax/:pTech
 	sendResult($data);
 });
 
-//get cantidad de jugadores por duenio
+//get ccanchas por duenio
 $app->get('/duenio/canchas/:idDuenio', function($idDuenio){
     $canchas = new Cancha();
     $data = $canchas->getCanchasByDuenio($idDuenio);
+	sendResult($data);
+});
+
+//get ccanchas por duenio y torneo
+$app->get('/duenio/canchas/:idDuenio/:idTorneo', function($idDuenio, $idTorneo){
+    $canchas = new Cancha();
+    $data = $canchas->getCanchasByDuenioTorneo($idDuenio, $idTorneo);
 	sendResult($data);
 });
 
