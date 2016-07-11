@@ -212,6 +212,217 @@ class Torneo
     }
     
     
+    public function update($torneo){
+        $this->connection->autocommit(false);
+        
+        try {
+        $idtorneo = $this->connection->real_escape_string($torneo['idTorneo']);
+        $idDuenio = $this->connection->real_escape_string($torneo['idDuenio']);
+        $idTipoTorneo = $this->connection->real_escape_string($torneo['idTipoTorneo']);
+        $nombre = $this->connection->real_escape_string($torneo['nombre']);
+        $cantEquipos = $this->connection->real_escape_string($torneo['cantEquipos']);
+        $cantJugadores = $this->connection->real_escape_string($torneo['cantJugadores']);
+        $idSuperficie = $this->connection->real_escape_string($torneo['idSuperficie']);
+        $idaYvuelta = $this->connection->real_escape_string($torneo['idaYvuelta']);
+        $tiempoPartido = $this->connection->real_escape_string($torneo['tiempoPartido']);
+        $precioInscripcion = $this->connection->real_escape_string($torneo['precioInscripcion']);
+        $fecIniInscripcion = $this->connection->real_escape_string($torneo['fecIniInscripcion']);
+        $fecFinInscripcion  = $this->connection->real_escape_string($torneo['fecFinInscripcion']);
+        $horasCancelacion = $this->connection->real_escape_string($torneo['horasCancelacion']);
+        $fechaInicio = $this->connection->real_escape_string($torneo['fechaInicio']);
+        $fechaFin = $this->connection->real_escape_string($torneo['fechaFin']);
+        $descripcion = $this->connection->real_escape_string($torneo['descripcion']);
+        $reglas = $this->connection->real_escape_string($torneo['reglas']);
+        $idEstado = $this->connection->real_escape_string($torneo['idEstado']);
+        $canchas= array();
+        $dias= array();
+        $canchas=$torneo['canchas'];
+        $dias =$torneo['dias'];
+        
+        $salida='';
+      
+       
+        // Parametros
+        $stmt = $this->connection->prepare('SET @idTorneo := ?');
+        $stmt->bind_param('i', $idtorneo);
+        $stmt->execute();    
+
+        $stmt = $this->connection->prepare('SET @idDuenio := ?');
+        $stmt->bind_param('i', $idDuenio);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @idTipoTorneo := ?');
+        $stmt->bind_param('i', $idTipoTorneo);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @nombre := ?');
+        $stmt->bind_param('s', $nombre);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @cantEquipos := ?');
+        $stmt->bind_param('i', $cantEquipos);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @cantJugadores := ?');
+        $stmt->bind_param('i', $cantJugadores);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @idSuperficie := ?');
+        $stmt->bind_param('i', $idSuperficie);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @idaYvuelta := ?');
+        $stmt->bind_param('i', $idaYvuelta);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @tiempoPartido := ?');
+        $stmt->bind_param('i', $tiempoPartido);
+        $stmt->execute();
+        $stmt = $this->connection->prepare('SET @precioInscripcion := ?');
+        $stmt->bind_param('d', $precioInscripcion);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @fecIniInscripcion := ?');
+        $stmt->bind_param('s', $fecIniInscripcion);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @fecFinInscripcion := ?');
+        $stmt->bind_param('s', $fecFinInscripcion);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @horasCancelacion := ?');
+        $stmt->bind_param('i',  $horasCancelacion);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @fechaInicio := ?');
+        $stmt->bind_param('s',  $fechaInicio);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @fechaFin := ?');
+        $stmt->bind_param('s', $fechaFin);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @descripcion := ?');
+        $stmt->bind_param('s', $descripcion);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @reglas := ?');
+        $stmt->bind_param('s', $reglas);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @idEstado := ?');
+        $stmt->bind_param('i', $idEstado);
+        $stmt->execute();
+        
+        //Salida
+        $stmt = $this->connection->prepare('SET @salida := ?');
+        $stmt->bind_param('s', $salida);
+        $stmt->execute();
+        
+        
+         // execute the stored Procedure         SP_insertDuenios
+        
+        $result = $this->connection->query('CALL SP_updateTorneos( @idTorneo, @idDuenio, @idTipoTorneo, @nombre, @cantEquipos, @cantJugadores,@idSuperficie, @idaYvuelta,                                                                             @tiempoPartido, @precioInscripcion, @fecIniInscripcion, @fecFinInscripcion,  @horasCancelacion, 
+                                                                   @fechaInicio, @fechaFin, @descripcion,  @reglas, @idEstado, @salida);');
+        
+        //$result = $this->connection->query('select @idDuenio as duenio');
+        //$row = $result->fetch_assoc();               
+        
+        // getting the value of the OUT parameter
+        $r = $this->connection->query('SELECT @salida as idTorneo');
+        $row = $r->fetch_assoc();               
+        $res = $row['idTorneo'] ;
+        
+        
+  
+        if($res > -1){
+            
+            /*elimino los dias y canchas en la base*/
+            $stmt = $this->connection->prepare('SET @idTorneo := ?');
+            $stmt->bind_param('i', $res);
+            $stmt->execute();
+            
+            $resultCan = $this->connection->query('CALL SP_deleteDiasYCanchasByTorneo(@idTorneo);');
+            
+            /*Alta de canchas*/
+            foreach ($canchas as $can) {
+                $idComplejo = $this->connection->real_escape_string($can['idComplejo']);
+                $idCancha = $this->connection->real_escape_string($can['idCancha']);
+                
+                $stmt = $this->connection->prepare('SET @idTorneo := ?');
+                $stmt->bind_param('i', $res);
+                $stmt->execute();
+                $stmt = $this->connection->prepare('SET @idComplejo := ?');
+                $stmt->bind_param('i', $idComplejo);
+                $stmt->execute();
+                
+                $stmt = $this->connection->prepare('SET @idCancha := ?');
+                $stmt->bind_param('i', $idCancha);
+                $stmt->execute();
+                
+                //Salida
+                $stmt = $this->connection->prepare('SET @outCancha := ?');
+                $stmt->bind_param('s', $salida);
+                $stmt->execute();
+                
+                $resultCan = $this->connection->query('CALL SP_insertTorneosCanchas( @idTorneo, @idComplejo, @idCancha, @outCancha);');
+        
+                       
+        
+                // getting the value of the OUT parameter
+                $rcan = $this->connection->query('SELECT @outCancha as res');
+                $row = $rcan->fetch_assoc();               
+                $resCan = $row['res'] ;
+            }
+                
+            /*Alta de Dias*/
+            foreach ($dias as $dia) {
+                $idDia = $this->connection->real_escape_string($dia['idDia']);
+                $HoraDesde = $this->connection->real_escape_string($dia['horaDesde']);
+                $HoraHasta = $this->connection->real_escape_string($dia['horaHasta']);
+                
+                $stmt = $this->connection->prepare('SET @idTorneo := ?');
+                $stmt->bind_param('i', $res);
+                $stmt->execute();
+                $stmt = $this->connection->prepare('SET @idDia := ?');
+                $stmt->bind_param('i', $idDia);
+                $stmt->execute();
+                
+                $stmt = $this->connection->prepare('SET @horaDesde := ?');
+                $stmt->bind_param('s', $HoraDesde);
+                $stmt->execute();
+                
+                
+                $stmt = $this->connection->prepare('SET @horaHasta := ?');
+                $stmt->bind_param('s', $HoraHasta);
+                $stmt->execute();
+                
+                 //Salida
+                $stmt = $this->connection->prepare('SET @outDia := ?');
+                $stmt->bind_param('s', $salida);
+                $stmt->execute();
+                
+                $resultDia = $this->connection->query('CALL SP_insertTorneosDias( @idTorneo, @idDia, @horaDesde, @horaHasta, @outDia);');
+        
+                       
+        
+                //getting the value of the OUT parameter
+                $rcan = $this->connection->query('SELECT @outDia as res');
+                $row = $rcan->fetch_assoc();               
+                $resCan = $row['res'] ;
+            }    
+    
+                
+            $this->connection->commit();
+            //$this->connection->rollback();
+            
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+            
+        }else{
+           sendError("Error, no se pudo registrar el torneo." . $res ); //por algun motivo pincha aca
+        }
+        
+    } catch (Exception $e) {
+            $this->connection->rollback();
+            echo 'Something fails: ',  $e->getMessage(), "\n";
+        }
+    }
+    
     public function agregarTorneoImagen($torneoimg){
         $this->connection->autocommit(false);
         
@@ -370,6 +581,29 @@ class Torneo
         return $dias;
     }
     
+    public function getDiasByTorneo($IdDuenio, $IdTorneo){  
+
+        $stmt = $this->connection->prepare('SET @IdDuenio := ?');
+        $stmt->bind_param('i', $IdDuenio);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute();
+        
+              
+        $query = "CALL SP_getDiasByTorneo(@IdDuenio, @IdTorneo);";
+        $dias= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $dias[] = $fila;
+            }
+            $result->free();
+        }
+        return $dias;
+    }
+    
     public function getTorneosByDuenio($IdDuenio,$Todos,$Activos,$Incriptos,$Finalizados){  
 
         $stmt = $this->connection->prepare('SET @IdDuenio := ?');
@@ -441,6 +675,24 @@ class Torneo
             $result->free();
         }
         return $imagenes;
+    }
+    
+    public function getCanchasByTorneo($IdTorneo){  
+
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getCanchasByTorneo(@IdTorneo);";
+        $canchas= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $canchas[] = $fila;
+            }
+            $result->free();
+        }
+        return $canchas;
     }
     
     public function deleteImagen($idTorneo, $url){  

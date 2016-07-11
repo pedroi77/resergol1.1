@@ -11,8 +11,13 @@ app.service("DuenioTorneoService", function($http, $resource){
                         return angular.fromJson(data).data;
                     },
                 isArray: true
+                },
+             update: {method: 'PUT',
+                transformResponse: function(data) {
+                        return angular.fromJson(data).data;
+                    },
+                isArray: true
                 }
-        ,
         /*save:{  method: 'save',
                 params: {},
                 isArray: false}*/

@@ -1,0 +1,498 @@
+<div class="container  ">
+        <div class="container">
+            <header class="row widget" >
+                <div style = "color: white; " class="container">
+                    <h3  style=" font-size: 50px; text-align:center; font-style:italic;" ></span>Modificar torneo</h3>
+                </div>
+            </header>
+        </div>
+    </div>    
+
+    
+
+    
+    <div class="container" id="mainTorneo" ng-controller="TorneoModificarController as tor" >
+        <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+                <h4 class="modal-title">resergol</h4>
+            </div>
+            <div class="modal-body" >
+                <h2 class="modal-title">{{msj}}</h2>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" type="button"   ng-click="cargarImagenes()">OK
+                </button>
+                <button class="btn btn-danger" type="button"   ng-click="cancelar()">Salir
+                </button>
+            </div>
+        </script>
+        
+        <div class="container">
+            
+            <div class=" principal row " style="margin-bottom: 0px;">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    
+                    <form name="torneoForm">
+                        <section class="widget">
+                        <header>
+                            <h4><i class="fa fa-user"></i><p class="mensajeExplicacion">Datos del torneo</h4>
+                        </header>
+                        
+                        <fieldset>
+                            
+                        <div class="body">
+                            
+                            
+                            <div class="form-group">
+                                <form  class="">
+                                    
+                                     <div class="form-group">
+                                        <label for="nombre" class="control-label col-sm-4">Nombre</label>
+                                        
+                                         <div class="col-xs-12 col-sm-8">    
+                                            <span ng-show="!torneoForm.$pristine && torneoForm.nombretor.$error.required" class="msjErrorTorneo">
+                                                Debe Ingresar el nombre del torneo.
+                                            </span>
+                                            <input placeholder="" id="nombreD" 
+                                                  ng-model="tor.Torneo.nombre" class="form-control input-transparent"                                                               style="margin-bottom:5px;" type="text" name="nombretor" 
+                                                   required ng-class="{ error: torneoForm.nombretor.$error.required && !torneoForm.$pristine, warning:torneoForm.nombretor.$error.nombretor }">
+                                         
+                                         </div>
+                                        
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="TipoTorneo" class="control-label col-sm-4">Tipo de torneo</label>
+                                        <div class="col-xs-12 col-sm-8">
+                                
+                                            
+                                            <select id="TipoTorneo" 
+                                                    data-placeholder="" 
+                                                    class="select2 form-control" 
+                                                    name="TipoTorneo" style="margin-bottom:5px;"
+                                                    ng-model="tor.tiposTorneos.selectedOption"
+                                                    ng-options="tipoTorneo.Nombre for tipoTorneo in tor.tiposTorneos.tipos track by tipoTorneo.Nombre"
+                                                    ng-click="tor.getCantEquipos()">
+                                               
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="cantJugadores" class="control-label col-sm-4">Jugadores en cancha</label>
+                                        <div class="col-xs-12 col-sm-8">    
+                                            <select id="cantJugadores"
+                                                    data-placeholder="" 
+                                                    class="select2 form-control" 
+                                                    name="cantJugadores" style="margin-bottom:5px;"
+                                                    ng-model="tor.cantJugadores.selectedOption"
+                                                    ng-options="cantidad.CantJugadores for cantidad in tor.cantJugadores.tipos track                                                                    by cantidad.CantJugadores">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group">
+                                        <label for="superficie" class="control-label col-sm-4">Superficie</label>
+                                        <div class="col-xs-12 col-sm-8">
+                                            <select id="superficie" 
+                                                    data-placeholder="" 
+                                                    class="select2 form-control" 
+                                                    name="superficie" style="margin-bottom:5px;"
+                                                    ng-model="tor.superficies.selectedOption"
+                                                    ng-options="superficie.Descripcion for superficie in tor.superficies.tipos track                                                                    by superficie.Descripcion">
+                                              
+                                            </select>
+                                        </div>    
+                                    </div>        
+                                    
+                                    <div class="form-group">
+                                        <label for="TipoPartidos" class="control-label col-sm-4">Tipo de partido</label>
+                                        <div class="col-xs-12 col-sm-8">    
+                                            <select id="TipoPartidos" 
+                                                    data-placeholder="" 
+                                                    class="select2 form-control" 
+                                                    name="TipoPartidos" style="margin-bottom:5px;"
+                                                    ng-model="tor.tiposPartidos.selectedOption"
+                                                    ng-options="tiposPartido.tipo for tiposPartido in tor.tiposPartidos.tipos track by tiposPartido.tipo">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="precio" class="control-label col-sm-4">Cantidad de equipos</label>
+                                        <div class="col-xs-12 col-sm-8">    
+                                            <select id="cantEq" 
+                                                    data-placeholder="" 
+                                                    class="select2 form-control" 
+                                                    name="cantEq" style="margin-bottom:5px;"
+                                                    ng-model="tor.cantEquipos.selectedOption"
+                                                    ng-options="eQcantidad.cantidad for eQcantidad in tor.cantEquipos.tipos track by eQcantidad.cantidad">
+                                            </select>
+                                        </div>    
+                                    </div> 
+                                    
+                                    <div class="form-group">
+                                        <label for="dur" class="control-label col-sm-4">Duración del partido </label>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.tiempo.$error.required" class="msjErrorTorneo">
+                                            Debe Ingresar la duración del partido.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.tiempo.$error.min" class="msjErrorTorneo">
+                                            Debe ingresar un número mayor a 10 minutos.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.tiempo.$error.max" class="msjErrorTorneo">
+                                            Debe ingresar un número menor a 120 minutos.
+                                        </span>
+                                        <div class="col-xs-12 col-sm-8">    
+                                             <input id="tiempo" class="form-control input-transparent" style="margin-bottom:5px;" type="number" placeholder=""  name="tiempo" ng-model = "tor.Torneo.tiempoPartido" min="10" max="120" required/>
+                                        </div>    
+                                    </div>  
+                                    
+                                    <div class="form-group">
+                                        <label for="precio" class="control-label col-sm-4">Precio de inscripción</label>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.precio.$error.required" class="msjErrorTorneo">
+                                            Debe Ingresar el precio.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.precio.$error.number" class="msjErrorTorneo">
+                                            Debe ingresar un número positivo.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.precio.$error.min" class="msjErrorTorneo">
+                                            Debe ingresar un número positivo.
+                                        </span>
+                                        <div class="col-xs-12 col-sm-8">    
+                                            <input id="precio" class="form-control input-transparent" style="margin-bottom:5px;" type="number" placeholder=""  name="precio" ng-model = "tor.Torneo.precioInscripcion" min="0" required/>
+                                        </div>    
+                                    </div>  
+                                    
+                                    <div class="form-group " >
+                                        <label for="calle" class="control-label col-sm-4">Fechas de inscripción</label>
+                                        
+                                         <div class="form-group">
+  
+                                                  <div class="col-sm-4">
+                                                    <p class="input-group">
+                                                        <!--date-disabled="tor.disabled(date)"-->
+                                                      <input type="text" class="form-control " ng-change="tor.validaFecInscDesde()"
+                                                             uib-datepicker-popup="{{format}}" 
+                                                             ng-model="tor.FecInscDesde" 
+                                                             min-date="dateOptionsInscDesde.minDate"    
+                                                             is-open="FecInscripcionDesde.opened" 
+                                                             datepicker-options="dateOptionsInscDesde" 
+                                                             ng-required="true"  
+                                                             close-text="Cerrar"
+                                                             alt-input-formats="altInputFormats" 
+                                                              ng-blur="tor.setearDesdeInsc()"/>
+                                                      <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="OpenFecInscDesde()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                      </span>
+                                                    </p>
+                                                </div>
+                                                  
+                                                 <div class="col-sm-4">
+                                                    <p class="input-group">
+                                                      <input type="text"    ng-change="tor.validaFecInscHasta()"
+                                                             class="form-control" 
+                                                             uib-datepicker-popup="{{format}}" 
+                                                             ng-model="tor.FecInscHasta" 
+                                                             is-open="FecInscripcionHasta.opened" 
+                                                             min-date="dateOptionsInscHasta.minDate"    
+                                                             datepicker-options="dateOptionsInscHasta"  
+                                                             ng-required="true" close-text="Cerrar" 
+                                                             ng-blur="tor.setearTorneoDesde()"
+                                                             alt-input-formats="altInputFormats" />
+                                                      <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="OpenFecInscHasta()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                      </span>
+                                                    </p>
+                                                </div>  
+                                                  
+                                       
+                                         </div>
+                                    
+                                    <div class="form-group ">
+                                        <label for="calle" class="control-label col-sm-4">Fechas Inicio y Fin</label>
+                                        
+                                        <div class="form-group">
+                                            <div class="form-group">
+  
+                                                  <div class="col-sm-4">
+                                                    <p class="input-group">
+                                                      <input type="text" ng-change="tor.validaFecDesde()"
+                                                              format-day-header="EEE"
+                                                             class="form-control" 
+                                                             uib-datepicker-popup="{{format}}" 
+                                                             ng-model="tor.TorneoDesde" 
+                                                             is-open="FecDesde.opened" 
+                                                             datepicker-options="dateOptionsTorneoDesde" 
+                                                             ng-required="true" 
+                                                             ng-blur= "tor.setearTorneoHasta()"
+                                                             close-text="Cerrar" 
+                                                             alt-input-formats="altInputFormats" />
+                                                      <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="OpenFecDesde()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                      </span>
+                                                    </p>
+                                                </div>
+                                                  
+                                                 <div class="col-sm-4">
+                                                    <p class="input-group">
+                                                      <input type="text" ng-change="tor.validaFecHasta()"
+                                                             class="form-control" 
+                                                             uib-datepicker-popup="{{format}}" 
+                                                             ng-model="tor.TorneoHasta" 
+                                                             is-open="FecHasta.opened" 
+                                                             datepicker-options="dateOptionsTorneoHasta" 
+                                                             ng-required="true" 
+                                                             close-text="Cerrar" 
+                                                             alt-input-formats="altInputFormats" />
+                                                      <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="OpenFecHasta()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                      </span>
+                                                    </p>
+                                                </div>  
+                                                  
+                                       
+                                         </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group" >
+                                        <label for="horas" class="control-label col-sm-4">Tiempo de aviso de cancelación al torneo (horas)</label>
+                                        <div class="col-xs-12 col-sm-8" style="margin-bottom:30px;">    
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.horas.$error.required" class="msjErrorTorneo">
+                                            Debe Ingresar la cantidad de horas.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.horas.$error.number" class="msjErrorTorneo">
+                                            Debe ingresar un número positivo.
+                                        </span>
+                                        <span ng-show="!torneoForm.$pristine && torneoForm.horas.$error.min" class="msjErrorTorneo">
+                                            La cantidad mínima de aviso es de 72 hs.
+                                        </span>
+                                            <input id="horas" class="form-control input-transparent" style="margin-bottom:5px;" type="number" ng-model = "tor.Torneo.horasCancelacion" min ="72"   name="horas" required />
+                                        </div>    
+                                    </div>  
+                                    
+                                    
+                                  
+                                    
+                                    <div class="form-group" style="margin-top:15px;">
+                                        <label for="descripcion" class="control-label   col-sm-4">Descripción breve <span class=""></span></label>
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <div class="col-sm-12" style="margin-bottom:20px;" >
+                                            <span ng-show="!torneoForm.$pristine && torneoForm.descTor.$error.required && torneoForm.descTor.$dirty" class="msjErrorTorneo">
+                                                Debe Ingresar la Descripción del torneo.
+                                            </span>
+                                            <textarea id="descTorneo" name="descTor" type="text" ng-model= "tor.Torneo.descripcion" class="form-control" rows="3" required ng-class="{ error:torneoForm.descTor.$error.required && torneoForm.descTor.$dirty, warning:torneoForm.descTor.$error.required }"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <label for="descripcion" class="control-label   col-sm-4">Reglas<span class=""></span></label>
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <div class="col-sm-12" style="margin-bottom:30px;" >
+                                            <span ng-show="!torneoForm.$pristine && torneoForm.reglasTor.$error.required && torneoForm.reglasTor.$dirty" class="msjErrorTorneo">
+                                                Debe Ingresar las reglas del torneo.
+                                            </span>
+                                            <textarea id="reglas" name="reglasTor" type="text" ng-model= "tor.Torneo.reglas"  class="form-control" rows="3" required></textarea>
+                                        </div>
+                                    </div>
+                                    
+                        
+                                    
+                                    <div class="form-group">
+                                        <div class="col-md-6"> 
+                                            <div class="form-group"  >
+                                                <button class="btn  btn-md btn-info btn-block" style="border-radius: 7px;" ng-click="tor.limpiar()" >
+                                                <i class="fa fa-plus glyphicon glyphicon-erase"></i>
+                                                    Anular torneo
+                                                </button>   
+                                            </div>
+                                        </div>
+                                        
+                                    
+                                        <div class="col-md-6"> 
+                                            <div class="form-group">
+                                                <button class="btn  btn-md btn-success btn-block"   ng-disabled="!torneoForm.$valid"  ng-click="tor.modificarTorneo()" style="border-radius: 7px;">
+                                                 <i class="glyphicon glyphicon-floppy-save"></i>
+                                                    Guardar
+                                                </button>
+                                            </div>
+                                              
+                                        </div>
+                                        
+                                      
+                                    </div> 
+                                    
+                                    
+                                    
+                                </form>
+                        </div>
+                        </fieldset>
+                    </section>
+                    </form>
+                </div>
+                    
+                <div class="col-md-6">
+                    
+                    <section class="widget">
+                        <header>
+                            <h4 class="mensajeExplicacion"><i class="fa fa-user"></i>Días y horarios en los que se juega el torneo</h4>
+                        </header>
+                        <fieldset>
+                        
+                        
+                            
+                             <table ng-table="tor.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+                                <tr ng-repeat="dia in tor.diasDesde.tipos" style="background-color:white;">
+                                    <td title=""  ng-if="false">{{dia.iddia}}</td>
+                                    <td title="'Dia'"  >{{dia.nombre}}</td>
+                                    <td title="'Desde'" ng-switch="true" style="width:25%">
+                                         <span ng-switch-default class="editable-text">{{dia.HoraDesde}}</span>
+                                        <div class="controls" ng-class="" ng-switch-when="true">
+                                            <input type="time" 
+                                                   step="3600"
+                                                   name="HoraDesde" 
+                                                   ng-model="dia.HoraDesde" 
+                                                   class="editable-input form-control "
+                                                   min={{dia.desdeMin}} max={{dia.hastaMax}}
+                                                   required/>
+                                        </div>
+                                    </td>
+                                    <td title="'Hasta'" ng-switch="true" style="width:25%">
+                                        <span ng-switch-default class="editable-text">{{dia.HoraHasta}}</span>
+                                        <div class="controls" ng-class="" ng-switch-when="true">
+                                            <input type="time" 
+                                                   step="3600"
+                                                   name="HoraDesde" 
+                                                   ng-model="dia.HoraHasta" 
+                                                   min={{dia.desdeMin}} max={{dia.hastaMax}}
+                                                   class="editable-input form-control" required/>
+                                        </div>
+                                    </td>
+                                    <td title="'Juega'">
+                                        <button type="button" ng-click="tor.juegaSiNo($index,true)" ng-disabled="dia.juega" class="btn btn-sm btn-success">
+                                            <i class="glyphicon glyphicon glyphicon-ok">
+                                            </i>
+                                        </button>
+
+                                        <button type="button" ng-click="tor.juegaSiNo($index,false)" ng-disabled="!dia.juega" class="btn btn-sm btn-danger">
+                                            <i class="glyphicon glyphicon-remove-circle">
+                                            </i>
+                                        </button>
+                                        <label>{{dia.siNo}}</label>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </fieldset>
+                    </section>
+                    
+                    <section class="widget">
+                        <header>
+                            <h4 class="mensajeExplicacion"><i class="fa fa-user"></i>Canchas y horarios</h4>
+                        </header>
+                        
+                        <fieldset>
+                            <table ng-table="tor.tableParams" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+                                <tr ng-repeat="cancha in tor.canchas.tipos" style="background-color:white;">
+                                    <td title=""  ng-if="false">{{cancha.idcancha}}</td>
+                                    <td title="'Cancha'" sortable="'cancha.nombre'" >{{cancha.nombre}}</td>
+                                    <td title="'Jugadores'"  >{{cancha.CantJugadores}}</td>
+                                    <td title="'Superficie'"  >{{cancha.descripcion}}</td>
+                                    <td title="'Techo'"  >{{cancha.techo}}</td> 
+                                    <td title="'Luz'"  >{{cancha.conLuz}}</td>
+                                    <td title="'Precio'">{{cancha.precio}}</td>
+                                    <td title="'Juega'">
+                                        <button type="button" ng-click="tor.juegaCanchaSiNo($index,true)" ng-disabled="cancha.juegaCancha" class="btn btn-sm btn-success">
+                                            <i class="glyphicon glyphicon glyphicon-ok">
+                                            </i>
+                                        </button>
+
+                                        <button type="button" ng-click="tor.juegaCanchaSiNo($index,false)" ng-disabled="!cancha.juegaCancha" class="btn btn-sm btn-danger">
+                                            <i class="glyphicon glyphicon-remove-circle">
+                                            </i>
+                                        </button>
+                                        <label>{{cancha.siNo}}</label>
+
+                                    </td>
+                                    
+                                </tr>
+                            </table>
+
+                        </fieldset>
+                    </section>
+                    
+                </div>    
+                
+            </div>
+            
+          
+           
+        </div>
+    </div>
+        
+
+ 
+   <div class="clearfix"></div>
+        
+    <div/>    
+ 
+         <!--modal nueva imagen-->
+    <div id="imagenModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-registracion">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+              
+                <div class="modal-body">
+                      <div class = 'form-horizontal well'>
+                        <fieldset>
+                             <div class="col-xs-12 col-sm-6 col-md-12">
+                                <img src="/../resergol1.1/images/canchas/cancha2.jpg" class="img-responsive" alt="Image" >
+                             </div>
+                          </fieldset>
+                        </div>
+                    
+                            
+                        <fieldset>
+                            <div class="form-group">
+                               <div class="col-md-6"> 
+                                    <div class="form-group">
+                                        <button class="btn  btn-md btn-info btn-block" style="border-radius: 7px;">
+                                             <i class="glyphicon glyphicon-folder-open"></i>
+                                             Seleccionar
+                                        </button>   
+                                    </div>
+                                </div>
+                                
+                               
+                                <div class="col-md-6"> 
+                                    <div class="form-group">
+                                        <button class="btn  btn-md btn-success btn-block" style="border-radius: 7px;">
+                                            <i class="glyphicon glyphicon-floppy-save"></i>
+                                            Guardar foto
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        
+                        
+                        
+                        
+                        </div>
+                                          </form>
+                      </div>
+              </div>
+            </div>    
+        
+    
+    
+  

@@ -288,6 +288,35 @@ $app->post('/duenios/torneos', function(){
     
 });
 
+//alta
+$app->put('/duenios/torneos', function(){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $torneo = new Torneo();
+        $result = $torneo->update($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al dar de alta el torneo");
+        };
+        
+    }
+	else{
+        sendError("token invalido");
+    }
+    
+});
 
 //arma fixture
 $app->post('/duenios/torneos/fixture', function(){
@@ -343,6 +372,7 @@ $app->get('/duenios/torneos/:idDuenio/:todos/:activos/:inscriptos/:finalizados',
 
 
 //get torneos por idTorneo
+//get torneos por idTorne
 $app->get('/common/torneo/:idTorneo', function($idTorneo){
     
     $headers = apache_request_headers();
@@ -409,6 +439,13 @@ $app->get('/dias/:idDuenio', function($idDuenio){
 	sendResult($data);
 });
 
+//get dias y horarios por duenio para modificar
+$app->get('/dias/:idDuenio/:idTorneo', function($idDuenio, $idTorneo){
+    $dias = new Torneo();
+    $data = $dias->getDiasByTorneo($idDuenio,$idTorneo);
+	sendResult($data);
+});
+
 //get de imagenes por torneo
 $app->get('/duenios/torneos/imagen/:idTorneo', function($idTorneo){
     $headers = apache_request_headers();
@@ -426,6 +463,13 @@ $app->get('/duenios/torneos/imagen/:idTorneo', function($idTorneo){
 	else{
         sendError("token invalido");
     }
+});
+
+//get de canchas del torneo
+$app->get('/common/torneo/canchas/:idTorneo', function($idTorneo){
+    $canchas = new Torneo();
+    $data = $canchas->getCanchasByTorneo($idTorneo);
+    sendResult($data);
 });
 
 //get de equipos por torneo
@@ -607,10 +651,17 @@ $app->get('/canchas/:pIdProv/:pIdLoc/:pCantJug/:pIdSuperficie/:pPrecioMax/:pTech
 	sendResult($data);
 });
 
-//get cantidad de jugadores por duenio
+//get ccanchas por duenio
 $app->get('/duenio/canchas/:idDuenio', function($idDuenio){
     $canchas = new Cancha();
     $data = $canchas->getCanchasByDuenio($idDuenio);
+	sendResult($data);
+});
+
+//get ccanchas por duenio y torneo
+$app->get('/duenio/canchas/:idDuenio/:idTorneo', function($idDuenio, $idTorneo){
+    $canchas = new Cancha();
+    $data = $canchas->getCanchasByDuenioTorneo($idDuenio, $idTorneo);
 	sendResult($data);
 });
 
