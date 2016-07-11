@@ -82,12 +82,12 @@
                                         </div>
                                         
                                           <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.vGol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                          
@@ -99,12 +99,12 @@
                                         </div>
                                         
                                          <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.vGol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                          
@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                         
-                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase1()">
+                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase1()" ng-show="tor.tipoUsuario=='D'">
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
@@ -135,12 +135,12 @@
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.vGol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                          
@@ -152,12 +152,12 @@
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.vGol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                          
@@ -169,7 +169,7 @@
                                 </div> 
                             </div>
                              
-                            <button class="btn btn-md btn-primary btn-block"  ng-click= "tor.updateFixtureFase2()">
+                            <button class="btn btn-md btn-primary btn-block"  ng-click= "tor.updateFixtureFase2() " ng-show="tor.tipoUsuario=='D'">
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
@@ -189,13 +189,13 @@
                                         
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.vGol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                         
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                          
@@ -207,12 +207,12 @@
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.vGol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                          
@@ -224,7 +224,7 @@
                                 </div>
                             </div>
                             
-                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase3()" ng-show="tor.nombreFase3 != ''">
+                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase3()" ng-show="tor.nombreFase3 != ''  && tor.tipoUsuario=='D'">
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
@@ -243,12 +243,12 @@
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.vGol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                          
@@ -260,12 +260,12 @@
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.vGol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                          
@@ -278,7 +278,7 @@
                                 
                             </div>
                             
-                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase4()" ng-show="tor.nombreFase4 != ''">
+                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase4()" ng-show="tor.nombreFase4 != '' && tor.tipoUsuario=='D' ">
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
@@ -297,12 +297,12 @@
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.vGol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.gol1" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                          
@@ -314,12 +314,12 @@
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;" ng-show="tor.bIdayVuelta">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.gol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                         
                                         <div class="score editable" data-resultid="result-0" style="width: 35px;">
-                                            <input placeholder="" id="nombreD" 
+                                            <input placeholder="" id="nombreD" min="0"
                                                   ng-model="partido.vGol2" class="form-control input-transparent"                                                               style="width: 30px; height: 20px;" type="number" name="" >
                                         </div>
                                          
@@ -329,7 +329,7 @@
                                 
                             </div>
                             
-                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase5()" ng-show="tor.nombreFase5 != ''">
+                            <button class="btn btn-md btn-primary btn-block" ng-click= "tor.updateFixtureFase5()" ng-show="tor.nombreFase5 != ''  && tor.tipoUsuario=='D'">
                                 Guardar <i class="glyphicon glyphicon-ok"></i>
                             </button>   
                         </div>
@@ -354,43 +354,52 @@
             </div>
         </div>
 
+         <div class="col-lg-12">
+        <h3 class="page-header">En estas canchas se juegan este torneo!!</h3>
+    </div>    
+
+
+    <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="cancha in tor.canchas">
         
-          <!-- Related Projects Row -->
-        <div class ="principal row filtro-Complejos" >
-
-            <div class="col-lg-12">
-                <h3 class="page-header">En estas canchas se juegan este torneo!!</h3>
+        
+        <div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
+            <div class="col-md-12" style="height:400px">
+            <p>
+                <img  ng-src="{{cancha.Imagen}}" class="img-responsive" alt="" style=" height:249px;">
+            </p>
+            </div>
+            <div class="caption">
+                <div class="blur"></div>
+                <div class="caption-text">
+                    <h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:1px;">                       {{cancha.NombreCancha}}
+                       
+                    </h3>
+                    <h4 class="fa fa-user titul" style="padding:1px;">
+                        en <a style="color:orange;" ui-sref="Clientes.verComplejo">{{cancha.NombreComplejo}}</a>             
+                    </h4>
+                    <h6 style="border-bottom:1px solid white; padding:3px;">
+                    {{cancha.Calle}} {{cancha.Altura}}
+                    </h6>
+                    <ul>
+                        <!--<li>Dirección: {{cancha.Calle}} {{cancha.Altura}}</li>-->
+                        <li>Tamaño: {{cancha.CantJugadores}} vs. {{cancha.CantJugadores}} </li>
+                        <li>Superficie: {{cancha.Superficie}}</li>
+                        <li>Techada: {{cancha.Techada == 1 ? "SI" : "NO"}} </li>
+                        <li>Luz: {{cancha.Luz == 1 ? "SI" : "NO"}}</li>
+                        <li>Precio p/Hora: ${{cancha.muestroPConLuz ? cancha.PrecioConLuz : cancha.Precio | currency:''}} </li>
+                    </ul>
+                    <div class="col-md-12 text-center">
+                    <a href="#" class="btn btn-success"
+                       ui-sref="Clientes.verCancha({idCan:'{{cancha.IdCancha}}', idComp:'{{cancha.IdComplejo}}'})"><span class="glyphicon glyphicon-eye-open"></span> VER CANCHA</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
-                </a>
-                <h5>Titulo o nombre de la cancha</h5>
-            </div>
 
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
-                </a>
-                <h5>Titulo o nombre de la cancha</h5>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
-                </a>
-                <h5>Titulo o nombre de la cancha</h5>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irCancha()">
-                </a>
-                <h5>Titulo o nombre de la cancha</h5>
-            </div>
 
         </div>
+    </div>
+         
         <!-- /.row -->
         <hr>
 

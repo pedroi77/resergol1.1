@@ -11,5 +11,6 @@ app.service("TorneoService", function($http, $resource){
                     },
                 isArray: true
                 }
+    
     });
 }); 

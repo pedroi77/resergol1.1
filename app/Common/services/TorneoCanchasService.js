@@ -1,11 +1,10 @@
 var app = angular.module("resergolApp");
 
-app.service("DuenioCanchasService", function($http, $resource){
+app.service("TorneoCanchasService", function($http, $resource){
 
-    var CANCHAS_URI = "http://localhost:8080/resergol1.1/api/duenio/canchas/:idDuenio/:idTorneo";
+    var TORNEO_URI = "http://localhost:8080/resergol1.1/api/common/torneo/canchas/:idTorneo";
     
-    
-    return $resource(CANCHAS_URI, {idDuenio: '@_idDuenio', idTorneo: '@_idDuenio' }, {
+    return $resource(TORNEO_URI, {}, {
         query: {method: 'GET',
                 transformResponse: function(data) {
                         return angular.fromJson(data).data;
@@ -13,6 +12,4 @@ app.service("DuenioCanchasService", function($http, $resource){
                 isArray: true
                 }
     });
-    
-	
 }); 

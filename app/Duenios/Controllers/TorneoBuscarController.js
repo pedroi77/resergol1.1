@@ -22,6 +22,12 @@ resergolApp.controller("TorneoBuscarController", function($scope, $state, Duenio
         }
     };
     
+    this.modificar = function(indice){
+        var vIdTorneo=self.torneo.torneos[indice]["idTorneo"];
+        $state.go("Duenios.torneoModificar",{idTorneo:vIdTorneo});
+    };
+    
+    
     this.verEquipos = function(indice, valor){
         var vIdTorneo=self.torneo.torneos[indice]["idTorneo"];
         var vNombre=self.torneo.torneos[indice]["nombre"];
