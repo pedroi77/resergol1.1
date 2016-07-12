@@ -401,22 +401,9 @@ $app->get('/duenios/torneos/:idDuenio/:todos/:activos/:inscriptos/:finalizados',
 
 //get torneos por idTorneo
 $app->get('/common/torneo/:idTorneo', function($idTorneo){
-    
-    $headers = apache_request_headers();
-    $token = explode(" ", $headers["Authorization"]);
-    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
-    
-    $duenio = new Duenio();
-    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
-
-    if($tokenOK){
-        $torneo = new Torneo();
-        $data = $torneo->getTorneosByIdTorneo($idTorneo);
-        sendResult($data);
-    }
-	else{
-        sendError("token invalido");
-    }
+    $torneo = new Torneo();
+    $data = $torneo->getTorneosByIdTorneo($idTorneo);
+    sendResult($data);
 });
 
 //get mails aviso cancelacion por idTorneo
@@ -495,21 +482,9 @@ $app->get('/dias/:idDuenio/:idTorneo', function($idDuenio, $idTorneo){
 
 //get de imagenes por torneo
 $app->get('/duenios/torneos/imagen/:idTorneo', function($idTorneo){
-    $headers = apache_request_headers();
-    $token = explode(" ", $headers["Authorization"]);
-    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
-    
-    $duenio = new Duenio();
-    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
-
-    if($tokenOK){
-        $imagenes = new Torneo();
-        $data = $imagenes->getImagenesByTorneo($idTorneo);
-        sendResult($data);
-    }
-	else{
-        sendError("token invalido");
-    }
+    $imagenes = new Torneo();
+    $data = $imagenes->getImagenesByTorneo($idTorneo);
+    sendResult($data);
 });
 
 //get de canchas del torneo
