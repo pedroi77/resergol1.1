@@ -688,6 +688,12 @@ $app->get('/torneosCli/:pNombre/:pTipo/:pCantEquipos/:pIdProv/:pIdLoc/:pCantJug/
 
 });
 
+//Get torneos para pantalla MisTorneos del cliente.
+$app->get('/torneosCli/:idCliente/:todos/:inscripcion/:activos/:finalizados', function($idCliente, $todos, $inscripcion, $activos, $finalizados){
+    $torneos = new Torneo();
+    $data = $torneos->getTorneosByCliente($idCliente, $todos, $inscripcion, $activos, $finalizados);
+	sendResult($data);
+});
 
 /*****************************************CANCHAS****************************************************************************/
 
@@ -1502,6 +1508,35 @@ $app->post('/equipoTorneo', function(){
         
         $eq = new Equipo();
         $result = $eq->inscribirEquipoATorneo($data);
+    
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al insertar equipo en torneo...");
+        };
+        
+    /*}
+    else{
+        sendError("token invalido");
+    }*/
+    
+});
+
+
+$app->delete('/equipoTorneo/:idEquipo/:idTorneo', function($idEquipo, $idTorneo){
+    
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $eq = new Equipo();
+        $result = $eq->deleteEquipoTorneo($idEquipo, $idTorneo);
     
         if($result){
            sendResult($result);

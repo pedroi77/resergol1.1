@@ -86,7 +86,10 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
             controllerAs : ""
 		})
         .state("Clientes.misTorneos",{
-			url : "/MisTorneos",
+			url : "/MisTorneos/:idCli",
+            params: {
+                    idCli:{value:'defaultValue'}
+                },
 			templateUrl : "app/Clientes/Templates/MisTorneos.html",
             controller : "ClientesController",	
             controllerAs : "cli"

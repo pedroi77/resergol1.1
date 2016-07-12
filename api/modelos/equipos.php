@@ -86,6 +86,43 @@ class Equipo
         }
         
     }
+    
+    
+    //Borra la reserva.
+    public function deleteEquipoTorneo($idEquipo, $idTorneo){
+        
+        $valor='';
+       
+        // Parametros
+        $stmt = $this->connection->prepare('SET @idEquipo := ?');
+        $stmt->bind_param('i', $idEquipo);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @idTorneo := ?');
+        $stmt->bind_param('i', $idTorneo);
+        $stmt->execute();
+ 
+        //Salida
+        $stmt = $this->connection->prepare('SET @valor := ?');
+        $stmt->bind_param('i', $valor);
+        $stmt->execute();
+        
+        $result = $this->connection->query('CALL SP_deleteEquipoTorneo(@idTorneo, @idEquipo, @valor);');
+        
+        // getting the value of the OUT parameter
+        $r = $this->connection->query('SELECT @valor as valor');
+        $row = $r->fetch_assoc();               
+        $res = $row['valor'] ;
+        
+        if($res > -1){
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+        }else{
+           sendError("Error, no se pudo borrar el equipo del torneo." . $res );
+        }
+   
+            
+    }
 
  
 }
