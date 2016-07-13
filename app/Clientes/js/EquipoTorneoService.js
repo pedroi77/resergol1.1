@@ -1,9 +1,9 @@
 var app = angular.module("resergolApp");
 
-app.service("TorneosClientesService", function($http, $resource){
+app.service("EquipoTorneoService", function($http, $resource){
 
 
-    var TORN_URI = "http://localhost:8080/resergol1.1/api/torneosCli/:pNombre/:pTipo/:pCantEquipos/:pIdProv/:pIdLoc/:pCantJug/:pIdSuperficie/:pInscripcion/:pActivos/:pFinalizados/:pIdaYVuelta/:idCliente/:todos/:inscripcion/:activos/:finalizados";
+    var TORN_URI = "http://localhost:8080/resergol1.1/api/equipoTorneo/:idEquipo/:idTorneo";
     
     return $resource(TORN_URI, {}, {
         query: {method: 'GET',

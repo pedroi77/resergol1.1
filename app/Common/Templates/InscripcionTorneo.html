@@ -9,17 +9,17 @@
             
                     <label for="precio" class="control-label col-sm-4">Nombre del equipo</label>
                     <div class="col-sm-6">       
-                        <input  type="text" id="precio" class="input-sm form-control" 
+                        <input  type="text" id="nombreEquipo" class="input-sm form-control" 
                                style="margin-bottom:9px;">
                     </div>
                     
                     <label for="precio" class="control-label col-sm-4">Foto del equipo</label>
                     <div class="col-sm-6">
                         <a href="#">
-                            <img class="img-responsive portfolio-item" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="">
+                            <img class="img-responsive portfolio-item" ng-src="{{ins.vURL}}" alt="">
                         </a>
                        <div class="form-group">
-                            <button class="btn  btn-md btn-info btn-block" style="border-radius: 7px; margin-top:5px;">
+                            <button href="#imagenModal" data-toggle="modal" class="btn  btn-md btn-info btn-block" style="border-radius: 7px; margin-top:5px;">
                                  <i class="glyphicon glyphicon-folder-open"></i>
                                  Seleccionar
                             </button>   
@@ -98,12 +98,12 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-6">
-                            <span class="uneditable-input h2">Precio a pagar: $380</span>
+                            <span class="uneditable-input h2">Precio a pagar: $ {{precioAPagar | currency:""}}</span>
                         </div>
-                        <div class="col-md-4">
+                        <!--<div class="col-md-4">
                             <button id="activate-step-2" class="btn btn-primary btn-lg btn-block"  style="border-radius: 7px">Confirmar y Pagar</button>
-                        </div>
-                            <div class="col-md-2">
+                        </div>-->
+                            <div class="col-md-2 text-left">
                             <button id="" ui-sref="Clientes.verTorneoLiga" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-lg btn-block" style="border-radius: 7px">Cancelar/Volver</button>
                             </div>
 
@@ -115,4 +115,52 @@
         
 
     </div>
+    </section>      
+        <!--modal nueva imagen-->
+        <div id="imagenModal" class="modal fade "  aria-hidden="true"  >
+            <div class="modal-dialog modal-registracion">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+
+                    <div class="modal-body" >
+                        <div class = 'form-horizontal well'>
+                            <fieldset>
+                                <div class="col-xs-12 col-sm-6 col-md-12">
+                                    <img  ngf-src="picFile[0]" class="img-responsive imgCarga" alt="Image" >
+                                </div>
+                            </fieldset>
+                        </div>
+
+
+                        <fieldset>
+                            <form name="EquiposImagenesService" ng-submit="uploadFile()">
+                                <div class="col-md-12"> 
+                                    <div class="form-group">
+
+                                        <div class="input-box">
+                                            <input type="file" id="file" class="input-text" ngf-change="onChange($files)" ngf-select uploader-model="file" ng-model="picFile" name="attachement" accept="image/png, image/jpeg, image/jpg" />
+                                        </div>
+                                    </div>
+                                    
+                                     <span ng-show="ins.bMensaje" class= "msjError">
+                                        Solo se permiten archivos con extension jpg, jpeg, gif, png
+                                    </span>
+                                    <button  class="btn  btn-md btn-success btn-block" style="border-radius: 7px;"   ng-click="uploadFile()"  data-dismiss="modal" ng-disabled="comIma.archivoInvalido" >
+                                        <i class="glyphicon glyphicon-floppy-save"></i>
+                                        Guardar foto
+                                    </button>
+                                </div>
+
+                            </form>
+                        </fieldset>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        
 </div>

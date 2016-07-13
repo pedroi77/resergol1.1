@@ -44,7 +44,7 @@
                             <tr style="font-size: 13px;" ng-repeat="res in misRes">
                                 <td>{{res.FechaReservaFormateada}}</td>
                                 <td>{{res.DiaDePartidoFormat}}</td>
-                                <td><a ui-sref="Clientes.verComplejo"
+                                <td><a ui-sref="Clientes.verComplejo({idComp:'{{res.IdComplejo}}'})"
                                     onclick="$('html,body').animate({scrollTop:10},'fast');return false;">{{res.Complejo}}</a></td>
                                 <!--<td>Laprida 952, Lomas de Zamora</td>-->
                                 <td><a ui-sref="Clientes.verCancha({idCan:'{{res.IdCancha}}', idComp:'{{res.IdComplejo}}'})"

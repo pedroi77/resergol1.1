@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("InscripcionTorneoController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasTempService){
+resergolApp.controller("InscripcionTorneoController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasTempService, EquiposService, EquipoTorneoService, EquiposImagenesAltaService, EquiposImagenesDBService, EquiposImagenesService, $compile, Upload){
 	
     var self = this;
     
@@ -12,10 +12,19 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
     $scope.idTorneo = 3;
     $scope.idDuenio = -1;
     $scope.idCliente = sessionStorage.id;
-
     
+    this.msjPantalla ="" ;
+    this.archivoInvalido = true;
+    this.bMensaje = false;
+    this.imagenes = {
+        tipos: [],
+        selectedOption: {idComplejo: '1', idCancha:'1', nombre: '', url:'', imagen:''} 
+    };    
+    
+    this.vURL = "/../resergol1.1/images/complejos/complejo2.jpg";
+
     this.paso1Completo = false;
-    $scope.precioAPagar = 0;
+    $scope.precioAPagar = 500;
     $scope.restante = 0;
     $scope.porcentajePago = 0;
 
@@ -268,6 +277,52 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
     
     this.reservar = function(){
     
+        //GUARDO EL EQUIPO
+        //self.vURL = self.vURL.replace('//', '/');
+        var url = null;
+        if(self.vURL != '/../resergol1.1/images/complejos/complejo2.jpg')
+            url = self.vURL;
+                
+        var EquipoNuevo = new EquiposService();
+        EquipoNuevo.data = {
+                        "idCliente": $scope.idCliente,
+                        "nombre": document.getElementById("nombreEquipo").value,
+                        "url": url,
+                        "pResultado": 0
+  	       };  
+        
+        
+        EquiposService.save(EquipoNuevo.data, function(reponse){
+                idRetorno = reponse.data[0];
+                console.log('retorno -->' + idRetorno);
+            
+                if(idRetorno != -1)
+                {
+                    //Una vez que guardo el equipo, guardo el equipo en el torneo.
+                    var InscripcionNuevo = new EquipoTorneoService();
+                    InscripcionNuevo.data = {
+                                    "idTorneo": $scope.idTorneo,
+                                    "idEquipo": parseInt(idRetorno),
+                                    "pResultado": 0
+                       };
+                    
+                    EquipoTorneoService.save(InscripcionNuevo.data, function(reponse){
+                        idRetorn = reponse.data[0];
+                        console.log('retorno inscripcion -->' + idRetorn);
+                        //IVO
+            
+                    },function(errorResponse){
+                        console.log('ERROR INSCRIPCION DEL EQUIPO AL TORNEO...' + errorResponse); 
+                    });
+            
+                }
+                else
+                    console.log('Error al insertar equipo...');
+            
+              },function(errorResponse){
+                console.log('ERROR EQUIPO...' + errorResponse); 
+             });
+        
         /*var ReservaNueva = new ReservasService();
         
         self.Reserva.fechaPartido = $scope.fechaPartido;
@@ -308,19 +363,24 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
     
     this.pagarYReservar = function(){
         
-        bootbox.confirm("¿Seguro desea realizar el pago?", function(result) {
+        var errores = "";
+        var nom = document.getElementById("nombreEquipo").value;
+        if(nom == undefined || nom == "")
+            errores = "* Por más malo que sea, el equipo debe tener un nombre! <br>";
+        if(nom.length > 18)
+            errores = "* El nombre del equipo es muy largo! <br>";
+            
+        if(errores != "")     
+        {
+            bootbox.alert(errores, function(){}); 
+            return false;
+        }
+    
+        
+        bootbox.confirm("¿Seguro desea realizar el pago de $"+ $scope.precioAPagar +" para inscribirte al torneo?", function(result) {
         if(result)
         {
-            $('ul.setup-panel li:eq(2)').removeClass('disabled');
-            
-            $('ul.setup-panel li a[href="#step-3"]').trigger('click');
-            //$(this).remove();
-            $(this).prop('disabled', true);
-            $('ul.setup-panel li:eq(0)').addClass('disabled');
-            $('ul.setup-panel li:eq(1)').addClass('disabled');
-
             self.reservar();
-            
         }
   
         }); 
@@ -340,7 +400,6 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
                         "valor": 0
   	       };  
         
-        console.log('POR GUARDAR LA TARJETA!!!');
         TarjetasClienteService.save(TarjetaNueva.data, function(reponse){
                 idRetorno = reponse.data[0];
                 console.log('retorno -->' + idRetorno);
@@ -350,6 +409,36 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
     };
     
 
+    
+    ////////////////////////////////////////********IMAGEN EQUIPO**********/////////////////////////////////////////////
+    
+     $scope.uploadFile = function()
+	{
+		var file = $scope.file;
+        console.log(file);
+        
+		EquiposImagenesService.uploadFile(file).then(function(res)
+		{
+            self.vURL = 'http://localhost:8080/resergol1.1/api/Imagenes/equipos/' + res.data;
+            //console.log('VURL---->' + self.vURL);
+		})
+	}
+    
+     $scope.onChange = function (files) {
+         
+        if(files[0] == undefined) return;
+            $scope.fileExt = files[0].name.split(".").pop()
+            return $scope.isImage($scope.fileExt );
+        }
+        
+        
+        $scope.isImage = function(ext) {
+            var res =  ("jpg" || ext == "jpeg"|| ext == "gif" || ext=="png");
+            self.archivoInvalido = !res;
+            self.bMensaje= !res ;
+            
+            return res;          
+        };
     
     
    
@@ -424,3 +513,17 @@ var readyInterval = setInterval(function() {
 
     
 });
+
+
+resergolApp.directive('uploaderModel', ["$parse", function ($parse) {
+	return {
+		restrict: 'A',
+		link: function (scope, iElement, iAttrs) 
+		{
+			iElement.on("change", function(e)
+			{
+				$parse(iAttrs.uploaderModel).assign(scope, iElement[0].files[0]);
+			});
+		}
+	};
+}])

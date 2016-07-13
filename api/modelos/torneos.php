@@ -898,9 +898,45 @@ class Torneo
     }
     
    
+//Se usa en el buscador de torneos del cliente.
+    public function getTorneosByCliente($idCliente, $todos, $inscripcion, $activos, $finalizados){
+        
+        $stmt = $this->connection->prepare('SET @idCliente := ?');
+        $stmt->bind_param('i', $idCliente);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @todos := ?');
+        $stmt->bind_param('i', $todos);
+        $stmt->execute();
+
+        $stmt = $this->connection->prepare('SET @inscripcion := ?');
+        $stmt->bind_param('i', $inscripcion);
+        $stmt->execute();
+
+        $stmt = $this->connection->prepare('SET @activos := ?');
+        $stmt->bind_param('i', $activos);
+        $stmt->execute(); 
+
+        $stmt = $this->connection->prepare('SET @finalizados := ?');
+        $stmt->bind_param('i', $finalizados);
+        $stmt->execute();
+        
+        $query = "CALL SP_getTorneosByCliente(@idCliente, @todos, @inscripcion, @activos, @finalizados);";
+        
+        $torneos = array();
+        
+        if($result = $this->connection->query($query)){
+            while($fila = $result->fetch_assoc()){
+                $torneos[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $torneos;
+    }
+
+
 }
-
-
 
 /*Ejemplo para el POST
 {

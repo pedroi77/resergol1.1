@@ -21,6 +21,7 @@ require_once("modelos/puntuaciones.php");
 require_once("modelos/comentarios.php");
 require_once("modelos/reservasCancelacion.php");
 require_once("modelos/devoluciones.php");
+require_once("modelos/equipos.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -400,22 +401,9 @@ $app->get('/duenios/torneos/:idDuenio/:todos/:activos/:inscriptos/:finalizados',
 
 //get torneos por idTorneo
 $app->get('/common/torneo/:idTorneo', function($idTorneo){
-    
-    $headers = apache_request_headers();
-    $token = explode(" ", $headers["Authorization"]);
-    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
-    
-    $duenio = new Duenio();
-    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
-
-    if($tokenOK){
-        $torneo = new Torneo();
-        $data = $torneo->getTorneosByIdTorneo($idTorneo);
-        sendResult($data);
-    }
-	else{
-        sendError("token invalido");
-    }
+    $torneo = new Torneo();
+    $data = $torneo->getTorneosByIdTorneo($idTorneo);
+    sendResult($data);
 });
 
 //get mails aviso cancelacion por idTorneo
@@ -494,21 +482,9 @@ $app->get('/dias/:idDuenio/:idTorneo', function($idDuenio, $idTorneo){
 
 //get de imagenes por torneo
 $app->get('/duenios/torneos/imagen/:idTorneo', function($idTorneo){
-    $headers = apache_request_headers();
-    $token = explode(" ", $headers["Authorization"]);
-    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
-    
-    $duenio = new Duenio();
-    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
-
-    if($tokenOK){
-        $imagenes = new Torneo();
-        $data = $imagenes->getImagenesByTorneo($idTorneo);
-        sendResult($data);
-    }
-	else{
-        sendError("token invalido");
-    }
+    $imagenes = new Torneo();
+    $data = $imagenes->getImagenesByTorneo($idTorneo);
+    sendResult($data);
 });
 
 //get de canchas del torneo
@@ -687,6 +663,12 @@ $app->get('/torneosCli/:pNombre/:pTipo/:pCantEquipos/:pIdProv/:pIdLoc/:pCantJug/
 
 });
 
+//Get torneos para pantalla MisTorneos del cliente.
+$app->get('/torneosCli/:idCliente/:todos/:inscripcion/:activos/:finalizados', function($idCliente, $todos, $inscripcion, $activos, $finalizados){
+    $torneos = new Torneo();
+    $data = $torneos->getTorneosByCliente($idCliente, $todos, $inscripcion, $activos, $finalizados);
+	sendResult($data);
+});
 
 /*****************************************CANCHAS****************************************************************************/
 
@@ -1442,5 +1424,121 @@ $app->get('/complejo/:idComplejo', function($idComplejo){
     $data = $complejo->getDatosComplejo($idComplejo);
     sendResult($data);
 });
+
+/**********************************EQUIPOS*************************************************************/
+$app->post('/equiposCliente', function(){
+    
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $eq = new Equipo();
+        $result = $eq->create($data);
+    
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al insertar equipo...");
+        };
+        
+    /*}
+    else{
+        sendError("token invalido");
+    }*/
+    
+});
+
+
+//alta imagenes equipos
+$app->post('/clientes/equipos/imagen', function(){
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $eq = new Equipo();
+        $result = $eq->agregarEquipoImagen($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al guardar la imagen del equipo");
+        };
+    /*}
+	else{
+        sendError("token invalido");
+    }*/
+});
+
+/**********************************INSCRIPCION EQUIPOS ATORNEOS*************************************************************/
+$app->post('/equipoTorneo', function(){
+    
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $eq = new Equipo();
+        $result = $eq->inscribirEquipoATorneo($data);
+    
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al insertar equipo en torneo...");
+        };
+        
+    /*}
+    else{
+        sendError("token invalido");
+    }*/
+    
+});
+
+
+$app->delete('/equipoTorneo/:idEquipo/:idTorneo', function($idEquipo, $idTorneo){
+    
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+    if($tokenOK){*/
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $eq = new Equipo();
+        $result = $eq->deleteEquipoTorneo($idEquipo, $idTorneo);
+    
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al insertar equipo en torneo...");
+        };
+        
+    /*}
+    else{
+        sendError("token invalido");
+    }*/
+    
+});
+
 
 $app->run();
