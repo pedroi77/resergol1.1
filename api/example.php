@@ -5,7 +5,8 @@ $mail = new PHPMailer;
 
 //$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
-$mail->isSMTP();                                      // Set mailer to use SMTP
+$mail->isSMTP();
+  
 //$mail->Host = 'smtp.comcast.net';  // Specify main and backup SMTP servers
 $mail->Host = 'smtp.gmail.com';
 $mail->SMTPAuth = true;                               // Enable SMTP authentication
@@ -17,10 +18,14 @@ $mail->Port = 587;                                    // TCP port to connect to
 $mail->setFrom('from@example.com', 'Mailer');
 //$mail->addAddress('iralapedro@gmail.com', 'Joe User');     // Add a recipient
 //$mail->addAddress('matiasfumacoo@gmail.com');               // Name is optional
-$mail->addAddress('ivanjfernandez@outlook.com');               // Name is optional
+//$mail->addAddress('ivanjfernandez@outlook.com');               // Name is optional
+
+
+
 $mail->addReplyTo('info@example.com', 'Information');
 $mail->addCC('cc@example.com');
 $mail->addBCC('bcc@example.com');
+
 
 $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
 $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
@@ -44,3 +49,4 @@ if(!$mail->send()) {
 } else {
     echo 'Message has been sent';
 }
+
