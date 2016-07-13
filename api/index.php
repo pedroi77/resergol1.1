@@ -1029,6 +1029,20 @@ $app->post('/duenios/canchas/reservas', function(){ ///:idComplejo/:idCancha/:po
     
 });
 
+//Get reservas del dueño por dia (Mis Reservas)
+/*$app->get('/duenios/reservas/:idComplejo/:fecha', function($idComplejo, $fecha){
+    $reservas = new Reserva();
+    $data = $reservas->getReservasByDuenioFecha($idComplejo, $fecha);
+	sendResult($data);
+});*/
+
+//Get reservas del dueño por dia (Mis Reservas)
+$app->get('/duenios/reservas/:idComplejo/:fecha/:idCancha', function($idComplejo, $fecha, $idCancha){
+    $reservas = new Reserva();
+    $data = $reservas->getReservasByDuenioFechaCancha($idComplejo, $fecha, $idCancha);
+	sendResult($data);
+});
+
 /*******************************TARJETAS CLIENTES*****************************************************/
 
 //alta
