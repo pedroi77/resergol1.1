@@ -46,7 +46,6 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
         
         self.tipoUsuario = sessionStorage.tipo;
         console.log( self.tipoUsuario);
-        console.log(  self.idTorneo);
        
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
             self.torneo = data[0];
