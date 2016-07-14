@@ -408,8 +408,8 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
              });
     };
     
-
     
+  
     ////////////////////////////////////////********IMAGEN EQUIPO**********/////////////////////////////////////////////
     
      $scope.uploadFile = function()

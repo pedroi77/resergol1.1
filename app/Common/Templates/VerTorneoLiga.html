@@ -27,7 +27,9 @@
             
             <br> </br>
             <div class="col-sm-12" ng-controller= "ClientesController as cli">
-                <button class="btn btn-md btn-primary btn-block" ng-click= "cli.inscripcionTorneoLiga()">
+                <button class="btn btn-md btn-primary btn-block"
+                        ng-disabled="!tor.estaLogueadoCliente"
+                        ng-click= "!tor.estaLogueadoCliente || tor.inscripcionTorneoLiga()">
                     Inscribite! <i class="glyphicon glyphicon-hand-right"></i>
                 </button>
             </div> 

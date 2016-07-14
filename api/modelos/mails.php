@@ -1,5 +1,6 @@
 <?php
 require_once("connection.php");
+require 'phpmailer/PHPMailerAutoload.php';
 //require_once("bower_components\swiftmailer-5.x\lib\swift_required.php");
 //include_once "bower_components\swiftmailer-5.x\lib\swift_required.php";
 //require_once 'bower_components/swiftmailer-5.x/lib/swift_required.php';
@@ -13,35 +14,57 @@ class Mails
         $this->connection = Connection::getInstance();
     }
     
-    public function mandarMail(){
+    public function mandarMail($mail){
+        
+        //RECEPTOR, ASUNTO, MENSAJE
+        $receptor = $this->connection->real_escape_string($mail['receptor']);
+        $asunto = $this->connection->real_escape_string($mail['asunto']);
+        $mensaje = $this->connection->real_escape_string($mail['mensaje']);
+        
+        $mail = new PHPMailer;
+        $mail->isSMTP();
 
-        $subject = 'Hello from Mandrill, PHP!';
-        $from = array('you@yourdomain.com' =>'Your Name');
-        $to = array(
-         'matiasfumacoo@gmail.com'  => 'Recipient1 Name',
-         'ivanjfernandez@outlook.com' => 'Recipient2 Name'
+        //$mail->Host = 'smtp.comcast.net';  // Specify main and backup SMTP servers
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = 'resergol@gmail.com';                 // SMTP username
+        $mail->Password = '123resergol321';                           // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587;                                    // TCP port to connect to
+
+        $mail->setFrom('from@example.com', 'Mailer');
+        //$mail->addAddress('iralapedro@gmail.com', 'Joe User');     // Add a recipient
+        //$mail->addAddress('matiasfumacoo@gmail.com');               // Name is optional
+        $mail->addAddress($receptor);               // Name is optional
+
+
+
+        $mail->addReplyTo('info@example.com', 'Information');
+        $mail->addCC('cc@example.com');
+        $mail->addBCC('bcc@example.com');
+
+
+        $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+        $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+        $mail->isHTML(true);                                  // Set email format to HTML
+
+        $mail->Subject = $asunto;
+        $mail->Body    = $mensaje;
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
         );
 
-        $text = "Mandrill speaks plaintext";
-        $html = "<em>Mandrill speaks <strong>HTML</strong></em>";
-
-        $transport = Swift_SmtpTransport::newInstance('smtp.mandrillapp.com', 587);
-        $transport->setUsername('MANDRILL_USERNAME');
-        $transport->setPassword('MANDRILL_PASSWORD');
-        $swift = Swift_Mailer::newInstance($transport);
-
-        $message = new Swift_Message($subject);
-        $message->setFrom($from);
-        $message->setBody($html, 'text/html');
-        $message->setTo($to);
-        $message->addPart($text, 'text/plain');
-
-        if ($recipients = $swift->send($message, $failures))
-        {
-         echo 'Message successfully sent!';
+        if(!$mail->send()) {
+            echo "Error: " . $mail->ErrorInfo;
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
         } else {
-         echo "There was an error:\n";
-         print_r($failures);
+            echo 'Message has been sent';
         }
 
 

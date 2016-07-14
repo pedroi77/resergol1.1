@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService, ComplejosDiasServices, PuntuacionesCanchaService, ComentariosCanchaService, CanchaImagenesDBServices){
+resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService, ComplejosDiasServices, PuntuacionesCanchaService, ComentariosCanchaService, CanchaImagenesDBServices, MandarMailsService){
 	
     var self = this;
     
@@ -292,8 +292,26 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
                 });
         };
 
-    
+     //Traigo los comentarios de la cancha.
+    this.mandarMail = function(){
+        
+        var mailNuevo = new MandarMailsService();
+                    mailNuevo.data = {
+                        "receptor": 'ivanjfernandez@outlook.com',
+                        "asunto": 'Gracias por Reservar!',
+                        "mensaje": 'mensaje de prueba'
+                    };  
+        
+                MandarMailsService.save(mailNuevo.data, function(reponse){
+                        console.log('se mando el mail');
+                      },function(errorResponse){
+                        console.log('no se mando el mail' + errorResponse); 
+                     }); 
+        };
 
+
+    self.mandarMail(); //Llamar a este metodo despues de hacer una reserva.
+    
     self.getComentariosCancha();
     
 this.getImagenes = function()
@@ -448,9 +466,7 @@ this.getImagenes = function()
         
     };
     
-     
-
-    
+   
   this.verificarListaNegra = function(){
 			ListasNegrasService.query({idCliente:sessionStorage.id, idComplejo:$scope.idComplejo}).$promise.then(function(data){
                  if(data != null && data != undefined && data[0] != undefined)

@@ -2,7 +2,7 @@
 var resergolApp = angular.module("resergolApp");
 
 
-resergolApp.controller("TorneoLigaController", function($scope, $stateParams, store, $state, TorneoService, TorneoImgDBService,TorneoLigaTablaService, TorneoLigaFechasService,TorneoLigaFixtureService,TorneoCanchasService){
+resergolApp.controller("TorneoLigaController", function($scope, $stateParams, store, $state, TorneoService, TorneoImgDBService,TorneoLigaTablaService, TorneoLigaFechasService,TorneoLigaFixtureService,TorneoCanchasService, ListasNegrasService){
 
 
     var self = this;
@@ -17,6 +17,7 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
     this.idTorneo = $stateParams.idTorneo;
     this.editando = false;
     this.canchas=[];
+    $scope.fechaIngresoListaNegra = 0; //Si es 0, no está en la lista negra. Si está, guardo la fecha que ingresó a la misma.
   
     this.estaLogueadoCliente = false;
     var token = store.get("token") || null;
@@ -30,6 +31,16 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
          }   
   
     console.log('LOGUEADO->' + self.estaLogueadoCliente);
+    
+    this.inscripcionTorneoLiga = function(){ 
+        if($scope.fechaIngresoListaNegra != 0)
+        {
+            var msj = 'No podés reservar ya que estás en la lista negra del complejo desde el ' + $scope.fechaIngresoListaNegra;
+            bootbox.alert(msj, function() {});
+        }
+        else
+            $state.go('Clientes.verTorneoLiga.inscripcionTorneoLiga');
+    };
     
     
     this.cargarFixture = function(idFecha){
@@ -77,10 +88,26 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
          });
     };
     
+    this.verificarListaNegra = function(){
+			ListasNegrasService.query({idCliente:sessionStorage.id, idComplejo:1}).$promise.then(function(data){
+                 if(data != null && data != undefined && data[0] != undefined)
+                 {
+                     if(data[0].FechaIngreso != null && data[0].FechaIngreso != undefined)
+                        $scope.fechaIngresoListaNegra = data[0].FechaIngreso;
+                     else
+                        $scope.fechaIngresoListaNegra = 0;     
+                 }
+                else
+                    $scope.fechaIngresoListaNegra = 0;
+                 
+            });
+	};
+    
     this.init = function(){
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
             console.log(data[0]);
             self.torneo = data[0];
+            self.verificarListaNegra();
         }); 
         
         TorneoImgDBService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {

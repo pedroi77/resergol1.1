@@ -22,6 +22,7 @@ require_once("modelos/comentarios.php");
 require_once("modelos/reservasCancelacion.php");
 require_once("modelos/devoluciones.php");
 require_once("modelos/equipos.php");
+require_once("modelos/mails.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -1540,5 +1541,21 @@ $app->delete('/equipoTorneo/:idEquipo/:idTorneo', function($idEquipo, $idTorneo)
     
 });
 
+///*********************MANDAR MAILS*******************************************************************************************/
+
+//mandarMails
+$app->post('/mandarMails', function(){
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+	
+	$mails = new Mails();
+    /*$result = */$mails->mandarMail($data);
+	
+	/*if($result){
+		sendResult($result);
+	}else{
+		sendError("Error al mandar mail");
+	}*/
+});
 
 $app->run();
