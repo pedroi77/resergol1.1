@@ -8,7 +8,7 @@
 
         <tbody>
             <tr ng-repeat="row in tor.MyRecCollection">
-                <td class="seleccion celdaReserva" style = "celdaReserva" ng-repeat="cell in row">{{cell.usuario}}</td>
+                <td class="seleccion celdaReserva" style = "celdaReserva" ng-repeat="cell in row track by $index">{{cell.usuario}}</td>
             </tr>
         </tbody>
     </table>
