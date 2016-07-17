@@ -176,28 +176,45 @@
                     <section class="widget">
                         
                         <table  class="table table-bordered text-center " style= "table-layout: fixed; vertical-align:center;">
-                            <tr>
+                            
+                            <!--thead>
+                                <tr>
+                                    <th ng-repeat="(header, value) in dueRes.MyRecCollection[0]" class="col-sm-1 thReservas">{{header}}</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="row in dueRes.MyRecCollection">
+                                    <td class="seleccion celdaReserva" style = "celdaReserva" ng-repeat="cell in row">{{cell}}</td>
+                                </tr>
+                            </tbody -->
+                            
+                            <tr ng-repeat="row in data">
+                                <td href="#reservasModal" style="{{col.estilo}}" role="button" data-toggle="modal" class="seleccion celdaReserva" ng-repeat="col in row track by $index">{{col.nombre}}</td>
+                            </tr>
+                            
+                            <!--tr>
                                 <td class="col-sm-1 thReservas"></td>
                                 <td class="col-sm-1 thReservas" ng-repeat="can in dueRes.canchas">{{can.nombre}}</td>
                             </tr>
                             
-                            <!--tr ng-repeat="hora in dueRes.horas">
+                            <!- -tr ng-repeat="hora in dueRes.horas">
                                 
                                 <td class="horas">{{hora.Hora}}</td>
                                 
                                 <td href="#reservasModal" ng-repeat="asd in dueRes.reservas.canchas" role="button" data-toggle="modal" class="seleccion celdaReserva" style = "celdaReserva">{{asd.datos.idDia}}</td>
                                 
-                            </tr -->
+                            </tr - ->
                             
-                            <tr ng-repeat="hora in dueRes.reservas.canchas">
+                            <!--tr ng-repeat="hora in dueRes.reservas.canchas">
                                 
                                 <td class="horas">{{hora.Hora}}</td>
                                 
                                 <td href="#reservasModal" ng-repeat="asd in hora.datos" role="button" data-toggle="modal" class="seleccion celdaReserva" style = "celdaReserva">{{asd.datos.idDia}}</td>
                                 
-                            </tr>
+                            </tr >
                             
-                            <!--tr ng-repeat="can in dueRes.reservas.canchas">
+                            <tr ng-repeat="can in dueRes.reservas.canchas">
                                 <td class="column" title="{{can.IdCancha}}" ng-repeat="res in can.datos" >
                                     {{res.usuario}}
                                 </td>
