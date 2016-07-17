@@ -529,6 +529,14 @@ $app->get('/common/torneo/liga/fechas/:idTorneo', function($idTorneo){
         sendResult($data);
 });
 
+
+//get de campeon del torneo
+$app->get('/common/torneo/campeon/:idTipoTorneo/:idTorneo', function($idTipoTorneo, $idTorneo){
+        $campeon = new Torneo();
+        $data = $campeon->getCampeon($idTipoTorneo, $idTorneo);
+        sendResult($data);
+});
+
 //get de fixture por fechas
 $app->get('/common/torneo/liga/fixture/:idTorneo/:idFecha', function($idTorneo, $idfecha){
     $fixture = new TorneoLiga();

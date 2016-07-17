@@ -2,7 +2,7 @@
 var resergolApp = angular.module("resergolApp");
 
 
-resergolApp.controller("TorneoLigaController", function($scope, $stateParams, store, $state, TorneoService, TorneoImgDBService,TorneoLigaTablaService, TorneoLigaFechasService,TorneoLigaFixtureService,TorneoCanchasService, ListasNegrasService){
+resergolApp.controller("TorneoLigaController", function($scope, $stateParams, store, $state, TorneoService, TorneoImgDBService,TorneoLigaTablaService, TorneoLigaFechasService,TorneoLigaFixtureService,TorneoCanchasService, ListasNegrasService,TorneoCampeonService){
 
 
     var self = this;
@@ -17,7 +17,11 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
     this.idTorneo = $stateParams.idTorneo;
     this.editando = false;
     this.canchas=[];
+    this.msjFecha;
+    this.campeon;
+    this.muestraCampeon=false;
     $scope.fechaIngresoListaNegra = 0; //Si es 0, no está en la lista negra. Si está, guardo la fecha que ingresó a la misma.
+    
   
     this.estaLogueadoCliente = false;
     var token = store.get("token") || null;
@@ -53,6 +57,8 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
                 self.fixture[contador]["gol2"]=parseInt(self.fixture[contador]["gol2"]) ;
                 contador++;
             });
+            
+            self.msjFecha = "Fecha " + idFecha;
         }); 
     }
     
@@ -108,6 +114,20 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
             console.log(data[0]);
             self.torneo = data[0];
             self.verificarListaNegra();
+            
+            TorneoCampeonService.query({idTipoTorneo:self.torneo.idTipoTorneo , idTorneo:self.idTorneo }).$promise.then(function(data) {            
+                self.campeon = data[0];
+                
+                console.log(self.campeon);
+                
+                
+                if(self.campeon.IdEquipo>0){
+                    self.muestraCampeon = true;
+                }else{
+                    self.muestraCampeon = false;
+                }
+            }); 
+            
         }); 
         
         TorneoImgDBService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
