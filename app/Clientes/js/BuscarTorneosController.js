@@ -218,9 +218,9 @@ this.getFiltros = function(){
 
 this.verTorneo = function(torneo)
 {
-    console.log(torneo.IdTipoTorneo);
-console.log(torneo.IdTorneo);
-    console.log(torneo);
+   // console.log(torneo.IdTipoTorneo);
+//console.log(torneo.IdTorneo);
+  //  console.log(torneo);
     
     if(torneo.IdTipoTorneo == 1 || torneo.IdTipoTorneo == "1")
         $state.go("Clientes.verTorneoLiga",{idTorneo:torneo.IdTorneo});

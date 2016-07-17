@@ -1,7 +1,7 @@
 
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $state, TorneoService, TorneoImgDBService, TorneoLigaFixtureService,TorneoCopaFixtureService, TorneoCopaIyVFixtureService, TorneoCanchasService ){
+resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $state, TorneoService, TorneoImgDBService, TorneoLigaFixtureService,TorneoCopaFixtureService, TorneoCopaIyVFixtureService, TorneoCanchasService,TorneoCampeonService ){
 
     var self = this;
     this.torneo;
@@ -28,6 +28,8 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
     this.canchas=[];
     this.bEdita = false;
     this.alturaCampeon;
+    this.campeon;
+    this.muestraCampeon=false;
     
 
     
@@ -64,6 +66,18 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
                 self.msjIdaVuelta = "Ida"
             }
                 
+            TorneoCampeonService.query({idTipoTorneo:self.torneo.idTipoTorneo , idTorneo:self.idTorneo }).$promise.then(function(data) {            
+                self.campeon = data[0];
+                
+                console.log(self.campeon);
+                
+                
+                if(self.campeon.IdEquipo>0){
+                    self.muestraCampeon = true;
+                }else{
+                    self.muestraCampeon = false;
+                }
+            }); 
              
         }); 
         
@@ -110,7 +124,7 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
                 self.nombreFase3 = 'Cuartos';
                 self.nombreFase4 = 'Semis';
                 self.nombreFase5 = 'Final';
-                self.alturaCampeon = "margin-top: 508.0px;"
+                self.alturaCampeon = "margin-top: 508.0px; height:200px;"
                 break;
             case 16:
                 idFase1 = 2;
@@ -123,7 +137,7 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
                 self.nombreFase3 = 'Semis';
                 self.nombreFase4 = 'Final';
                 self.nombreFase5 = '';
-                self.alturaCampeon = "margin-top: 254.0px;"
+                self.alturaCampeon = "margin-top: 254.0px; height:200px;"
                 break;
             case 8:
                 idFase1 = 3;
@@ -136,7 +150,7 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
                 self.nombreFase3 = 'Final';
                 self.nombreFase4 = '';
                 self.nombreFase5 = '';
-                self.alturaCampeon = "margin-top: 227.0px;"
+                self.alturaCampeon = "margin-top: 227.0px; height:200px;"
                 break;
             case 4:
                 idFase1 = 4;
@@ -149,7 +163,7 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
                 self.nombreFase3 = '';
                 self.nombreFase4 = '';
                 self.nombreFase5 = '';
-                self.alturaCampeon = "margin-top: 63.5px;"
+                self.alturaCampeon = "margin-top: 63.5px; height:200px;"
                 break;
         };
         
@@ -489,7 +503,7 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
                 self.nombreFase3 = 'Cuartos';
                 self.nombreFase4 = 'Semis';
                 self.nombreFase5 = 'Final';
-                self.alturaCampeon = "margin-top: 508.0px;"
+                self.alturaCampeon = "margin-top: 508.0px; height:200px;"
                 break;
             case 16:
                 idFase1 = 2;
@@ -502,7 +516,7 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
                 self.nombreFase3 = 'Semis';
                 self.nombreFase4 = 'Final';
                 self.nombreFase5 = '';
-                self.alturaCampeon = "margin-top: 254.0px;"
+                self.alturaCampeon = "margin-top: 254.0px; height:200px;"
                 break;
             case 8:
                 idFase1 = 3;
@@ -515,7 +529,7 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
                 self.nombreFase3 = 'Final';
                 self.nombreFase4 = '';
                 self.nombreFase5 = '';
-                self.alturaCampeon = "margin-top: 127.0px;"
+                self.alturaCampeon = "margin-top: 127.0px; height:200px;"
                 break;
             case 4:
                 idFase1 = 4;
@@ -528,7 +542,7 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
                 self.nombreFase3 = '';
                 self.nombreFase4 = '';
                 self.nombreFase5 = '';
-                self.alturaCampeon = "margin-top: 63.5px;"
+                self.alturaCampeon = "margin-top: 63.5px; height:200px;"
                 break;
         };
         

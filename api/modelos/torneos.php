@@ -934,6 +934,31 @@ class Torneo
         }
         return $torneos;
     }
+    
+    //Campeon del torneo
+    public function getCampeon($IdTipoTorneo, $IdTorneo){  
+        
+        $stmt = $this->connection->prepare('SET @IdTipo := ?');
+        $stmt->bind_param('i', $IdTipoTorneo);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @IdTorneo := ?');
+        $stmt->bind_param('i', $IdTorneo);
+        $stmt->execute(); 
+         
+        
+        
+        $query = "CALL SP_getCampeon(@IdTipo, @IdTorneo);";
+        $campeon= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $campeon[] = $fila;
+            }
+            $result->free();
+        }
+        return $campeon;
+    }
 
 
 }
