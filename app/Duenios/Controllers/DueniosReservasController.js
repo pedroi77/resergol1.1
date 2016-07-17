@@ -109,6 +109,17 @@ $scope.data= [
 ["Hora"]
 ];
 
+this.reservaSeleccionada = {
+    
+    IdComplejo: self.IdComplejo
+    ,IdCancha: 0
+    ,NombreCancha: ''
+    ,CantJugadores: 0
+    ,Superficie: ''
+    ,Usuario: ''
+    ,Precio: 0
+    ,Pagado: 0  
+};
 /********************************************************************************************************************/
     
 this.traerReservas = function(){
@@ -126,7 +137,7 @@ this.traerReservas = function(){
         angular.forEach(dataCancha, function(unaCancha) { //self.reservas.canchas
         
             //console.log(unaCancha.nombre);
-            $scope.data[0].push({"nombre": unaCancha.nombre, "estilo": "background-color:#B5CBDE;", referencia:"" , pagado:0, precioCancha: 0});
+            $scope.data[0].push({"nombre": unaCancha.nombre, "estilo": "background-color:#B5CBDE;", referencia:"" , pagado:0, precioCancha: 0, "superficie": '', "nombreCancha": ''});
         
             //Traigo las reservas de cada cancha
             DueniosReservasServices.query({idComplejo: self.IdComplejo, fecha: self.Fecha, idCancha: unaCancha.IdCancha}).$promise.then(function(dataRes){
@@ -140,7 +151,7 @@ this.traerReservas = function(){
                     //recorro la primer lista de "reservas" para llenar la lista de horas
                     angular.forEach(dataRes, function(h) {
             
-                        $scope.data[i] = [{"nombre": h.hora, "estilo": "background-color:#B5CBDE;", referencia:"", pagado:0, precioCancha: 0}];
+                        $scope.data[i] = [{"nombre": h.hora, "estilo": "background-color:#B5CBDE;", referencia:"", pagado:0, precioCancha: 0, "superficie": '', "nombreCancha": ''}];
                         i++;
                     });
                 }
@@ -162,7 +173,7 @@ this.traerReservas = function(){
                         estilo = "background-color:#A5D29C;";
                     }
 
-                    $scope.data[index2][index] = {"nombre": res.usuario, "estilo": estilo, referencia:"#reservasModal", pagado:res.Pagado, precioCancha: res.precioCancha}; 
+                    $scope.data[index2][index] = {"nombre": res.usuario, "estilo": estilo, referencia:"#reservasModal", pagado:res.Pagado, precioCancha: res.precioCancha, "superficie": res.superficie, "nombreCancha": res.nombre}; 
                     index2++;
                 });
             });
@@ -172,23 +183,39 @@ this.traerReservas = function(){
     
 this.obtenerDiaActual = function(){
     
-    var hoy = new Date();
-    var dd = hoy.getDate();
-    var mm = hoy.getMonth()+1; //hoy es 0!
-    var yyyy = hoy.getFullYear();
+    var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"); 
+    var diasSemana = new Array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"); 
+    var f=new Date(); 
+    console.log(diasSemana[f.getDay()] + " " + f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
+};
 
-    if(dd<10) {
-        dd='0'+dd
-    } 
-
-    if(mm<10) {
-        mm='0'+mm
-    } 
-
-    hoy = mm+'/'+dd+'/'+yyyy;
+this.elegirReseva = function(reserva){
     
-    console.log(hoy);
-}
+    self.reservaSeleccionada.NombreCancha = reserva.nombre;
+    //self.reservaSeleccionada.Precio = reserva.precioCancha;
+    //self.reservaSeleccionada.CantJugadores = reserva.CantJugadores;
+    //self.reservaSeleccionada.Superficie = reserva.superficie;
+    
+    console.log("pago por aca");
+    
+};
+    
+$scope.setSelected = function(element) {
+    
+    alert("row" + element.parentNode.parentNode.rowIndex + 
+    " - column" + element.parentNode.cellIndex);
+};
+    
+$('td').click(function(){
+  var col = $(this).parent().children().index($(this));
+  var row = $(this).parent().parent().children().index($(this).parent());
+  alert('Row: ' + row + ', Column: ' + col);
+});
+    
+$('td').click(function(){ 
+    var colIndex = $(this).prevAll().length;
+    var rowIndex = $(this).parent('tr').prevAll().length;
+});
     
 self.traerReservas();
 self.obtenerDiaActual();

@@ -175,7 +175,7 @@
                 <div class="table-responsive col-md-9 ">     
                     <section class="widget">
                         
-                        <table  class="table table-bordered text-center " style= "table-layout: fixed; vertical-align:center;">
+                        <table id="tablaReservas" class="table table-bordered text-center " style= "table-layout: fixed; vertical-align:center;">
                             
                             <!--thead>
                                 <tr>
@@ -189,8 +189,8 @@
                                 </tr>
                             </tbody -->
                             
-                            <tr ng-repeat="row in data">
-                                <td href="{{col.referencia}}" style="{{col.estilo}}" role="button" data-toggle="modal" class="seleccion celdaReserva" ng-repeat="col in row track by $index">{{col.nombre}}</td>
+                            <tr ng-repeat="row in data" >
+                                <td href="{{col.referencia}}" ng-click="setSelected(this);" style="{{col.estilo}}" role="button" data-toggle="modal" class="seleccion celdaReserva" ng-repeat="col in row track by $index">{{col.nombre}}</td>
                             </tr>
                             
                             <!--tr>
@@ -426,13 +426,13 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label class="control-label">Maracana</label>
+                                            <label class="control-label">{{dueRes.reservaSeleccionada.NombreCancha}}</label>
                                             <br>
-                                            <label class="control-label">$ 300</label>
+                                            <label class="control-label">$ {{dueRes.reservaSeleccionada.Precio}}</label>
                                             <br>
-                                            <label class="control-label">5</label>
+                                            <label class="control-label">{{dueRes.reservaSeleccionada.CantJugadores}}</label>
                                             <br>
-                                            <label class="control-label">Cesped</label>
+                                            <label class="control-label">{{dueRes.reservaSeleccionada.Superficie}}</label>
                                         </div>
                                     </div>  
                                 </form>
