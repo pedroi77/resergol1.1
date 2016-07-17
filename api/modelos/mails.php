@@ -32,25 +32,27 @@ class Mails
         $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                    // TCP port to connect to
 
-        $mail->setFrom('from@example.com', 'Mailer');
+        $mail->setFrom('resergol@gmail.com', 'Resergol');
         //$mail->addAddress('iralapedro@gmail.com', 'Joe User');     // Add a recipient
         //$mail->addAddress('matiasfumacoo@gmail.com');               // Name is optional
         $mail->addAddress($receptor);               // Name is optional
 
 
 
-        $mail->addReplyTo('info@example.com', 'Information');
+        /*$mail->addReplyTo('info@example.com', 'Information');
         $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');
+        $mail->addBCC('bcc@example.com');*/
 
 
-        $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-        $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+        //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+        //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
         $mail->isHTML(true);                                  // Set email format to HTML
 
         $mail->Subject = $asunto;
-        $mail->Body    = $mensaje;
+        //$mensaje += "<img src='images/logo/logoMediano.png'>";
+        $mail->Body = $mensaje;
         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        //$mail->AddEmbeddedImage('images/logo/logoMediano.png', 'logoResergol');
 
         $mail->SMTPOptions = array(
             'ssl' => array(

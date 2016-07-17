@@ -135,7 +135,7 @@ this.traerReservas = function(){
                 self.reservas.canchas[index].datos = data;
                 //self.cosas.push({'usuario': data.usuario, 'hora': data.hora})
                 index++;
-                
+            
                 if(index == 1){
                     
                     var i = 1;
@@ -167,6 +167,7 @@ this.traerReservas = function(){
                     $scope.data[index2][index] = {"nombre": res.usuario, "estilo": estilo}// 
                     index2++;
                 });
+                
             });
         });  
     });

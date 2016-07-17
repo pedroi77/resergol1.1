@@ -12,6 +12,7 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
     $scope.idComplejo = $stateParams.idComp;
     $scope.idDuenio = -1;
     $scope.idCliente = sessionStorage.id;
+    $scope.mailCliente = sessionStorage.email;
     
     this.myInterval =5000;
     this.noWrapSlides = false;
@@ -47,6 +48,7 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
     this.diasComplejo = [];
     $scope.dt = null;
     $scope.FechasReservaFija = [];
+    $scope.noDisponibles = []; //Fechas no disp. para una reserva fija si es que las hay.
     $scope.aceptaReservaFija = 0;
     $scope.tooltipDiasComplejo = "";
     
@@ -292,14 +294,15 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
                 });
         };
 
-     //Traigo los comentarios de la cancha.
-    this.mandarMail = function(){
+     //Mandar mail.
+    this.mandarMail = function(mensaje, asunto){
         
+        console.log(mensaje);
         var mailNuevo = new MandarMailsService();
                     mailNuevo.data = {
-                        "receptor": 'ivanjfernandez@outlook.com',
-                        "asunto": 'Gracias por Reservar!',
-                        "mensaje": 'mensaje de prueba'
+                        "receptor": 'ivanjfernandez@outlook.com', //PONER $scope.mailCliente!!!!!!!!!!!!!!!!!
+                        "asunto": asunto,
+                        "mensaje": mensaje
                     };  
         
                 MandarMailsService.save(mailNuevo.data, function(reponse){
@@ -310,8 +313,6 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
         };
 
 
-    self.mandarMail(); //Llamar a este metodo despues de hacer una reserva.
-    
     self.getComentariosCancha();
     
 this.getImagenes = function()
@@ -627,7 +628,7 @@ this.getImagenes = function()
                     $scope.FechasReservaFija = data;
                     console.log('PRIMERA FECHA FIJA->' + $scope.FechasReservaFija[0].fecha);
                 
-                var noDisponibles = [];
+                $scope.noDisponibles = [];
                 console.log(data);
                 var hHasta = self.selectedHoraHId + ":00:00";
                 if($scope.FechasReservaFija.length == 0)
@@ -643,8 +644,8 @@ this.getImagenes = function()
                          //Guardo las fechas no disponibles para la reserva fija, asi se las muestro al cliente.
                         if(aux.NoDisponible != undefined && aux.NoDisponible != null && aux.NoDisponible != "")
                         {
-                            noDisponibles.push(aux.NoDisponible); 
-                            noDispEnString += aux.NoDisponible + "\n";
+                            $scope.noDisponibles.push(aux.NoDisponible); 
+                            noDispEnString += aux.NoDisponible + "<br>";
                         }
                         else
                         {
@@ -654,10 +655,10 @@ this.getImagenes = function()
                          
                      });
                     
-                    if(noDisponibles.length > 0)
+                    if($scope.noDisponibles.length > 0)
                     {
                         var mensaje = 'La reserva fija se realizará para el día y horario elegido en lo que resta del año. \n ';
-                        mensaje += 'Sin embargo las siguientes fechas no se podrán reservar ya que no están disponibles: \n ';
+                        mensaje += 'Sin embargo las siguientes fechas no se podrán reservar ya que no están disponibles: <br> ';
                         mensaje += noDispEnString + "\n \n" + '¿Desea realizar la reserva fija igualmente?';
                         
                         bootbox.confirm(mensaje, function(result) {
@@ -852,6 +853,19 @@ this.getImagenes = function()
         ReservasService.save(ReservaNueva.data, function(reponse){
                 idReserva = reponse.data[0];
                 console.log('idReserva -->' + idReserva);
+        
+        var horario = self.selectedHoraDId + ":00 hs. a " + self.selectedHoraHId + ":00 hs.";
+        var msjMail = "<u>" + sessionStorage.usuario + "</u>" + ": Realizaste una reserva de la cancha <b>" + $scope.cancha[0].nombre + "</b> del complejo <b>";
+            msjMail += $scope.cancha[0].Complejo + "</b> para el dia <b>" + $scope.fechaPartido + " de "+horario+"</b> <br><br>";
+            msjMail += "<u>Direccion de " + $scope.cancha[0].Complejo +":</u><b> " + $scope.cancha[0].Calle + " " + $scope.cancha[0].Altura + ", " + $scope.cancha[0].Localidad + " - " + $scope.cancha[0].Provincia + "</b><br><br>";
+            msjMail += "Pagaste <b>$" + $scope.precioAPagar + "</b><br>";
+            if($scope.restante > 0)
+                msjMail += "Debes <b>$" + $scope.restante + "</b><br>";
+            msjMail += "De un total de <b>$" + parseFloat($scope.precioAPagar + $scope.restante) + "</b><br><br><br>";
+            msjMail += "Muchas gracias por confiar en nosotros, el equipo de Resergol desea que disfrutes el partido!";
+            
+            
+                
             
         //Si realizó reserva fija, hago todas las reservas despues de haber reservado la primera normalmente.
         if($scope.aceptaReservaFija == 1)
@@ -860,8 +874,60 @@ this.getImagenes = function()
             ReservaFijaNueva.data = $scope.listasReservasFijas;
             console.log(ReservaFijaNueva.data[0]);
             ReservasFijasService.save(ReservaFijaNueva.data, function(reponse){    
-                //idReservaFija = reponse.data[0];
-                //console.log('idReserva -->' + idReservaFija);                      
+                idReservaFija = reponse.data[0];
+                //Mail para avisar de la reserva fija y de los dias que no se reservó si es que esta ocupada en el resto del año.
+                if(idReservaFija > 0)
+                {
+                    
+                    var sIddia = $scope.fechaElegida.getDay();
+                    var sDia = "";
+                    console.log('DIAAAAAAAAAA--->' + sIddia);
+                    switch(sIddia) {
+                        case 1:
+                            sDia = "Lunes";
+                            break;
+                        case 2:
+                            sDia = "Martes";
+                            break;
+                        case 3:
+                            sDia = "Miercoles";
+                            break;
+                        case 4:
+                            sDia = "Jueves";
+                            break;
+                        case 5:
+                            sDia = "Viernes";
+                            break;
+                        case 6:
+                            sDia = "Sabados";
+                            break;
+                        case 0:
+                            sDia = "Domingos";
+                            break;
+                    }
+                    
+                    //console.log(dia);
+                    var MailResFija = "<u>" + sessionStorage.usuario + "</u>" + ": Realizaste una reserva fija de la cancha <b>" + $scope.cancha[0].nombre + "</b> del complejo <b>";
+                    MailResFija += $scope.cancha[0].Complejo + "<br></b> para los dias <b>" + sDia + " restantes del a&ntilde;o de "+horario+"</b> <br><br>";
+                    
+                    //Si hay dias de la reserva fija que no se pudieron reservar xq estaban ocupados, vuelvo a avisar en el mail.
+                    if($scope.noDisponibles.length > 0)
+                    {
+                        var sFechasNoDisp = "";
+                        angular.forEach($scope.noDisponibles, function(noDis) {
+                            sFechasNoDisp += noDis + " <br>";
+                        });
+                        
+                        MailResFija += "Excepto las siguientes fechas que se encuentran reservadas por otra persona: <br>";
+                        MailResFija += "<b> "+ sFechasNoDisp +" </b><br><br>";
+                    }
+                    
+                    MailResFija += "<u>Direccion de " + $scope.cancha[0].Complejo +":</u><b> " + $scope.cancha[0].Calle + " " + $scope.cancha[0].Altura + ", " + $scope.cancha[0].Localidad + " - " + $scope.cancha[0].Provincia + "</b><br><br>";
+                    MailResFija += "Muchas gracias por confiar en nosotros, el equipo de Resergol desea que disfrutes cada uno de los partidos restantes del a&ntilde;o!";
+                    
+                    self.mandarMail(MailResFija, 'Nueva Reserva Fija! Gracias por confiar en Resergol');
+                }
+                
             },function(errorResponse){
                 console.log('ERROR res fija...'); 
             });
@@ -871,6 +937,7 @@ this.getImagenes = function()
              self.guardarTarjeta();
         
             self.borrarReservaTemp();
+            self.mandarMail(msjMail, 'Reservaste! Gracias por confiar en Resergol'); //Mando mail de la reserva que se realizo.
             
             $state.go('Clientes.verCancha.Reservar.ok'); 
             

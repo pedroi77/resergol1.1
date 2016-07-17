@@ -1549,13 +1549,13 @@ $app->post('/mandarMails', function(){
     $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
 	
 	$mails = new Mails();
-    /*$result = */$mails->mandarMail($data);
+    $result = $mails->mandarMail($data);
 	
-	/*if($result){
+	if($result){
 		sendResult($result);
 	}else{
 		sendError("Error al mandar mail");
-	}*/
+	}
 });
 
 $app->run();

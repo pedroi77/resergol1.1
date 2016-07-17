@@ -40,6 +40,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                 self.Usuario.passInvalida = false;
                 self.Usuario.login = true;
                 self.Usuario.id = cliente[0].IdCliente;
+                self.Usuario.email = cliente[0].Email;
                 store.set('token',  cliente[1]); //guardo el token
                 self.guardarSession();
                 if(!(form == null)){
@@ -148,6 +149,7 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
         sessionStorage.pass = btoa(self.Usuario.contrasenia);    
         sessionStorage.id = self.Usuario.id;
         sessionStorage.idComplejo = self.Usuario.idComplejo;
+        sessionStorage.email = self.Usuario.email;
     };
     
     this.desloguearse = function(){
