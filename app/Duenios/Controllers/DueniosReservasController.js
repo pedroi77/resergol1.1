@@ -27,6 +27,9 @@ this.cosas = [
     { num: 1}*/
 ]
 
+//this.tmpCanchas = []; 
+    
+    
 this.horas = [
     
     
@@ -109,17 +112,6 @@ $scope.data= [
 ["Hora"]
 ];
 
-this.reservaSeleccionada = {
-    
-    IdComplejo: self.IdComplejo
-    ,IdCancha: 0
-    ,NombreCancha: ''
-    ,CantJugadores: 0
-    ,Superficie: ''
-    ,Usuario: ''
-    ,Precio: 0
-    ,Pagado: 0  
-};
 /********************************************************************************************************************/
     
 this.traerReservas = function(){
@@ -130,52 +122,64 @@ this.traerReservas = function(){
         //cargo la lista de las canchas del complejo
         ///self.reservas.canchas = dataCancha; 
         //self.canchas = data;
-        console.log(dataCancha);
+        //console.log(dataCancha);
         var index = 0;
         
         //Recorro la lista de canchas por complejo 
         angular.forEach(dataCancha, function(unaCancha) { //self.reservas.canchas
         
             //console.log(unaCancha.nombre);
-            $scope.data[0].push({"nombre": unaCancha.nombre, "estilo": "background-color:#B5CBDE;", referencia:"" , pagado:0, precioCancha: 0, "superficie": '', "nombreCancha": ''});
+            $scope.data[0].push({"nombre": unaCancha.nombre, "estilo": "background-color:#B5CBDE;", referencia:"" , pagado:0, precioCancha: 0});
         
             //Traigo las reservas de cada cancha
             DueniosReservasServices.query({idComplejo: self.IdComplejo, fecha: self.Fecha, idCancha: unaCancha.IdCancha}).$promise.then(function(dataRes){
                
-                //console.log(index);
-                
                 if(index == 0){
-                    
                     var i = 1;
-                    
                     //recorro la primer lista de "reservas" para llenar la lista de horas
                     angular.forEach(dataRes, function(h) {
-            
-                        $scope.data[i] = [{"nombre": h.hora, "estilo": "background-color:#B5CBDE;", referencia:"", pagado:0, precioCancha: 0, "superficie": '', "nombreCancha": ''}];
+                        $scope.data[i] = [{"nombre": h.hora, "estilo": "background-color:#B5CBDE;", referencia:"", pagado:0, precioCancha: 0}];
                         i++;
                     });
                 }
                 
                 //Lleno cada cancha con su lista de reservas
-                dataCancha[index].datos = dataRes;
+                var auxindexCancha ;
+                var auxJ
+                
+                for(auxindexCancha =0;auxindexCancha < dataCancha.length;auxindexCancha++){
+                    if(dataCancha[auxindexCancha].nombre == dataRes[0].nombre){
+                        auxJ = auxindexCancha+1;   
+                        dataCancha[auxindexCancha].datos = dataRes;
+                    }
+                }
+                
+                
                 index++;
-
+                
+                
                 var index2 = 1;
                 
                 //Recorro la lista de reservas
+                console.log(auxJ);
                 angular.forEach(dataRes, function(res) {
                     
                     var estilo = "background-color:#FF6E6E;";
                     
                     if(res.usuario == null){
-                        
                         res.usuario = "Disponible";
                         estilo = "background-color:#A5D29C;";
                     }
-
-                    $scope.data[index2][index] = {"nombre": res.usuario, "estilo": estilo, referencia:"#reservasModal", pagado:res.Pagado, precioCancha: res.precioCancha, "superficie": res.superficie, "nombreCancha": res.nombre}; 
+                    //console.log(index);
+                    $scope.data[index2][auxJ] = {"nombre": res.usuario, "estilo": estilo, referencia:"#reservasModal", pagado:res.Pagado, precioCancha: res.precioCancha}; 
                     index2++;
                 });
+                
+                
+        
+                
+                
+                
             });
         });  
     });
@@ -183,41 +187,58 @@ this.traerReservas = function(){
     
 this.obtenerDiaActual = function(){
     
-    var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"); 
-    var diasSemana = new Array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"); 
-    var f=new Date(); 
-    console.log(diasSemana[f.getDay()] + " " + f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
-};
+    var hoy = new Date();
+    var dd = hoy.getDate();
+    var mm = hoy.getMonth()+1; //hoy es 0!
+    var yyyy = hoy.getFullYear();
 
-this.elegirReseva = function(reserva){
+    if(dd<10) {
+        dd='0'+dd
+    } 
+
+    if(mm<10) {
+        mm='0'+mm
+    } 
+
+    hoy = mm+'/'+dd+'/'+yyyy;
     
-    self.reservaSeleccionada.NombreCancha = reserva.nombre;
-    //self.reservaSeleccionada.Precio = reserva.precioCancha;
-    //self.reservaSeleccionada.CantJugadores = reserva.CantJugadores;
-    //self.reservaSeleccionada.Superficie = reserva.superficie;
+    //console.log(hoy);
+}
     
-    console.log("pago por aca");
-    
-};
-    
-$scope.setSelected = function(element) {
-    
-    alert("row" + element.parentNode.parentNode.rowIndex + 
-    " - column" + element.parentNode.cellIndex);
-};
-    
-$('td').click(function(){
-  var col = $(this).parent().children().index($(this));
-  var row = $(this).parent().parent().children().index($(this).parent());
-  alert('Row: ' + row + ', Column: ' + col);
-});
-    
-$('td').click(function(){ 
-    var colIndex = $(this).prevAll().length;
-    var rowIndex = $(this).parent('tr').prevAll().length;
-});
-    
-self.traerReservas();
-self.obtenerDiaActual();
+ this.init = function(){
+     self.traerReservas();
+     self.obtenerDiaActual();
+ }
+ 
+ /*PI borrar
+ this.mostrar= function(){
+     
+     var row=1;
+     var col=1;
+     
+     angular.forEach(self.tmpCanchas, function(canchaAux){
+         row= 1;
+         angular.forEach(canchaAux.datos, function(res) {
+                    
+            var estilo = "background-color:#FF6E6E;";
+
+            if(res.usuario == null){
+                res.usuario = "Disponible";
+                estilo = "background-color:#A5D29C;";
+            }
+            //console.log(row);
+            $scope.data[row][col] = {"nombre": res.usuario, "estilo": estilo, referencia:"#reservasModal", pagado:res.Pagado, precioCancha: res.precioCancha}; 
+            row++;
+        });
+        col++;
+     });
+   
+     
+     console.log($scope.data);
+     console.log( self.tmpCanchas);
+ };
+  */
+ 
+self.init();
     
 });
