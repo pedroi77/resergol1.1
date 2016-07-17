@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoModificarController", function($scope, $state,$stateParams,  TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, DuenioCanchasService, DueniosCantEquiposService, DuenioTorneoService, $uibModal,  $uibModalStack ,TorneoService, DuenioTorneoMailService){
+resergolApp.controller("TorneoModificarController", function($scope, $state,$stateParams,  TipoTorneosService, DueniosSuperficiesService, DueniosJugadoresService,DuenioDiasService, DuenioCanchasService, DueniosCantEquiposService, DuenioTorneoService, $uibModal,  $uibModalStack ,TorneoService, DuenioTorneoMailService, MandarMailsService){
 
     var self = this;
     this.tiposTorneos =[];
@@ -589,19 +589,13 @@ resergolApp.controller("TorneoModificarController", function($scope, $state,$sta
                 
                 DuenioTorneoMailService.query({idTorneo:self.Torneo.idTorneo}).$promise.then(function(data) {
                     equipos = data;
-                    console.log(equipos);
+                    self.mandarMail(equipos);
                 }); 
                 
                 
                 var TorneoEliminar = new DuenioTorneoService();
         
                 TorneoEliminar.data= {'idTorneo':self.Torneo.idTorneo};
-                //TorneoEliminar.data = self.Torneo;
-                console.log(TorneoEliminar.data);
-                //DuenioTorneoService.delete(TorneoEliminar.data, function(reponse){
-
-                
-                
                 
                 DuenioTorneoService.delete(TorneoEliminar.data, function(reponse){
                     bootbox.alert("Se eliminó el torneo.", function() {});
@@ -614,6 +608,28 @@ resergolApp.controller("TorneoModificarController", function($scope, $state,$sta
                  
             }
         }); 
+    };
+    
+    this.mandarMail = function(equipos){
+        
+        console.log(equipos);
+        
+        var i;
+        for(i=0; i<equipos.length; i++){
+        
+            var mailNuevo = new MandarMailsService();
+                        mailNuevo.data = {
+                            "receptor": equipos[i].Email,
+                            "asunto": 'Aviso torneo ' + equipos[i].nomTorneo,
+                            "mensaje": 'Resergol le informa que se a cancelado el torneo ' +equipos[i].nomTorneo +  ' del complejo ' + equipos[i].complejo + ' en el cual su equipo se inscribió. Se le acreditará en su cuenta el importe abonado a la hora de inscribirse. <br> Sepa disculpar las molestias ocacionadas.' 
+                        };  
+
+                    MandarMailsService.save(mailNuevo.data, function(reponse){
+                            console.log('se mando el mail');
+                          },function(errorResponse){
+                            console.log('no se mando el mail' + errorResponse); 
+                         }); 
+        };
     };
 
     self.init(); 
