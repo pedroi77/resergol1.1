@@ -190,7 +190,7 @@
                             </tbody -->
                             
                             <tr ng-repeat="row in data">
-                                <td href="#reservasModal" style="{{col.estilo}}" role="button" data-toggle="modal" class="seleccion celdaReserva" ng-repeat="col in row track by $index">{{col.nombre}}</td>
+                                <td href="{{col.referencia}}" style="{{col.estilo}}" role="button" data-toggle="modal" class="seleccion celdaReserva" ng-repeat="col in row track by $index">{{col.nombre}}</td>
                             </tr>
                             
                             <!--tr>
@@ -398,7 +398,7 @@
     </div>
            
     <!--reservas modal-->
-    <div id="reservasModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="reservasModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" ng-controller="DueniosReservasController as dueRes">
         <div class="modal-dialog modal-registracion">
             <div class="modal-content">
                 <div class="modal-header">

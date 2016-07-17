@@ -310,7 +310,7 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
         };
 
 
-    self.mandarMail(); //Llamar a este metodo despues de hacer una reserva.
+    //self.mandarMail(); //Llamar a este metodo despues de hacer una reserva.
     
     self.getComentariosCancha();
     
