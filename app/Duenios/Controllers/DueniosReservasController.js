@@ -27,6 +27,9 @@ this.cosas = [
     { num: 1}*/
 ]
 
+//this.tmpCanchas = []; 
+    
+    
 this.horas = [
     
     
@@ -119,7 +122,7 @@ this.traerReservas = function(){
         //cargo la lista de las canchas del complejo
         ///self.reservas.canchas = dataCancha; 
         //self.canchas = data;
-        console.log(dataCancha);
+        //console.log(dataCancha);
         var index = 0;
         
         //Recorro la lista de canchas por complejo 
@@ -131,40 +134,52 @@ this.traerReservas = function(){
             //Traigo las reservas de cada cancha
             DueniosReservasServices.query({idComplejo: self.IdComplejo, fecha: self.Fecha, idCancha: unaCancha.IdCancha}).$promise.then(function(dataRes){
                
-                //console.log(index);
-                
                 if(index == 0){
-                    
                     var i = 1;
-                    
                     //recorro la primer lista de "reservas" para llenar la lista de horas
                     angular.forEach(dataRes, function(h) {
-            
                         $scope.data[i] = [{"nombre": h.hora, "estilo": "background-color:#B5CBDE;", referencia:"", pagado:0, precioCancha: 0}];
                         i++;
                     });
                 }
                 
                 //Lleno cada cancha con su lista de reservas
-                dataCancha[index].datos = dataRes;
+                var auxindexCancha ;
+                var auxJ
+                
+                for(auxindexCancha =0;auxindexCancha < dataCancha.length;auxindexCancha++){
+                    if(dataCancha[auxindexCancha].nombre == dataRes[0].nombre){
+                        auxJ = auxindexCancha+1;   
+                        dataCancha[auxindexCancha].datos = dataRes;
+                    }
+                }
+                
+                
                 index++;
-
+                
+                
                 var index2 = 1;
                 
                 //Recorro la lista de reservas
+                console.log(auxJ);
                 angular.forEach(dataRes, function(res) {
                     
                     var estilo = "background-color:#FF6E6E;";
                     
                     if(res.usuario == null){
-                        
                         res.usuario = "Disponible";
                         estilo = "background-color:#A5D29C;";
                     }
-
-                    $scope.data[index2][index] = {"nombre": res.usuario, "estilo": estilo, referencia:"#reservasModal", pagado:res.Pagado, precioCancha: res.precioCancha}; 
+                    //console.log(index);
+                    $scope.data[index2][auxJ] = {"nombre": res.usuario, "estilo": estilo, referencia:"#reservasModal", pagado:res.Pagado, precioCancha: res.precioCancha}; 
                     index2++;
                 });
+                
+                
+        
+                
+                
+                
             });
         });  
     });
@@ -187,10 +202,43 @@ this.obtenerDiaActual = function(){
 
     hoy = mm+'/'+dd+'/'+yyyy;
     
-    console.log(hoy);
+    //console.log(hoy);
 }
     
-self.traerReservas();
-self.obtenerDiaActual();
+ this.init = function(){
+     self.traerReservas();
+     self.obtenerDiaActual();
+ }
+ 
+ /*PI borrar
+ this.mostrar= function(){
+     
+     var row=1;
+     var col=1;
+     
+     angular.forEach(self.tmpCanchas, function(canchaAux){
+         row= 1;
+         angular.forEach(canchaAux.datos, function(res) {
+                    
+            var estilo = "background-color:#FF6E6E;";
+
+            if(res.usuario == null){
+                res.usuario = "Disponible";
+                estilo = "background-color:#A5D29C;";
+            }
+            //console.log(row);
+            $scope.data[row][col] = {"nombre": res.usuario, "estilo": estilo, referencia:"#reservasModal", pagado:res.Pagado, precioCancha: res.precioCancha}; 
+            row++;
+        });
+        col++;
+     });
+   
+     
+     console.log($scope.data);
+     console.log( self.tmpCanchas);
+ };
+  */
+ 
+self.init();
     
 });
