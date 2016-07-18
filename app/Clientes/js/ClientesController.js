@@ -38,7 +38,29 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
                     nroDoc:'',
                     clienteValido: true
                   };
-   
+   /*
+    this.limpiarModal = function(form){
+        self.cliente.id =-3;
+        self.cliente.tipo ='C';
+        self.cliente.existeDni =false;
+        self.cliente.existe =false;
+        self.cliente.existeEmail =false;
+        self.cliente.contraseniasIguales =true;
+        self.cliente.usuario ="";
+        self.cliente.eMail ="";
+        self.cliente.contrasenia ="";
+        self.cliente.contrasenia2 ="";
+        self.cliente.nombre ="";
+        self.cliente.apellido ="";
+        self.cliente.tipoDoc =-1;
+        self.cliente.nroDoc ="";
+        self.cliente.clienteValido =true;
+        
+        
+        
+        form.$setPristine();
+    };
+    */
     
     this.irTorneoCopa = function(){
              $state.go('Clientes.verTorneoCopa');
@@ -84,14 +106,24 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
 
     };
     
+    this.sinEspacios = function(cadena){
+        var aux = cadena.split(" ");
+        var salida = "";
+        angular.forEach(aux, function(palabra){
+           salida = salida + palabra.trim()
+        })
+        
+        return salida.toString();
+    };
     
     
     this.existeUsuario = function(){
         if(self.cliente.usuario!=undefined){
             
+            self.cliente.usuario = self.sinEspacios(self.cliente.usuario.trim());
             
-            self.cliente.usuario = self.cliente.usuario.trim().replace(" ", "");
-            console.log( self.cliente.usuario);
+            //console.log(self.cliente.usuario);
+            
             UsuarioService.query({user:self.cliente.usuario}).$promise.then(function(data){
                 self.cliente.id =  data[0].id;                                                         
                 self.cliente.tipo  = data[0].tipo;    

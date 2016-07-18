@@ -1,7 +1,7 @@
 /*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("MainController", function($state,store, UsuarioService, ClientesService,DueniosService,AdminService){
+resergolApp.controller("MainController", function($scope, $state,store, UsuarioService, ClientesService,DueniosService,AdminService){
 	
     var self = this;
 	this.brand;
@@ -12,6 +12,8 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
     this.mayusculas = function(){
         self.Usuario.usuario = self.Usuario.usuario.toUpperCase();
     };
+    
+    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
     
     this.home = function(){
         
@@ -41,6 +43,18 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                 break;
         };
     };
+    
+    this.limpiarModal = function(form){
+        self.Usuario.usuario ="";
+        self.Usuario.contrasenia = "";
+        form.$setPristine();
+    };
+    
+
+    
+    $('#loginModal').on('hidden', function () {
+        console.log('pepe');
+    })
     
    this.getCliente = function(form){
          ClientesService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
