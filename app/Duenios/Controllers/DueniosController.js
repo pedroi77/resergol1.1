@@ -109,8 +109,22 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
             ); 
    };
     
+    this.sinEspacios = function(cadena){
+        var aux = cadena.split(" ");
+        var salida = "";
+        angular.forEach(aux, function(palabra){
+           salida = salida + palabra.trim()
+        })
+        
+        return salida.toString();
+    };
+    
     this.existeUsuario = function(){
+        
+        
         if(self.Duenio.usuario!=undefined){
+            
+            self.Duenio.usuario = self.sinEspacios(self.Duenio.usuario.trim());
             
             UsuarioService.query({user:self.Duenio.usuario}).$promise.then(function(data){
                 self.Duenio.id =  data[0].id;                                                         
@@ -221,26 +235,26 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
     
     this.limpiarForm = function(form){
         
-            /*form.$setPristine();
-            self.Duenio.id: -3,
-            self.Duenio.tipo: 'D',
-            self.Duenio.usuario: '', 
-            self.Duenio.email: '',
-            self.Duenio.contrasenia: '', 
-            self.Duenio.contrasenia2: '' ,
-            self.Duenio.nombre: '',
-            self.Duenio.apellido: '',
-            self.Duenio.idTipoDoc:0,
-            self.Duenio.nroDoc:'',
-            self.Duenio.nombreComplejo: '',
-            self.Duenio.NroTelef:'',
-            self.Duenio.idProv:0,
-            self.Duenio.idLoc:0,
-            self.Duenio.direccion:'',
-            self.Duenio.nroCalle:'',
-            self.Duenio.existeDni:false,
-            self.Duenio.existe:false,
-            self.Duenio.existeMail: false*/
+            form.$setPristine();
+            self.Duenio.id= -3,
+            self.Duenio.tipo= 'D',
+            self.Duenio.usuario= '', 
+            self.Duenio.email= '',
+            self.Duenio.contrasenia= '', 
+            self.Duenio.contrasenia2= '' ,
+            self.Duenio.nombre= '',
+            self.Duenio.apellido= '',
+            self.Duenio.idTipoDoc=0,
+            self.Duenio.nroDoc='',
+            self.Duenio.nombreComplejo= '',
+            self.Duenio.NroTelef='',
+            self.Duenio.idProv=0,
+            self.Duenio.idLoc=0,
+            self.Duenio.direccion='',
+            self.Duenio.nroCalle='',
+            self.Duenio.existeDni=false,
+            self.Duenio.existe=false,
+            self.Duenio.existeMail= false
         
     };
     
