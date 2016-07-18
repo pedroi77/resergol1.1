@@ -14,7 +14,18 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
     };
     
     this.home = function(){
-         $state.go('Clientes.buscarCanchas');
+        
+          switch(self.Usuario.tipo){
+            case 'C':
+                $state.go('Clientes.buscarCanchas');
+                break;
+            case 'D':
+                $state.go('Duenios.reserva');
+                break;
+            case 'A':
+                $state.go('Admin.administracion');
+                break;
+        };
     };
     
     this.validaLogin = function(form){
@@ -167,7 +178,9 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
          });
     };
     
-    
+    this.acercaDe = function(){
+         bootbox.alert("ReserGol es una plataforma web en la que podrás buscar las mejores canchas de fútbol! y reservar tu turno para jugar, con sólo un click!", function() {});
+    }
     
     this.init = function(){
        self.Usuario = { 

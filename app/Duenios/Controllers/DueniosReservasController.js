@@ -161,7 +161,6 @@ this.traerReservas = function(){
                 var index2 = 1;
                 
                 //Recorro la lista de reservas
-                console.log(auxJ);
                 angular.forEach(dataRes, function(res) {
                     
                     var estilo = "background-color:#FF6E6E;";
@@ -208,36 +207,14 @@ this.obtenerDiaActual = function(){
  this.init = function(){
      self.traerReservas();
      self.obtenerDiaActual();
- }
- 
- /*PI borrar
- this.mostrar= function(){
-     
-     var row=1;
-     var col=1;
-     
-     angular.forEach(self.tmpCanchas, function(canchaAux){
-         row= 1;
-         angular.forEach(canchaAux.datos, function(res) {
-                    
-            var estilo = "background-color:#FF6E6E;";
-
-            if(res.usuario == null){
-                res.usuario = "Disponible";
-                estilo = "background-color:#A5D29C;";
-            }
-            //console.log(row);
-            $scope.data[row][col] = {"nombre": res.usuario, "estilo": estilo, referencia:"#reservasModal", pagado:res.Pagado, precioCancha: res.precioCancha}; 
-            row++;
-        });
-        col++;
-     });
-   
-     
-     console.log($scope.data);
-     console.log( self.tmpCanchas);
  };
-  */
+ 
+ this.clic = function(indice, fila){
+    console.log(indice);
+    console.log(fila);
+     console.log(fila[indice]);
+ };
+ 
  
 self.init();
     

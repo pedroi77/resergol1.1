@@ -89,18 +89,21 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
     this.existeUsuario = function(){
         if(self.cliente.usuario!=undefined){
             
+            
+            self.cliente.usuario = self.cliente.usuario.trim().replace(" ", "");
+            console.log( self.cliente.usuario);
             UsuarioService.query({user:self.cliente.usuario}).$promise.then(function(data){
                 self.cliente.id =  data[0].id;                                                         
                 self.cliente.tipo  = data[0].tipo;    
                 
                 if(self.cliente.id > -1){
                     self.cliente.existe = true;
-                    console.log(self.cliente.existe + " - "  + self.cliente.tipo + " - " + self.cliente.usuario);
+                    //console.log(self.cliente.existe + " - "  + self.cliente.tipo + " - " + self.cliente.usuario);
                     
                 }
                 else{
                     self.cliente.existe = false;
-                    console.log(self.cliente.existe + " - "  + self.cliente.tipo + " - " + self.cliente.usuario);
+                    //console.log(self.cliente.existe + " - "  + self.cliente.tipo + " - " + self.cliente.usuario);
                 }
             });
             
