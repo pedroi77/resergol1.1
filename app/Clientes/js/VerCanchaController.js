@@ -118,6 +118,8 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
                         codigo: '12'
                       };
     
+    this.bTarjetaDeLaBD = false;
+    
     
          var token = store.get("token") || null;
          var sesion = sessionStorage.usuario  || null;
@@ -783,6 +785,8 @@ this.getImagenes = function()
 
                         if(data[0].Mes != null && data[0].Mes != undefined)
                              document.getElementById("expMonth").value = data[0].Mes;
+                        
+                        self.bTarjetaDeLaBD = true;
                     }
                         
             });
@@ -1441,7 +1445,7 @@ jQuery.validator.addMethod("month", function(value, element) {
 jQuery.validator.addMethod("year", function(value, element) {
   return this.optional(element) || (/^[0-9]{2}$/.test(value) && value >= 16 && value <= 25);
 }, "Año inválido...");
-
+    
 validator = $form.validate({
     rules: {
         cardNumber: {
@@ -1473,10 +1477,10 @@ validator = $form.validate({
     }
 });
 
-paymentFormReady = function() {
-    if ($form.find('[name=cardNumber]').hasClass("success") &&
+this.paymentFormReady = function() {
+    if ((($form.find('[name=cardNumber]').hasClass("success") &&
         $form.find('[name=expMonth]').hasClass("success") &&
-        $form.find('[name=expYear]').hasClass("success") &&
+        $form.find('[name=expYear]').hasClass("success")) || self.bTarjetaDeLaBD) &&
         $form.find('[name=cvCode]').val().length > 2 && $form.find('[name=cvCode]').val().length < 5) {
         return true;
     } else {
@@ -1486,7 +1490,8 @@ paymentFormReady = function() {
 
 //$form.find('[type=submit]').prop('disabled', true);
 var readyInterval = setInterval(function() {
-    if (paymentFormReady()) {
+    
+    if (self.paymentFormReady()) {
         $form.find('[type=submit]').prop('disabled', false);
         //clearInterval(readyInterval);
     }
@@ -1496,6 +1501,4 @@ var readyInterval = setInterval(function() {
     ////////////////////////////////////////////////////////**************************************************************
     
 
-
-    
-[]});
+});
