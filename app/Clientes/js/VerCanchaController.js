@@ -630,6 +630,7 @@ this.getImagenes = function()
                     $scope.FechasReservaFija = data;
                     console.log('PRIMERA FECHA FIJA->' + $scope.FechasReservaFija[0].fecha);
                 
+                
                 $scope.noDisponibles = [];
                 console.log(data);
                 var hHasta = self.selectedHoraHId + ":00:00";
@@ -646,6 +647,7 @@ this.getImagenes = function()
                          //Guardo las fechas no disponibles para la reserva fija, asi se las muestro al cliente.
                         if(aux.NoDisponible != undefined && aux.NoDisponible != null && aux.NoDisponible != "")
                         {
+
                             $scope.noDisponibles.push(aux.NoDisponible); 
                             noDispEnString += aux.NoDisponible + "<br>";
                         }
@@ -657,9 +659,11 @@ this.getImagenes = function()
                          
                      });
                     
+                 
                     if($scope.noDisponibles.length > 0)
                     {
                         var mensaje = 'La reserva fija se realizará para el día y horario elegido en lo que resta del año. \n ';
+                        
                         mensaje += 'Sin embargo las siguientes fechas no se podrán reservar ya que no están disponibles: <br> ';
                         mensaje += noDispEnString + "\n \n" + '¿Desea realizar la reserva fija igualmente?';
                         

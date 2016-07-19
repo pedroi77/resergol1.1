@@ -2,7 +2,7 @@
 var resergolApp = angular.module("resergolApp");
 
 
-resergolApp.controller("TorneoLigaController", function($scope, $stateParams, store, $state, TorneoService, TorneoImgDBService,TorneoLigaTablaService, TorneoLigaFechasService,TorneoLigaFixtureService,TorneoCanchasService, ListasNegrasService,TorneoCampeonService){
+resergolApp.controller("TorneoLigaController", function($scope, $stateParams, store, $state, TorneoService, TorneoImgDBService,TorneoLigaTablaService, TorneoLigaFechasService,TorneoLigaFixtureService,TorneoCanchasService, ListasNegrasService,TorneoCampeonService, EquipoTorneoService){
 
 
     var self = this;
@@ -22,7 +22,7 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
     this.muestraCampeon=false;
     $scope.fechaIngresoListaNegra = 0; //Si es 0, no está en la lista negra. Si está, guardo la fecha que ingresó a la misma.
     
-  
+    
     this.estaLogueadoCliente = false;
     var token = store.get("token") || null;
          var sesion = sessionStorage.usuario  || null;
@@ -34,8 +34,6 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
              self.estaLogueadoCliente = true;
          }   
   
-    console.log('LOGUEADO->' + self.estaLogueadoCliente);
-    
     this.inscripcionTorneoLiga = function(){ 
         if($scope.fechaIngresoListaNegra != 0)
         {
@@ -109,11 +107,27 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
             });
 	};
     
+    this.getEquiposTorneo = function(){
+			EquipoTorneoService.query({idTorneo:self.idTorneo}).$promise.then(function(data){
+                 var equiposTor = data;
+                 console.log(equiposTor);
+            });
+	};
+    
     this.init = function(){
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
             console.log(data[0]);
             self.torneo = data[0];
+            
+            this.validaInscripcion = function(){
+                if(self.estaLogueadoCliente == false)
+                    return false;
+                if(self.torneo.idEstado != 3)
+                    return false;
+            };
+            
             self.verificarListaNegra();
+            self.getEquiposTorneo();
             
             TorneoCampeonService.query({idTipoTorneo:self.torneo.idTipoTorneo , idTorneo:self.idTorneo }).$promise.then(function(data) {            
                 self.campeon = data[0];

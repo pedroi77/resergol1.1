@@ -29,131 +29,6 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                         dias:[]
 
                       };
-    
- /*   
-this.MyRecCollection = [{
-    "Name": "Alfreds Futterkiste",
-    "City": "Berlin",
-    "Country": "Germany"
-}, {
-    "Name": "Berglunds snabbköp",
-    "City": "Luleå",
-    "Country": "Sweden"
-}, {
-    "Name": "Centro comercial Moctezuma",
-    "City": "México D.F.",
-    "Country": "Mexico"
-}, {
-    "Name": "Ernst Handel",
-    "City": "Graz",
-    "Country": "Austria"
-}, {
-    "Name": "FISSA Fabrica Inter. Salchichas S.A.",
-    "City": "Madrid",
-    "Country": "Spain"
-}, {
-    "Name": "Galería del gastrónomo",
-    "City": "Barcelona",
-    "Country": "Spain"
-}, {
-    "Name": "Island Trading",
-    "City": "Cowes",
-    "Country": "UK"
-}, {
-    "Name": "Königlich Essen",
-    "City": "Brandenburg",
-    "Country": "Germany"
-}, {
-    "Name": "Laughing Bacchus Wine Cellars",
-    "City": "Vancouver",
-    "Country": "Canada"
-}, {
-    "Name": "Magazzini Alimentari Riuniti",
-    "City": "Bergamo",
-    "Country": "Italy"
-}, {
-    "Name": "North/South",
-    "City": "London",
-    "Country": "UK"
-}, {
-    "Name": "Paris spécialités",
-    "City": "Paris",
-    "Country": "France"
-}, {
-    "Name": "Rattlesnake Canyon Grocery",
-    "City": "Albuquerque",
-    "Country": "USA"
-}, {
-    "Name": "Simons bistro",
-    "City": "København",
-    "Country": "Denmark"
-}, {
-    "Name": "The Big Cheese",
-    "City": "Portland",
-    "Country": "USA"
-}, {
-    "Name": "Vaffeljernet",
-    "City": "Århus",
-    "Country": "Denmark"
-}, {
-    "Name": "Wolski Zajazd",
-    "City": "Warszawa",
-    "Country": "Poland"
-}];*/
-    
-this.MyRecCollection = [
-    {
-        "": {usuario: "10:00", datos:{precio:200, notas:'algunas'} },
-        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-        "": {usuario: "11:00", datos:{precio:200, notas:'algunas'} },
-        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-        "": {usuario: "12:00", datos:{precio:200, notas:'algunas'} },
-       "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-       "": {usuario: "13:00", datos:{precio:200, notas:'algunas'} },
-       "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-       "": {usuario: "14:00", datos:{precio:200, notas:'algunas'} },
-        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-        "": {usuario: "15:00", datos:{precio:200, notas:'algunas'} },
-         "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }, {
-       "": {usuario: "16:00", datos:{precio:200, notas:'algunas'} },
-        "Maracana": {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Fortin":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Acade":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Monu":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} },
-        "Lencho":  {usuario: "pepe", datos:{precio:200, notas:'algunas'} }
-    }
-];
-      
         
     
     this.tiposTorneos = {
@@ -361,10 +236,54 @@ this.MyRecCollection = [
       };
 
      
-      this.FecInscDesde = new Date();
-      this.FecInscHasta = new Date();
-      this.TorneoDesde = new Date();
-      this.TorneoHasta = new Date();
+    
+    this.sumaFecha = function(d, fecha){
+         var Fecha = new Date();
+         var sFecha = fecha || (Fecha.getDate() + "/" + (Fecha.getMonth() +1) + "/" + Fecha.getFullYear());
+         var sep = sFecha.indexOf('/') != -1 ? '/' : '-'; 
+         var aFecha = sFecha.split(sep);
+         var fecha = aFecha[2]+'/'+aFecha[1]+'/'+aFecha[0];
+         fecha= new Date(fecha);
+         fecha.setDate(fecha.getDate()+parseInt(d));
+         var anno=fecha.getFullYear();
+         var mes= fecha.getMonth()+1;
+         var dia= fecha.getDate();
+         mes = (mes < 10) ? ("0" + mes) : mes;
+         dia = (dia < 10) ? ("0" + dia) : dia;
+         var fechaFinal = dia+sep+mes+sep+anno;
+         return (fechaFinal);
+    };
+    
+    
+    //set de las fechas cuando inicia la pantalla
+    this.FecInscDesde = new Date();
+    
+    this.fininsAux =   this.FecInscDesde.getDate() + '/'+  addZero(this.FecInscDesde.getMonth()) + '/' +  addZero(this.FecInscDesde.getFullYear());
+    
+    this.fininsAux = self.sumaFecha(7,this.fininsAux);
+
+    self.FecInscHasta =new Date( parseInt(this.fininsAux.substring(6,10)), 
+                          parseInt(this.fininsAux.substring(3,5)), 
+                          parseInt(this.fininsAux.substring(0,2)));
+    
+
+    this.fininsAux = this.FecInscHasta.getDate() + '/'+  addZero(this.FecInscHasta.getMonth()) + '/' +  addZero(this.FecInscHasta.getFullYear());
+    
+    
+    
+    self.TorneoDesde =new Date( parseInt(this.fininsAux.substring(6,10)), 
+                          parseInt(this.fininsAux.substring(3,5)), 
+                          parseInt(this.fininsAux.substring(0,2)));
+    
+    this.fininsAux =   this.TorneoDesde.getDate() + '/'+  addZero(this.TorneoDesde.getMonth()) + '/' +  addZero(this.TorneoDesde.getFullYear());
+    
+    this.fininsAux = self.sumaFecha(7,this.fininsAux);
+    
+    self.TorneoHasta =new Date( parseInt(this.fininsAux.substring(6,10)), 
+                          parseInt(this.fininsAux.substring(3,5)), 
+                          parseInt(this.fininsAux.substring(0,2)));
+   
+    
     
       this.setearDesdeInsc= function(){
         self.FecInscHasta = self.FecInscDesde;
@@ -627,6 +546,7 @@ this.MyRecCollection = [
         $state.reload("Duenios.torneoNuevo");
     };
     
+
     
     /*Modal*/
     $scope.animationsEnabled = true;

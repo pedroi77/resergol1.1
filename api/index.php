@@ -1549,6 +1549,17 @@ $app->delete('/equipoTorneo/:idEquipo/:idTorneo', function($idEquipo, $idTorneo)
     
 });
 
+
+//Get equipos inscriptos a un torneo
+$app->get('/equipoTorneo/:idTorneo', function($pIdTorneo){
+    
+    $eq = new Equipo();
+    $data = $eq->getEquiposTorneo($pIdTorneo);
+	sendResult($data);
+    
+});
+
+
 ///*********************MANDAR MAILS*******************************************************************************************/
 
 //mandarMails

@@ -157,46 +157,51 @@
                           </div>
         </div>
          <div class="row">
-             <div class="col-md-3">
+             <div class="col-md-4">
               <div class="widget">
                 <h4 class="fa fa-user titul">Ubicación</h4>
                 <div class="boxMapa">
-                    <div id="map-containerIvan"></div>
+                    <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+                    <!-- <div id="map-containerIvan"></div> -->
                 </div>
               </div>
              </div>
              
-         <div class="col-md-9">
-         <div class="detailBox">
-        <div class="titleBox">
-          <label>Comentarios</label>
-        </div>
-        <div class="commentBox">
-
-            <p class="taskDescription">Lo que opina la gente acerca de la cancha "{{cancha[0].nombre}}" de "{{cancha[0].Complejo}}"</p>
-        </div>
-        <div class="actionBox">
-            <ul class="commentList">
-                <li ng-repeat="comm in ComentariosCancha">
-                    <div class="commentText">
-                        <p style="color:gray">{{comm.Usuario}}:  </p>
-                        <p class="">{{comm.Comentario}}</p> <span class="date sub-text">{{comm.Fecha}}</span>
-
-                    </div>
-                </li>
-            </ul>
-            <form class="form-inline" name="algo" id="algo" role="form">
-                <div class="form-group">
-                    <input class="form-control" id="txtComentar" ng-maxlength="100" ng-model="can.comment" ng-disabled="!can.estaLogueado" type="text" placeholder="Agregar comentario" />
+        <div class="col-md-8">
+            <div class="detailBox">
+                <div class="titleBox">
+                    <label>Comentarios</label>
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-default" id="btnComentar" ng-click="can.comentar() || !can.estaLogueado" ng-disabled="!can.estaLogueado || !algo.$valid">Comentar</button>
-                </div>
-            </form>
-        </div>
-    </div>
+                
+                <div class="commentBox">
 
-    </div>
+                    <p class="taskDescription">Lo que opina la gente acerca de la cancha "{{cancha[0].nombre}}" de "{{cancha[0].Complejo}}"</p>
+                </div>
+                
+                <div class="actionBox">
+                    <ul class="commentList">
+                        <li ng-repeat="comm in ComentariosCancha">
+                            <div class="commentText">
+                                <p style="color:gray">{{comm.Usuario}}:  </p>
+                                <p class="">{{comm.Comentario}}</p> <span class="date sub-text">{{comm.Fecha}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <form class="form-inline" name="algo" id="algo" role="form">
+                        <div class="form-group">
+                            <input class="form-control" id="txtComentar" ng-maxlength="100" ng-model="can.comment" ng-disabled="!can.estaLogueado" type="text" placeholder="Agregar comentario" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <button class="btn btn-default" id="btnComentar" ng-click="can.comentar() || !can.estaLogueado" ng-disabled="!can.estaLogueado || !algo.$valid">Comentar</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+
+        </div>
       
              
 </div>

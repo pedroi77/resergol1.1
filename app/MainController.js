@@ -1,7 +1,7 @@
 /*codigo de ejemplo del profesor*/
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("MainController", function($state,store, UsuarioService, ClientesService,DueniosService,AdminService){
+resergolApp.controller("MainController", function($scope, $state,store, UsuarioService, ClientesService,DueniosService,AdminService){
 	
     var self = this;
 	this.brand;
@@ -13,8 +13,21 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
         self.Usuario.usuario = self.Usuario.usuario.toUpperCase();
     };
     
+    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+    
     this.home = function(){
-         $state.go('Clientes.buscarCanchas');
+        
+          switch(self.Usuario.tipo){
+            case 'C':
+                $state.go('Clientes.buscarCanchas');
+                break;
+            case 'D':
+                $state.go('Duenios.reserva');
+                break;
+            case 'A':
+                $state.go('Admin.administracion');
+                break;
+        };
     };
     
     this.validaLogin = function(form){
@@ -30,6 +43,18 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
                 break;
         };
     };
+    
+    this.limpiarModal = function(form){
+        self.Usuario.usuario ="";
+        self.Usuario.contrasenia = "";
+        form.$setPristine();
+    };
+    
+
+    
+    $('#loginModal').on('hidden', function () {
+        console.log('pepe');
+    })
     
    this.getCliente = function(form){
          ClientesService.query({user:self.Usuario.usuario, pass:self.Usuario.contrasenia}).$promise.then(function(data){
@@ -169,7 +194,9 @@ resergolApp.controller("MainController", function($state,store, UsuarioService, 
          });
     };
     
-    
+    this.acercaDe = function(){
+         bootbox.alert("ReserGol es una plataforma web en la que podrás buscar las mejores canchas de fútbol! y reservar tu turno para jugar, con sólo un click!", function() {});
+    }
     
     this.init = function(){
        self.Usuario = { 

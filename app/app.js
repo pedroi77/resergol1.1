@@ -13,11 +13,16 @@ var resergolApp = angular.module("resergolApp",
 "ngTable",
 "ngAnimate",
 "ui.bootstrap",
-    "ngFileUpload"
+"ngFileUpload",
+"uiGmapgoogle-maps"
 ]);
 
 
-resergolApp.config(function($stateProvider, $urlRouterProvider,  $httpProvider, jwtInterceptorProvider ){
+resergolApp.config(function( $stateProvider, $urlRouterProvider,  $httpProvider, jwtInterceptorProvider, uiGmapGoogleMapApiProvider ){
+    
+    uiGmapGoogleMapApiProvider.configure({
+            china: true
+        });
     
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     
@@ -54,6 +59,11 @@ resergolApp.config(function($stateProvider, $urlRouterProvider,  $httpProvider, 
     $urlRouterProvider.otherwise("/clientes/Canchas");
     //$urlRouterProvider.otherwise("/duenios/Reservas");
     
+});
+resergolApp.run(function($rootScope) {
+    $rootScope.$on('unauthenticated', function(response){
+        $('#loginModal').modal('show');
+    });
 });
 
 

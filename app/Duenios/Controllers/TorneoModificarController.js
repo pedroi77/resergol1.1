@@ -599,6 +599,7 @@ resergolApp.controller("TorneoModificarController", function($scope, $state,$sta
                 
                 DuenioTorneoService.delete(TorneoEliminar.data, function(reponse){
                     bootbox.alert("Se eliminó el torneo.", function() {});
+                    $state.go("Duenios.torneoBuscar");
                   },function(errorResponse){
                     bootbox.alert("Ocurrió un error al eliminar el torneo", function() {});
                  });

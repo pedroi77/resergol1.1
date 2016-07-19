@@ -27,26 +27,27 @@
                             <a  id="btnUsuario" ng-show="main.Usuario.login" >{{main.Usuario.usuario}}</a>
                         </li>
                         <li>
-                            <a href="#loginModal" id="btnIniciarSesion"  ng-show="!main.Usuario.login" role="button" data-toggle="modal" ng-model="main.IniciarSesion">{{main.IniciarSesion}}</a>
+                            <a href="#loginModal" id="btnIniciarSesion"  ng-show="!main.Usuario.login" role="button" data-toggle="modal" ng-model="main.IniciarSesion" ng-click="main.limpiarModal(loginForm)">{{main.IniciarSesion}}</a>
                         </li>
                         <li>
                             <a id="btnCerrarSesion" role="button" data-toggle="modal" ng-click="main.desloguearse()" 
                                ng-show="main.Usuario.login">Salir</a>
                         </li>
                         <li>
-                            <a href="#registracionModal" ng-show="!main.Usuario.login" role="button"  data-toggle="modal">¡Registrate!</a>
+                            <a href="#registracionModal" ng-show="!main.Usuario.login" role="button"  data-toggle="modal"  >¡Registrate!</a>
                         </li>
                         <li>
-                            <a href="#registracionDuenioModal" ng-show="!main.Usuario.login" role="button" data-toggle="modal">Registra tu cancha!</a>           </li>
+                            <a href="#registracionDuenioModal" ng-show="!main.Usuario.login" role="button" data-toggle="modal" >Registra tu cancha!</a>           </li>
                         <li>
-                            <a href="#aboutModal" role="button" data-toggle="modal">Acerca de</a>
+                           <!-- <a href="#aboutModal" role="button" data-toggle="modal">Acerca de</a> -->
+                            <a ng-click= "main.acercaDe()" >Acerca de</a>
                         </li>
                     </ul>
                 </div>	
             </div>	
         </div>
 
-
+        
 
         <!--main-->
          <!--<div class="container-fluid" id="main">-->
@@ -67,7 +68,7 @@
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >×</button>
               <h2 class="text-center "><img src="images/logo/logoMediano.png" class="">
           </div>
           <div class="modal-body">
@@ -126,10 +127,10 @@
     <div class="modal-dialog modal-registracion">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" ng-click="cli.limpiarForm(frmDatosUsuario)" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" ng-click="cli.limpiarForm(frmDatos)" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             
-            <form class="modal-body" name="frmDatosUsuario">
+            <form class="modal-body" name="frmDatos">
           
                 <hr>
                 
@@ -272,7 +273,7 @@
     <div class="modal-dialog modal-registracion">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" ng-click= "due.limpiarForm(frmDatosUsuario)" data-dismiss="modal" aria-hidden="true" >×</button>
             </div>
             
             <form class="modal-body" name="frmDatosUsuario">
@@ -519,7 +520,7 @@
         <script src="js/additional-methods.min.js"></script>
         
 			<!--<PI> agrego dependencias INI-->
-        
+        <script src="bower_components/lodash.js"></script>
 		<script src="bower_components/angular/angular.min.js"></script>
 		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 	    <script src="bower_components/angular-resource.min.js"></script>
@@ -533,6 +534,27 @@
         <script src="bower_components/angular-ui-ui-grid-1c766f0/ng-grid-2.0.14.min.js"></script>
         <link href="bower_components/jquery-bracket-master/dist/jquery.bracket.min.css" rel="stylesheet">
         <script src="bower_components/angular-locale_es-es.js" charset="UTF-8"></script>
+        
+        
+        <!-- Para Mapa-->
+        
+            <!--
+<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+ -->
+        <script 
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6VEj5KxE4puhLlYoWQVT5C4WRgGvlY2c&callback=initMap">
+        </script>
+
+
+        <script src="bower_components/angular-simple-logger.js"></script>
+         
+        <script src="bower_components/angular-google-maps.js"></script>
+        
+    
+       
+        
+
+        <!-- Para Mapa FIN-->
         
         <script src="http://parall.ax/parallax/js/jspdf.js?1391533408"></script> <!--Para reportes -->
         <script src="js/bootbox.min.js"></script> <!--Para popUps-->
