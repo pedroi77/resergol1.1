@@ -25,6 +25,14 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			templateUrl : "app/Duenios/Templates/DuenioTorneoModificar.html",
 			controllerAs : "due"
 		})
+        .state("Duenios.verComplejo",{
+                url : "/VerComplejo/:idComp",
+                params: {
+                    idComp:{value:'defaultValue'}
+                },
+                templateUrl : "app/Clientes/Templates/VerComplejo.html",
+                controllerAs : "cli"
+            })
         .state("Duenios.test",{
 			url : "/Torneos/test",
 			templateUrl : "app/Duenios/Templates/reservaPrueba.html",
