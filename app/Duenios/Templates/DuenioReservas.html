@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="DueniosReservasController as dueRes">
 
     <div class="container">
         <header class="row widget" >
@@ -6,260 +6,44 @@
                 <h3  style=" font-size: 50px; text-align:center;  font-style:italic;">Reservas</h3>
 
                <div class="principal row" style= "text-align:center">
-                   <button type="button" class="btn" style="border-radius: 8px; background-color: transparent">
+                   <!--button type="button" class="btn" style="border-radius: 8px; background-color: transparent">
                         <i class="glyphicon glyphicon-arrow-left"></i>
                     </button>
 
-                    <label class="fontMasChica" style="text-align:center">Jueves 1 de Octubre de 2015</label>
+                    <label class="fontMasChica" style="text-align:center">Jueves 1 de Octubre de 2015</label >
 
                     <button type="button" class="btn" style="border-radius: 8px; background-color: transparent">
                         <i class="glyphicon glyphicon-arrow-right"></i>
-                    </button>   
+                    </button -->   
                 </div>
             </div>
         </header>
     </div>
     
-    <div class="col-md-12" ng-controller="DueniosReservasController as dueRes">
+    <div class="col-md-12">
+        <div class="col-sm-4">  
+            <label for="sel2" class="control-label col-sm-3" >Fecha</label>
+            <p class="input-group">
+                <input type="text" id="fecha" readonly='true' class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="false" close-text="Cerrar" alt-input-formats="altInputFormats" ng-change="dueRes.cambiaFecha(dt)"/>
+
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+        </div>
+    </div>
+    
+    <div class="col-md-12">
         <div class="container">
             <div class ="principal row filtro-reservas">
-                <div class="col-xs-12 col-md-3">
-                    <section class="widget">
-                        <header>
-                            <h3>Filtrar por</h3>    
-                        </header>
-                        <div class="widget-controls">
-                            <a data-widgster="expand" title="Expandir" href="#" style="display: none;"><i class="glyphicon glyphicon-chevron-up"></i></a>
-                            <a data-widgster="collapse" title="Contraer" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
-                            <a data-widgster="close" title="Cerrar" href="#"><i class="glyphicon glyphicon-remove"></i></a>
-                        </div>
-
-                        <label class="font-titulo-Filtro" style="margin-top:4px;"><input type="checkbox" value="" > Disponibles</label>
-                        <br>
-
-
-
-                        <div class="form-group ">
-                            <label for="sel2" class="font-titulo-Filtro" style="margin-top:10px;">Canchas:</label>
-
-                            <div class ="checkbox"> 
-                                <label class="fontMasChica"><input type="checkbox" value="" >Todas</label>
-                            </div>
-                            <div class ="checkbox">
-                                <label class="fontMasChica"><input type="checkbox" value="" >Maracana</label>
-                            </div>    
-                            <div class ="checkbox">
-                                <label class="fontMasChica"><input type="checkbox" value="" >El fortín</label>
-                            </div>        
-                            <div class ="checkbox">
-                                <label class="fontMasChica"><input type="checkbox" value="" >La fortaleza</label>
-                            </div>    
-                            <div class ="checkbox">
-                                <label class="fontMasChica"><input type="checkbox" value="" >EL monumental</label>
-                            </div>        
-                            <div class ="checkbox">
-                                <label class="fontMasChica"><input type="checkbox" value="" >La visera</label>
-                            </div>    
-
-                        </div>
-
-                        <div class="form-group espacios">
-                            <label for="sel2" class="font-titulo-Filtro" >Fecha:</label>
-                            <div class='input-group date'>
-                                <input type='text'  class="form-control" id="fecha" style="height:31px;"/>
-                                <span class="input-group-addon"  style="height:30px;"  id="fecha" onclick="mostrarCalendario()" >
-                                <span class="glyphicon glyphicon-calendar"  ></span>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="form-group espacios">
-                            <div class ="principal row espacios" style= "margin-left: 1px;">
-                                <label class="font-titulo-Filtro">Horarios:</label>
-                                <br>
-                                <div class ="checkbox" style= "margin-left: 1px; margin-top: 3px; ">
-                                    <label class="fontMasChica" ><input type="checkbox" value=""> Todos</label>
-                                </div>
-
-                                <label for="sel2" class="fontMasChica" style= "margin-left: 2px; margin-top: 4px; " >Desde:</label>
-                                <SELECT NAME="cboHoraInicial" SIZE=1 class="combo-horario"> 
-                                <OPTION>8 Hs</OPTION>
-                                <OPTION>9 Hs</OPTION>
-                                <OPTION>10 Hs</OPTION>
-                                <OPTION>11 Hs</OPTION> 
-                                <OPTION>12 Hs</OPTION> 
-                                <OPTION>13 Hs</OPTION> 
-                                <OPTION>14 Hs</OPTION> 
-                                <OPTION>15 Hs</OPTION>
-                                <OPTION>16 Hs</OPTION> 
-                                <OPTION>17 Hs</OPTION> 
-                                <OPTION>18 Hs</OPTION> 
-                                <OPTION>19 Hs</OPTION> 
-                                <OPTION>19 Hs</OPTION> 
-                                <OPTION>20 Hs</OPTION> 
-                                <OPTION>21 Hs</OPTION> 
-                                <OPTION>22 Hs</OPTION> 
-                                <OPTION>23 Hs</OPTION> 
-                            </SELECT> 
-
-                                <label for="sel2" class="fontMasChica" style= "margin-left: 1px" > Hasta:</label>
-                                <SELECT NAME="cboHoraFin" SIZE=1 class="combo-horario"> 
-                                <OPTION>8 Hs</OPTION>
-                                <OPTION>9 Hs</OPTION>
-                                <OPTION>10 Hs</OPTION>
-                                <OPTION>11 Hs</OPTION> 
-                                <OPTION>12 Hs</OPTION> 
-                                <OPTION>13 Hs</OPTION> 
-                                <OPTION>14 Hs</OPTION> 
-                                <OPTION>15 Hs</OPTION>
-                                <OPTION>16 Hs</OPTION> 
-                                <OPTION>17 Hs</OPTION> 
-                                <OPTION>18 Hs</OPTION> 
-                                <OPTION>19 Hs</OPTION> 
-                                <OPTION>19 Hs</OPTION> 
-                                <OPTION>20 Hs</OPTION> 
-                                <OPTION>21 Hs</OPTION> 
-                                <OPTION>22 Hs</OPTION> 
-                                <OPTION  selected="selected">23</OPTION> 
-                            </SELECT> 
-
-                            </div>
-                        </div>
-
-                        <div class="form-group espacios">
-                            <label class="font-titulo-Filtro ">Caracteristicas de canchas:</label>
-
-                            <div class ="principal row " style= "margin-left: 1px; ">
-                                <label class="fontMasChica" style= "margin-left: 2px; margin-top:4px; " >Cant. de jugadores:</label>
-                            </div>
-                            <div class ="principal row " style= "margin-left: 1px; ">
-                                <SELECT NAME="cboCantJugadores" SIZE=1 style="width:220px; height:30px; color:black;"> 
-                                    <OPTION>Todos</OPTION>
-                                    <OPTION>5</OPTION>
-                                    <OPTION>6</OPTION>
-                                    <OPTION>7</OPTION>
-                                    <OPTION>8</OPTION> 
-                                    <OPTION>9</OPTION> 
-                                    <OPTION>10</OPTION> 
-                                    <OPTION>11</OPTION> 
-                                </SELECT> 
-                            </div>
-
-                            <div class ="principal row " style= "margin-left: 1px; margin-top: 3px; ">
-                                <label class="fontMasChica" style= "margin-left: 2px;  margin-top: 5px;" >Superficie:</label>
-                            </div>    
-                            <div class ="principal row " style= "margin-left: 1px; ">
-                                <SELECT NAME="cboPisos" SIZE=1 style="width:220px; height:30px; color:black;"> 
-                                <OPTION>Todos</OPTION>
-                                <OPTION>Sintetico</OPTION>
-                                <OPTION>Tierra</OPTION>
-                                <OPTION>Cesped</OPTION>
-                                <OPTION>Baldoza</OPTION> 
-                            </SELECT>
-                            </div>
-                       </div>
-
-                       <div>
-                           <button ng-click="dueRes.mostrar()" type="button" class="btn btn-primary  btn-lg btn-block" style="border-radius: 8px;">
-
-                               <i class="glyphicon glyphicon-search"></i>
-                               Buscar...
-                           </button>
-                       </div>       
-
-                     </section>
-                </div>
-
-
-
-                <div class="table-responsive col-md-9 ">     
+                <div class="table-responsive col-md-12 ">     
                     <section class="widget">
                         
-                        <table  class="table table-bordered text-center " style= "table-layout: fixed; vertical-align:center;">
+                        <table id="tablaReservas" class="table table-bordered text-center " style= "table-layout: fixed; vertical-align:center;">
                             
-                            <!--thead>
-                                <tr>
-                                    <th ng-repeat="(header, value) in dueRes.MyRecCollection[0]" class="col-sm-1 thReservas">{{header}}</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr ng-repeat="row in dueRes.MyRecCollection">
-                                    <td class="seleccion celdaReserva" style = "celdaReserva" ng-repeat="cell in row">{{cell}}</td>
-                                </tr>
-                            </tbody -->
-                            
-                            <tr ng-repeat="row in data">
-                                <td href="{{col.referencia}}" style="{{col.estilo}}" role="button" data-toggle="modal" class="seleccion celdaReserva" ng-repeat="col in row track by $index"  ng-click="dueRes.clic($index, row)">{{col.nombre}}</td>
+                            <tr ng-repeat="row in data" >
+                                <td href="{{col.referencia}}" ng-click="dueRes.clic($index, row)" style="{{col.estilo}}" role="button" data-toggle="modal" class="seleccion celdaReserva" ng-repeat="col in row track by $index">{{col.nombre}}</td>
                             </tr>
-                            
-                            <!--tr>
-                                <td class="col-sm-1 thReservas"></td>
-                                <td class="col-sm-1 thReservas" ng-repeat="can in dueRes.canchas">{{can.nombre}}</td>
-                            </tr>
-                            
-                            <!- -tr ng-repeat="hora in dueRes.horas">
-                                
-                                <td class="horas">{{hora.Hora}}</td>
-                                
-                                <td href="#reservasModal" ng-repeat="asd in dueRes.reservas.canchas" role="button" data-toggle="modal" class="seleccion celdaReserva" style = "celdaReserva">{{asd.datos.idDia}}</td>
-                                
-                            </tr - ->
-                            
-                            <!--tr ng-repeat="hora in dueRes.reservas.canchas">
-                                
-                                <td class="horas">{{hora.Hora}}</td>
-                                
-                                <td href="#reservasModal" ng-repeat="asd in hora.datos" role="button" data-toggle="modal" class="seleccion celdaReserva" style = "celdaReserva">{{asd.datos.idDia}}</td>
-                                
-                            </tr >
-                            
-                            <tr ng-repeat="can in dueRes.reservas.canchas">
-                                <td class="column" title="{{can.IdCancha}}" ng-repeat="res in can.datos" >
-                                    {{res.usuario}}
-                                </td>
-                            </tr>
-                            
-                            <table ng-table="adm.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
-                                <tr ng-repeat="due in adm.duePendientes" style="background-color:white;">
-                                    <td class="text-center" title="'ID'" ng-if='false'>{{due.IdDuenio}}</td>
-                                    <td class="text-center" title="'Usuario'"  >{{due.Usuario}}</td>
-                                    <td class="text-center" title="'F. Alta'">{{due.FechaAlta}}</td>
-                                    <td class="text-center" title="'Complejo'">{{due.nombreComplejo}}</td>
-                                    <td class="text-center" title="'Tel.'" >{{due.NroTelef}}</td>
-                                    <td class="text-center" title="'Calle'" >{{due.Calle}}</td>
-                                    <td class="text-center" title="'Altura'" >{{due.Altura}}</td>
-                                    <td class="text-center" title="'Provincia'">{{due.Provincia}}</td>
-                                    <td class="text-center" title="'Localidad'">{{due.Localidad}}</td>
-                                    <td class="text-center" title="'Rechazar'">
-                                        <button type="button" ng-click="adm.aceptarDuenio(due.IdDuenio, 0)" class="btn btn-sm btn-danger">
-                                            <i class="glyphicon glyphicon-remove-circle">
-                                            </i>
-                                        </button>
-                                    </td>
-                                    <td class="text-center" title="'Aceptar'">
-                                        <button type="button" ng-click="adm.aceptarDuenio(due.IdDuenio, 1)" class="btn btn-sm btn-success">
-                                            <i class="glyphicon glyphicon glyphicon-ok">
-                                            </i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table -->
-
-                            <!--tr>
-                                <td class="horas">9 Hs</td>
-                                <td href="#reservasModal" role="button" data-toggle="modal" class="seleccion celdaReserva">Fede</td>
-                                <td href="#reservasModal" role="button" data-toggle="modal" class="seleccion celdaReserva">Guille</td>
-                                <td href="#reservasModal" role="button" data-toggle="modal" class="seleccion celdaReserva">Alan</td>
-                                <td href="#reservasModal" role="button" data-toggle="modal" class="seleccion celdaReserva">Disponible</td>
-                                <td href="#reservasModal" role="button" data-toggle="modal" class="seleccion celdaReserva">Ivan</td>
-
-                                <td href="#reservasModal" role="button" data-toggle="modal" class="seleccion celdaReserva" style="background-color:#F63333">Disponible</td>
-
-                            </tr>
-
-                
-
 
                         </table>
                      </section>    
@@ -274,7 +58,7 @@
     </div>
            
     <!--reservas modal-->
-    <div id="reservasModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div id="reservasModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-registracion">
             <div class="modal-content">
                 <div class="modal-header">
@@ -302,13 +86,13 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label class="control-label">Maracana</label>
+                                            <label class="control-label">{{dueRes.reservaSeleccionada.NombreCancha}}</label>
                                             <br>
-                                            <label class="control-label">$ 300</label>
+                                            <label class="control-label">$ {{dueRes.reservaSeleccionada.Precio}}</label>
                                             <br>
-                                            <label class="control-label">5</label>
+                                            <label class="control-label">{{dueRes.reservaSeleccionada.CantJugadores}} vs {{dueRes.reservaSeleccionada.CantJugadores}}</label>
                                             <br>
-                                            <label class="control-label">Cesped</label>
+                                            <label class="control-label">{{dueRes.reservaSeleccionada.Superficie}}</label>
                                         </div>
                                     </div>  
                                 </form>
@@ -321,13 +105,13 @@
                                 <form class="form center-block">
                                     <div class="col-md-2">    
                                         <div class="form-group" style= "margin-top:8px;">
-                                            <label >Ususario:</label>
+                                            <label >Usuario:</label>
                                         </div>
                                         <div class="form-group" style= "margin-top:22px;">
                                             <label >Horario:</label>
                                         </div>
                                         <div class="form-group" style= "margin-top:26px;">
-                                            <label >Seña:</label>
+                                            <label >Pagado:</label>
                                         </div>
                                         <div class="form-group" style= "margin-top:22px;">
                                             <label>Resta:</label>
@@ -336,7 +120,7 @@
 
                                     <div class="col-md-10">
                                         <div class="form-group">
-                                            <input type="text" id="usuario" class="form-control input-md" placeholder="Cliente">
+                                            <input type="text" id="usuario" ng-disabled="dueRes.reservaSeleccionada.Usuario != ''" class="form-control input-md" placeholder="Cliente" value="{{dueRes.reservaSeleccionada.Usuario}}">
                                         </div> 
 
                                         <div class="form-group">
@@ -384,11 +168,11 @@
                                         </div>
 
                                         <div class ="principal row" style= "margin-top:0px;">
-                                            <input type="text" id="seña" class="form-control input-md" placeholder="$ 150">
+                                            <input type="text" id="seña" class="form-control input-md" value="{{dueRes.reservaSeleccionada.Pagado}}">
                                         </div>
 
                                         <div class="form-group" style= "margin-top:8px;">
-                                            <input type="text" id="resta" class="form-control input-md" placeholder="$ 150">
+                                            <input type="text" id="resta" class="form-control input-md" value="{{dueRes.reservaSeleccionada.Resta}}">
                                         </div> 
                                     </div>
                                 </form>
@@ -399,7 +183,7 @@
                             <div class="form-group">
                                 <div class="col-md-4"> 
                                     <div class="form-group">
-                                        <button class="btn  btn-md btn-danger btn-block" style="border-radius: 7px;">Cancelar</button>   
+                                        <button class="btn  btn-md btn-danger btn-block" style="border-radius: 7px;">Cancelar Reserva</button>   
                                     </div>
                                 </div>
 
@@ -411,7 +195,7 @@
 
                                 <div class="col-md-4"> 
                                     <div class="form-group">
-                                        <button class="btn  btn-md btn-success btn-block" style="border-radius: 7px;">Completar pago</button>
+                                        <button class="btn  btn-md btn-success btn-block" ng-disabled="dueRes.reservaSeleccionada.Usuario == '' || dueRes.reservaSeleccionada.EstadoReserva == 2" style="border-radius: 7px;">Completar pago</button>
                                     </div>
                                 </div>
                             </div>
@@ -421,7 +205,7 @@
                             <div class="form-group">
                                 <div class="col-md-12"> 
                                     <div class="form-group">
-                                        <button class="btn  btn-md btn-primary btn-block" style="border-radius: 7px;">Reservar</button>
+                                        <button class="btn  btn-md btn-primary btn-block" ng-disabled="dueRes.reservaSeleccionada.Usuario != ''" style="border-radius: 7px;">Reservar</button>
                                     </div>
                                 </div>
                             </div>
