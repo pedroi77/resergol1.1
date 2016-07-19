@@ -354,11 +354,11 @@ class Complejo
             $stmt->execute();
             
             $stmt = $this->connection->prepare('SET @pX := ?');
-            $stmt->bind_param('i', $X);
+            $stmt->bind_param('d', $X);
             $stmt->execute();
             
             $stmt = $this->connection->prepare('SET @pY := ?');
-            $stmt->bind_param('i', $Y);
+            $stmt->bind_param('d', $Y);
             $stmt->execute();
             
             $resultCan = $this->connection->query('CALL SP_setComplejosDireccion(@pIdComplejoDireccion, @pCalle, @pAltura, @pIdLocalidad, @pIdProvincia, @pX, @pY);');
