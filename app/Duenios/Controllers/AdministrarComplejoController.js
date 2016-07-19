@@ -26,13 +26,8 @@ this.horaLuzSeleccionada = {id: 17, desc: '17:00:00'};
             function(res) { // success
                 MapService.addMarker(res);
                 $scope.place.name = res.name;
-                //$scope.place.lat = res.geometry.location.lat();
-                //$scope.place.lng = res.geometry.location.lng();
                 self.Complejo.X=  res.geometry.location.lat();
                 self.Complejo.Y =res.geometry.location.lng();
-                console.log( res.name);
-                console.log(self.Complejo.X);
-                console.log(self.Complejo.Y);
             },
             function(status) { // error
                 $scope.apiError = true;

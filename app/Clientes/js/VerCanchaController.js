@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService, ComplejosDiasServices, PuntuacionesCanchaService, ComentariosCanchaService, CanchaImagenesDBServices, MandarMailsService){
+resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DuenioDiasService, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasFijasService, ReservasTempService, ComplejosDiasServices, PuntuacionesCanchaService, ComentariosCanchaService, CanchaImagenesDBServices, MandarMailsService, $log){
 	
     var self = this;
     
@@ -35,6 +35,66 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
     this.seVoto2 = false;
     this.seVoto1 = false;
     
+    //Esto es para el MAPA. Inicio
+    $scope.map = {center: {latitude: -34.602473, longitude: -58.381057 }, zoom: 14 };
+    //$scope.map = {center: {latitude: -34.602473, longitude: -58.381057 }, zoom: 14 };
+    $scope.options = {scrollwheel: false};
+    $scope.coordsUpdates = 0;
+    $scope.dynamicMoveCtr = 0;
+    $scope.marker = {
+      id: 0,
+      coords: {
+        latitude: 0,
+        longitude: 0
+      },
+      options: { draggable: true },
+      events: {
+        dragend: function (marker, eventName, args) {
+          $log.log('marker dragend');
+          var lat = marker.getPosition().lat();
+          var lon = marker.getPosition().lng();
+          $log.log(lat);
+          $log.log(lon);
+
+          $scope.marker.options = {
+            draggable: true,
+            labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+            labelAnchor: "100 0",
+            labelClass: "marker-labels"
+          };
+        }
+      }
+    };
+    $scope.$watchCollection("marker.coords", function (newVal, oldVal) {
+      if (_.isEqual(newVal, oldVal))
+        return;
+      $scope.coordsUpdates++;
+    });
+    
+    /*
+    $scope.marker.coords = {
+        latitude:-34.602473,
+        longitude: -58.381057 
+      };
+    */
+    /*
+    $timeout(function () {
+      $scope.marker.coords = {
+        latitude:-34.602473,
+        longitude: -58.381057 
+      };
+      $scope.dynamicMoveCtr++;
+      $timeout(function () {
+        $scope.marker.coords = {
+          latitude: 43.1451,
+          longitude: -102.6680
+        };
+        $scope.dynamicMoveCtr++;
+      }, 2000);
+    }, 1000);
+    */
+    //Esto es para el MAPA. Fin
+
     $scope.ComentariosCancha = []; //usuario,comentario y fecha.   
     this.Comentario = {
                         idCancha:$scope.idCancha,
@@ -339,6 +399,13 @@ this.getImagenes = function()
                     $scope.cancha = data;
                     $scope.idDuenio = data[0].IdDuenio; 
                 
+                //console.log(data);
+                $scope.map = {center: {latitude: data[0].X, longitude: data[0].Y}, zoom: 14 };
+                
+                 $scope.marker.coords = {
+                    latitude:data[0].X,
+                    longitude:  data[0].Y 
+                  };
                 
                 DuenioDiasService.query({idDuenio:$scope.idDuenio}).$promise.then(function(data) {
                     self.diasComplejo = data;
