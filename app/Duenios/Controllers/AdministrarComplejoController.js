@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("AdministrarComplejoController", function($scope, $state, DueniosComplejosService, DiasServices, DocumentosService, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DueniosService, AdministrarComplejoService, ComplejosDiasServices, EmailComplejoService, EmailDuenioService,UsuarioService, ComplejoExisteUsuarioDuenioService, $uibModal,  $uibModalStack){
+resergolApp.controller("AdministrarComplejoController", function($scope, $state, DueniosComplejosService, DiasServices, DocumentosService, ProvinciasService, LocalidadesService, CanchasService, TiposSuperficiesService, DueniosService, AdministrarComplejoService, ComplejosDiasServices, EmailComplejoService, EmailDuenioService,UsuarioService, ComplejoExisteUsuarioDuenioService, $uibModal,  $uibModalStack, MapService){
 
 //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-DECLARACIONES-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
 var self = this;
@@ -14,6 +14,38 @@ this.localidadSeleccionada = {IdLocalidad: '-1', Nombre: 'Otra'};
 this.tipoDocSeleccionado = {IdTipoDoc: '-1', Descripcion: 'Otro'};
 this.horaLuzSeleccionada = {id: 17, desc: '17:00:00'};
 //#endregion
+    
+    //Mapa INICIO
+    $scope.place = {};
+    
+    $scope.search = function() {
+        $scope.apiError = false;
+        
+        MapService.search($scope.searchPlace)
+        .then(
+            function(res) { // success
+                MapService.addMarker(res);
+                $scope.place.name = res.name;
+                self.Complejo.X=  res.geometry.location.lat();
+                self.Complejo.Y =res.geometry.location.lng();
+            },
+            function(status) { // error
+                $scope.apiError = true;
+                $scope.apiStatus = status;
+            }
+        );
+    }
+    
+    $scope.send = function() {
+        alert($scope.place.name + ' : ' + $scope.place.lat + ', ' + $scope.place.lng);    
+    }
+    
+    MapService.init();
+    
+    this.armarDir = function(){
+        $scope.searchPlace = self.Complejo.calle + ' ' + self.Complejo.altura + ' ' + self.localidadSeleccionada.Nombre + ' ' + self.provinciaSeleccionada.Nombre ;
+    };
+    //Mapa FIN
 
 this.Complejo = { 
 
@@ -233,7 +265,7 @@ this.traerDatosComplejos = function(){
 
             angular.forEach(self.horaLuz.hora, function(aux) {
 
-                console.log('AUX:' + aux.desc.substr(0,5) + 'SELF:' + self.Complejo.horaCobroLuz.substr(0,5));
+                //console.log('AUX:' + aux.desc.substr(0,5) + 'SELF:' + self.Complejo.horaCobroLuz.substr(0,5));
 
                 if(aux.desc.substr(0,5) == self.Complejo.horaCobroLuz.substr(0,5))    
                 {
@@ -250,7 +282,7 @@ this.traerDatosComplejos = function(){
         ProvinciasService.query().$promise.then(function(data) {
 
             self.provincias.prov = data;
-            console.log(data);
+            //console.log(data);
             angular.forEach(self.provincias.prov, function(aux) {
 
             if(aux.IdProvincia == self.Complejo.idProv)    
@@ -283,20 +315,20 @@ this.traerDatosComplejos = function(){
 };
     
     this.getDiasComplejos = function(){
-        console.log("ID: "  + self.Complejo.idComplejo);
+        //console.log("ID: "  + self.Complejo.idComplejo);
         ComplejosDiasServices.query({idComplejo:self.Complejo.idComplejo, aux:0}).$promise.then(function(data){
 
-            console.log("ID: "  + self.Complejo.idComplejo);
-            console.log("Dentro de getDiasComplejos");
+            //console.log("ID: "  + self.Complejo.idComplejo);
+            //console.log("Dentro de getDiasComplejos");
             self.Complejo.diasComplejo = data;  
             
-            console.log("Data--> " + data[0]);
+            //console.log("Data--> " + data[0]);
         });
     };
 
     this.getLocalidades = function(){
         var idProv = self.provinciaSeleccionada.IdProvincia;//self.provincias.selectedProv.IdProvincia;
-        console.log("Id de la provincia en getLocalidades: " + idProv)
+        //console.log("Id de la provincia en getLocalidades: " + idProv)
         if(idProv != -1 && idProv != undefined){
             LocalidadesService.query({id:idProv}).$promise.then(function(data) {
                 self.localidades.loc = data;
@@ -304,7 +336,7 @@ this.traerDatosComplejos = function(){
                 angular.forEach(self.localidades.loc, function(aux) {
                      if(aux.IdLocalidad == self.Complejo.idLoc)    
                      {
-                         console.log('te entro la localidad');
+                         //console.log('te entro la localidad');
                          self.localidadSeleccionada.IdLocalidad = aux.IdLocalidad;
                          self.localidadSeleccionada.Nombre = aux.Nombre;
                     }
@@ -495,13 +527,15 @@ this.traerDatosComplejos = function(){
         self.Complejo.idProv = self.provinciaSeleccionada.IdProvincia;
         self.Complejo.idTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
         self.Complejo.idLoc = self.localidadSeleccionada.IdLocalidad;
-        self.Complejo.horaCobroLuz = self.horaLuzSeleccionada.desc.substr(0,5) + ":00";
+        self.Complejo.horaCobroLuz = self.horaLuzSeleccionada.desc.substr(0,5) + ":00"; //MATI esto pincha :(
+        //self.Complejo.horaCobroLuz = "19:00:00";
 
         AdministrarComplejo.data = self.Complejo;
 
-        console.log("Datos del complejo: " + self.Complejo.idLoc + self.Complejo.idProv);
+        //console.log("Datos del complejo: " + self.Complejo.idLoc + self.Complejo.idProv);
 
-        console.log("Estamos en el hacerCambiosComplejo, Datos:  " + AdministrarComplejo.data);
+        //console.log("Estamos en el hacerCambiosComplejo, Datos:  " + AdministrarComplejo.data);
+        console.log(AdministrarComplejo.data);
 
         AdministrarComplejoService.save(AdministrarComplejo.data, function(reponse){
             self.Complejo.idComplejo = reponse.data[0];

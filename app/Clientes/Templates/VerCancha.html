@@ -161,7 +161,11 @@
               <div class="widget">
                 <h4 class="fa fa-user titul">Ubicación</h4>
                 <div class="boxMapa">
-                    <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+                    <!--<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map> -->
+                    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options">
+                        <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+                        </ui-gmap-marker>
+                    </ui-gmap-google-map>
                     <!-- <div id="map-containerIvan"></div> -->
                 </div>
               </div>

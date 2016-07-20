@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("InscripcionTorneoController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasTempService, EquiposService, EquipoTorneoService, EquiposImagenesAltaService, EquiposImagenesDBService, EquiposImagenesService, $compile, Upload){
+resergolApp.controller("InscripcionTorneoController", function($scope, $rootScope, $sce, store, $timeout, $state,  $stateParams, ReservasService, TarjetasClienteService, ListasNegrasService, ReservasTempService, EquiposService, EquipoTorneoService, EquiposImagenesAltaService, EquiposImagenesDBService, EquiposImagenesService, $compile, Upload, EquipoTorneoService, TorneoService){
 	
     var self = this;
     
@@ -8,10 +8,11 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
     $scope.tiempoTimer = 300;
     $rootScope.$state = $state;
     $scope.torneo = [];
-    //$scope.idTorneo = $stateParams.idTorneo;
-    $scope.idTorneo = 3;
+    $scope.idTorneo = $stateParams.idTorneo;
+    //$scope.idTorneo = 3;
     $scope.idDuenio = -1;
     $scope.idCliente = sessionStorage.id;
+    this.equiposTor = null;
     
     this.msjPantalla ="" ;
     this.archivoInvalido = true;
@@ -24,7 +25,7 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
     this.vURL = "/../resergol1.1/images/complejos/complejo2.jpg";
 
     this.paso1Completo = false;
-    $scope.precioAPagar = 500;
+    $scope.precioAPagar = 0;
     $scope.restante = 0;
     $scope.porcentajePago = 0;
 
@@ -88,23 +89,13 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
         $timeout.cancel(mytimeout);
     };
     
-    /*$scope.$on('timer-stopped', function(event, remaining) {
-        if(remaining === 0 && $state.current.name == 'Clientes.verCancha.Reservar') {
-             self.borrarReservaTemp();
-
-             bootbox.alert("Tiempo máximo de reserva alcanzado.", function() {
-             });
-            
-            $state.go('Clientes.verCancha'); 
-            $('html,body').animate({scrollTop:10},'slow');return false;
-        }
-        
-    });*/
     
-
+    TorneoService.query({idTorneo:$scope.idTorneo}).$promise.then(function(data) {
+        $scope.torneo = data[0];
+        $scope.precioAPagar = $scope.torneo.PrecioInscripcion;
+        console.log($scope.torneo);
+    });
     
-    
-
     this.imprimirComprobante = function() {
       //Traigo el horario de la reserva.    
       
@@ -309,7 +300,18 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
                     EquipoTorneoService.save(InscripcionNuevo.data, function(reponse){
                         idRetorn = reponse.data[0];
                         console.log('retorno inscripcion -->' + idRetorn);
-                        //IVO
+                        var msjTor = "Inscripción a torneo exitosa, con el equipo " + document.getElementById("nombreEquipo").value +"! <br>";
+                        msjTor += 'El torneo podrás seguirlo en la sección "Mis Torneos". <br>¡Que gane el mejor!';
+                    
+                        bootbox.alert(msjTor, function(){});
+                        
+                        if($scope.torneo.idTipoTorneo == 1)
+                            $state.go('Clientes.verTorneoLiga'); 
+                        else if($scope.torneo.idTipoTorneo == 2)
+                            $state.go('Clientes.verTorneoCopa'); 
+                        
+                        if(document.getElementById('chkGuardaTarjeta').checked)
+                            self.guardarTarjeta();
             
                     },function(errorResponse){
                         console.log('ERROR INSCRIPCION DEL EQUIPO AL TORNEO...' + errorResponse); 
@@ -356,27 +358,47 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
             console.log('ERROR...'); 
          });*/
         
-        if(document.getElementById('chkGuardaTarjeta').checked)
-             self.guardarTarjeta();
+        
         
     };
+    
+    this.getEquiposTorneo = function(){
+			EquipoTorneoService.query({idTorneo:$scope.idTorneo}).$promise.then(function(data){
+                 self.equiposTor = data;
+            });
+	};
+    
+    self.getEquiposTorneo();
     
     this.pagarYReservar = function(){
         
         var errores = "";
         var nom = document.getElementById("nombreEquipo").value;
-        if(nom == undefined || nom == "")
-            errores = "* Por más malo que sea, el equipo debe tener un nombre! <br>";
-        if(nom.length > 18)
-            errores = "* El nombre del equipo es muy largo! <br>";
-            
+
+        if(self.equiposTor.length >= $scope.torneo.CantEquipos)
+            errores += "* No hay más cupos para inscribirse al torneo, lo sentimos! <br>";
+        else
+            {
+                if(nom == undefined || nom == "")
+                   errores = "* Por más malo que sea, el equipo debe tener un nombre! <br>";
+                if(nom.length > 18)
+                   errores += "* El nombre del equipo es muy largo! <br>";
+
+                //Recorro los equipos inscriptos para ver si el cliente ya se inscribió o si ya existe un equipo con el mismo nombre...
+                angular.forEach(self.equiposTor, function(aux) { 
+                    if(aux.IdCliente == sessionStorage.id)
+                        errores += "* Ya te inscribiste en este torneo con el equipo " +aux.Nombre+"! <br>";
+                    if(aux.Nombre == nom)
+                        errores += "* El equipo llamado "+nom+" ya existe en el torneo! <br>";
+                });
+            }
+
         if(errores != "")     
         {
             bootbox.alert(errores, function(){}); 
             return false;
         }
     
-        
         bootbox.confirm("¿Seguro desea realizar el pago de $"+ $scope.precioAPagar +" para inscribirte al torneo?", function(result) {
         if(result)
         {

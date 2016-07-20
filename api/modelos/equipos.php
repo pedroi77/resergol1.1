@@ -123,6 +123,27 @@ class Equipo
    
             
     }
+    
+    public function getEquiposTorneo($pIdTorneo){
+        
+        $stmt = $this->connection->prepare('SET @pIdTorneo := ?');
+        $stmt->bind_param('i', $pIdTorneo);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getEquiposTorneo(@pIdTorneo);";
+        
+        $eqs = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $eqs[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $eqs;
+    }
+    
 
  
 }

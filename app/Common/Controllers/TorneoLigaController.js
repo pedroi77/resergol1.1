@@ -2,7 +2,7 @@
 var resergolApp = angular.module("resergolApp");
 
 
-resergolApp.controller("TorneoLigaController", function($scope, $stateParams, store, $state, TorneoService, TorneoImgDBService,TorneoLigaTablaService, TorneoLigaFechasService,TorneoLigaFixtureService,TorneoCanchasService, ListasNegrasService,TorneoCampeonService){
+resergolApp.controller("TorneoLigaController", function($scope, $stateParams, store, $state, TorneoService, TorneoImgDBService,TorneoLigaTablaService, TorneoLigaFechasService,TorneoLigaFixtureService,TorneoCanchasService, ListasNegrasService,TorneoCampeonService, EquipoTorneoService){
 
 
     var self = this;
@@ -22,7 +22,7 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
     this.muestraCampeon=false;
     $scope.fechaIngresoListaNegra = 0; //Si es 0, no está en la lista negra. Si está, guardo la fecha que ingresó a la misma.
     
-  
+    
     this.estaLogueadoCliente = false;
     var token = store.get("token") || null;
          var sesion = sessionStorage.usuario  || null;
@@ -34,12 +34,10 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
              self.estaLogueadoCliente = true;
          }   
   
-    console.log('LOGUEADO->' + self.estaLogueadoCliente);
-    
     this.inscripcionTorneoLiga = function(){ 
         if($scope.fechaIngresoListaNegra != 0)
         {
-            var msj = 'No podés reservar ya que estás en la lista negra del complejo desde el ' + $scope.fechaIngresoListaNegra;
+            var msj = 'No podés inscribirte ya que estás en la lista negra del complejo desde el ' + $scope.fechaIngresoListaNegra;
             bootbox.alert(msj, function() {});
         }
         else
@@ -94,8 +92,9 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
          });
     };
     
+    
     this.verificarListaNegra = function(){
-			ListasNegrasService.query({idCliente:sessionStorage.id, idComplejo:1}).$promise.then(function(data){
+			ListasNegrasService.query({idCliente:sessionStorage.id, idComplejo:self.canchas[0].IdComplejo}).$promise.then(function(data){
                  if(data != null && data != undefined && data[0] != undefined)
                  {
                      if(data[0].FechaIngreso != null && data[0].FechaIngreso != undefined)
@@ -109,11 +108,25 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
             });
 	};
     
+    
+    //Para habilitar/deshabilitar el botón de inscripción a torneo.
+    this.valida = false;
+    
     this.init = function(){
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
             console.log(data[0]);
             self.torneo = data[0];
-            self.verificarListaNegra();
+            //self.validaInscripcion();
+            /*cargar imagenes*/
+            TorneoCanchasService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
+                self.canchas = data;
+                self.verificarListaNegra();
+            });
+            
+            if(self.estaLogueadoCliente == false || self.torneo.idEstado != 2)
+                self.valida = false;
+            else
+                self.valida = true;
             
             TorneoCampeonService.query({idTipoTorneo:self.torneo.idTipoTorneo , idTorneo:self.idTorneo }).$promise.then(function(data) {            
                 self.campeon = data[0];
@@ -166,10 +179,6 @@ resergolApp.controller("TorneoLigaController", function($scope, $stateParams, st
             self.fechas = data;
         }); 
         
-          /*cargar imagenes*/
-        TorneoCanchasService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
-            self.canchas = data;
-        }); 
         
        self.cargarFixture(1);
         

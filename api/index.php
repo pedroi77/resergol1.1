@@ -96,13 +96,14 @@ $app->post('/duenios', function(){
 	}
 });
 
+
 //Get
 $app->get('/duenios/:user/:pass', function($usuario,$contrasenia){
     //http://localhost:8080/resergol1.1/api/clientes/HOMERO&1111
     $duenio = new Duenio();
     $result = $duenio->getDuenio($usuario,$contrasenia);
     
-    if(count($result)>0){
+    if($result[0]['IdDuenio']>0){
         //Creo el token
         $key = 'resergol77';
         $token = array(
@@ -116,20 +117,36 @@ $app->get('/duenios/:user/:pass', function($usuario,$contrasenia){
     
         $miToken['token'] = $jwt;
         
-        //$aux =  \Firebase\JWT\JWT::decode($jwt, 'resergol77');  //borrar
-        
-        //array_push($result,$miToken);
         array_push($result,$jwt);
 
         sendResult($result);
-        //sendResult($aux);//borrar
+        
         
     }else{
-        $result[] = "-1";
         sendResult($result);
     }
 });
 
+
+//get de devoluciones por complejo
+$app->get('/duenios/devoluciones/:idcomplejo/:desde/:hasta/:tipo', function($idcomplejo,  $desde, $hasta, $tipo){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){    
+        $duenio = new Duenio();
+        $data = $duenio->getDevoluciones($idcomplejo, $desde, $hasta, $tipo);
+        sendResult($data);
+    }
+	else{
+        sendError("token invalido");
+    }
+});
 
 /*************************************************ADMINISTRADORES*************************************************/
 
@@ -220,7 +237,7 @@ $app->get('/clientes/:user/:pass', function($usuario,$contrasenia){
     $cliente = new Cliente();
     $result = $cliente->getCliente($usuario,$contrasenia);
     
-    if(count($result)>0){
+    if($result[0]['IdCliente'] > 0){
         //Creo el token
         $key = 'mi-secret-key';
         $token = array(
@@ -238,7 +255,6 @@ $app->get('/clientes/:user/:pass', function($usuario,$contrasenia){
         sendResult($result);
         
     }else{
-        $result[] = "-1";
         sendResult($result);
     }
 });
@@ -1577,6 +1593,17 @@ $app->delete('/equipoTorneo/:idEquipo/:idTorneo', function($idEquipo, $idTorneo)
     
 });
 
+
+//Get equipos inscriptos a un torneo
+$app->get('/equipoTorneo/:idTorneo', function($pIdTorneo){
+    
+    $eq = new Equipo();
+    $data = $eq->getEquiposTorneo($pIdTorneo);
+	sendResult($data);
+    
+});
+
+
 ///*********************MANDAR MAILS*******************************************************************************************/
 
 //mandarMails
@@ -1585,13 +1612,13 @@ $app->post('/mandarMails', function(){
     $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
 	
 	$mails = new Mails();
-    /*$result = */$mails->mandarMail($data);
+    $result = $mails->mandarMail($data);
 	
-	/*if($result){
+	if($result){
 		sendResult($result);
 	}else{
 		sendError("Error al mandar mail");
-	}*/
+	}
 });
 
 $app->run();
