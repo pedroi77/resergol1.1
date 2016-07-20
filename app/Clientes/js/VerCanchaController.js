@@ -399,7 +399,7 @@ this.getImagenes = function()
                     $scope.cancha = data;
                     $scope.idDuenio = data[0].IdDuenio; 
                 
-                //console.log(data);
+                console.log(data);
                 $scope.map = {center: {latitude: data[0].X, longitude: data[0].Y}, zoom: 14 };
                 
                  $scope.marker.coords = {

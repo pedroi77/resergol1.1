@@ -131,6 +131,26 @@ $app->get('/duenios/:user/:pass', function($usuario,$contrasenia){
 });
 
 
+//get de devoluciones por complejo
+$app->get('/duenios/devoluciones/:idcomplejo/:desde/:hasta/:tipo', function($idcomplejo,  $desde, $hasta, $tipo){
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){    
+        $duenio = new Duenio();
+        $data = $duenio->getDevoluciones($idcomplejo, $desde, $hasta, $tipo);
+        sendResult($data);
+    }
+	else{
+        sendError("token invalido");
+    }
+});
+
 /*************************************************ADMINISTRADORES*************************************************/
 
 //Get
