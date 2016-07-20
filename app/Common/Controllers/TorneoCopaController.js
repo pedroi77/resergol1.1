@@ -1,7 +1,7 @@
 
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $state, TorneoService, TorneoImgDBService, TorneoLigaFixtureService,TorneoCopaFixtureService, TorneoCopaIyVFixtureService, TorneoCanchasService,TorneoCampeonService ){
+resergolApp.controller("TorneoCopaController", function($scope, $stateParams, store, $state, TorneoService, TorneoImgDBService, TorneoLigaFixtureService,TorneoCopaFixtureService, TorneoCopaIyVFixtureService, TorneoCanchasService,TorneoCampeonService, ListasNegrasService, EquipoTorneoService){
 
     var self = this;
     this.torneo;
@@ -30,8 +30,30 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
     this.alturaCampeon;
     this.campeon;
     this.muestraCampeon=false;
-    
+    $scope.fechaIngresoListaNegra = 0; //Si es 0, no está en la lista negra. Si está, guardo la fecha que ingresó a la misma.
 
+    
+    this.estaLogueadoCliente = false;		
+    var token = store.get("token") || null;		
+         var sesion = sessionStorage.usuario  || null;		
+        		
+         if(!token || !sesion ){		
+             self.estaLogueadoCliente = false;		
+         }    		
+         else if(sessionStorage.tipo == 'C'){		
+             self.estaLogueadoCliente = true;		
+         }   		
+  		
+    this.inscripcionTorneoCopa = function(){ 		
+        if($scope.fechaIngresoListaNegra != 0)		
+        {		
+            var msj = 'No podés inscribirte ya que estás en la lista negra del complejo desde el ' + $scope.fechaIngresoListaNegra;		
+            bootbox.alert(msj, function() {});		
+        }		
+        else		
+            $state.go('Clientes.verTorneoCopa.inscripcionTorneoCopa');		
+    };
+    
     
     this.validaGol = function(indice){
            
@@ -44,6 +66,25 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
     }
     
     
+    this.verificarListaNegra = function(){		
+			ListasNegrasService.query({idCliente:sessionStorage.id, idComplejo:self.canchas[0].IdComplejo}).$promise.then(function(data){		
+                 if(data != null && data != undefined && data[0] != undefined)		
+                 {		
+                     if(data[0].FechaIngreso != null && data[0].FechaIngreso != undefined)		
+                        $scope.fechaIngresoListaNegra = data[0].FechaIngreso;		
+                     else		
+                        $scope.fechaIngresoListaNegra = 0;     		
+                 }		
+                else		
+                    $scope.fechaIngresoListaNegra = 0;		
+                 		
+            });		
+	};		
+    		
+    		
+    //Para habilitar/deshabilitar el botón de inscripción a torneo.		
+    this.valida = false;
+    
     
     this.init = function(){
         
@@ -55,8 +96,19 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
        
         TorneoService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
             self.torneo = data[0];
-            
             self.bIdayVuelta =  self.torneo['idaYvuelta']=='0' ? false:true;
+            
+            /*cargar imagenes*/
+            TorneoCanchasService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
+                self.canchas = data;
+                console.log(self.canchas);
+                self.verificarListaNegra();
+            }); 
+            
+            if(self.estaLogueadoCliente == false || self.torneo.idEstado != 2)
+                self.valida = false;		
+            else		
+                self.valida = true;
             
             if(self.bIdayVuelta) {
                 self.cargarLlavesIdayVuelta(parseInt(self.torneo["CantEquipos"]));
@@ -98,10 +150,6 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, $s
             };   
         }); 
 
-        /*cargar imagenes*/
-        TorneoCanchasService.query({idTorneo:self.idTorneo }).$promise.then(function(data) {
-            self.canchas = data;
-        }); 
     }
     
     this.cargarLlaves= function(cantEquipos){

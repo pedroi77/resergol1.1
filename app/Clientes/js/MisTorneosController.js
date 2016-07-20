@@ -215,9 +215,9 @@ resergolApp.controller("MisTorneosController", function($scope,$state, $statePar
         console.log(torneo.IdTipoTorneo);
 
         if(torneo.IdTipoTorneo == 1 || torneo.IdTipoTorneo == "1")
-            $state.go("Duenios.verTorneoLiga",{idTorneo:torneo.IdTorneo});
+            $state.go("Clientes.verTorneoLiga",{idTorneo:torneo.IdTorneo});
         else if(torneo.IdTipoTorneo == 2 || torneo.IdTipoTorneo == "2")
-                $state.go("Duenios.verTorneoCopa",{idTorneo:torneo.IdTorneo});
+                $state.go("Clientes.verTorneoCopa",{idTorneo:torneo.IdTorneo});
 
         $('html,body').animate({scrollTop:10},'fast');return false;
     }
