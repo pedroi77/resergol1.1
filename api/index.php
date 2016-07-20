@@ -1052,6 +1052,34 @@ $app->get('/duenios/reservas/:idComplejo/:fecha/:idCancha', function($idComplejo
 	sendResult($data);
 });
 
+//completa el pago de una reserva
+$app->post('/duenios/reservas/completarPago', function(){
+    
+    //antes habia una validacion del token
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+
+    $reserva = new Reserva();
+    $result = $reserva->completarPago($data);
+
+    sendResult($result);
+    
+});
+/*
+//borra de reservas la reserva seleccionada
+$app->delete('/duenios/reservas/cancelarReserva/:idReserva', function($idReserva){
+    
+    //antes habia una validacion del token
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+
+    $reserva = new Reserva();
+    $result = $reserva->deleteReserva($idReserva);
+
+    sendResult($result);
+    
+});*/
+
 /*******************************TARJETAS CLIENTES*****************************************************/
 
 //alta

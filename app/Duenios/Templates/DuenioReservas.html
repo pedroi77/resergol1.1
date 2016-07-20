@@ -168,11 +168,11 @@
                                         </div>
 
                                         <div class ="principal row" style= "margin-top:0px;">
-                                            <input type="text" id="seña" class="form-control input-md" value="{{dueRes.reservaSeleccionada.Pagado}}">
+                                            <input type="text" id="pagado" ng-change="dueRes.CalcularResta()" ng-model="dueRes.reservaSeleccionada.Pagado" class="form-control input-md" value="{{dueRes.reservaSeleccionada.Pagado}}">
                                         </div>
 
                                         <div class="form-group" style= "margin-top:8px;">
-                                            <input type="text" id="resta" class="form-control input-md" value="{{dueRes.reservaSeleccionada.Resta}}">
+                                            <input type="text" id="resta" ng-disabled="true" class="form-control input-md" value="{{dueRes.reservaSeleccionada.Resta}}">
                                         </div> 
                                     </div>
                                 </form>
@@ -183,19 +183,19 @@
                             <div class="form-group">
                                 <div class="col-md-4"> 
                                     <div class="form-group">
-                                        <button class="btn  btn-md btn-danger btn-block" style="border-radius: 7px;">Cancelar Reserva</button>   
+                                        <button class="btn  btn-md btn-danger btn-block" ng-click="dueRes.borrarReserva()" style="border-radius: 7px;">Cancelar Reserva</button>   
                                     </div>
                                 </div>
 
                                 <div class="col-md-4"> 
                                     <div class="form-group">
-                                        <button class="btn  btn-md btn-warning btn-block" style="border-radius: 7px;">Reserva Fija</button>
+                                        <button class="btn  btn-md btn-warning btn-block" ng-click="dueRes.reservar(1)" style="border-radius: 7px;">Reserva Fija</button>
                                     </div>
                                 </div>
 
                                 <div class="col-md-4"> 
                                     <div class="form-group">
-                                        <button class="btn  btn-md btn-success btn-block" ng-disabled="dueRes.reservaSeleccionada.Usuario == '' || dueRes.reservaSeleccionada.EstadoReserva == 2" style="border-radius: 7px;">Completar pago</button>
+                                        <button class="btn  btn-md btn-success btn-block" ng-disabled="dueRes.reservaSeleccionada.Usuario == '' || dueRes.reservaSeleccionada.EstadoReserva == 2" ng-click="dueRes.completarPago()" style="border-radius: 7px;">Completar pago</button>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@
                             <div class="form-group">
                                 <div class="col-md-12"> 
                                     <div class="form-group">
-                                        <button class="btn  btn-md btn-primary btn-block" ng-disabled="dueRes.reservaSeleccionada.Usuario != ''" style="border-radius: 7px;">Reservar</button>
+                                        <button class="btn  btn-md btn-primary btn-block" ng-click="dueRes.reservar(0)" ng-disabled="dueRes.reservaSeleccionada.Usuario != ''" style="border-radius: 7px;">Reservar</button>
                                     </div>
                                 </div>
                             </div>

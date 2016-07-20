@@ -284,6 +284,77 @@ class Reserva
         return $reservas;
     }
     
+    public function completarPago($reserva){
+        
+        $vResultado = 0;
+        $idReserva = $this->connection->real_escape_string($reserva['IdReserva']);
+        
+        //echo 'Cambios en la reserva: ', ' idreserva: ' . $idReserva, "\n";
+        
+        // Parametros
+        $stmt = $this->connection->prepare('SET @pIdReserva := ?');
+        $stmt->bind_param('i', $idReserva);
+        $stmt->execute();
+        
+        //Salida
+        $stmt = $this->connection->prepare('SET @vResultado := ?');
+        $stmt->bind_param('i', $vResultado);
+        $stmt->execute();
+        
+        $result = $this->connection->query('CALL SP_updateReservaCompletarPago(@pIdReserva, @vResultado);');
+
+        $r = $this->connection->query('SELECT @vResultado as resul');
+        $row = $r->fetch_assoc();               
+
+        $res = $row['resul'] ;
+        
+        //echo 'Cambios en la reserva: ', '  resultado: ' . $res, "\n";
+        
+        if($res > -1){
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+        }else{
+           sendError("Error, no se actualizaron las reservas." . $res );
+        }
+        
+    }
+
+    public function deleteReserva($idReserva){
+        
+        $vResultado = 0;
+
+        $idReserva = $this->connection->real_escape_string($reserva['IdReserva']);
+        
+        //echo 'Cambios en la reserva: ', ' idreserva: ' . $idReserva, "\n";
+        
+        // Parametros
+        $stmt = $this->connection->prepare('SET @pIdReserva := ?');
+        $stmt->bind_param('i', $idReserva);
+        $stmt->execute();
+        
+        //Salida
+        $stmt = $this->connection->prepare('SET @vResultado := ?');
+        $stmt->bind_param('i', $vResultado);
+        $stmt->execute();
+        
+        $result = $this->connection->query('CALL SP_updateReservaCompletarPago(@pIdReserva, @vResultado);');
+
+        $r = $this->connection->query('SELECT @vResultado as resul');
+        $row = $r->fetch_assoc();               
+
+        $res = $row['resul'] ;
+        
+        //echo 'Cambios en la reserva: ', '  resultado: ' . $res, "\n";
+        
+        if($res > -1){
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+        }else{
+           sendError("Error, no se actualizaron las reservas." . $res );
+        }
+        
+    }
+    
     /*public function getReservasByDuenioFecha($idComplejo, $idCancha, $fecha){
         
         
@@ -313,9 +384,9 @@ class Reserva
         }
         return $reservas;
     }*/
-    
+    /*
     //Al cancelar la reserva, luego de ingresar la devolucion, borro la reserva.
-    /*public function delete($idReserva){
+    public function deleteReserva($idReserva){
         
         $valor='';
        
@@ -323,7 +394,6 @@ class Reserva
         $stmt = $this->connection->prepare('SET @idReserva := ?');
         $stmt->bind_param('i', $idReserva);
         $stmt->execute();
-        
         
         //Salida
         $stmt = $this->connection->prepare('SET @valor := ?');
@@ -347,9 +417,6 @@ class Reserva
    
             
     }*/
-    
-    
-
     
 }
 
