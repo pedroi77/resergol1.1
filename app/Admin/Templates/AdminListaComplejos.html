@@ -21,13 +21,13 @@
                 <td class="text-center" title="'Provincia'">{{due.Provincia}}</td>
                 <td class="text-center" title="'Localidad'">{{due.Localidad}}</td>
                 <td class="text-center" title="'Rechazar'">
-                    <button type="button" ng-click="adm.aceptarDuenio(due.IdDuenio, 0)" class="btn btn-sm btn-danger">
+                    <button type="button" ng-click="adm.aceptarDuenio(due.IdDuenio, 0, $index)" class="btn btn-sm btn-danger">
                         <i class="glyphicon glyphicon-remove-circle">
                         </i>
                     </button>
 				</td>
                 <td class="text-center" title="'Aceptar'">
-                    <button type="button" ng-click="adm.aceptarDuenio(due.IdDuenio, 1)" class="btn btn-sm btn-success">
+                    <button type="button" ng-click="adm.aceptarDuenio(due.IdDuenio, 1, $index)" class="btn btn-sm btn-success">
                         <i class="glyphicon glyphicon glyphicon-ok">
                         </i>
                     </button>

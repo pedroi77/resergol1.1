@@ -121,7 +121,14 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			controllerAs : "due"
 		})
     
-    
+        .state("Duenios.devoluciones",{
+			url : "/Devoluciones",
+            params: {
+                    idComplejo:{value:'defaultValue'}
+                },	
+			templateUrl : "app/Duenios/Templates/DueniosDevoluciones.html",
+			controllerAs : "due"
+		})
         .state("Duenios.reserva",{
 			url : "/Reservas",
 			templateUrl : "app/Duenios/Templates/DuenioReservas.html",

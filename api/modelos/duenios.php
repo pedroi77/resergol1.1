@@ -162,4 +162,36 @@ class Duenio
         }
         
     }
+    
+     public function getDevoluciones($idComplejo, $desde, $hasta, $tipo ){
+        
+        $stmt = $this->connection->prepare('SET @idComplejo := ?');
+        $stmt->bind_param('i', $idComplejo);
+        $stmt->execute(); 
+    
+        $stmt = $this->connection->prepare('SET @desde := ?');
+        $stmt->bind_param('s', $desde);
+        $stmt->execute(); 
+         
+        $stmt = $this->connection->prepare('SET @hasta := ?');
+        $stmt->bind_param('s', $hasta);
+        $stmt->execute(); 
+         
+        $stmt = $this->connection->prepare('SET @tipo := ?');
+        $stmt->bind_param('i', $tipo);
+        $stmt->execute(); 
+        
+        $query = "CALL sp_GetDevoluciones(@idComplejo, @desde, @hasta,@tipo  );";
+        
+        $devoluciones= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $devoluciones[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $devoluciones;
+    }
 }
