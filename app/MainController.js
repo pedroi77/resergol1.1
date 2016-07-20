@@ -61,17 +61,22 @@ resergolApp.controller("MainController", function($scope, $state,store, UsuarioS
             cliente = {};
             cliente = data;       
                    
-            if(cliente[0] != '-1'){
-                self.Usuario.passInvalida = false;
-                self.Usuario.login = true;
-                self.Usuario.id = cliente[0].IdCliente;
-                self.Usuario.email = cliente[0].Email;
-                store.set('token',  cliente[1]); //guardo el token
-                self.guardarSession();
-                if(!(form == null)){
-                      $('#loginModal').modal('hide');
-                      form.$setPristine();
+            if(cliente[0].IdCliente != '-1'){
+                if(cliente[0].IdCliente != -3 ){ //Esta bloqueado
+                    self.Usuario.passInvalida = false;
+                    self.Usuario.login = true;
+                    self.Usuario.id = cliente[0].IdCliente;
+                    self.Usuario.email = cliente[0].Email;
+                    store.set('token',  cliente[1]); //guardo el token
+                    self.guardarSession();
+                    if(!(form == null)){
+                          $('#loginModal').modal('hide');
+                          form.$setPristine();
+                    }    
+                }else{
+                    bootbox.alert("Ingreso la contraseña 3 veces mal, su usuario a sido bloqueado. Contactese con el administrador de la pagina para reactivar su cuenta.", function() {});
                 }
+                
             }
             else{
                 self.Usuario.login = false;
@@ -85,23 +90,29 @@ resergolApp.controller("MainController", function($scope, $state,store, UsuarioS
             duenio = {};
             duenio = data;       
                    
-            if(duenio[0] != '-1'){
-                self.Usuario.id = duenio[0].IdDuenio;
-                self.Usuario.idComplejo = duenio[0].IdComplejo;
-                self.Usuario.passInvalida = false;
-                self.Usuario.login = true;
-                store.set('token',  duenio[1]);
-                self.guardarSession();
-                $state.go('Duenios.reserva');
-                if(!(form == null)){
-                     $('#loginModal').modal('hide');
-                     form.$setPristine();
+            if(duenio[0].IdDuenio != '-1'){
+                if(duenio[0].IdDuenio != '-3'){
+                    self.Usuario.id = duenio[0].IdDuenio;
+                    self.Usuario.idComplejo = duenio[0].IdComplejo;
+                    self.Usuario.passInvalida = false;
+                    self.Usuario.login = true;
+                    store.set('token',  duenio[1]);
+                    self.guardarSession();
+                    $state.go('Duenios.reserva');
+                    if(!(form == null)){
+                         $('#loginModal').modal('hide');
+                         form.$setPristine();
+                     }
+                }else{
+                    bootbox.alert("Ingreso la contraseña 3 veces mal, su usuario a sido bloqueado. Contactese con el administrador de la pagina para reactivar su cuenta.", function() {});
                  }
-            }
-            else{
+                
+            }else{
                 self.Usuario.login = false;
                 self.Usuario.passInvalida = true;
             }
+             
+              
          });
     };
     
