@@ -1,0 +1,66 @@
+
+    <div class="container  ">
+        <div class="container">
+            <header class="row widget" >
+                <div style = "color: white; " class="container">
+                    <h3  style=" font-size: 50px; text-align:center; font-style:italic;" ></span>Usuarios bloqueados</h3>
+                </div>
+            </header>
+        </div>
+    </div>    
+
+    
+    <div class="container" id="mainTorneo" ng-controller="BloqueadosController as usr" >
+        <div class="container widget col-xs-12 col-sm-6 col-md-12">
+            <header>
+                <h4><i class="fa fa-user"></i><p class="mensajeExplicacion">Seleccione un usuario especifico</h4>
+            </header>
+
+            <div class="col-sm-12"> 
+               
+                
+               
+                                        
+                 <div class="form-group">
+                   
+                    <input id="usuario" name="loginUsuario" type="text" ng-maxlength="25" ng-model="usr.usuario" ng-change="usr.mayusculas()"  style="color:black;">
+
+
+                    <button class="btn btn-md btn-info  " style="margin-left:15px;" ng-click="usr.buscar()">
+                        <i class="fa fa-plus glyphicon glyphicon-search"></i>Buscar
+                    </button>
+                                       
+                </div>
+                
+                
+            </div>
+            
+            <br> <br/>
+            <br> <br/>
+            
+            
+            <div class="col-md-12" style="background-color:white;">
+                <table ng-table="adm.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+                    <tr ng-repeat="usuario in usr.usuarios" style="background-color:white;">
+                        <td class="text-center" title="'Tipo'">{{usuario.tipo}}</td>
+                        <td class="text-center" title="'Usuario'">{{usuario.Usuario}}</td>
+                        <td class="text-center" title="'Mail'">{{usuario.Email}}</td>
+                        
+                        <td class="text-center" title="'Liberar'">
+                            <button type="button" ng-click="usr.desbloquear($index)" class="btn btn-sm btn-success">
+                                <i class="glyphicon glyphicon glyphicon-ok">
+                                </i>
+                            </button>
+				        </td>
+                        
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+ 
+   <div class="clearfix"></div>
+        
+   <div/>    

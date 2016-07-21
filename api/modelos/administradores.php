@@ -117,4 +117,52 @@ class Administrador
     }
     
     
+     public function getUsuariosBloqueados($usuario){
+        $stmt = $this->connection->prepare('SET @usuario := ?');
+        $stmt->bind_param('s', $usuario);
+        $stmt->execute(); 
+
+        
+        $query = "CALL SP_getUsuariosBloqueados(@usuario);";
+        
+        $usuarios= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $usuarios[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $usuarios;
+    }
+    
+    
+    public function desbloquearUsuario($data){
+        $usuario = $this->connection->real_escape_string($data['usuario']);
+        
+        
+        $stmt = $this->connection->prepare('SET @usuario := ?');
+        $stmt->bind_param('s', $usuario);
+        $stmt->execute(); 
+     
+        $query = "CALL SP_desbloquearUsuario(@usuario);";
+        //$query = "select @usuario;";
+        
+        $usuarios= array();
+        
+        
+        if( $result = $this->connection->query($query) ){
+            /*while($fila = $result->fetch_assoc()){
+                $usuarios[] = $fila;
+            }*/
+              
+            //$result->free();
+        }
+        return $usuarios;
+        
+    }
+    
+    
+    
 }

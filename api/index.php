@@ -185,6 +185,14 @@ $app->get('/dueniosPendientes', function(){
 	sendResult($data);
 });
 
+
+//Get de usuarios bloqueados. FALTA TOKEN
+$app->get('/administradores/bloqueados/:usuario', function($usuario){
+    $admin= new Administrador();
+    $data = $admin->getUsuariosBloqueados($usuario);
+	sendResult($data);
+});
+
 //Cambia de estado a los dueños pendientes.
 /*
 $app->put('/administrarDuenio/:IdDuenio/:acepta', function($IdDuenio, $acepta){
@@ -199,6 +207,17 @@ $app->put('/administrarDuenio', function(){
     $aceptarDuenio = new Administrador();
     
     $result = $aceptarDuenio->aceptarDuenio($data);
+        
+	sendResult($result);
+});
+
+//Desbloquear
+$app->put('/administradores/bloqueados/', function(){
+    $request = Slim\Slim::getInstance()->request();   
+    $data = json_decode($request->getBody(), true);
+    $usuario = new Administrador();
+    
+    $result = $usuario->desbloquearUsuario($data);
         
 	sendResult($result);
 });
