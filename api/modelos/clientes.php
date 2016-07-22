@@ -112,6 +112,32 @@ class Cliente
         
     }
 
+     public function validarCliente($usuario,$contrasenia ){
+        $stmt = $this->connection->prepare('SET @usuario := ?');
+        $stmt->bind_param('s', $usuario);
+        $stmt->execute(); 
+    
+        $stmt = $this->connection->prepare('SET @contrasenia := ?');
+        $stmt->bind_param('s', $contrasenia);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getCliente(@usuario, @contrasenia );";
+        
+        $cliente= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $cliente[] = $fila;
+            }
+              
+            $result->free();
+        }
+         
+        if(count($cliente)>0) 
+            return true;
+        else
+            return false;
+    }
     
  //<PI> IVAN TODO ESTO ANDABA ANTES DE SLIM. LO COMENTO PORQUE CAPAZ TE SIRVE.
 //if(isset($_GET["action"])){

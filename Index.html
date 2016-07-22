@@ -23,8 +23,8 @@
                     </div>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a  id="btnUsuario" ng-show="main.Usuario.login" >{{main.Usuario.usuario}}</a>
+                        <li >
+                            <a    id="btnUsuario" ng-show="main.Usuario.login" >{{main.Usuario.usuario}}</a>
                         </li>
                         <li>
                             <a href="#loginModal" id="btnIniciarSesion"  ng-show="!main.Usuario.login" role="button" data-toggle="modal" ng-model="main.IniciarSesion" ng-click="main.limpiarModal(loginForm)">{{main.IniciarSesion}}</a>
@@ -127,10 +127,10 @@
     <div class="modal-dialog modal-registracion">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" ng-click="cli.limpiarForm(frmDatos)" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" ng-click="cli.limpiarForm(frmDatosUsuario)" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             
-            <form class="modal-body" name="frmDatos">
+            <form class="modal-body" name="frmDatosUsuario"> <!--frmDatosUsuario  frmDatos-->
           
                 <hr>
                 
@@ -144,7 +144,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         
-                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Usuario" ng-maxlength="25" name="usuario" ng-model="cli.cliente.usuario" required ng-class="{ error:frmDatosUsuario.usuario.$error.required && frmDatosUsuario.usuario.$dirty, warning:frmDatosUsuario.usuario.$error.usuario }" ng-blur="cli.existeUsuario()">
+                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" ng-blur="cli.existeUsuario()"  ng-change="cli.mayusculas()" tooltip-placement="left" 
+                                     uib-tooltip="Solo se permite mayusculas"  placeholder="Usuario" ng-maxlength="25" name="usuario" ng-model="cli.cliente.usuario" required ng-class="{ error:frmDatosUsuario.usuario.$error.required && frmDatosUsuario.usuario.$dirty, warning:frmDatosUsuario.usuario.$error.usuario }" >
                                         <span ng-show="!frmDatosUsuario.$pristine && cli.cliente.existe" class= "msjError">
                                             Este usuario ya existe.
                                         </span>
@@ -292,7 +293,8 @@
                             <div class="form center-block" >
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Usuario" ng-maxlength="25" name="usuarioDuenio" ng-model="due.Duenio.usuario" required ng-class="{ error:frmDatosUsuario.usuario.$error.required && frmDatosUsuario.usuario.$dirty, warning:frmDatosUsuario.usuario.$error.usuario }" ng-blur="due.existeUsuario()">
+                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" ng-change="due.mayusculas()" tooltip-placement="left" 
+                                     uib-tooltip="Solo se permite mayusculas" placeholder="Usuario" ng-maxlength="25" name="usuarioDuenio" ng-model="due.Duenio.usuario" required ng-class="{ error:frmDatosUsuario.usuario.$error.required && frmDatosUsuario.usuario.$dirty, warning:frmDatosUsuario.usuario.$error.usuario }" ng-blur="due.existeUsuario()">
                                         <span ng-show="!frmDatosUsuario.$pristine && due.Duenio.existe" class= "msjError">
                                             Este usuario ya existe.
                                         </span>
@@ -611,9 +613,7 @@
         <script src="app/Duenios/Controllers/AdministrarListaNegraController.js"></script>
 		<script src="app/Duenios/Controllers/DueniosReservasController.js"></script>		
         <script src="app/Duenios/Controllers/TorneoModificarController.js"></script>       
-        <!--
         <script src="app/Duenios/Controllers/DevolucionesController.js"></script>       
-        -->
         <script src="app/Clientes/js/ClientesController.js"></script>
         <script src="app/Clientes/js/VerCanchaController.js"></script>
         <script src="app/Clientes/js/ClientesService.js"></script>

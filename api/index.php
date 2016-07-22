@@ -159,10 +159,10 @@ $app->get('/admin/:user/:pass', function($usuario,$contrasenia){
     
     if(count($result)>0){
         //Creo el token
-        $key = 'mi-secret-key';
+        $key = 'resergol77';
         $token = array(
-                "id" => "1",
-                "name" => "unodepiera",
+                "user" => $result[0]['Usuario'],
+                "pass" => $result[0]['Contrasenia'],
                 "iat" => 1356999524,
                 "nbf" => 1357000000
                 );
@@ -260,10 +260,10 @@ $app->get('/clientes/:user/:pass', function($usuario,$contrasenia){
     
     if($result[0]['IdCliente'] > 0){
         //Creo el token
-        $key = 'mi-secret-key';
+        $key = 'resergol77';
         $token = array(
-                "id" => "1",
-                "name" => "unodepiera",
+                "user" => $result[0]['Usuario'],
+                "pass" => $result[0]['Contrasenia'],
                 "iat" => 1356999524,
                 "nbf" => 1357000000
                 );
@@ -271,9 +271,15 @@ $app->get('/clientes/:user/:pass', function($usuario,$contrasenia){
         $jwt = \Firebase\JWT\JWT::encode($token, $key);
     
         $miToken['token'] = $jwt;
-        array_push($result,$miToken);
+        //array_push($result,$miToken);
+        array_push($result,$jwt);
+        
 
         sendResult($result);
+        
+        
+        
+        
         
     }else{
         sendResult($result);
@@ -1172,9 +1178,22 @@ $app->delete('/clientes/tarjetas/:idCliente', function($idCliente){
 //Get fecha de ingreso a la lista negra si es que el cliente está en la lista negra.
 $app->get('/listaNegra/:idCliente/:idComplejo', function($idCliente, $idComplejo){
     
-    $listaNegra = new ListaNegra();
-    $data = $listaNegra->verificarClienteListaNegra($idCliente, $idComplejo);
-	sendResult($data);
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $listaNegra = new ListaNegra();
+        $data = $listaNegra->verificarClienteListaNegra($idCliente, $idComplejo);
+        sendResult($data);
+    }
+	else{
+        sendError("token invalido");
+    }
     
 });
 

@@ -34,6 +34,12 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
    
     this.mensajeBienvenida = 'En Resergol te damos la posibilidad de llegar a todos los jugadores del fútbol amateur de manera gratuita. Sólo tenés que completar los siguientes datos y te mandaremos un  e-mail como aviso para que puedas registrar tu complejo!';
     
+    
+    
+    this.mayusculas = function(){
+        self.Duenio.usuario = self.Duenio.usuario.toUpperCase();
+    };
+    
     /* scope que controla las restricciones del formulario del registro de dueño */
     $scope.submitForm = function (formData) {
     alert('Form submitted with' + JSON.stringify(formData));
