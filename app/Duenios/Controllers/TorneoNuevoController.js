@@ -499,12 +499,14 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                 };
         };
         
-       
+     
         
         var TorneoNuevo = new DuenioTorneoService();
         
         TorneoNuevo.data=self.Torneo;
         
+            console.log(TorneoNuevo.data);
+            
         DuenioTorneoService.save(TorneoNuevo.data, function(reponse){
             idTorneo = reponse.data[0];
             self.open('sm', true, idTorneo);
