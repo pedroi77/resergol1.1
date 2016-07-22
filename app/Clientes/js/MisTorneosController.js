@@ -123,15 +123,13 @@ resergolApp.controller("MisTorneosController", function($scope,$state, $statePar
                     if(devuelvo)
                     {
                         
-                      //BORRO AL EQUIPO DEL TORNEO...
-                        console.log('idEq->' + tor.IdEquipo + '---idTor-->' + tor.IdTorneo);
+                        //BORRO AL EQUIPO DEL TORNEO...
+                        //console.log('idEq->' + tor.IdEquipo + '---idTor-->' + tor.IdTorneo);
                         EquipoTorneoService.delete({idEquipo: tor.IdEquipo, idTorneo: tor.IdTorneo }, function(reponse){
                                     idRetorno = reponse.data[0];
                                     console.log('SE BORRO...... RETORNO -->' + idRetorno);
                                     self.init();
-                                    bootbox.alert("¡SE BORRO AL EQUIPO DEL TORNEO!!!!", function() {});
-                            
-                                    //ACÁ HAY QUE BORRAR AL EQUIPO DE LA TABLA EQUIPOS!!!
+                                    bootbox.alert("¡Se borró a tu equipo del torneo!", function() {});
                             
                                     },function(errorResponse){
                                         console.log('ERROR BORRAR RES...' + errorResponse); 

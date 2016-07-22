@@ -107,6 +107,39 @@ class TarjetaCliente
         }
         return $reservas;
     }
+    
+    
+    //Borra el equipo del torneo.
+    public function deleteTarjeta($idCliente){
+        
+        $valor='';
+       
+        // Parametros
+        $stmt = $this->connection->prepare('SET @idCliente := ?');
+        $stmt->bind_param('i', $idCliente);
+        $stmt->execute();
+
+        //Salida
+        $stmt = $this->connection->prepare('SET @valor := ?');
+        $stmt->bind_param('i', $valor);
+        $stmt->execute();
+        
+        $result = $this->connection->query('CALL SP_deleteTarjeta(@idCliente, @valor);');
+        
+        // getting the value of the OUT parameter
+        $r = $this->connection->query('SELECT @valor as valor');
+        $row = $r->fetch_assoc();               
+        $res = $row['valor'] ;
+        
+        if($res > -1){
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+        }else{
+           sendError("Error, no se pudo borrar la tarjeta del cliente." . $res );
+        }
+   
+            
+    }
 
     
 }

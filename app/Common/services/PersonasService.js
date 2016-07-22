@@ -1,12 +1,11 @@
-
 var app = angular.module("resergolApp");
 
-app.service("MiCuentaService", function($http, $resource){
+app.service("PersonasService", function($http, $resource){
 
  
-var MI_CUENTA_URI = "http://localhost:8080/resergol1.1/api/datosCuentaCliente/:idCliente";  
+var PERSON_URI = "http://localhost:8080/resergol1.1/api/datosPersona";  
       
-return $resource(MI_CUENTA_URI, {idCliente: '@_idCliente'}, {
+return $resource(PERSON_URI, {}, {
         query: {method: 'GET',
                 transformResponse: function(data) {                                                                                                    
                         return angular.fromJson(data).data;
