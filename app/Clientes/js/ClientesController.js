@@ -20,6 +20,10 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
     });
 	
     
+    this.mayusculas = function(){
+        self.cliente.usuario = self.cliente.usuario.toUpperCase();
+    };
+    
 
     this.cliente = { 
                     id: -3,

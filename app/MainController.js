@@ -245,6 +245,10 @@ resergolApp.controller("MainController", function($scope, $state,store, UsuarioS
             $state.go('Clientes.misTorneos', {idCli: self.Usuario.id});
         };
     
+    this.irMiCuenta = function(){            
+            $state.go('Clientes.miCuenta', {idCli: self.Usuario.id});
+        };
+    
     self.init();
     
 });

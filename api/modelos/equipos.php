@@ -88,7 +88,7 @@ class Equipo
     }
     
     
-    //Borra la reserva.
+    //Borra el equipo del torneo.
     public function deleteEquipoTorneo($idEquipo, $idTorneo){
         
         $valor='';

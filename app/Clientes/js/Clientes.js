@@ -97,11 +97,14 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
             controllerAs : "cli"
 		})
         .state("Clientes.miCuenta",{
-			url : "/MiCuenta",
-			templateUrl : "app/Clientes/Templates/MiCuenta.html",
+            url : "/MiCuenta/:idCli",
+            params: {
+                        idCli:{value:'defaultValue'}
+                    },
+            templateUrl : "app/Clientes/Templates/MiCuenta.html",
             controller : "ClientesController",	
             controllerAs : "cli"
-		});
+        });
     
     
 		$urlRouterProvider.otherwise("/clientes/misCanchas");

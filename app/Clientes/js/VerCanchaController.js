@@ -539,6 +539,8 @@ this.getImagenes = function()
    
   this.verificarListaNegra = function(){
 			ListasNegrasService.query({idCliente:sessionStorage.id, idComplejo:$scope.idComplejo}).$promise.then(function(data){
+                
+                 console.log(data);
                  if(data != null && data != undefined && data[0] != undefined)
                  {
                      if(data[0].FechaIngreso != null && data[0].FechaIngreso != undefined)

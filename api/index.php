@@ -23,6 +23,8 @@ require_once("modelos/reservasCancelacion.php");
 require_once("modelos/devoluciones.php");
 require_once("modelos/equipos.php");
 require_once("modelos/mails.php");
+require_once("modelos/miCuenta.php");
+require_once("modelos/persona.php");
 require_once("util/jsonResponse.php");
 require 'Slim/Slim/Slim.php';
 
@@ -157,10 +159,10 @@ $app->get('/admin/:user/:pass', function($usuario,$contrasenia){
     
     if(count($result)>0){
         //Creo el token
-        $key = 'mi-secret-key';
+        $key = 'resergol77';
         $token = array(
-                "id" => "1",
-                "name" => "unodepiera",
+                "user" => $result[0]['Usuario'],
+                "pass" => $result[0]['Contrasenia'],
                 "iat" => 1356999524,
                 "nbf" => 1357000000
                 );
@@ -185,6 +187,14 @@ $app->get('/dueniosPendientes', function(){
 	sendResult($data);
 });
 
+
+//Get de usuarios bloqueados. FALTA TOKEN
+$app->get('/administradores/bloqueados/:usuario', function($usuario){
+    $admin= new Administrador();
+    $data = $admin->getUsuariosBloqueados($usuario);
+	sendResult($data);
+});
+
 //Cambia de estado a los dueños pendientes.
 /*
 $app->put('/administrarDuenio/:IdDuenio/:acepta', function($IdDuenio, $acepta){
@@ -199,6 +209,17 @@ $app->put('/administrarDuenio', function(){
     $aceptarDuenio = new Administrador();
     
     $result = $aceptarDuenio->aceptarDuenio($data);
+        
+	sendResult($result);
+});
+
+//Desbloquear
+$app->put('/administradores/bloqueados/', function(){
+    $request = Slim\Slim::getInstance()->request();   
+    $data = json_decode($request->getBody(), true);
+    $usuario = new Administrador();
+    
+    $result = $usuario->desbloquearUsuario($data);
         
 	sendResult($result);
 });
@@ -239,10 +260,10 @@ $app->get('/clientes/:user/:pass', function($usuario,$contrasenia){
     
     if($result[0]['IdCliente'] > 0){
         //Creo el token
-        $key = 'mi-secret-key';
+        $key = 'resergol77';
         $token = array(
-                "id" => "1",
-                "name" => "unodepiera",
+                "user" => $result[0]['Usuario'],
+                "pass" => $result[0]['Contrasenia'],
                 "iat" => 1356999524,
                 "nbf" => 1357000000
                 );
@@ -250,9 +271,15 @@ $app->get('/clientes/:user/:pass', function($usuario,$contrasenia){
         $jwt = \Firebase\JWT\JWT::encode($token, $key);
     
         $miToken['token'] = $jwt;
-        array_push($result,$miToken);
+        //array_push($result,$miToken);
+        array_push($result,$jwt);
+        
 
         sendResult($result);
+        
+        
+        
+        
         
     }else{
         sendResult($result);
@@ -1157,13 +1184,44 @@ $app->get('/clientes/tarjetas/', function(){
 });
 
 
+//delete de reservasTemp
+$app->delete('/clientes/tarjetas/:idCliente', function($idCliente){
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);*/
+
+    //if($tokenOK){
+        $tarj = new TarjetaCliente();
+        $result = $tarj->deleteTarjeta($idCliente);
+    /*}
+	else{
+        sendError("token invalido");
+    }*/
+});
+
 //-**********************************LISTA NEGRA*************************************************************--//
 //Get fecha de ingreso a la lista negra si es que el cliente está en la lista negra.
 $app->get('/listaNegra/:idCliente/:idComplejo', function($idCliente, $idComplejo){
     
-    $listaNegra = new ListaNegra();
-    $data = $listaNegra->verificarClienteListaNegra($idCliente, $idComplejo);
-	sendResult($data);
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
+        $listaNegra = new ListaNegra();
+        $data = $listaNegra->verificarClienteListaNegra($idCliente, $idComplejo);
+        sendResult($data);
+    }
+	else{
+        sendError("token invalido");
+    }
     
 });
 
@@ -1636,5 +1694,68 @@ $app->post('/mandarMails', function(){
 		sendError("Error al mandar mail");
 	}
 });
+
+/*****************************MI CUENTA - DATOS CLIENTE**************************************************************************/
+
+//get datos de la cuenta del cliente.
+$app->get('/datosCuentaCliente/:idCliente', function($idCliente){    
+        $cuenta = new miCuenta();
+        $data = $cuenta->getDatosCliente($idCliente);
+        sendResult($data);
+    });
+	
+//update
+$app->post('/datosCuentaCliente', function(){
+    
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $cuenta = new miCuenta();
+        $result = $cuenta->modificarUsuario($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al actualizar el usuario");
+        };
+    
+});
+
+//delete de reservasTemp
+$app->delete('/datosCuentaCliente/:idCliente', function($idCliente){
+    /*$headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $duenio = new Duenio();
+    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);*/
+
+    //if($tokenOK){
+        $cli = new miCuenta();
+        $result = $cli->deleteCliente($idCliente);
+    /*}
+	else{
+        sendError("token invalido");
+    }*/
+});
+
+/**************************DATOS PERSONA**************************************************************/
+//update
+$app->post('/datosPersona', function(){
+    
+        $request = Slim\Slim::getInstance()->request();
+        $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+        
+        $person = new Persona();
+        $result = $person->modificarPersona($data);
+	
+        if($result){
+           sendResult($result);
+        }else{
+            sendError("Error al actualizar la persona");
+        };
+    
+});
+
 
 $app->run();
