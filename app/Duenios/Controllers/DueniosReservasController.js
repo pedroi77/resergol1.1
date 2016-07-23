@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("DueniosReservasController", function($scope, DevolucionesService, ReservasCancelacionService, ReservasService, DueniosReservasServices, DuenioReservasCompletarPagoService, AdministrarCanchasService, DuenioDiasService, $state, $uibModal,  $uibModalStack){
+resergolApp.controller("DueniosReservasController", function($scope, DevolucionesService, ReservasCancelacionService, ReservasService, DueniosReservasServices, DuenioReservasCompletarPagoService, AdministrarCanchasService, DuenioDiasService, ReservasFijasService, ReservasTempService, $state, $uibModal,  $uibModalStack){
     
 /*************************************SECCION DE VARIABLES*****************************************************/
 var self = this;
@@ -43,7 +43,7 @@ this.reservaSeleccionada = {
     ,Usuario: ''
     ,Precio: '0'
     ,Pagado: 0
-    ,Resta: 1000
+    ,Resta: 0
     ,EstadoReserva: 0
     ,IdReserva: 0
     ,puedeCancelar: false
@@ -51,8 +51,21 @@ this.reservaSeleccionada = {
     ,IdCliente: 0
     ,TotalPagar: 0
     ,IdCancha:0
+    ,UsuarioReserva:''
+    ,totalCalculado: 0
+    ,horaDesde: ''
+    ,horaHasta: ''
+    ,HoraCobroLuz: ''
+    ,PorcentajeLuz: 0
+    ,PorcentSenia: 0
+    ,Luz: 0
 };
     
+$scope.aceptaReservaFija = 0;
+$scope.noDisponibles = [];
+$scope.selectedHoraIdHasta = 21;
+$scope.listasReservasFijas = [];
+$scope.CantHoras = 0;
 $scope.data= [
 //["Hora", "Maracana", "Lencho"],
 //["11:00", "Disponible", "Matias"]
@@ -60,11 +73,18 @@ $scope.data= [
 ["Hora"]
 ];
     
+this.horasHasta = [];
+    
 this.fechaSeleccionada = new Date();
+this.FechaReserva = new Date();
     
 /*************************************SECCION DE METODOS*****************************************************/
     
 this.traerReservas = function(){
+    
+    $scope.data= [
+        ["Hora"]
+    ];
     
     //Traigo todas las canchas del complejo del dueño que se logueo
     AdministrarCanchasService.query({idComplejo: self.IdComplejo, aux:0}).$promise.then(function(dataCancha){ //, aux: 0
@@ -79,23 +99,26 @@ this.traerReservas = function(){
         angular.forEach(dataCancha, function(unaCancha) { //self.reservas.canchas
         
             //console.log(unaCancha.nombre);
-            $scope.data[0].push({"nombre": unaCancha.nombre, "estilo": "background-color:#B5CBDE;", referencia:"" , pagado:0, precioCancha: 0, "nombreCancha": '', "cantJugadores": '', "superficie": '', "resta": 0, "estadoReserva": 0, "idReserva": 0, "hora": '', "horasCancelacion": 0, "idCliente": 0, "TotalPagar": 0, "idCancha": 0});
+            $scope.data[0].push({"nombre": unaCancha.nombre, "estilo": "background-color:#B5CBDE;", referencia:"" , pagado:0, precioCancha: 0, "nombreCancha": '', "cantJugadores": '', "superficie": '', "resta": 0, "estadoReserva": 0, "idReserva": 0, "hora": '', "horasCancelacion": 0, "idCliente": 0, "TotalPagar": 0, "idCancha": 0, "HoraCobroLuz": '' ,"PorcentajeLuz": 0 ,"PorcentSenia": 0, "Luz": 0});
         
             //Traigo las reservas de cada cancha
             DueniosReservasServices.query({idComplejo: self.IdComplejo, fecha: self.Fecha, idCancha: unaCancha.IdCancha}).$promise.then(function(dataRes){
                
+                $scope.CantHoras = dataRes.length;
                 if(index == 0){
                     var i = 1;
                     //recorro la primer lista de "reservas" para llenar la lista de horas
                     angular.forEach(dataRes, function(h) {
-                        $scope.data[i] = [{"nombre": h.hora, "estilo": "background-color:#B5CBDE;", referencia:"", pagado:0, precioCancha: 0, "nombreCancha": '', "cantJugadores": '', "superficie": '', "resta": 0, "estadoReserva": 0, "idReserva": 0, "hora": '', "horasCancelacion": 0, "idCliente": 0,"TotalPagar": 0,"idCancha":0}];
+                        $scope.data[i] = [{"nombre": h.hora, "estilo": "background-color:#B5CBDE;", referencia:"", pagado:0, precioCancha: 0, "nombreCancha": '', "cantJugadores": '', "superficie": '', "resta": 0, "estadoReserva": 0, "idReserva": 0, "hora": '', "horasCancelacion": 0, "idCliente": 0,"TotalPagar": 0,"idCancha":0, "HoraCobroLuz": '' ,"PorcentajeLuz": 0 ,"PorcentSenia": 0, "Luz": 0}];
                         i++;
+                        self.horasHasta.push({"id": h.hora.substr(0,2), "desc": h.hora});
+                        //console.log(h.hora.substr(0,5));
                     });
                 }
                 
                 //Lleno cada cancha con su lista de reservas
                 var auxindexCancha ;
-                var auxJ
+                var auxJ;
                 
                 for(auxindexCancha =0;auxindexCancha < dataCancha.length;auxindexCancha++){
                     if(dataCancha[auxindexCancha].nombre == dataRes[0].nombre){
@@ -118,9 +141,9 @@ this.traerReservas = function(){
                         estilo = "background-color:#A5D29C;";
                     }
                     //console.log(index);
-                    $scope.data[index2][auxJ] = {"nombre": res.usuario, "estilo": estilo, "referencia":"#reservasModal", "pagado":res.Pagado, "precioCancha": res.precioCancha, "nombreCancha": res.nombre, "cantJugadores": res.CantJugadores, "superficie": res.superficie, "resta": res.resta, "estadoReserva": res.estadoReserva, "idReserva": res.IdReserva, "hora": res.hora, "horasCancelacion": res.CancelacionHasta, "idCliente": res.idCliente,"TotalPagar": 0,"idCancha": res.IdCancha}; 
+                    $scope.data[index2][auxJ] = {"nombre": res.usuario, "estilo": estilo, "referencia":"#reservasModal", "pagado":res.Pagado, "precioCancha": res.precioCancha, "nombreCancha": res.nombre, "cantJugadores": res.CantJugadores, "superficie": res.superficie, "resta": res.resta, "estadoReserva": res.estadoReserva, "idReserva": res.IdReserva, "hora": res.hora, "horasCancelacion": res.CancelacionHasta, "idCliente": res.idCliente,"TotalPagar": 0,"idCancha": res.IdCancha, "HoraCobroLuz": res.HoraCobroLuz ,"PorcentajeLuz": res.PorcentajeLuz ,"PorcentSenia": res.PorcentSenia, "Luz": res.Luz}; 
                     index2++;
-                });  
+                }); 
             });
         });  
     });
@@ -147,13 +170,10 @@ this.obtenerDiaActual = function(){
     } 
 
     self.Fecha = yyyy+'-'+mm+'-'+dd;
+    self.FechaReserva = dd+'/'+mm+'/'+yyyy;
 }
     
  this.init = function(){
-     
-    $scope.data= [
-        ["Hora"]
-    ];
      
     DuenioDiasService.query({idDuenio:$scope.idDuenio}).$promise.then(function(data) {
         self.diasComplejo = data;
@@ -175,6 +195,7 @@ this.clic = function(indice, fila){
     var hours=Digital.getHours();
     var minutes=Digital.getMinutes();
     var seconds=Digital.getSeconds();
+    
     var dn="AM";
     
     if (hours>12){
@@ -193,7 +214,6 @@ this.clic = function(indice, fila){
     hora = hours + ":" + minutes + ":" + seconds;
     
     /*******************************************************************/
-    
     if(fila[indice].hora < hora)
         self.reservaSeleccionada.puedeCancelar = true;
     else
@@ -205,6 +225,11 @@ this.clic = function(indice, fila){
     self.reservaSeleccionada.NombreCancha = fila[indice].nombreCancha;
     self.reservaSeleccionada.CantJugadores = fila[indice].cantJugadores;
     self.reservaSeleccionada.Superficie = fila[indice].superficie;
+    self.reservaSeleccionada.horaDesde = fila[indice].hora.substring(0,5);
+    self.reservaSeleccionada.HoraCobroLuz = fila[indice].HoraCobroLuz;
+    self.reservaSeleccionada.PorcentajeLuz = fila[indice].PorcentajeLuz;
+    self.reservaSeleccionada.PorcentSenia = fila[indice].PorcentSenia;
+    self.reservaSeleccionada.Luz = fila[indice].Luz;
     
     if(fila[indice].nombre == 'Disponible')
         self.reservaSeleccionada.Usuario = '';
@@ -218,8 +243,10 @@ this.clic = function(indice, fila){
     else
         self.reservaSeleccionada.Pagado = parseInt(fila[indice].pagado);
     
-    if(fila[indice].resta == null)
-        self.reservaSeleccionada.Resta = 1000;
+    if(fila[indice].resta == null){
+        self.reservaSeleccionada.totalCalculado = 0;
+        self.reservaSeleccionada.Resta = 0;
+    }  
     else
         self.reservaSeleccionada.Resta = parseInt(fila[indice].resta);
     
@@ -229,6 +256,11 @@ this.clic = function(indice, fila){
     self.reservaSeleccionada.IdCliente = fila[indice].idCliente;
     self.reservaSeleccionada.IdCancha = fila[indice].idCancha;
     
+    if(fila[indice].idCliente == null || fila[indice].idCliente == undefined || fila[indice].idCliente == '')
+        self.reservaSeleccionada.IdCliente = 1;
+    
+    //self.llenarComboHorasHasta();
+    self.llenarComboHorasHasta(indice, fila);
 };
     
 this.cambiaFecha = function(dt)
@@ -240,6 +272,7 @@ this.cambiaFecha = function(dt)
     hoy = pad(hoy.getFullYear()+"-"+pad(hoy.getMonth()+1)+"-"+hoy.getDate());
     
     self.Fecha = pad($scope.fechaElegida.getFullYear()+"-"+pad($scope.fechaElegida.getMonth()+1)+"-"+$scope.fechaElegida.getDate());
+    self.FechaReserva = pad($scope.fechaElegida.getDate()+"/"+pad($scope.fechaElegida.getMonth()+1)+"/"+$scope.fechaElegida.getFullYear());
 
     self.traerReservas();
     
@@ -250,7 +283,7 @@ this.cambiaFecha = function(dt)
     
 this.CalcularResta = function(){
     
-    self.reservaSeleccionada.Resta = self.reservaSeleccionada.Resta - self.reservaSeleccionada.Pagado;
+    self.reservaSeleccionada.Resta = self.reservaSeleccionada.totalCalculado - self.reservaSeleccionada.Pagado;
     
     var pago = document.getElementById('pagado').value;
     
@@ -357,63 +390,303 @@ this.borrarReserva = function()
     }); 
 };
     
+this.llenarComboHorasHasta = function(indice, fila){
+
+    console.log(indice); //columna
+    console.log(fila);
+    console.log(fila[indice]);
+    console.log("cantidad de horas: " + $scope.CantHoras);
+    
+    self.horasHasta = [];
+    
+    var i;
+    for (i = 0; i < $scope.CantHoras + 1; i++) {
+        
+        if($scope.data[i][indice].hora != null && $scope.data[i][indice].hora != undefined && $scope.data[i][indice].hora != ''){
+            //jojo
+            if(parseInt($scope.data[i][indice].hora.substring(0,2)) > parseInt(fila[indice].hora.substring(0,2))){
+                
+                console.log("Usuario: " + $scope.data[i][indice].nombre);
+                
+                if($scope.data[i][indice].nombre != "Disponible"){
+                    self.horasHasta.push({"id": $scope.data[i][indice].hora.substring(0,5), "desc": $scope.data[i][indice].hora.substring(0,5)});
+                    break;
+                }
+                
+                self.horasHasta.push({"id": $scope.data[i][indice].hora.substring(0,5), "desc": $scope.data[i][indice].hora.substring(0,5)});
+            }
+        }  
+        
+        if(i == $scope.CantHoras){
+            
+            var ultHora = parseInt($scope.data[i][indice].hora.substring(0,2)) + 1;
+            ultHora += ":00";
+            
+            self.horasHasta.push({"id": ultHora, "desc": ultHora});
+        }
+    };
+    
+    $scope.selectedHoraIdHasta = self.horasHasta[0].desc.substring(0,5);
+    
+    if(self.reservaSeleccionada.Usuario == '')
+        self.calcularPago();
+};
+    
+this.calcularPago = function(){
+    
+    
+    //Calculo el precio a pagar siempre y cuando se haya elegido una fecha y hora desde y hasta.
+    console.log('CALCULANDO PRECIO.....');
+    ////////NUEVO////////////////////////////////////////////////////
+    //Traigo las hora desde y hasta.
+    var hd = parseInt(self.reservaSeleccionada.horaDesde.substring(0,2));
+    var hh = parseInt($scope.selectedHoraIdHasta.substring(0,2));
+
+    console.log(hd + " " + hh);
+
+    //Calculo cuantas horas se van a alquilar...
+    var horasAlq = hh - hd;
+    
+    console.log('horas alq--> ' + horasAlq);
+    
+    
+    var precio = parseFloat(self.reservaSeleccionada.Precio);
+    
+    console.log(precio);
+    
+    var horaLuz = -1;
+    
+    if(self.reservaSeleccionada.HoraCobroLuz != undefined && self.reservaSeleccionada.HoraCobroLuz != null)
+        horaLuz = self.reservaSeleccionada.HoraCobroLuz.substring(0,2);
+    
+    console.log('luz desde-->' + horaLuz);
+    
+    
+    var porcentajeLuz = 0;
+    
+    //console.log("asdadas: " + self.reservaSeleccionada.PorcentajeLuz);
+    
+    if(self.reservaSeleccionada.PorcentajeLuz != null && self.reservaSeleccionada.PorcentajeLuz != undefined);
+        porcentajeLuz = parseFloat(self.reservaSeleccionada.PorcentajeLuz);
+
+    console.log('porcent luz-->' + porcentajeLuz);
+
+    var horasConLuz = 0;
+    if(self.reservaSeleccionada.Luz == 1 && horaLuz != -1)
+    {
+        for (i=0; i<horasAlq; i++)
+        {
+            var num =  parseInt(hd + i);
+            //console.log(num);
+            if(num >= horaLuz)
+                horasConLuz++;
+        }   
+    }
+    
+    //console.log(horasConLuz);
+
+    var precioAMostrar = 0;
+    
+    if(horasConLuz == 0)
+        precioAMostrar = precio * horasAlq;
+    else if(horasConLuz == horasAlq){
+        precioAMostrar = (precio * horasAlq) + ((precio * horasAlq) * porcentajeLuz / 100);
+        //console.log('precio*horasalq->' + precio * horasAlq);
+        //console.log('*' + porcentajeLuz);
+    }
+    else //Si una parte se cobra con luz y otra no...
+        {
+            //console.log('porcentajeluz--> ' + porcentajeLuz);
+            var precioCLuz = (precio * horasConLuz) + ((precio * horasConLuz) * porcentajeLuz / 100);
+            var precioSLuz = (horasAlq - horasConLuz) * precio;
+
+            precioAMostrar = precioCLuz + precioSLuz;
+        }
+
+    //console.log('precioamostrar-> ' + precioAMostrar);
+    self.reservaSeleccionada.Resta = precioAMostrar;
+    self.reservaSeleccionada.totalCalculado = precioAMostrar;
+    
+};
+    
 this.reservar = function(aceptaReservaFija){
 
     var ReservaNueva = new ReservasService();
-/*
-    self.Reserva.fechaPartido = $scope.fechaPartido;
-    self.Reserva.horaD = $scope.hDesdePartido;
-    self.Reserva.horaH = $scope.hHastaPartido;
-    var precioTotal =  $scope.precioAPagar + $scope.restante;
-    self.Reserva.importeAPagar = precioTotal;
-    self.Reserva.pagado = $scope.precioAPagar;
-    self.Reserva.porcentajePago = $scope.porcentajePago;
-    var estadoRes = (document.getElementById('rbPagaCanchaCompleta').checked) ? 2 : 1;
-    self.Reserva.estadoReserva = estadoRes;*/
+    var estadoReserva = 2;
+    console.log(self.Fecha.replace('-', '/').replace(' - ', '/'));
+    var horaHasta = document.getElementById("horaHasta");
+    var selectedText = horaHasta.options[horaHasta.selectedIndex].text;
+    
+    console.log(horaHasta);
 
+    if(self.reservaSeleccionada.totalCalculado  == 0)
+        estadoReserva = 1;
+    
     ReservaNueva.data= {
         
-        'idCliente': 0
+        'idCliente': 1
         ,'idComplejo' : self.IdComplejo
         ,'idCancha': self.reservaSeleccionada.IdCancha
-        ,'fechaPartido' : this.Fecha
-        ,'horaD' : '18:00:00'
-        ,'horaH' : '20:00:00'
-        ,'importeAPagar' : 1000
-        ,'pagado' : 1000
+        ,'fechaPartido' : self.FechaReserva
+        ,'horaD' : self.reservaSeleccionada.horaDesde
+        ,'horaH' : selectedText
+        ,'importeAPagar' : self.reservaSeleccionada.totalCalculado
+        ,'pagado' : self.reservaSeleccionada.Pagado
         ,'porcentajePago' : 100
-        ,'estadoReserva' : 2
+        ,'estadoReserva' : estadoReserva
+        ,'usuarioReserva': self.reservaSeleccionada.UsuarioReserva
     }
     
     console.log(ReservaNueva.data);
 
     ReservasService.save(ReservaNueva.data, function(reponse){
-            idReserva = reponse.data[0];
-            console.log('idReserva -->' + idReserva);
-/*
-    //Si realizó reserva fija, hago todas las reservas despues de haber reservado la primera normalmente.
-    if(aceptaReservaFija == 1)
-    {
-        var ReservaFijaNueva = new ReservasFijasService();
-        ReservaFijaNueva.data = $scope.listasReservasFijas;
-        console.log(ReservaFijaNueva.data[0]);
-        ReservasFijasService.save(ReservaFijaNueva.data, function(reponse){    
-            //idReservaFija = reponse.data[0];
-            //console.log('idReserva -->' + idReservaFija);                      
+        idReserva = reponse.data[0];
+        console.log('idReserva -->' + idReserva);
+
+        //Si realizó reserva fija, hago todas las reservas despues de haber reservado la primera normalmente.
+        if(aceptaReservaFija == 1)
+        {       
+            console.log("entro a reservas fijas");
+            //console.log("Fecha dt: " + $scope.dt);
+            var idDeDia = $scope.dt.getDay() == 0 ? 7 : $scope.dt.getDay();
+            var anio = $scope.dt.getFullYear();
+            //console.log("anio: " + anio);
+            //console.log("Desde:" + self.reservaSeleccionada.horaDesde);
+            //console.log("IdDia: " + idDeDia);
+            //console.log("Hasta: " + selectedText);
+            //console.log("fecha: " + self.Fecha);
+            self.getFechasReservaFija(self.reservaSeleccionada.horaDesde, selectedText,idDeDia, anio, self.Fecha);
+            //var ReservaFijaNueva = new ReservasFijasService();
+
+            
+            //ReservaFijaNueva.data = $scope.listasReservasFijas;
+            //console.log(ReservaFijaNueva.data[0]);
+            //ReservasFijasService.save(ReservaFijaNueva.data, function(reponse){    
+            ////idReservaFija = reponse.data[0];
+            ////console.log('idReserva -->' + idReservaFija);                      
+            //},function(errorResponse){
+            //console.log('ERROR res fija...'); 
+            //});
+        }    
+
         },function(errorResponse){
-            console.log('ERROR res fija...'); 
-        });
-    }    */
-
-        self.borrarReservaTemp();
-
-      },function(errorResponse){
         console.log('ERROR...'); 
-     });
+    });
+            
+};
+    
+this.getFechasReservaFija = function(hDesde, hHast, idDia, anio, fprimerReserva){
+    
+    ReservasFijasService.query({pIdCancha: self.reservaSeleccionada.IdCancha, pIdComplejo: self.IdComplejo, pHoraDesde:hDesde, pIdDia:idDia, pAnio:anio, pFechaPrimerReserva:fprimerReserva}).$promise.then(function(data){
+        
+        $scope.FechasReservaFija = data;
+        
+        console.log($scope.FechasReservaFija);
+        //console.log('PRIMERA FECHA FIJA->' + $scope.FechasReservaFija[0].fecha);
 
 
+        $scope.noDisponibles = [];
+        
+        var hHasta = hHast + ":00";
+        if($scope.FechasReservaFija.length == 0)
+        {
+            bootbox.alert("La reserva fija no se hará ya que no hay días disponibles en lo que resta del año para el horario seleccionado...", function() {});
+        }
+        else
+        {
+            var noDispEnString = "";
+            var importeTotal = parseFloat(self.reservaSeleccionada.totalCalculado);
+            var horaHasta = hHast + ":00";
+            hDesde += ":00";
+            
+             angular.forEach($scope.FechasReservaFija, function(aux) {
+                 //Guardo las fechas no disponibles para la reserva fija, asi se las muestro al cliente.
+                if(aux.NoDisponible != undefined && aux.NoDisponible != null && aux.NoDisponible != "")
+                {
+
+                    $scope.noDisponibles.push(aux.NoDisponible); 
+                    noDispEnString += aux.NoDisponible + "<br>";
+                }
+                else
+                {
+                    $scope.listasReservasFijas.push({idCliente: self.reservaSeleccionada.IdCliente, idComplejo: self.IdComplejo, idCancha: self.reservaSeleccionada.IdCancha, fechaPartido: aux.fecha, horaD: hDesde, horaH: hHasta, importeAPagar: importeTotal, pagado: 0, porcentajePago: 0, estadoReserva: 3, "usuarioReserva": self.reservaSeleccionada.UsuarioReserva});
+
+                }
+
+             });
 
 
+            if($scope.noDisponibles.length > 0)
+            {
+                var mensaje = 'La reserva fija se realizará para el día y horario elegido en lo que resta del año. \n ';
+
+                mensaje += 'Sin embargo las siguientes fechas no se podrán reservar ya que no están disponibles: <br> ';
+                mensaje += noDispEnString + "\n \n" + '¿Desea realizar la reserva fija igualmente?';
+
+                bootbox.confirm(mensaje, function(result) {
+                    if(result)
+                    {
+                        bootbox.alert("Sólo se paga lo correspondiente a la primer reserva, las fechas restantes las reservará el sistema, y se pagarán personalmente en el complejo. ", function() {});
+
+                        $scope.aceptaReservaFija = 1;
+
+                    }
+                    else
+                    {
+                        $scope.aceptaReservaFija = 0;
+                    }
+                }); 
+            }
+            else
+            {
+                //Se puede hacer la reserva fija por el resto del año para todos los dias!.
+                var mensaje = 'La reserva fija se realizará para el día y horario elegido en lo que resta del año. \n ';
+                mensaje += noDispEnString + "\n \n" + '¿Desea realizar la reserva fija?';
+                bootbox.confirm(mensaje, function(result) {
+                if(result)
+                {
+                    bootbox.alert("Sólo se paga lo correspondiente a la primer reserva, las fechas restantes las reservará el sistema, y se pagarán personalmente en el complejo. ", function() {});
+
+                    $scope.aceptaReservaFija = 1;
+                    console.log("acepta 1: " + $scope.aceptaReservaFija);
+                    console.log("Entramos a res fija");
+                    
+                    var ReservaFijaNueva = new ReservasFijasService();
+
+                    ReservaFijaNueva.data = $scope.listasReservasFijas;
+                    console.log(ReservaFijaNueva.data[0]);
+
+                    ReservasFijasService.save(ReservaFijaNueva.data, function(reponse){    
+                        idReservaFija = reponse.data[0];
+                        console.log('idReserva -->' + idReservaFija);                      
+                    },function(errorResponse){
+                        console.log('ERROR res fija...'); 
+                    });
+                    
+                }
+                else
+                    $scope.aceptaReservaFija = 0;
+                    console.log("acepta 0: " + $scope.aceptaReservaFija);
+                });
+            }
+            
+            console.log("acepta: " + $scope.aceptaReservaFija);
+            if($scope.aceptaReservaFija == 1){
+                
+            }
+        }
+   });
+};
+    
+this.cambiaHasta = function(){
+        
+    self.horasHasta = [];
+    for(var i = $scope.selectedHoraIdDesde + 1; i < 25; i++)
+    {
+        self.horasHasta.push({id: i, desc:  i + ':00 hs.'});
+    }
+    $scope.selectedHoraIdHasta = $scope.selectedHoraIdDesde + 1;
+    console.log('llegue al cambia hasta');
 };
     
 /**************************************FUNCIONES DE CALENDARIO*********************************************************************************/

@@ -71,6 +71,7 @@ class ReservaFija
                     $pagado = $this->connection->real_escape_string($resFija['pagado']);
                     $porcentajePago = $this->connection->real_escape_string($resFija['porcentajePago']);
                     $estadoReserva = $this->connection->real_escape_string($resFija['estadoReserva']);
+                    $usuarioReserva = $this->connection->real_escape_string($resFija['usuarioReserva']);
 
                     $salida='';
 
@@ -105,13 +106,19 @@ class ReservaFija
                     $stmt = $this->connection->prepare('SET @estadoReserva := ?');
                     $stmt->bind_param('i', $estadoReserva);
                     $stmt->execute();
+                    
+                    $stmt = $this->connection->prepare('SET @usuarioReserva := ?');
+                    $stmt->bind_param('s', $usuarioReserva);
+                    $stmt->execute();
 
                     //Salida
                     $stmt = $this->connection->prepare('SET @idReserva := ?');
                     $stmt->bind_param('s', $idReserva);
                     $stmt->execute();
 
-                    $result = $this->connection->query('CALL SP_reservar( @idCliente, @idComplejo, @idCancha, @fechaPartido, @horaD, @horaH, @importeAPagar, @pagado, @porcentajePago, @estadoReserva, @idReserva);');
+                    //$result = $this->connection->query('CALL SP_reservar( @idCliente, @idComplejo, @idCancha, @fechaPartido, @horaD, @horaH, @importeAPagar, @pagado, @porcentajePago, @estadoReserva, @idReserva);');
+                    
+                    $result = $this->connection->query('CALL SP_reservar( @idCliente, @idComplejo, @idCancha, @fechaPartido, @horaD, @horaH, @importeAPagar, @pagado, @porcentajePago, @estadoReserva, @usuarioReserva, @idReserva);');
 
                 }
             

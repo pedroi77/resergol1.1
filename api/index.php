@@ -1167,6 +1167,22 @@ $app->get('/listaNegra/:idCliente/:idComplejo', function($idCliente, $idComplejo
     
 });
 
+//Trae la lista negra del complejo al que se le esta pasando por parametro
+$app->get('/duenios/complejo/listaNegra/:idComplejo', function($idComplejo){
+    
+    $listaNegra = new Complejo();
+    $data = $listaNegra->getUsuariosListaNegra($idComplejo);
+	sendResult($data);
+    
+});
+
+//Trae la lista negra del complejo al que se le esta pasando por parametro
+$app->delete('/duenios/complejo/listaNegra/:idComplejo/:idCliente', function($idComplejo, $idCliente){
+    
+    $listaNegra = new Complejo();
+    $data = $listaNegra->deleteClienteListaNegra($idComplejo, $idCliente);
+	//sendResult($data);
+});
 
 //-***********************************RESERVA FIJA**************************************************************--//
 //Trae las fechas de las reservas fijas que quiere hacer un cliente de la fecha seleccionada hasta que termine el año.

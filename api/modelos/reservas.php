@@ -83,6 +83,7 @@ class Reserva
         $pagado = $this->connection->real_escape_string($reserva['pagado']);
         $porcentajePago = $this->connection->real_escape_string($reserva['porcentajePago']);
         $estadoReserva = $this->connection->real_escape_string($reserva['estadoReserva']);
+        $usuarioReserva = $this->connection->real_escape_string($reserva['usuarioReserva']);
         
         $salida='';
       
@@ -119,6 +120,10 @@ class Reserva
         $stmt->bind_param('i', $estadoReserva);
         $stmt->execute();
         
+        $stmt = $this->connection->prepare('SET @usuarioReserva := ?');
+        $stmt->bind_param('s', $usuarioReserva);
+        $stmt->execute();
+        
         //Salida
         $stmt = $this->connection->prepare('SET @idReserva := ?');
         //$stmt->bind_param('i', $valor);
@@ -128,7 +133,7 @@ class Reserva
        
          // execute the stored Procedure         SP_reservar
         
-        $result = $this->connection->query('CALL SP_reservar( @idCliente, @idComplejo, @idCancha, @fechaPartido, @horaD, @horaH, @importeAPagar, @pagado, @porcentajePago, @estadoReserva, @idReserva);');
+        $result = $this->connection->query('CALL SP_reservar( @idCliente, @idComplejo, @idCancha, @fechaPartido, @horaD, @horaH, @importeAPagar, @pagado, @porcentajePago, @estadoReserva, @usuarioReserva, @idReserva);');
         
         // getting the value of the OUT parameter
         $r = $this->connection->query('SELECT @idReserva as idReserva');

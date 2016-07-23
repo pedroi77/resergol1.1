@@ -56,7 +56,7 @@ class Complejo
     //guarda todo lo relacionado con el torneo(Actualiza el objeto persona, el objeto dueño)
     public function createComplejo($complejo){
         
-        $idPersona = 0;
+        //$idPersona = 0;
         $resultado = 0;
         $this->connection->autocommit(false);
         //echo 'entro al create complejo', 'otro mensaje', '\n';

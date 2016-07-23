@@ -54,7 +54,7 @@
     </div>
  
     <div class="clearfix">
-            
+    
     </div>
            
     <!--reservas modal-->
@@ -120,55 +120,20 @@
 
                                     <div class="col-md-10">
                                         <div class="form-group">
-                                            <input type="text" id="usuario" ng-disabled="dueRes.reservaSeleccionada.Usuario != ''" class="form-control input-md" placeholder="Cliente" value="{{dueRes.reservaSeleccionada.Usuario}}">
+                                            <input type="text" id="usuario" ng-disabled="dueRes.reservaSeleccionada.Usuario != ''" class="form-control input-md" ng-model="dueRes.reservaSeleccionada.UsuarioReserva" placeholder="Cliente" value="dueRes.reservaSeleccionada.Usuario">
                                         </div> 
 
                                         <div class="form-group">
                                             <label for="sel2"  class="fontMasChica" style= "margin-left: 2px;" >Desde:</label>
-                                            <SELECT NAME="cboHoraInicial" > 
-                                                <OPTION>8 Hs</OPTION>
-                                                <OPTION>9 Hs</OPTION>
-                                                <OPTION>10 Hs</OPTION>
-                                                <OPTION>11 Hs</OPTION> 
-                                                <OPTION>12 Hs</OPTION> 
-                                                <OPTION>13 Hs</OPTION> 
-                                                <OPTION>14 Hs</OPTION> 
-                                                <OPTION>15 Hs</OPTION>
-                                                <OPTION>16 Hs</OPTION> 
-                                                <OPTION>17 Hs</OPTION> 
-                                                <OPTION>18 Hs</OPTION> 
-                                                <OPTION>19 Hs</OPTION> 
-                                                <OPTION>19 Hs</OPTION> 
-                                                <OPTION>20 Hs</OPTION> 
-                                                <OPTION>21 Hs</OPTION> 
-                                                <OPTION>22 Hs</OPTION> 
-                                                <OPTION>23 Hs</OPTION> 
-                                            </SELECT> 
+                                            <input type="text" ng-disabled="true" id="pagado" style="width: 100px" class="input-md" value="{{dueRes.reservaSeleccionada.horaDesde}}">
 
-                                            <label for="sel2" class="fontMasChica" style= "margin-left: 50px; " > Hasta:</label>
-                                            <SELECT NAME="cboHoraFin" SIZE=1 > 
-                                                <OPTION>8 Hs</OPTION>
-                                                <OPTION>9 Hs</OPTION>
-                                                <OPTION>10 Hs</OPTION>
-                                                <OPTION>11 Hs</OPTION> 
-                                                <OPTION>12 Hs</OPTION> 
-                                                <OPTION>13 Hs</OPTION> 
-                                                <OPTION>14 Hs</OPTION> 
-                                                <OPTION>15 Hs</OPTION>
-                                                <OPTION>16 Hs</OPTION> 
-                                                <OPTION>17 Hs</OPTION> 
-                                                <OPTION>18 Hs</OPTION> 
-                                                <OPTION>19 Hs</OPTION> 
-                                                <OPTION>19 Hs</OPTION> 
-                                                <OPTION>20 Hs</OPTION> 
-                                                <OPTION>21 Hs</OPTION> 
-                                                <OPTION>22 Hs</OPTION> 
-                                                <OPTION  selected="selected">23</OPTION> 
-                                            </SELECT> 
+                                            <label for="sel2" class="fontMasChica" style= "margin-left: 20px; " > Hasta:</label>
+                                            <select ng-disabled="dueRes.reservaSeleccionada.Usuario != ''" id="horaHasta" data-live-search="true" style="margin-bottom:2px, width: 100px;" class="" ng-model="selectedHoraIdHasta"
+                                            ng-change="dueRes.calcularPago()" ng-options="hora.id as hora.desc for hora in dueRes.horasHasta"></select>
                                         </div>
 
                                         <div class ="principal row" style= "margin-top:0px;">
-                                            <input type="text" id="pagado" ng-change="dueRes.CalcularResta()" ng-model="dueRes.reservaSeleccionada.Pagado" class="form-control input-md" value="{{dueRes.reservaSeleccionada.Pagado}}">
+                                            <input type="text" ng-disabled="dueRes.reservaSeleccionada.EstadoReserva == 2" id="pagado" ng-change="dueRes.CalcularResta()" ng-model="dueRes.reservaSeleccionada.Pagado" class="form-control input-md" value="{{dueRes.reservaSeleccionada.Pagado}}">
                                         </div>
 
                                         <div class="form-group" style= "margin-top:8px;">
