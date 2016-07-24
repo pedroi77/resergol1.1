@@ -9,12 +9,14 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 		.state("Admin.administracion",{
 			url : "/admin/Administracion",
 			templateUrl : "app/Admin/Templates/AdminListaComplejos.html",
-			controllerAs : "admin"
+			controllerAs : "admin",
+            rol: 'A'
 		})
         .state("Admin.bloqueados",{
 			url : "/admin/Bloqueados",
 			templateUrl : "app/Admin/Templates/AdminUsuariosBoqueados.html",
-			controllerAs : "admin"
+			controllerAs : "admin",
+            rol: 'A'
 		});
 		$urlRouterProvider.otherwise("/admin");
     

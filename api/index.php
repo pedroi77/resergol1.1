@@ -170,7 +170,7 @@ $app->get('/admin/:user/:pass', function($usuario,$contrasenia){
         $jwt = \Firebase\JWT\JWT::encode($token, $key);
     
         $miToken['token'] = $jwt;
-        array_push($result,$miToken);
+        array_push($result,$jwt);
 
         sendResult($result);
     }else{
@@ -179,20 +179,47 @@ $app->get('/admin/:user/:pass', function($usuario,$contrasenia){
     }
 });
 
+    
 
 //Get de dueños pendientes.
 $app->get('/dueniosPendientes', function(){
-    $duePendientes = new Administrador();
-    $data = $duePendientes->getDueniosPendientes();
-	sendResult($data);
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $admin = new Administrador();
+    $tokenOK = $admin->validarAdmin($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){   
+        $duePendientes = new Administrador();
+        $data = $duePendientes->getDueniosPendientes();
+        sendResult($data);
+     }else{
+        sendError("token invalido");
+    }
+    
 });
 
 
-//Get de usuarios bloqueados. FALTA TOKEN
+//Get de usuarios bloqueados. 
 $app->get('/administradores/bloqueados/:usuario', function($usuario){
-    $admin= new Administrador();
-    $data = $admin->getUsuariosBloqueados($usuario);
-	sendResult($data);
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $admin = new Administrador();
+    $tokenOK = $admin->validarAdmin($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){   
+        $admin= new Administrador();
+        $data = $admin->getUsuariosBloqueados($usuario);
+        sendResult($data);
+    }else{
+        sendError("token invalido");
+    }
+    
 });
 
 //Cambia de estado a los dueños pendientes.
@@ -215,13 +242,31 @@ $app->put('/administrarDuenio', function(){
 
 //Desbloquear
 $app->put('/administradores/bloqueados/', function(){
-    $request = Slim\Slim::getInstance()->request();   
-    $data = json_decode($request->getBody(), true);
-    $usuario = new Administrador();
     
-    $result = $usuario->desbloquearUsuario($data);
-        
-	sendResult($result);
+    
+      
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $admin = new Administrador();
+    $tokenOK = $admin->validarAdmin($tokenDec->user, $tokenDec->pass);
+    
+    
+    if($tokenOK){   
+        $request = Slim\Slim::getInstance()->request();   
+        $data = json_decode($request->getBody(), true);
+        $usuario = new Administrador();
+
+        $result = $usuario->desbloquearUsuario($data);
+
+        sendResult($result);
+    }else{
+        sendError("token invalido");
+    }
+    
+    
+ 
 });
 
  
