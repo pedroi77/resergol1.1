@@ -83,6 +83,33 @@ class Administrador
     }
     */
     
+     public function validarAdmin($usuario,$contrasenia ){
+        $stmt = $this->connection->prepare('SET @usuario := ?');
+        $stmt->bind_param('s', $usuario);
+        $stmt->execute(); 
+    
+        $stmt = $this->connection->prepare('SET @contrasenia := ?');
+        $stmt->bind_param('s', $contrasenia);
+        $stmt->execute(); 
+        
+        $query = "CALL SP_getAdministrador(@usuario, @contrasenia );";
+        
+        $admin= array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $admin[] = $fila;
+            }
+              
+            $result->free();
+        }
+         
+        if(count($admin)>0) 
+            return true;
+        else
+            return false;
+    }
+    
       public function aceptarDuenio($data){
         $IdDuenio = $this->connection->real_escape_string($data['IdDuenio']);
         $acepta = $this->connection->real_escape_string($data['acepta']);

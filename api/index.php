@@ -170,7 +170,7 @@ $app->get('/admin/:user/:pass', function($usuario,$contrasenia){
         $jwt = \Firebase\JWT\JWT::encode($token, $key);
     
         $miToken['token'] = $jwt;
-        array_push($result,$miToken);
+        array_push($result,$jwt);
 
         sendResult($result);
     }else{
@@ -179,20 +179,47 @@ $app->get('/admin/:user/:pass', function($usuario,$contrasenia){
     }
 });
 
+    
 
 //Get de dueños pendientes.
 $app->get('/dueniosPendientes', function(){
-    $duePendientes = new Administrador();
-    $data = $duePendientes->getDueniosPendientes();
-	sendResult($data);
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $admin = new Administrador();
+    $tokenOK = $admin->validarAdmin($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){   
+        $duePendientes = new Administrador();
+        $data = $duePendientes->getDueniosPendientes();
+        sendResult($data);
+     }else{
+        sendError("token invalido");
+    }
+    
 });
 
 
-//Get de usuarios bloqueados. FALTA TOKEN
+//Get de usuarios bloqueados. 
 $app->get('/administradores/bloqueados/:usuario', function($usuario){
-    $admin= new Administrador();
-    $data = $admin->getUsuariosBloqueados($usuario);
-	sendResult($data);
+    
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $admin = new Administrador();
+    $tokenOK = $admin->validarAdmin($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){   
+        $admin= new Administrador();
+        $data = $admin->getUsuariosBloqueados($usuario);
+        sendResult($data);
+    }else{
+        sendError("token invalido");
+    }
+    
 });
 
 //Cambia de estado a los dueños pendientes.
@@ -215,13 +242,31 @@ $app->put('/administrarDuenio', function(){
 
 //Desbloquear
 $app->put('/administradores/bloqueados/', function(){
-    $request = Slim\Slim::getInstance()->request();   
-    $data = json_decode($request->getBody(), true);
-    $usuario = new Administrador();
     
-    $result = $usuario->desbloquearUsuario($data);
-        
-	sendResult($result);
+    
+      
+    $headers = apache_request_headers();
+    $token = explode(" ", $headers["Authorization"]);
+    $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
+    
+    $admin = new Administrador();
+    $tokenOK = $admin->validarAdmin($tokenDec->user, $tokenDec->pass);
+    
+    
+    if($tokenOK){   
+        $request = Slim\Slim::getInstance()->request();   
+        $data = json_decode($request->getBody(), true);
+        $usuario = new Administrador();
+
+        $result = $usuario->desbloquearUsuario($data);
+
+        sendResult($result);
+    }else{
+        sendError("token invalido");
+    }
+    
+    
+ 
 });
 
  
@@ -1095,6 +1140,34 @@ $app->get('/duenios/reservas/:idComplejo/:fecha/:idCancha', function($idComplejo
 	sendResult($data);
 });
 
+//completa el pago de una reserva
+$app->post('/duenios/reservas/completarPago', function(){
+    
+    //antes habia una validacion del token
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+
+    $reserva = new Reserva();
+    $result = $reserva->completarPago($data);
+
+    sendResult($result);
+    
+});
+/*
+//borra de reservas la reserva seleccionada
+$app->delete('/duenios/reservas/cancelarReserva/:idReserva', function($idReserva){
+    
+    //antes habia una validacion del token
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+
+    $reserva = new Reserva();
+    $result = $reserva->deleteReserva($idReserva);
+
+    sendResult($result);
+    
+});*/
+
 /*******************************TARJETAS CLIENTES*****************************************************/
 
 //alta
@@ -1197,6 +1270,22 @@ $app->get('/listaNegra/:idCliente/:idComplejo', function($idCliente, $idComplejo
     
 });
 
+//Trae la lista negra del complejo al que se le esta pasando por parametro
+$app->get('/duenios/complejo/listaNegra/:idComplejo', function($idComplejo){
+    
+    $listaNegra = new Complejo();
+    $data = $listaNegra->getUsuariosListaNegra($idComplejo);
+	sendResult($data);
+    
+});
+
+//Trae la lista negra del complejo al que se le esta pasando por parametro
+$app->delete('/duenios/complejo/listaNegra/:idComplejo/:idCliente', function($idComplejo, $idCliente){
+    
+    $listaNegra = new Complejo();
+    $data = $listaNegra->deleteClienteListaNegra($idComplejo, $idCliente);
+	//sendResult($data);
+});
 
 //-***********************************RESERVA FIJA**************************************************************--//
 //Trae las fechas de las reservas fijas que quiere hacer un cliente de la fecha seleccionada hasta que termine el año.

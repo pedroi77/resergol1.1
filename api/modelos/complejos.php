@@ -56,7 +56,7 @@ class Complejo
     //guarda todo lo relacionado con el torneo(Actualiza el objeto persona, el objeto dueño)
     public function createComplejo($complejo){
         
-        $idPersona = 0;
+        //$idPersona = 0;
         $resultado = 0;
         $this->connection->autocommit(false);
         //echo 'entro al create complejo', 'otro mensaje', '\n';
@@ -89,17 +89,18 @@ class Complejo
             $resultCan = $this->connection->query('CALL SP_updateDuenio(@pIdDuenio, @pUsuario, @pContrasenia, @pIdPersona);');
             //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN UPDATE DUEÑO-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
             
+            $person = $this->connection->query('SELECT @pIdPersona as persona');
+            $row = $person->fetch_assoc();        
+            $persona = $row['persona'] ;
+            
+            //echo 'entro al create complejo', ' persona ' . $persona, '\n';
+            
             //datos de la persona(update), modifica las datos base de una persona(dni, nombre, apellido, etc) SP_updatePersona
             $emailDuenio = $this->connection->real_escape_string($complejo['emailDuenio']);
             $nombreDuenio = $this->connection->real_escape_string($complejo['nombreDuenio']);
             $apellidoDuenio = $this->connection->real_escape_string($complejo['apellidoDuenio']);
             $idTipoDoc = $this->connection->real_escape_string($complejo['idTipoDoc']);
             $nroDoc = $this->connection->real_escape_string($complejo['nroDoc']);
-            
-            //PARTE UPDATE DE PERSONA
-            $person = $this->connection->query('SELECT @pIdPersona as persona');
-            $row = $person->fetch_assoc();        
-            $persona = $row['persona'] ;
             
             // Parametros
             $stmt = $this->connection->prepare('SET @pIdPersona := ?');
@@ -132,6 +133,8 @@ class Complejo
             $stmt->execute();
             
             $resultCan = $this->connection->query('CALL SP_updatePersona(@pIdPersona, @pNombre, @pIdTipoDoc, @pApellido, @pNroDoc, @pEmail, @vResultado);');
+            
+            //echo 'entro al create complejo', ' llamo al sp de personas ', '\n';
             //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN UPDATE PERSONA-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
             
             //datos del Complejo(SP_insertComplejos)
@@ -243,7 +246,7 @@ class Complejo
             }
             else
             {
-                $resultCan = $this->connection->query('CALL SP_updateComplejo( @pIdComplejo, @pNombre, @pDescripcion, @pEstacionamiento, @pBuffet, @pDuchas, @pParrillas, @pWiFi, @pHoraCobroLuz, @pPorcentajeSeña, @pHorasCancelacion, @pTiempoReserva, @pEmail, @pIdEstado, @pIdDuenio, @pPorcentajeLuz, @pNroCelular, @pNroTelefono);');
+                $resultCan = $this->connection->query('CALL SP_updateComplejo(@pNombre, @pDescripcion, @pEstacionamiento, @pBuffet, @pDuchas, @pParrillas, @pWiFi, @pHoraCobroLuz, @pPorcentajeSeña, @pHorasCancelacion, @pTiempoReserva, @pEmail, @pIdEstado, @pIdDuenio, @pPorcentajeLuz, @pNroCelular, @pNroTelefono,@pIdComplejo);');
                 
                 //echo 'Something fails: ', 'hizo update al complejo', "\n";
                 
@@ -253,12 +256,163 @@ class Complejo
             //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN SET COMPLEJO-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
 
             //Se guardara los demas datos del complejo(Tales como los pagos, direccion y dias que se abre el complejo)
-            $this->insertarOtrosDatos($complejo, $idComplejo);
+            //$this->insertarOtrosDatos($complejo, $idComplejo);
 
             //echo 'Hizo Commit ','ID COmplejo: ' . $idComplejo, "\n";
             //$this->connection->rollback();
             
+            
+            //PARTE DE COMPLEJOS PAGOS
+            $CBU = $this->connection->real_escape_string($complejo['CBU']);
+            $NroCuenta = $this->connection->real_escape_string($complejo['nroCuenta']);
+            
+            //PARAMETROS DE COMPLEJOS PAGOS
+            $stmt = $this->connection->prepare('SET @pIdComplejoPagos := ?');
+            $stmt->bind_param('i', $idComplejo);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pCBU := ?');
+            $stmt->bind_param('s', $CBU);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pNroCuenta := ?');
+            $stmt->bind_param('s', $NroCuenta);
+            $stmt->execute();
+            
+            //echo 'Something fails: ', 'seteo los parametros de pagos con ID ' . $idComplejo . ' CBU: ' . $CBU . ' NroCuenta: ' . $NroCuenta, "\n";
+
+            $stmt = $this->connection->prepare('SET @pIdComplejoPagos := ?');
+            $stmt->bind_param('i', $idComplejo);
+            $stmt->execute();
+            
+            //$complejoPagos = array();
+            //if($result = $this->connection->query('CALL SP_existeComplejoPagos(@pIdComplejoPagos);') ){
+            //    while($fila = $result->fetch_assoc()){
+            //        $complejoPagos[] = $fila;
+            //    }           
+            //}
+            //
+            ////$complejoPagos[0]['existe'] === '0'
+            //if(true){
+            //    $resultCan = $this->connection->query('CALL SP_insertComplejosPagos(@pIdComplejoPagos, @pCBU, @pNroCuenta);');
+            //    
+            //    echo 'Something fails: ', 'Inserto los pagos con ID ' . $idComplejo, "\n";
+            //}
+            //else
+            //{
+            //    $resultCan = $this->connection->query('CALL SP_updateComplejosPagos(@pIdComplejoPagos, @pCBU, @pNroCuenta);');
+            //    
+            //    echo 'Something fails: ', 'Updateo los pagos con ID ' . $idComplejo, "\n";
+            //}
+            
+            $resultCan = $this->connection->query('CALL SP_setComplejosPagos(@pIdComplejoPagos, @pCBU, @pNroCuenta);');
+            //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN COMPLEJOS PAGOS-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
+            
+            //DATOS DE LA DIRECCION DEL COMPLEJO(SP_insertComplejosDireccion)
+            $calle = $this->connection->real_escape_string($complejo['calle']);
+            $altura = $this->connection->real_escape_string($complejo['altura']);
+            $idProv = $this->connection->real_escape_string($complejo['idProv']);
+            $idLoc = $this->connection->real_escape_string($complejo['idLoc']);
+            $X = $this->connection->real_escape_string($complejo['X']);
+            $Y = $this->connection->real_escape_string($complejo['Y']);
+            
+            //PARAMETROS DE COMPLEJOS DIRECCION            
+            $stmt = $this->connection->prepare('SET @pIdComplejoDireccion := ?');
+            $stmt->bind_param('i', $idComplejo);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pCalle := ?');
+            $stmt->bind_param('s', $calle);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pAltura := ?');
+            $stmt->bind_param('i', $altura);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pIdLocalidad := ?');
+            $stmt->bind_param('i', $idLoc);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pIdProvincia := ?');
+            $stmt->bind_param('i', $idProv);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pX := ?');
+            $stmt->bind_param('d', $X);
+            $stmt->execute();
+            
+            $stmt = $this->connection->prepare('SET @pY := ?');
+            $stmt->bind_param('d', $Y);
+            $stmt->execute();
+            
+            $resultCan = $this->connection->query('CALL SP_setComplejosDireccion(@pIdComplejoDireccion, @pCalle, @pAltura, @pIdLocalidad, @pIdProvincia, @pX, @pY);');
+            
+            //$complejoDireccion[0]['existe'] === '0'
+            //if(true){
+            //    $resultCan = $this->connection->query('CALL SP_insertComplejosDireccion(@pIdComplejoDireccion, @pCalle, @pAltura, @pIdLocalidad, @pIdProvincia, @pX, @pY);');
+            //    
+            //    echo 'Something fails: ', 'despues del SP_insertComplejosDireccion', "\n";
+            //    
+            //    echo 'Complejo Direccion: ', 'Complejo: ' . $idComplejo . ' Calle: ' . $calle . ' Altura: ' . $altura . ' Localidad: ' . $idLoc . ' Provincia: ' . $idProv . ' X: ' . $X . ' Y: ' . $Y, "\n";
+            //}
+            //else{
+            //    $resultCan = $this->connection->query('CALL SP_updateComplejoDireccion(@pIdComplejo, @pCalle, @pAltura, @pIdLocalidad, @pIdProvincia, @pX, @pY);');
+            //    
+            //    echo 'Something fails: ', 'despues del SP_updateComplejoDireccion', "\n";
+            //    
+            //    echo 'Complejo Direccion: ', 'Complejo: ' . $idComplejo . ' Calle: ' . $calle . ' Altura: ' . $altura . ' Localidad: ' . $idLoc . ' Provincia: ' . $idProv . ' X: ' . $X . ' Y: ' . $Y, "\n";
+            //    
+            //    $res = $this->connection->query('SELECT @vResultado as resul');
+            //    $row = $res->fetch_assoc();        
+            //    $resultado = $row['resul'];
+            //}
+            //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-FIN COMPLEJOS DIRECCION-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
+            
+            //COMPLEJOS DIAS
+            $diasComplejo = array();
+            $diasComplejo = $complejo['diasComplejo'];
+            
+            $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+            $stmt->bind_param('i', $idComplejo);
+            $stmt->execute();
+            
+            $resultCan = $this->connection->query('CALL SP_deleteComplejosDias(@pIdComplejo);');
+            
+            //HARA EL FOR EACH DE LOS DIAS CARGADOS POR EL DUEÑO DE CUANDO SE ABRIRA SU COMPLEJO
+            foreach ($diasComplejo as $dia){
+                
+                $HoraDesde = $this->connection->real_escape_string($dia['horaDesde']);
+                $HoraHasta = $this->connection->real_escape_string($dia['horaHasta']);
+                $DiaDesde = $this->connection->real_escape_string($dia['idDiaDesde']);
+                $DiaHasta = $this->connection->real_escape_string($dia['idDiaHasta']);
+                
+                $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+                $stmt->bind_param('i', $idComplejo);
+                $stmt->execute();
+                
+                $stmt = $this->connection->prepare('SET @pIdDiaDesde := ?');
+                $stmt->bind_param('i', $DiaDesde);
+                $stmt->execute();
+                
+                $stmt = $this->connection->prepare('SET @pIdDiaHasta := ?');
+                $stmt->bind_param('i', $DiaHasta);
+                $stmt->execute();
+                
+                $stmt = $this->connection->prepare('SET @pHoraDesde := ?');
+                $stmt->bind_param('s', $HoraDesde);
+                $stmt->execute();
+                
+                $stmt = $this->connection->prepare('SET @pHoraHasta := ?');
+                $stmt->bind_param('s', $HoraHasta);
+                $stmt->execute();
+                
+                 //echo 'Something fails: ', "Hora desde " . $dia['horaDesde'] . " Hora hasta " . $dia['horaHasta'] . " id Dia Desde " . $dia['idDiaDesde'] . " id Dia Desde " . $dia['idDiaHasta'], "\n";
+                
+                $resultDia = $this->connection->query('CALL SP_setComplejosDias(@pIdComplejo, @pIdDiaDesde, @pIdDiaHasta, @pHoraDesde, @pHoraHasta);');
+            } 
+            
             $this->connection->commit();
+            //$dat= array($idComplejo);
             $dat= array($idComplejo);
             sendResult($dat, 'OK' );
             

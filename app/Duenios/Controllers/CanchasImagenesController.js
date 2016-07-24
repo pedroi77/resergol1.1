@@ -28,7 +28,6 @@ resergolApp.controller("CanchasImagenesController", function($scope, $state , $s
                 $scope.imgSelect =  self.imagenes.selectedOption.imagen;
                 self.msjPantalla = "Imagenes del torneo " + self.imagenes.selectedOption.nombre;
             }
-            
         });
     };
     

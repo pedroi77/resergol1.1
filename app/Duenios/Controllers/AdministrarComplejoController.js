@@ -265,7 +265,7 @@ this.traerDatosComplejos = function(){
 
             angular.forEach(self.horaLuz.hora, function(aux) {
 
-                //console.log('AUX:' + aux.desc.substr(0,5) + 'SELF:' + self.Complejo.horaCobroLuz.substr(0,5));
+                console.log('AUX:' + aux.desc.substr(0,5) + 'SELF:' + self.Complejo.horaCobroLuz.substr(0,5));
 
                 if(aux.desc.substr(0,5) == self.Complejo.horaCobroLuz.substr(0,5))    
                 {
@@ -419,12 +419,15 @@ this.traerDatosComplejos = function(){
     };
     
     //aca tendria que hacer un UPDATE a la tabla de complejos segun el ID del complejo y del usuario
-    this.updateComplejo = function()
+    /*this.updateComplejo = function()
     {
         var complejoData = new AdministrarComplejoService();
      
         self.Complejo.idProv = self.provinciaSeleccionada;
         self.Complejo.idLoc = self.localidadSeleccionada;
+        self.Complejo.idTipoDoc = self.tipoDocSeleccionado;
+        console.log(self.tipoDocSeleccionado);
+        
         //self.Complejo.tipoDuenio = 
         
         complejoData.data = self.Complejo; 
@@ -437,7 +440,7 @@ this.traerDatosComplejos = function(){
           },function(errorResponse){
               console.log(errorResponse.data.message);  
          });
-    };
+    };*/
     
     this.cambiaHasta = function(){
         
@@ -525,10 +528,36 @@ this.traerDatosComplejos = function(){
         /*self.Complejo.idProv = self.provinciaSeleccionada;
         self.Complejo.idLoc = self.localidadSeleccionada;*/
         self.Complejo.idProv = self.provinciaSeleccionada.IdProvincia;
-        self.Complejo.idTipoDoc = self.tiposDoc.selectedOption.IdTipoDoc;
+        self.Complejo.idTipoDoc = self.tipoDocSeleccionado.IdTipoDoc;
+        //console.log(self.tipoDocSeleccionado);
         self.Complejo.idLoc = self.localidadSeleccionada.IdLocalidad;
         self.Complejo.horaCobroLuz = self.horaLuzSeleccionada.desc.substr(0,5) + ":00"; //MATI esto pincha :(
         //self.Complejo.horaCobroLuz = "19:00:00";
+        
+        if(document.getElementById("parrilla").checked)
+            self.Complejo.parrilla = 1;
+        else
+            self.Complejo.parrilla = 0;
+        
+        if(document.getElementById("estacionamiento").checked)
+            self.Complejo.estacionamiento = 1;
+        else
+            self.Complejo.estacionamiento = 0;
+        
+        if(document.getElementById("duchas").checked)
+            self.Complejo.duchas = 1;
+        else
+            self.Complejo.duchas = 0;
+        
+        if(document.getElementById("buffet").checked)
+            self.Complejo.buffet = 1;
+        else
+            self.Complejo.buffet = 0;
+        
+        if(document.getElementById("wifi").checked)
+            self.Complejo.wifi = 1;
+        else
+            self.Complejo.wifi = 0;
 
         AdministrarComplejo.data = self.Complejo;
 
@@ -545,6 +574,11 @@ this.traerDatosComplejos = function(){
         bootbox.alert("Complejo guardado exitosamente!", function() {
         });
     };
+    
+    this.pruebaLuz = function(){
+        
+        console.log(self.horaLuzSeleccionada.desc);
+    }
     
 //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-VALIDACIONES-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//
     this.validarDatos = function(){

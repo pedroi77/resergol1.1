@@ -83,6 +83,7 @@ class Reserva
         $pagado = $this->connection->real_escape_string($reserva['pagado']);
         $porcentajePago = $this->connection->real_escape_string($reserva['porcentajePago']);
         $estadoReserva = $this->connection->real_escape_string($reserva['estadoReserva']);
+        $usuarioReserva = $this->connection->real_escape_string($reserva['usuarioReserva']);
         
         $salida='';
       
@@ -119,6 +120,10 @@ class Reserva
         $stmt->bind_param('i', $estadoReserva);
         $stmt->execute();
         
+        $stmt = $this->connection->prepare('SET @usuarioReserva := ?');
+        $stmt->bind_param('s', $usuarioReserva);
+        $stmt->execute();
+        
         //Salida
         $stmt = $this->connection->prepare('SET @idReserva := ?');
         //$stmt->bind_param('i', $valor);
@@ -128,7 +133,7 @@ class Reserva
        
          // execute the stored Procedure         SP_reservar
         
-        $result = $this->connection->query('CALL SP_reservar( @idCliente, @idComplejo, @idCancha, @fechaPartido, @horaD, @horaH, @importeAPagar, @pagado, @porcentajePago, @estadoReserva, @idReserva);');
+        $result = $this->connection->query('CALL SP_reservar( @idCliente, @idComplejo, @idCancha, @fechaPartido, @horaD, @horaH, @importeAPagar, @pagado, @porcentajePago, @estadoReserva, @usuarioReserva, @idReserva);');
         
         // getting the value of the OUT parameter
         $r = $this->connection->query('SELECT @idReserva as idReserva');
@@ -284,6 +289,77 @@ class Reserva
         return $reservas;
     }
     
+    public function completarPago($reserva){
+        
+        $vResultado = 0;
+        $idReserva = $this->connection->real_escape_string($reserva['IdReserva']);
+        
+        //echo 'Cambios en la reserva: ', ' idreserva: ' . $idReserva, "\n";
+        
+        // Parametros
+        $stmt = $this->connection->prepare('SET @pIdReserva := ?');
+        $stmt->bind_param('i', $idReserva);
+        $stmt->execute();
+        
+        //Salida
+        $stmt = $this->connection->prepare('SET @vResultado := ?');
+        $stmt->bind_param('i', $vResultado);
+        $stmt->execute();
+        
+        $result = $this->connection->query('CALL SP_updateReservaCompletarPago(@pIdReserva, @vResultado);');
+
+        $r = $this->connection->query('SELECT @vResultado as resul');
+        $row = $r->fetch_assoc();               
+
+        $res = $row['resul'] ;
+        
+        //echo 'Cambios en la reserva: ', '  resultado: ' . $res, "\n";
+        
+        if($res > -1){
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+        }else{
+           sendError("Error, no se actualizaron las reservas." . $res );
+        }
+        
+    }
+
+    public function deleteReserva($idReserva){
+        
+        $vResultado = 0;
+
+        $idReserva = $this->connection->real_escape_string($reserva['IdReserva']);
+        
+        //echo 'Cambios en la reserva: ', ' idreserva: ' . $idReserva, "\n";
+        
+        // Parametros
+        $stmt = $this->connection->prepare('SET @pIdReserva := ?');
+        $stmt->bind_param('i', $idReserva);
+        $stmt->execute();
+        
+        //Salida
+        $stmt = $this->connection->prepare('SET @vResultado := ?');
+        $stmt->bind_param('i', $vResultado);
+        $stmt->execute();
+        
+        $result = $this->connection->query('CALL SP_updateReservaCompletarPago(@pIdReserva, @vResultado);');
+
+        $r = $this->connection->query('SELECT @vResultado as resul');
+        $row = $r->fetch_assoc();               
+
+        $res = $row['resul'] ;
+        
+        //echo 'Cambios en la reserva: ', '  resultado: ' . $res, "\n";
+        
+        if($res > -1){
+            $dat= array($res);
+            sendResult($dat, 'OK' );
+        }else{
+           sendError("Error, no se actualizaron las reservas." . $res );
+        }
+        
+    }
+    
     /*public function getReservasByDuenioFecha($idComplejo, $idCancha, $fecha){
         
         
@@ -313,9 +389,9 @@ class Reserva
         }
         return $reservas;
     }*/
-    
+    /*
     //Al cancelar la reserva, luego de ingresar la devolucion, borro la reserva.
-    /*public function delete($idReserva){
+    public function deleteReserva($idReserva){
         
         $valor='';
        
@@ -323,7 +399,6 @@ class Reserva
         $stmt = $this->connection->prepare('SET @idReserva := ?');
         $stmt->bind_param('i', $idReserva);
         $stmt->execute();
-        
         
         //Salida
         $stmt = $this->connection->prepare('SET @valor := ?');
@@ -347,9 +422,6 @@ class Reserva
    
             
     }*/
-    
-    
-
     
 }
 
