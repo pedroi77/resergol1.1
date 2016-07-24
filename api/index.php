@@ -1140,6 +1140,34 @@ $app->get('/duenios/reservas/:idComplejo/:fecha/:idCancha', function($idComplejo
 	sendResult($data);
 });
 
+//completa el pago de una reserva
+$app->post('/duenios/reservas/completarPago', function(){
+    
+    //antes habia una validacion del token
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+
+    $reserva = new Reserva();
+    $result = $reserva->completarPago($data);
+
+    sendResult($result);
+    
+});
+/*
+//borra de reservas la reserva seleccionada
+$app->delete('/duenios/reservas/cancelarReserva/:idReserva', function($idReserva){
+    
+    //antes habia una validacion del token
+    $request = Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
+
+    $reserva = new Reserva();
+    $result = $reserva->deleteReserva($idReserva);
+
+    sendResult($result);
+    
+});*/
+
 /*******************************TARJETAS CLIENTES*****************************************************/
 
 //alta
@@ -1242,6 +1270,22 @@ $app->get('/listaNegra/:idCliente/:idComplejo', function($idCliente, $idComplejo
     
 });
 
+//Trae la lista negra del complejo al que se le esta pasando por parametro
+$app->get('/duenios/complejo/listaNegra/:idComplejo', function($idComplejo){
+    
+    $listaNegra = new Complejo();
+    $data = $listaNegra->getUsuariosListaNegra($idComplejo);
+	sendResult($data);
+    
+});
+
+//Trae la lista negra del complejo al que se le esta pasando por parametro
+$app->delete('/duenios/complejo/listaNegra/:idComplejo/:idCliente', function($idComplejo, $idCliente){
+    
+    $listaNegra = new Complejo();
+    $data = $listaNegra->deleteClienteListaNegra($idComplejo, $idCliente);
+	//sendResult($data);
+});
 
 //-***********************************RESERVA FIJA**************************************************************--//
 //Trae las fechas de las reservas fijas que quiere hacer un cliente de la fecha seleccionada hasta que termine el año.

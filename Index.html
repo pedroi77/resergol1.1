@@ -5,7 +5,7 @@
 		<title>ReserGol</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href="bower_components/bootstrap/CSS/bootstrap.min.css" rel="stylesheet"> 
+		<link href="bower_components/bootstrap/CSS/bootstrap.min.css" rel="stylesheet">
         <link href="bower_components/angular-ui-ui-grid-1c766f0/ng-grid.css" rel="stylesheet">
         <link href="bower_components/angular-ui-ui-grid-1c766f0/ng-grid.min.css" rel="stylesheet">
 		<link href="css/styles.css" rel="stylesheet">
@@ -23,8 +23,8 @@
                     </div>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li >
-                            <a    id="btnUsuario" ng-show="main.Usuario.login" >{{main.Usuario.usuario}}</a>
+                        <li>
+                            <a  id="btnUsuario" ng-show="main.Usuario.login" >{{main.Usuario.usuario}}</a>
                         </li>
                         <li>
                             <a href="#loginModal" id="btnIniciarSesion"  ng-show="!main.Usuario.login" role="button" data-toggle="modal" ng-model="main.IniciarSesion" ng-click="main.limpiarModal(loginForm)">{{main.IniciarSesion}}</a>
@@ -600,8 +600,10 @@
         <script src="app/Duenios/Services/DueniosReservasServices.js"></script>
         <script src="app/Duenios/Services/DueniosReservasAumentoService.js"></script>        
         <script src="app/Duenios/Services/DuenioTorneoMailService.js"></script>	
-        <script src="app/Duenios/Services/DevolucionesService.js"></script>	
-        <script src="app/Duenios/Controllers/DueniosController.js"></script>
+
+		<script src="app/Duenios/Services/DuenioReservasCompletarPagoService.js"></script>
+		<script src="app/Duenios/Services/DevolucionesService.js"></script>	        
+		<script src="app/Duenios/Controllers/DueniosController.js"></script>
         <script src="app/Duenios/Controllers/TorneoEquiposController.js"></script>
         <script src="app/Duenios/Controllers/TorneoBuscarController.js"></script>
         <script src="app/Duenios/Controllers/TorneoNuevoController.js"></script>
@@ -612,7 +614,7 @@
         <script src="app/Duenios/Controllers/CanchasImagenesController.js"></script>
         <script src="app/Duenios/Controllers/AdministrarListaNegraController.js"></script>
 		<script src="app/Duenios/Controllers/DueniosReservasController.js"></script>		
-        <script src="app/Duenios/Controllers/TorneoModificarController.js"></script>       
+        <script src="app/Duenios/Controllers/TorneoModificarController.js"></script>
         <script src="app/Duenios/Controllers/DevolucionesController.js"></script>       
         <script src="app/Clientes/js/ClientesController.js"></script>
         <script src="app/Clientes/js/VerCanchaController.js"></script>
@@ -645,7 +647,7 @@
         <script src="app/Admin/Services/AceptarDueniosService.js"></script>
         <script src="app/Admin/Services/EnviarMailService.js"></script>
         <script src="app/Admin/Services/UsuariosBloqueadosService.js"></script>
-        
+    
     
 		<script src="app/Common/CommonController.js"></script>
         <script src="app/Common/Controllers/TorneoLigaController.js"></script>

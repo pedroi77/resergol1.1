@@ -697,7 +697,7 @@ this.getImagenes = function()
     this.getFechasReservaFija = function(hDesde, idDia, anio, fprimerReserva){
 			ReservasFijasService.query({pIdCancha:$scope.idCancha, pIdComplejo:$scope.idComplejo, pHoraDesde:hDesde, pIdDia:idDia, pAnio:anio, pFechaPrimerReserva:fprimerReserva}).$promise.then(function(data){
                     $scope.FechasReservaFija = data;
-                    console.log('PRIMERA FECHA FIJA->' + $scope.FechasReservaFija[0].fecha);
+                    //console.log('PRIMERA FECHA FIJA->' + $scope.FechasReservaFija[0].fecha);
                 
                 
                 $scope.noDisponibles = [];
@@ -722,7 +722,7 @@ this.getImagenes = function()
                         }
                         else
                         {
-                            $scope.listasReservasFijas.push({idCliente: sessionStorage.id, idComplejo: $scope.idComplejo, idCancha: $scope.idCancha, fechaPartido: aux.fecha, horaD: hDesde, horaH: hHasta, importeAPagar: importeTotal, pagado: 0, porcentajePago: 0, estadoReserva: 3 });
+                            $scope.listasReservasFijas.push({idCliente: sessionStorage.id, idComplejo: $scope.idComplejo, idCancha: $scope.idCancha, fechaPartido: aux.fecha, horaD: hDesde, horaH: hHasta, importeAPagar: importeTotal, pagado: 0, porcentajePago: 0, estadoReserva: 3, "usuarioReserva": ''});
                             
                         }
                          
@@ -921,10 +921,12 @@ this.getImagenes = function()
         self.Reserva.porcentajePago = $scope.porcentajePago;
         var estadoRes = (document.getElementById('rbPagaCanchaCompleta').checked) ? 2 : 1;
         self.Reserva.estadoReserva = estadoRes;
+        self.Reserva.usuarioReserva = '';
         
         console.log(self.Reserva.fechaPartido);
         console.log(self.Reserva.horaD);
         console.log(self.Reserva.horaH);
+        
         ReservaNueva.data=self.Reserva;
         
         ReservasService.save(ReservaNueva.data, function(reponse){
@@ -1458,7 +1460,7 @@ this.getImagenes = function()
         }
             
         
-    };
+};
     
     
     
