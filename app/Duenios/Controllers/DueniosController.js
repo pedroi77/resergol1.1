@@ -183,7 +183,7 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
         if(self.Duenio.email!=undefined){
             EmailService.query({email:self.Duenio.email}).$promise.then(function(data){
                   
-                alert(data[0].resultado);
+                //alert(data[0].resultado);
                 var bExisteEmail = data[0].resultado;                                                             
                 if(bExisteEmail == 1){
                     self.Duenio.existeMail = true;

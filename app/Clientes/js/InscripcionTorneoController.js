@@ -234,7 +234,13 @@ resergolApp.controller("InscripcionTorneoController", function($scope, $rootScop
                              document.getElementById("expYear").value = data[0].Anio;
 
                         if(data[0].Mes != null && data[0].Mes != undefined)
-                             document.getElementById("expMonth").value = data[0].Mes;
+                        {
+                            var sMes = data[0].Mes.toString();
+                            if(data[0].Mes < 10)
+                                sMes = "0" + sMes;
+                            
+                            document.getElementById("expMonth").value = sMes;
+                        }
                     }
                         
             });
