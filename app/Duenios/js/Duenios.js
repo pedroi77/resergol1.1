@@ -100,7 +100,7 @@ resergolApp.config(function($stateProvider, $urlRouterProvider){
 			url : "/Canchas",
 			templateUrl : "app/Duenios/Templates/DuenioCanchas.html",
 			controllerAs : "due",
-            data:'D'
+            rol:'D'
 		})
 		.state("Duenios.listaNegra",{
 			url : "/ListaNegra",
