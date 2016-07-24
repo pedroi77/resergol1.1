@@ -127,8 +127,7 @@
                                 <div class="form-group" style="margin-bottom:15px; ">
                                     <label id="horaSeñaLabel" for="horaSeña" class="control-label col-sm-6">Hora a partir de la cual se cobra luz<span class="required">*</span></label>
                                     <div class="col-xs-12 col-sm-3">  
-                                        <select id="horaDesdeLuz" data-live-search="true" style="margin-bottom:15px;" class="form-control" ng-model="admCom.horaLuzSeleccionada"
-                                                ng-options="hora.id as hora.desc for hora in admCom.horaLuz.hora" >
+                                        <select id="horaDesdeLuz" data-live-search="true" style="margin-bottom:15px;" class="form-control" ng-model="admCom.horaLuzSeleccionada" ng-change="admCom.pruebaLuz()" ng-options="hora.desc for hora in admCom.horaLuz.hora track by hora.id">
                                         </select>
                                     </div>    
                                 </div>

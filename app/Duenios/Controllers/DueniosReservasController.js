@@ -283,13 +283,20 @@ this.cambiaFecha = function(dt)
     
 this.CalcularResta = function(){
     
-    self.reservaSeleccionada.Resta = self.reservaSeleccionada.totalCalculado - self.reservaSeleccionada.Pagado;
+    var restaPago = self.reservaSeleccionada.totalCalculado - self.reservaSeleccionada.Pagado;
     
-    var pago = document.getElementById('pagado').value;
+    if(restaPago < 0){
+        bootbox.alert("La reserva no puede quedar negativa.", function() {});
+        
+    } 
+    
+    self.reservaSeleccionada.Resta = restaPago;
+    
+    /*var pago = document.getElementById('pagado').value;
     
     console.log(pago);
     
-    console.log(self.reservaSeleccionada.Resta + " - " + self.reservaSeleccionada.Pagado);
+    console.log(self.reservaSeleccionada.Resta + " - " + self.reservaSeleccionada.Pagado);*/
 };
     
 this.compararFechas = function (DateA, DateB) {     // this function is good for dates > 01/01/1970
@@ -347,7 +354,7 @@ this.borrarReserva = function()
         {
             if(sPag > 0 && devuelvo)
             {
-              //INSERTO LA DEVOLUCION
+                //INSERTO LA DEVOLUCION
                 var devNueva = new DevolucionesService();
                 devNueva.data = {
                     "idCliente": self.reservaSeleccionada.IdCliente,
@@ -360,10 +367,12 @@ this.borrarReserva = function()
                         console.log('se guardo devolucion -->' + idRetorno);
 
                         ReservasCancelacionService.delete({idReserva: self.reservaSeleccionada.IdReserva}, function(reponse){
+                            
                             idRetorno = reponse.data[0];
                             console.log('SE BORRO...... RETORNO -->' + idRetorno);
                             
-                            self.init();
+                            
+                            
                             bootbox.alert("¡Cancelación de reserva, y reembolso exitoso!", function() {});
                             },function(errorResponse){
                                 console.log('ERROR BORRAR RES...' + errorResponse); 
@@ -380,12 +389,14 @@ this.borrarReserva = function()
                     console.log('SE BORRO...... RETORNO -->' + idRetorno);
                     
                     
-                    self.init();
+                    //self.init();
                     bootbox.alert("¡Cancelación de reserva exitosa!", function() {});
                 },function(errorResponse){
                     console.log('ERROR BORRAR RES...' + errorResponse); 
                 });
             }
+            self.init();
+            $('#reservasModal').modal('hide');
         }
     }); 
 };
@@ -513,11 +524,11 @@ this.reservar = function(aceptaReservaFija){
 
     var ReservaNueva = new ReservasService();
     var estadoReserva = 2;
-    console.log(self.Fecha.replace('-', '/').replace(' - ', '/'));
+    //console.log(self.Fecha.replace('-', '/').replace(' - ', '/'));
     var horaHasta = document.getElementById("horaHasta");
     var selectedText = horaHasta.options[horaHasta.selectedIndex].text;
     
-    console.log(horaHasta);
+    //console.log(horaHasta);
 
     if(self.reservaSeleccionada.totalCalculado  == 0)
         estadoReserva = 1;
@@ -537,42 +548,29 @@ this.reservar = function(aceptaReservaFija){
         ,'usuarioReserva': self.reservaSeleccionada.UsuarioReserva
     }
     
-    console.log(ReservaNueva.data);
+    //console.log(ReservaNueva.data);
 
     ReservasService.save(ReservaNueva.data, function(reponse){
         idReserva = reponse.data[0];
         console.log('idReserva -->' + idReserva);
 
+        console.log("acepta reserva fija --> " + aceptaReservaFija);
         //Si realizó reserva fija, hago todas las reservas despues de haber reservado la primera normalmente.
         if(aceptaReservaFija == 1)
         {       
-            console.log("entro a reservas fijas");
-            //console.log("Fecha dt: " + $scope.dt);
             var idDeDia = $scope.dt.getDay() == 0 ? 7 : $scope.dt.getDay();
             var anio = $scope.dt.getFullYear();
-            //console.log("anio: " + anio);
-            //console.log("Desde:" + self.reservaSeleccionada.horaDesde);
-            //console.log("IdDia: " + idDeDia);
-            //console.log("Hasta: " + selectedText);
-            //console.log("fecha: " + self.Fecha);
+
             self.getFechasReservaFija(self.reservaSeleccionada.horaDesde, selectedText,idDeDia, anio, self.Fecha);
-            //var ReservaFijaNueva = new ReservasFijasService();
-
-            
-            //ReservaFijaNueva.data = $scope.listasReservasFijas;
-            //console.log(ReservaFijaNueva.data[0]);
-            //ReservasFijasService.save(ReservaFijaNueva.data, function(reponse){    
-            ////idReservaFija = reponse.data[0];
-            ////console.log('idReserva -->' + idReservaFija);                      
-            //},function(errorResponse){
-            //console.log('ERROR res fija...'); 
-            //});
         }    
-
-        },function(errorResponse){
-        console.log('ERROR...'); 
-    });
-            
+        
+    },function(errorResponse){
+        bootbox.alert("Hubo un error al querer reservar la cancha", function() {});
+    });  
+    
+    bootbox.alert("Reserva exitosa", function() {});
+    self.init();
+    $('#reservasModal').modal('hide');
 };
     
 this.getFechasReservaFija = function(hDesde, hHast, idDia, anio, fprimerReserva){
