@@ -362,7 +362,7 @@ resergolApp.controller("VerCanchaController", function($scope, $rootScope, $sce,
         console.log(mensaje);
         var mailNuevo = new MandarMailsService();
                     mailNuevo.data = {
-                        "receptor": 'ivanjfernandez@outlook.com', //PONER $scope.mailCliente!!!!!!!!!!!!!!!!!
+                        "receptor": $scope.mailCliente,
                         "asunto": asunto,
                         "mensaje": mensaje
                     };  
@@ -556,7 +556,7 @@ this.getImagenes = function()
         
     
     
-    this.getHorasDisponiblesByFecha = function(fecha/*, horaActual*/){
+    this.getHorasDisponiblesByFecha = function(fecha, horaActual){
 			ReservasService.query({idCancha:$scope.idCancha, idComplejo:$scope.idComplejo, fecha:fecha}).$promise.then(function(data){
                     $scope.HorasDisponibles = data;
                 
@@ -582,10 +582,23 @@ this.getImagenes = function()
 
                       //console.log(aux.hora);
                       var sID = parseInt(aux.hora.substring(0,2));  
-                      //if(horaActual != -1)
-                          
-                      var sDesc = sID + ':00 hs';
-                      self.horasD.push({id: sID, desc: sDesc});             
+                      
+                      //SI QUIERO RESERVAR HOY, CALCULO A PARTIR DE LA HORA QUE ES EN ESTE MOMENTO PARA LLENAR EL COMBO DE HORAS.    
+                      if(horaActual != -1)
+                      {
+                        if(sID > horaActual)
+                        {
+                          var sDesc = sID + ':00 hs';
+                          self.horasD.push({id: sID, desc: sDesc});             
+                        }
+                      }
+                     else
+                     {
+                         //SI NO QUIERO RESERVAR HOY, CARGO EL COMBO NORMALMENTE, CON LAS HORAS EN LAS QUE ABRE EL COMPLEJO.
+                        var sDesc = sID + ':00 hs';
+                        self.horasD.push({id: sID, desc: sDesc});              
+                     }
+                     
 
                     });
 
@@ -857,7 +870,14 @@ this.getImagenes = function()
                              document.getElementById("expYear").value = data[0].Anio;
 
                         if(data[0].Mes != null && data[0].Mes != undefined)
-                             document.getElementById("expMonth").value = data[0].Mes;
+                        {
+                            var sMes = data[0].Mes.toString();
+                            if(data[0].Mes < 10)
+                                sMes = "0" + sMes;
+                            
+                            document.getElementById("expMonth").value = sMes;
+                        }
+                             
                         
                         self.bTarjetaDeLaBD = true;
                     }
@@ -1117,7 +1137,7 @@ this.getImagenes = function()
         //maxDate: new Date(2020, 5, 22), 
         minDate: new Date(),
         //Hago que no se pueda reservar a mas de 2 meses a futuro.
-        maxDate: new Date().setDate(new Date().getDate+60),
+        maxDate: new Date().getDate+60,
         startingDay: 1  
       };
 
@@ -1267,7 +1287,7 @@ this.getImagenes = function()
             
         /*--------------------------------------------------------------------------------*/
         
-        self.getHorasDisponiblesByFecha(fechaSelect/*, horaActual*/);
+        self.getHorasDisponiblesByFecha(fechaSelect, horaActual);
         
     };
     
@@ -1518,7 +1538,12 @@ jQuery.validator.addMethod("month", function(value, element) {
 }, "Mes inválido...");
 
 jQuery.validator.addMethod("year", function(value, element) {
-  return this.optional(element) || (/^[0-9]{2}$/.test(value) && value >= 16 && value <= 25);
+    var hoy = new Date();
+    var anioMax = hoy.getFullYear().toString();
+    anioMax = parseInt(anioMax.substring(2,4));
+    var anioMin = anioMax;
+    anioMax += 5;    
+  return this.optional(element) || (/^[0-9]{2}$/.test(value) && value >= anioMin && value <= anioMax);
 }, "Año inválido...");
     
 validator = $form.validate({
@@ -1555,12 +1580,13 @@ validator = $form.validate({
 this.paymentFormReady = function() {
     if ((($form.find('[name=cardNumber]').hasClass("success") &&
         $form.find('[name=expMonth]').hasClass("success") &&
-        $form.find('[name=expYear]').hasClass("success")) || self.bTarjetaDeLaBD) &&
+        $form.find('[name=expYear]').hasClass("success")) /*|| self.bTarjetaDeLaBD*/) &&
         $form.find('[name=cvCode]').val().length > 2 && $form.find('[name=cvCode]').val().length < 5) {
         return true;
     } else {
         return false;
     }
+    
 }
 
 //$form.find('[type=submit]').prop('disabled', true);

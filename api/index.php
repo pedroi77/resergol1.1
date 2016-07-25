@@ -1419,32 +1419,33 @@ $app->delete('/clientes/reservasTemp/:idCancha/:idComplejo', function($idCancha,
 
 //Get puntuacion de un cliente a una cancha
 $app->get('/puntuacionesCancha/:idCancha/:idComplejo/:idCliente', function($pIdCancha, $pIdComplejo, $pIdCliente){
-    
-    $punt = new Puntuacion();
-    $data = $punt->getPuntuacionCanchaCliente($pIdCancha, $pIdComplejo, $pIdCliente);
-	sendResult($data);
-    
+
+        $punt = new Puntuacion();
+        $data = $punt->getPuntuacionCanchaCliente($pIdCancha, $pIdComplejo, $pIdCliente);
+        sendResult($data);
+
 });
 
 //Get puntuacion de una cancha
 $app->get('/puntuacionesCancha/:idCancha/:idComplejo', function($pIdCancha, $pIdComplejo){
-    
-    $punt = new Puntuacion();
-    $data = $punt->getPuntuacionCancha($pIdCancha, $pIdComplejo);
-	sendResult($data);
-    
+
+        $punt = new Puntuacion();
+        $data = $punt->getPuntuacionCancha($pIdCancha, $pIdComplejo);
+        sendResult($data);
 });
 
 //Puntuar cancha
 $app->post('/puntuacionesCancha', function(){
     
-    /*$headers = apache_request_headers();
+    $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
     
+
     $cliente = new Cliente();
     $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
-    if($tokenOK){*/
+
+    if($tokenOK){
         $request = Slim\Slim::getInstance()->request();
         $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
         
@@ -1457,10 +1458,10 @@ $app->post('/puntuacionesCancha', function(){
             sendError("Error al insertar puntuacion cancha...");
         };
         
-    /*}
+    }
 	else{
         sendError("token invalido");
-    }*/
+    }
     
 });
 
@@ -1480,13 +1481,15 @@ $app->get('/comentariosCancha/:idCancha/:idComplejo', function($pIdCancha, $pIdC
 //Comentar cancha
 $app->post('/comentariosCancha', function(){
     
-    /*$headers = apache_request_headers();
+    $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
     
+
     $cliente = new Cliente();
     $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
-    if($tokenOK){*/
+
+    if($tokenOK){
         $request = Slim\Slim::getInstance()->request();
         $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
         
@@ -1499,10 +1502,10 @@ $app->post('/comentariosCancha', function(){
             sendError("Error al insertar comentario cancha...");
         };
         
-    /*}
+    }
     else{
         sendError("token invalido");
-    }*/
+    }
     
 });
 
@@ -1550,13 +1553,15 @@ $app->get('/puntuacionesComplejo/:idComplejo', function($pIdComplejo){
 //Puntuar complejo
 $app->post('/puntuacionesComplejo', function(){
     
-    /*$headers = apache_request_headers();
+    $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
     
+
     $cliente = new Cliente();
     $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
-    if($tokenOK){*/
+
+    if($tokenOK){
         $request = Slim\Slim::getInstance()->request();
         $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
         
@@ -1569,10 +1574,10 @@ $app->post('/puntuacionesComplejo', function(){
             sendError("Error al insertar puntuacion complejo...");
         };
         
-    /*}
+    }
 	else{
         sendError("token invalido");
-    }*/
+    }
     
 });
 
@@ -1589,13 +1594,15 @@ $app->get('/comentariosComplejo/:idComplejo', function($pIdComplejo){
 //Comentar complejo
 $app->post('/comentariosComplejo', function(){
     
-    /*$headers = apache_request_headers();
+    $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
     
+
     $cliente = new Cliente();
     $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
-    if($tokenOK){*/
+
+    if($tokenOK){
         $request = Slim\Slim::getInstance()->request();
         $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
         
@@ -1606,12 +1613,11 @@ $app->post('/comentariosComplejo', function(){
            sendResult($result);
         }else{
             sendError("Error al insertar comentario complejo...");
-        };
-        
-    /*}
+        };   
+    }
     else{
         sendError("token invalido");
-    }*/
+    }
     
 });
 
@@ -1626,13 +1632,15 @@ $app->get('/complejo/:idComplejo', function($idComplejo){
 /**********************************EQUIPOS*************************************************************/
 $app->post('/equiposCliente', function(){
     
-    /*$headers = apache_request_headers();
+    $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
     
+
     $cliente = new Cliente();
     $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
-    if($tokenOK){*/
+
+    if($tokenOK){
         $request = Slim\Slim::getInstance()->request();
         $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
         
@@ -1643,12 +1651,11 @@ $app->post('/equiposCliente', function(){
            sendResult($result);
         }else{
             sendError("Error al insertar equipo...");
-        };
-        
-    /*}
+        };   
+    }
     else{
         sendError("token invalido");
-    }*/
+    }
     
 });
 
@@ -1683,13 +1690,15 @@ $app->post('/clientes/equipos/imagen', function(){
 /**********************************INSCRIPCION EQUIPOS ATORNEOS*************************************************************/
 $app->post('/equipoTorneo', function(){
     
-    /*$headers = apache_request_headers();
+    $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
     
+
     $cliente = new Cliente();
     $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
-    if($tokenOK){*/
+
+    if($tokenOK){
         $request = Slim\Slim::getInstance()->request();
         $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
         
@@ -1700,25 +1709,26 @@ $app->post('/equipoTorneo', function(){
            sendResult($result);
         }else{
             sendError("Error al insertar equipo en torneo...");
-        };
-        
-    /*}
+        };   
+    }
     else{
         sendError("token invalido");
-    }*/
+    }
     
 });
 
 
 $app->delete('/equipoTorneo/:idEquipo/:idTorneo', function($idEquipo, $idTorneo){
     
-    /*$headers = apache_request_headers();
+    $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
     
+
     $cliente = new Cliente();
     $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
-    if($tokenOK){*/
+
+    if($tokenOK){
         $request = Slim\Slim::getInstance()->request();
         $data = json_decode($request->getBody(), true); //true convierte en array asoc, false en objeto php
         
@@ -1728,13 +1738,12 @@ $app->delete('/equipoTorneo/:idEquipo/:idTorneo', function($idEquipo, $idTorneo)
         if($result){
            sendResult($result);
         }else{
-            sendError("Error al insertar equipo en torneo...");
-        };
-        
-    /*}
+            sendError("Error al borrar equipo del torneo...");
+        };   
+    }
     else{
         sendError("token invalido");
-    }*/
+    }
     
 });
 
@@ -1794,20 +1803,21 @@ $app->post('/datosCuentaCliente', function(){
 
 //delete de reservasTemp
 $app->delete('/datosCuentaCliente/:idCliente', function($idCliente){
-    /*$headers = apache_request_headers();
+   $headers = apache_request_headers();
     $token = explode(" ", $headers["Authorization"]);
     $tokenDec = \Firebase\JWT\JWT::decode(trim($token[1],'"'), 'resergol77');
     
-    $duenio = new Duenio();
-    $tokenOK = $duenio->validarDuenio($tokenDec->user, $tokenDec->pass);*/
 
-    //if($tokenOK){
+    $cliente = new Cliente();
+    $tokenOK = $cliente->validarCliente($tokenDec->user, $tokenDec->pass);
+
+    if($tokenOK){
         $cli = new miCuenta();
         $result = $cli->deleteCliente($idCliente);
-    /*}
+    }
 	else{
         sendError("token invalido");
-    }*/
+    }
 });
 
 /**************************DATOS PERSONA**************************************************************/

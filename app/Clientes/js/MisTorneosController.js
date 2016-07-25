@@ -117,7 +117,7 @@ resergolApp.controller("MisTorneosController", function($scope,$state, $statePar
             else if(sPag > 0) 
                 msj = "Se te reembolsará la suma de $"+sPag+".";
                 
-            bootbox.confirm("¿Seguro desea cancelar la reserva? <br>" + msj, function(result) {
+            bootbox.confirm("¿Seguro desea cancelar la inscripción? <br>" + msj, function(result) {
                 if(result)
                 {
                     if(devuelvo)
@@ -136,11 +136,12 @@ resergolApp.controller("MisTorneosController", function($scope,$state, $statePar
                                     });
           
                       //INSERTO LA DEVOLUCION
-                        /*var devNueva = new DevolucionesService();
+                        var devNueva = new DevolucionesService();
                         devNueva.data = {
                             "idCliente": $scope.idCliente,
                             "idDuenio": tor.IdDuenio,
-                            "monto": parseFloat(tor.Pagado)
+                            "monto": parseFloat(tor.Pagado),
+                            "tipo": 2
                         };  
                    
                         DevolucionesService.save(devNueva.data, function(reponse){
@@ -158,18 +159,20 @@ resergolApp.controller("MisTorneosController", function($scope,$state, $statePar
                             
                               },function(errorResponse){
                                 console.log('ERROR devolucion...' + errorResponse); 
-                             });*/ 
+                             });
                     }
                     else
                     {
-                        /*ReservasCancelacionService.delete({idReserva: tor.IdReserva}, function(reponse){
+                        //BORRO AL EQUIPO DEL TORNEO...
+                        //console.log('idEq->' + tor.IdEquipo + '---idTor-->' + tor.IdTorneo);
+                            EquipoTorneoService.delete({idEquipo: tor.IdEquipo, idTorneo: tor.IdTorneo }, function(reponse){
                             idRetorno = reponse.data[0];
                             console.log('SE BORRO...... RETORNO -->' + idRetorno);
                             self.init();
-                            bootbox.alert("¡Cancelación de reserva exitosa!", function() {});
-                        },function(errorResponse){
-                            console.log('ERROR BORRAR RES...' + errorResponse); 
-                        });*/
+                            bootbox.alert("¡Se borró a tu equipo del torneo!", function() {});
+                            },function(errorResponse){
+                                console.log('ERROR BORRAR RES...' + errorResponse); 
+                            });
                     }
                 }
             }); 
