@@ -7143,16 +7143,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_deleteReserva`(IN `pIdReserva` I
 BEGIN
 
     DECLARE horasCanc INT DEFAULT 0;
-    DECLARE horasDif DATETIME DEFAULT 0;
+    DECLARE horasDif DATETIME;
     DECLARE complejo INT DEFAULT 0;
     DECLARE cliente INT DEFAULT 0;
     DECLARE existeEnLista INT DEFAULT 0;
     DECLARE Error INT DEFAULT 0;
 	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
 	
-    select com.HorasCancelacion, cast(time_to_sec(timediff(CONCAT(res.fecha, ' ', res.HoraInicio), NOW() )) / 3600 as integer) as horasDif
+    select com.HorasCancelacion /*, cast(time_to_sec(timediff(CONCAT(res.fecha, ' ', res.HoraInicio), NOW() )) / 3600 as integer) as horasDif*/
 		,com.idComplejo, res.idCliente
-    into horasCanc, horasDif, complejo, cliente
+    /*into horasCanc, horasDif, complejo, cliente*/
 	from complejos com
 	inner join reservas res
 	on com.IdComplejo = res.IdComplejo

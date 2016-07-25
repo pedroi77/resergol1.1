@@ -27,7 +27,7 @@ this.horaLuzSeleccionada = {id: 17, desc: '17:00:00'};
                 MapService.addMarker(res);
                 $scope.place.name = res.name;
                 self.Complejo.X=  res.geometry.location.lat();
-                self.Complejo.Y =res.geometry.location.lng();
+                self.Complejo.Y = res.geometry.location.lng();
             },
             function(status) { // error
                 $scope.apiError = true;
@@ -41,10 +41,12 @@ this.horaLuzSeleccionada = {id: 17, desc: '17:00:00'};
     }
     
     MapService.init();
+    MapService.init();
     
     this.armarDir = function(){
         $scope.searchPlace = self.Complejo.calle + ' ' + self.Complejo.altura + ' ' + self.localidadSeleccionada.Nombre + ' ' + self.provinciaSeleccionada.Nombre ;
     };
+    
     //Mapa FIN
 
 this.Complejo = { 
@@ -258,6 +260,11 @@ this.traerDatosComplejos = function(){
             self.Complejo.nroCuenta = parseInt(data[0].NroCuenta);
             self.Complejo.X = data[0].X;
             self.Complejo.Y = data[0].Y;
+            
+            
+            
+      
+            
 
             //console.log("antes de getDiasComplejos");
             self.getDiasComplejos();
@@ -265,11 +272,11 @@ this.traerDatosComplejos = function(){
 
             angular.forEach(self.horaLuz.hora, function(aux) {
 
-                console.log('AUX:' + aux.desc.substr(0,5) + 'SELF:' + self.Complejo.horaCobroLuz.substr(0,5));
+                //console.log('AUX:' + aux.desc.substr(0,5) + 'SELF:' + self.Complejo.horaCobroLuz.substr(0,5));
 
                 if(aux.desc.substr(0,5) == self.Complejo.horaCobroLuz.substr(0,5))    
                 {
-                    console.log("entro porque son iguales, descrip: " + aux.desc + " ID: " + aux.id);
+                    //console.log("entro porque son iguales, descrip: " + aux.desc + " ID: " + aux.id);
                     self.horaLuzSeleccionada.desc = aux.desc.substr(0,5) + " hs.";
                     self.horaLuzSeleccionada.id = aux.id;
                     
@@ -353,7 +360,11 @@ this.traerDatosComplejos = function(){
             self.localidades.loc.splice(0, 0, {IdLocalidad: '-1', Nombre: '-Localidad-'});
             self.localidades.selectedOption = {IdLocalidad: '-1', Nombre:'-Localidad-'}; 
             self.provincias.selectedOption = {IdProvincia: '1', Nombre: 'Buenos Aires'};
-        };     
+        };
+        
+        //Seteo la ubicacion del mapa
+        self.armarDir();
+        $scope.search();
     };
     
     $scope.addRow = function(){		
@@ -570,7 +581,8 @@ this.traerDatosComplejos = function(){
             self.Complejo.idComplejo = reponse.data[0];
             sessionStorage.idComplejo = reponse.data[0];
         });
-
+        
+        sessionStorage.usuario = AdministrarComplejo.data.usuario;
         bootbox.alert("Complejo guardado exitosamente!", function() {
         });
     };

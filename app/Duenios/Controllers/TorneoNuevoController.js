@@ -267,7 +267,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                           parseInt(this.fininsAux.substring(0,2)));
     
 
-    this.fininsAux = this.FecInscHasta.getDate() + '/'+  addZero(this.FecInscHasta.getMonth()) + '/' +  addZero(this.FecInscHasta.getFullYear());
+    this.fininsAux = addZero(this.FecInscHasta.getDate()) + '/'+  addZero(this.FecInscHasta.getMonth()) + '/' +  addZero(this.FecInscHasta.getFullYear());
     
     
     
@@ -275,7 +275,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                           parseInt(this.fininsAux.substring(3,5)), 
                           parseInt(this.fininsAux.substring(0,2)));
     
-    this.fininsAux =   this.TorneoDesde.getDate() + '/'+  addZero(this.TorneoDesde.getMonth()) + '/' +  addZero(this.TorneoDesde.getFullYear());
+    this.fininsAux =   addZero(this.TorneoDesde.getDate()) + '/'+  addZero(this.TorneoDesde.getMonth()) + '/' +  addZero(this.TorneoDesde.getFullYear());
     
     this.fininsAux = self.sumaFecha(7,this.fininsAux);
     
@@ -284,6 +284,7 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
                           parseInt(this.fininsAux.substring(0,2)));
    
     
+  
     
       this.setearDesdeInsc= function(){
         self.FecInscHasta = self.FecInscDesde;
