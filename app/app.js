@@ -102,8 +102,9 @@ resergolApp.run(function($rootScope, $uibModal, $q, $http, $state) {
     // si se pudo cambiar de estado entonces borro el estado que estaba guardando
     $rootScope.$on('$stateChangeSuccess', function () {  
         
+        //console.log($rootScope.goingTo.state.data);
         
-        if($rootScope.goingTo.state.data != 'Todos'){
+        if($rootScope.goingTo.state.rol != 'Todos'){
            
             //console.log($rootScope.goingTo.state);   
             

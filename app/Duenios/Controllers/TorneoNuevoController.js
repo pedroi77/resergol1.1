@@ -518,17 +518,17 @@ resergolApp.controller("TorneoNuevoController", function($scope, $state, TipoTor
     
     this.validarDatos = function(){
         if(!this.tieneDias()){
-            alert("No selecciono días");
+            bootbox.alert("No selecciono días.", function() {});
             return false;
         }
                 
         if(!this.tieneCanchas()){
-            alert("No selecciono canchas");
+            bootbox.alert("No selecciono canchas.", function() {});
             return false;
         }
         
         if(!this.superficieValida()){
-            alert("La superficie del torneo no coincide con ninguna de las canchas seleccionadas.");
+            bootbox.alert("La superficie del torneo no coincide con ninguna de las canchas seleccionadas.", function() {});
             return false;
         }
         
