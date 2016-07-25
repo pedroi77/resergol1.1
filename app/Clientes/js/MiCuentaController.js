@@ -250,7 +250,7 @@ this.existeUsuario = function(){
         {
             if(self.datos.NroTarjeta == null || isNaN(self.datos.NroTarjeta) || self.datos.Anio == null || isNaN(self.datos.Anio) || self.datos.Mes == null)
             {
-                bootbox.alert("Datos de la tarjeta incompletos.", function(){ 
+                bootbox.alert("Datos de la tarjeta incompletos o inválidos.", function(){ 
                 });
                 return false;   
             }

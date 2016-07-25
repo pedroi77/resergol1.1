@@ -227,21 +227,19 @@
                                                                          track by tipoDoc.IdTipoDoc" >
                                         </select>
                                         <!--<span ng-show="!frmDatosUsuario.$pristine && cli.cliente.existeDni" class= "msjError">
-                                            Este Dni ya existe.
+                                            Este Documento ya existe.
                                         </span>-->
                                     </div>
                                     
                                     <div class="col-md-6">
                                         
-                                        <input id="nroDoc" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="cli.cliente.nroDoc" required ng-class="{ error:frmDatosUsuario.nroDoc.$error.required && frmDatosUsuario.nroDoc.$dirty }" ng-blur="cli.existeDni()">
-                                        <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.nroDoc.$error.maxlength" class= "msjError">
-                                            Supero la cantidad máxima de caracteres.
+                                        <input id="nroDoc" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" ng-maxlength="cli.tiposDoc.selectedOption.IdTipoDoc == 1 ? 8 : 11" ng-minlength="cli.tiposDoc.selectedOption.IdTipoDoc == 1 ? 7 : 10" id="nroDoc" name="nroDoc" ng-model="cli.cliente.nroDoc" required ng-class="{ error:frmDatosUsuario.nroDoc.$error.required && frmDatosUsuario.nroDoc.$dirty }" ng-blur="cli.existeDni()">
+                                        <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.nroDoc.$error.maxlength || frmDatosUsuario.nroDoc.$error.minlength" class= "msjError">
+                                            Tamaño inválido.
                                         </span>
                                         <span ng-show="!frmDatosUsuario.$pristine && cli.cliente.existeDni" class= "msjError">
-                                            Este Dni ya existe.
+                                            Este documento ya existe.
                                         </span>
-                                      
-                                        
                                     </div> 
                                 </div>
                             </div>
@@ -306,7 +304,7 @@
                                         <input id="email" type="email" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="example@email.com" name="email" ng-model="due.Duenio.email" 
                                             required ng-class="{ error:frmDatosUsuario.email.$error.required && frmDatosUsuario.email.$dirty, warning:frmDatosUsuario.email.$error.email }" ng-blur="due.existeEmail()">
                                         <span ng-show="!frmDatosUsuario.$pristine && due.Duenio.existeMail" class= "msjError">
-                                            EMail existente.
+                                            Email existente.
                                         </span>
                                     </div> 
                                 </div> 
@@ -369,12 +367,15 @@
                                     
                                     <div class="col-md-6">
                                         
-                                        <input id="nroDoc" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="due.Duenio.nroDoc" required ng-class="{ error:frmDatosUsuario.nroDoc.$error.required && frmDatosUsuario.nroDoc.$dirty, warning:frmDatosUsuario.nroDoc.$error.nroDoc}" ng-blur="due.existeDni()">
-                                        <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.frmDatosUsuario.$error.maxlength" class= "msjError">
-                                            Supero la cantidad máxima de caracteres.
+                                        <input name="nroDoc" id="nroDoc" type="number" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" placeholder="Nro Documento" maxlength="due.tiposDoc.selectedOption.IdTipoDoc == 1 ? 8 : 11"
+                                        minlength="due.tiposDoc.selectedOption.IdTipoDoc == 1 ? 7 : 10"
+                                                ng-model="due.Duenio.nroDoc" required ng-class="{ error:frmDatosUsuario.nroDoc.$error.required && frmDatosUsuario.nroDoc.$dirty, warning:frmDatosUsuario.nroDoc.$error.nroDoc}" ng-blur="due.existeDni()">
+                                        <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.frmDatosUsuario.$error.maxlength
+                                                       || frmDatosUsuario.frmDatosUsuario.$error.minlength" class= "msjError">
+                                            Tamaño inválido.
                                         </span>
                                         <span ng-show="!frmDatosUsuario.$pristine && due.Duenio.existeDni" class= "msjError">
-                                            Este Dni ya existe.
+                                            Este Documento ya existe.
                                         </span>
                                     </div> 
                                 </div>

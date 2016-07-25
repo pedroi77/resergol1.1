@@ -106,12 +106,12 @@ resergolApp.run(function($rootScope, $uibModal, $q, $http, $state) {
         if($rootScope.goingTo.state.data != 'Todos'){
            
             //console.log($rootScope.goingTo.state);   
-            
-            if($rootScope.goingTo.state.rol  == sessionStorage.tipo){
+        
+            if(($rootScope.goingTo.state.rol == sessionStorage.tipo) || $rootScope.goingTo.state.rol == 'Todos'){
                 //console.log('ok');
             }else{
-                //console.log('mandar al index'); 
-                location.href = "http://localhost:8080/resergol1.1/index.html#/clientes/Canchas"; 
+                //console.log('mandar al index');
+                location.hrbuibuibuief = "http://localhost:8080/resergol1.1/index.html#/clientes/Canchas"; 
             }
         }else{
              //console.log("Estado valido para todos");

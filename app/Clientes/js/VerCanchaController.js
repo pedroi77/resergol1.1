@@ -556,7 +556,7 @@ this.getImagenes = function()
         
     
     
-    this.getHorasDisponiblesByFecha = function(fecha/*, horaActual*/){
+    this.getHorasDisponiblesByFecha = function(fecha, horaActual){
 			ReservasService.query({idCancha:$scope.idCancha, idComplejo:$scope.idComplejo, fecha:fecha}).$promise.then(function(data){
                     $scope.HorasDisponibles = data;
                 
@@ -582,10 +582,23 @@ this.getImagenes = function()
 
                       //console.log(aux.hora);
                       var sID = parseInt(aux.hora.substring(0,2));  
-                      //if(horaActual != -1)
-                          
-                      var sDesc = sID + ':00 hs';
-                      self.horasD.push({id: sID, desc: sDesc});             
+                      
+                      //SI QUIERO RESERVAR HOY, CALCULO A PARTIR DE LA HORA QUE ES EN ESTE MOMENTO PARA LLENAR EL COMBO DE HORAS.    
+                      if(horaActual != -1)
+                      {
+                        if(sID > horaActual)
+                        {
+                          var sDesc = sID + ':00 hs';
+                          self.horasD.push({id: sID, desc: sDesc});             
+                        }
+                      }
+                     else
+                     {
+                         //SI NO QUIERO RESERVAR HOY, CARGO EL COMBO NORMALMENTE, CON LAS HORAS EN LAS QUE ABRE EL COMPLEJO.
+                        var sDesc = sID + ':00 hs';
+                        self.horasD.push({id: sID, desc: sDesc});              
+                     }
+                     
 
                     });
 
@@ -1124,7 +1137,7 @@ this.getImagenes = function()
         //maxDate: new Date(2020, 5, 22), 
         minDate: new Date(),
         //Hago que no se pueda reservar a mas de 2 meses a futuro.
-        maxDate: new Date().setDate(new Date().getDate+60),
+        maxDate: new Date().getDate+60,
         startingDay: 1  
       };
 
@@ -1274,7 +1287,7 @@ this.getImagenes = function()
             
         /*--------------------------------------------------------------------------------*/
         
-        self.getHorasDisponiblesByFecha(fechaSelect/*, horaActual*/);
+        self.getHorasDisponiblesByFecha(fechaSelect, horaActual);
         
     };
     
