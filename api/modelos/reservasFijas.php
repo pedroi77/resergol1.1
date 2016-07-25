@@ -144,4 +144,76 @@ class ReservaFija
         
         }
     
+    public function existenReservasFijas($pIdCliente, $pIdComplejo, $pIdCancha, $pHoraInicio, $pHoraFin){
+        
+        $stmt = $this->connection->prepare('SET @pIdCliente := ?');
+        $stmt->bind_param('i', $pIdCliente);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $pIdComplejo);
+        $stmt->execute(); 
+         
+        $stmt = $this->connection->prepare('SET @pIdCancha := ?');
+        $stmt->bind_param('i', $pIdCancha);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pHoraInicio := ?');
+        $stmt->bind_param('s', $pHoraInicio);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pHoraFin := ?');
+        $stmt->bind_param('s', $pHoraFin);
+        $stmt->execute(); 
+         
+        $query = "CALL SP_existenReservasFijas(@pIdCliente, @pIdComplejo, @pIdCancha, @pHoraInicio, @pHoraFin);";
+        
+        $FechasReservasFijas = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $FechasReservasFijas[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $FechasReservasFijas;
+    }
+    
+    public function deleteReservasFijas($pIdCliente, $pIdComplejo, $pIdCancha, $pHoraInicio, $pHoraFin){
+        
+        $stmt = $this->connection->prepare('SET @pIdCliente := ?');
+        $stmt->bind_param('i', $pIdCliente);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $pIdComplejo);
+        $stmt->execute(); 
+         
+        $stmt = $this->connection->prepare('SET @pIdCancha := ?');
+        $stmt->bind_param('i', $pIdCancha);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pHoraInicio := ?');
+        $stmt->bind_param('s', $pHoraInicio);
+        $stmt->execute();
+        
+        $stmt = $this->connection->prepare('SET @pHoraFin := ?');
+        $stmt->bind_param('s', $pHoraFin);
+        $stmt->execute(); 
+         
+        $query = "CALL SP_deleteReservasFijas(@pIdCliente, @pIdComplejo, @pIdCancha, @pHoraInicio, @pHoraFin);";
+        
+        $FechasReservasFijas = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $FechasReservasFijas[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $FechasReservasFijas;
+    }
+    
 }

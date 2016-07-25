@@ -107,11 +107,11 @@ resergolApp.run(function($rootScope, $uibModal, $q, $http, $state) {
         if($rootScope.goingTo.state.rol != 'Todos'){
            
             //console.log($rootScope.goingTo.state);   
-            
-            if($rootScope.goingTo.state.rol  == sessionStorage.tipo){
+        
+            if(($rootScope.goingTo.state.rol == sessionStorage.tipo) || $rootScope.goingTo.state.rol == 'Todos'){
                 //console.log('ok');
             }else{
-                //console.log('mandar al index'); 
+                //console.log('mandar al index');
                 location.href = "http://localhost:8080/resergol1.1/index.html#/clientes/Canchas"; 
             }
         }else{

@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("AdministrarCanchasController", function($scope, $state, AdministrarCanchasService, CanchasService, TiposSuperficiesService, DueniosReservasAumentoService, $uibModal,  $uibModalStack){
+resergolApp.controller("AdministrarCanchasController", function($scope, $state, AdministrarCanchasService, DueniosReservasMailsService, CanchasService, TiposSuperficiesService, DueniosReservasAumentoService, DueniosReservasMailsService, MandarMailsService, $uibModal,  $uibModalStack){
     
 //Seccion de Datos
 var self = this;
@@ -9,7 +9,8 @@ this.cantJugadores = [
           
       ];
     
-this.Canchas = [];    
+this.Canchas = [];   
+this.mails = []; 
     
 this.CanchaSeleccionada = {
                     
@@ -253,13 +254,44 @@ this.cambiarPreciosReservas = function(){
                     "idComplejo": self.CanchaSeleccionada.IdComplejo,
                     "idCancha": self.CanchaSeleccionada.IdCancha,
                     "porcentajeAumento": porcentaje
-      }; 
+    }; 
     
     DueniosReservasAumentoService.save(AdministrarAumento.data, function(reponse){
-        console.log('Hizo las cosas');
+        
+        DueniosReservasMailsService.query({ pIdComplejo: self.CanchaSeleccionada.IdComplejo , pIdCancha: self.CanchaSeleccionada.IdCancha}).$promise.then(function(dataMails) {
+            self.mails = dataMails;
+            
+            angular.forEach(self.mails, function(aux) {
+
+                self.mandarMail(aux.Email, aux.Usuario, aux.nombreComplejo);
+            });
+        });
+        
         },function(errorResponse){
         console.log('ERROR TARJETA...' + errorResponse); 
     });
+};
+    
+ //Mandar mail.
+this.mandarMail = function(receptor, nombreUsuario, nombreComplejo){
+
+    var asunto = "ReserGol - Notificacion de Aumento de Cancha";
+    var mensaje = "<u><b>" + nombreUsuario + "</u></b>: Se le informa que hubo un aumento en el precio de la cancha <b>" + self.CanchaSeleccionada.nombre + "</b><br> del complejo <b> "+ nombreComplejo +"</b>. <br><br>En caso de desearlo, puede cancelar la reserva en la seccion 'Mis Reservas' <br><br>";
+    mensaje += "Atentamente, el equipo de ReserGol.";
+    
+    console.log(mensaje);
+    var mailNuevo = new MandarMailsService();
+                mailNuevo.data = {
+                    "receptor": receptor, //PONER $scope.mailCliente!!!!!!!!!!!!!!!!!
+                    "asunto": asunto,
+                    "mensaje": mensaje
+                };  
+
+    MandarMailsService.save(mailNuevo.data, function(reponse){
+            console.log('se mando el mail');
+          },function(errorResponse){
+            console.log('no se mando el mail' + errorResponse); 
+         }); 
 };
 
 //-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-//

@@ -132,7 +132,8 @@ resergolApp.controller("MisReservasController", function($scope,$state, $statePa
                         devNueva.data = {
                             "idCliente": $scope.idCliente,
                             "idDuenio": res.IdDuenio,
-                            "monto": parseFloat(res.Pagado)
+                            "monto": parseFloat(res.Pagado),
+                            "tipo": 1
                         };  
                    
                         DevolucionesService.save(devNueva.data, function(reponse){
@@ -189,7 +190,7 @@ resergolApp.controller("MisReservasController", function($scope,$state, $statePa
                      var horaFn = aux.HoraFin.substring(0,2) + 'hs';    
                      aux.DiaDePartidoFormat = aux.FechaPartidoFormateada + ' (' + horaIn + ' a ' + horaFn + ')';
                      aux.PagadoFormat = '$' + parseFloat(aux.Pagado);
-                     aux.RestanteFormat = '$' + parseFloat(aux.Restante);
+                     aux.RestanteFormat = '$' + parseInt(aux.Restante);
                  });
             
             });
