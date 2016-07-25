@@ -1126,6 +1126,13 @@ $app->post('/duenios/canchas/reservas', function(){ ///:idComplejo/:idCancha/:po
     
 });
 
+//obtiene todos los mails de todos los clientes que hicieron revervas si hubo aumento de precio para una cancha
+$app->get('/duenios/reservas/mails/:pIdComplejo/:pIdCancha', function($idComplejo, $idCancha){
+    $reservas = new Reserva();
+    $data = $reservas->getMailsReservas($idComplejo, $idCancha);
+	sendResult($data);
+});
+
 //Get reservas del dueño por dia (Mis Reservas)
 /*$app->get('/duenios/reservas/:idComplejo/:fecha', function($idComplejo, $fecha){
     $reservas = new Reserva();
@@ -1153,7 +1160,8 @@ $app->post('/duenios/reservas/completarPago', function(){
     sendResult($result);
     
 });
-/*
+
+/*             
 //borra de reservas la reserva seleccionada
 $app->delete('/duenios/reservas/cancelarReserva/:idReserva', function($idReserva){
     
@@ -1328,6 +1336,24 @@ $app->post('/clientes/reservasFijas/', function(){
     //}
     
 });
+
+//cosulta que verifica que existen reservas fijas para ese cliente, cancha y hora
+$app->get('/duenios/reservasFijas/:pIdCliente/:pIdComplejo/:pIdCancha/:pHoraInicio/:pHoraFin', function($pIdCliente, $pIdComplejo, $pIdCancha, $pHoraInicio, $pHoraFin){
+    
+    $fechasResFijas = new ReservaFija();
+    $data = $fechasResFijas->existenReservasFijas($pIdCliente, $pIdComplejo, $pIdCancha, $pHoraInicio, $pHoraFin);
+	sendResult($data);
+    
+});
+
+//cosulta que verifica que existen reservas fijas para ese cliente, cancha y hora
+/*$app->delete('/duenios/reservasFijas/:pIdCliente/:pIdComplejo/:pIdCancha/:pHoraInicio/:pHoraFin', function($pIdCliente, $pIdComplejo, $pIdCancha, $pHoraInicio, $pHoraFin){
+    
+    $fechasResFijas = new ReservaFija();
+    $data = $fechasResFijas->deleteReservasFijas($pIdCliente, $pIdComplejo, $pIdCancha, $pHoraInicio, $pHoraFin);
+	sendResult($data);
+    
+});*/
 
 //-***********************************RESERVAS TEMPORALES**************************************************************--//
 $app->get('/clientes/reservasTemp/:idCancha/:idComplejo', function($pIdCancha, $pIdComplejo){

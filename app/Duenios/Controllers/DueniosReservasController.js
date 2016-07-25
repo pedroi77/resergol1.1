@@ -1,6 +1,6 @@
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("DueniosReservasController", function($scope, DevolucionesService, ReservasCancelacionService, ReservasService, DueniosReservasServices, DuenioReservasCompletarPagoService, AdministrarCanchasService, DuenioDiasService, ReservasFijasService, ReservasTempService, $state, $uibModal,  $uibModalStack){
+resergolApp.controller("DueniosReservasController", function($scope, DevolucionesService, ReservasCancelacionService, ReservasService, DueniosReservasServices, DuenioReservasCompletarPagoService, AdministrarCanchasService, DuenioDiasService, ReservasFijasService, ReservasTempService, DuenioReservasFijasService, $state, $uibModal,  $uibModalStack){
     
 /*************************************SECCION DE VARIABLES*****************************************************/
 var self = this;
@@ -171,17 +171,20 @@ this.obtenerDiaActual = function(){
 
     self.Fecha = yyyy+'-'+mm+'-'+dd;
     self.FechaReserva = dd+'/'+mm+'/'+yyyy;
-}
+};
     
- this.init = function(){
-     
-    DuenioDiasService.query({idDuenio:$scope.idDuenio}).$promise.then(function(data) {
+this.init = function(){
+    
+    DuenioDiasService.query({idDuenio:self.IdDuenio}).$promise.then(function(data) {
         self.diasComplejo = data;
+        console.log(self.diasComplejo);
     }); 
      
-     self.traerReservas();
-     self.obtenerDiaActual();
- }
+    console.log(self.diasComplejo);
+    self.traerReservas();
+    //self.obtenerDiaActual();
+
+};
  
 this.clic = function(indice, fila){
     
@@ -219,7 +222,7 @@ this.clic = function(indice, fila){
     else
         self.reservaSeleccionada.puedeCancelar = false;
     
-    console.log(self.reservaSeleccionada.puedeCancelar);
+    //console.log(self.reservaSeleccionada.puedeCancelar);
 
     self.reservaSeleccionada.Usuario = '';
     self.reservaSeleccionada.NombreCancha = fila[indice].nombreCancha;
@@ -258,7 +261,7 @@ this.clic = function(indice, fila){
     
     if(fila[indice].idCliente == null || fila[indice].idCliente == undefined || fila[indice].idCliente == '')
         self.reservaSeleccionada.IdCliente = 1;
-    
+
     //self.llenarComboHorasHasta();
     self.llenarComboHorasHasta(indice, fila);
 };
@@ -268,8 +271,8 @@ this.cambiaFecha = function(dt)
     function pad(n) {return n < 10 ? "0"+n : n;}
     $scope.fechaElegida = dt;
 
-    var hoy = new Date();
-    hoy = pad(hoy.getFullYear()+"-"+pad(hoy.getMonth()+1)+"-"+hoy.getDate());
+    //var hoy = new Date();
+    //hoy = pad(hoy.getFullYear()+"-"+pad(hoy.getMonth()+1)+"-"+hoy.getDate());
     
     self.Fecha = pad($scope.fechaElegida.getFullYear()+"-"+pad($scope.fechaElegida.getMonth()+1)+"-"+$scope.fechaElegida.getDate());
     self.FechaReserva = pad($scope.fechaElegida.getDate()+"/"+pad($scope.fechaElegida.getMonth()+1)+"/"+$scope.fechaElegida.getFullYear());
@@ -278,7 +281,7 @@ this.cambiaFecha = function(dt)
     
     //console.log('hoy-> ' + hoy);
     //console.log('eleccion-> ' + fechaSelect);
-
+    
 };
     
 this.CalcularResta = function(){
@@ -306,8 +309,8 @@ this.compararFechas = function (DateA, DateB) {     // this function is good for
 
     var msDateA = Date.UTC(a.getFullYear(), a.getMonth()+1, a.getDate());
     var msDateB = Date.UTC(b.getFullYear(), b.getMonth()+1, b.getDate());
-    console.log(msDateA);
-    console.log(msDateB);
+    //console.log(msDateA);
+    //console.log(msDateB);
 
     if (parseFloat(msDateA) < parseFloat(msDateB))
       return -1;  // lt
@@ -364,14 +367,49 @@ this.borrarReserva = function()
 
                 DevolucionesService.save(devNueva.data, function(reponse){
                         idRetorno = reponse.data[0];
-                        console.log('se guardo devolucion -->' + idRetorno);
+                        //console.log('se guardo devolucion -->' + idRetorno);
 
                         ReservasCancelacionService.delete({idReserva: self.reservaSeleccionada.IdReserva}, function(reponse){
                             
                             idRetorno = reponse.data[0];
-                            console.log('SE BORRO...... RETORNO -->' + idRetorno);
+                            //console.log('SE BORRO...... RETORNO -->' + idRetorno);
                             
+                            var hDesde = self.reservaSeleccionada.horaDesde + ':00';
+                            var selectedText = document.getElementById("horaHasta");
+                            var hHasta = horaHasta.options[horaHasta.selectedIndex].text + ':00';
                             
+                            //console.log("pIdCliente: " + self.reservaSeleccionada.IdCliente + "pIdComplejo: " + self.IdComplejo + "pIdCancha: " + self.reservaSeleccionada.IdCancha + "pHoraInicio: " + hDesde + "pHoraFin: " + hHasta);
+                            
+                            DuenioReservasFijasService.query({pIdCliente: self.reservaSeleccionada.IdCliente, pIdComplejo: self.IdComplejo, pIdCancha: self.reservaSeleccionada.IdCancha, pHoraInicio: hDesde, pHoraFin: hHasta}).$promise.then(function(data){ 
+                    
+                                console.log("Cantidad de reservas:" + data.length);
+                                console.log("ID de las reservas");
+                                console.log(data);
+                                
+                                if(data.length == 0)
+                                    bootbox.alert("¡Cancelación de reserva exitosa!", function() {});
+                                else{
+
+                                    bootbox.confirm("Este cliente tiene reservas fijas.<br> ¿Desea eliminarlas?", function(result) {
+                                        if(result)
+                                        {
+                                            angular.forEach(data, function(h) {
+
+                                                ReservasCancelacionService.delete({idReserva: h.IdReserva}, function(reponse){
+
+                                                    idRetorno = reponse.data[0];
+                                                    console.log('SE BORRO...... RETORNO -->' + idRetorno);
+
+                                                },function(errorResponse){
+                                                        console.log('ERROR BORRAR RES...' + errorResponse); 
+                                                });
+
+                                                //console.log(h.hora.substr(0,5));
+                                            });
+                                        }
+                                    });
+                                }
+                            });
                             
                             bootbox.alert("¡Cancelación de reserva, y reembolso exitoso!", function() {});
                             },function(errorResponse){
@@ -388,9 +426,49 @@ this.borrarReserva = function()
                     idRetorno = reponse.data[0];
                     console.log('SE BORRO...... RETORNO -->' + idRetorno);
                     
+                    var existenReservasFijas = false;
+                    
+                    var hDesde = self.reservaSeleccionada.horaDesde + ':00';
+                    var selectedText = document.getElementById("horaHasta");
+                    var hHasta = horaHasta.options[horaHasta.selectedIndex].text + ':00';
+                            
+                    console.log("pIdCliente: " + self.reservaSeleccionada.IdCliente + "pIdComplejo: " + self.IdComplejo + "pIdCancha: " + self.reservaSeleccionada.IdCancha + "pHoraInicio: " + hDesde + "pHoraFin: " + hHasta);
+                            
+                    DuenioReservasFijasService.query({pIdCliente: self.reservaSeleccionada.IdCliente, pIdComplejo: self.IdComplejo, pIdCancha: self.reservaSeleccionada.IdCancha, pHoraInicio: hDesde, pHoraFin: hHasta}).$promise.then(function(data){ 
+                    
+                        
+                        console.log("Cantidad de reservas:" + data.length);
+                        console.log("ID de las reservas");
+                        console.log(data);
+                        
+                        
+                        if(data.length == 0)
+                            bootbox.alert("¡Cancelación de reserva exitosa!", function() {});
+                        else{
+
+                            bootbox.confirm("Este cliente tiene reservas fijas.<br> ¿Desea eliminarlas?", function(result) {
+                                if(result)
+                                {
+                                    angular.forEach(data, function(h) {
+
+                                        ReservasCancelacionService.delete({idReserva: h.IdReserva}, function(reponse){
+
+                                            idRetorno = reponse.data[0];
+                                            console.log('SE BORRO...... RETORNO -->' + idRetorno);
+
+                                        },function(errorResponse){
+                                                console.log('ERROR BORRAR RES...' + errorResponse); 
+                                        });
+
+                                        //console.log(h.hora.substr(0,5));
+                                    });
+                                }
+                            });
+                        }
+                    });
                     
                     //self.init();
-                    bootbox.alert("¡Cancelación de reserva exitosa!", function() {});
+                    
                 },function(errorResponse){
                     console.log('ERROR BORRAR RES...' + errorResponse); 
                 });
@@ -403,10 +481,10 @@ this.borrarReserva = function()
     
 this.llenarComboHorasHasta = function(indice, fila){
 
-    console.log(indice); //columna
-    console.log(fila);
-    console.log(fila[indice]);
-    console.log("cantidad de horas: " + $scope.CantHoras);
+    //console.log(indice); //columna
+    //console.log(fila);
+    //console.log(fila[indice]);
+    //console.log("cantidad de horas: " + $scope.CantHoras);
     
     self.horasHasta = [];
     
@@ -417,7 +495,7 @@ this.llenarComboHorasHasta = function(indice, fila){
             //jojo
             if(parseInt($scope.data[i][indice].hora.substring(0,2)) > parseInt(fila[indice].hora.substring(0,2))){
                 
-                console.log("Usuario: " + $scope.data[i][indice].nombre);
+                //console.log("Usuario: " + $scope.data[i][indice].nombre);
                 
                 if($scope.data[i][indice].nombre != "Disponible"){
                     self.horasHasta.push({"id": $scope.data[i][indice].hora.substring(0,5), "desc": $scope.data[i][indice].hora.substring(0,5)});
@@ -447,30 +525,30 @@ this.calcularPago = function(){
     
     
     //Calculo el precio a pagar siempre y cuando se haya elegido una fecha y hora desde y hasta.
-    console.log('CALCULANDO PRECIO.....');
+    //console.log('CALCULANDO PRECIO.....');
     ////////NUEVO////////////////////////////////////////////////////
     //Traigo las hora desde y hasta.
     var hd = parseInt(self.reservaSeleccionada.horaDesde.substring(0,2));
     var hh = parseInt($scope.selectedHoraIdHasta.substring(0,2));
 
-    console.log(hd + " " + hh);
+    //console.log(hd + " " + hh);
 
     //Calculo cuantas horas se van a alquilar...
     var horasAlq = hh - hd;
     
-    console.log('horas alq--> ' + horasAlq);
+    //console.log('horas alq--> ' + horasAlq);
     
     
     var precio = parseFloat(self.reservaSeleccionada.Precio);
     
-    console.log(precio);
+    //console.log(precio);
     
     var horaLuz = -1;
     
     if(self.reservaSeleccionada.HoraCobroLuz != undefined && self.reservaSeleccionada.HoraCobroLuz != null)
         horaLuz = self.reservaSeleccionada.HoraCobroLuz.substring(0,2);
     
-    console.log('luz desde-->' + horaLuz);
+    //console.log('luz desde-->' + horaLuz);
     
     
     var porcentajeLuz = 0;
@@ -480,7 +558,7 @@ this.calcularPago = function(){
     if(self.reservaSeleccionada.PorcentajeLuz != null && self.reservaSeleccionada.PorcentajeLuz != undefined);
         porcentajeLuz = parseFloat(self.reservaSeleccionada.PorcentajeLuz);
 
-    console.log('porcent luz-->' + porcentajeLuz);
+    //console.log('porcent luz-->' + porcentajeLuz);
 
     var horasConLuz = 0;
     if(self.reservaSeleccionada.Luz == 1 && horaLuz != -1)
@@ -561,6 +639,8 @@ this.reservar = function(aceptaReservaFija){
             var idDeDia = $scope.dt.getDay() == 0 ? 7 : $scope.dt.getDay();
             var anio = $scope.dt.getFullYear();
 
+            //jojo
+            console.log("jojojo: " + self.Fecha);
             self.getFechasReservaFija(self.reservaSeleccionada.horaDesde, selectedText,idDeDia, anio, self.Fecha);
         }    
         
@@ -571,6 +651,7 @@ this.reservar = function(aceptaReservaFija){
     bootbox.alert("Reserva exitosa", function() {});
     self.init();
     $('#reservasModal').modal('hide');
+
 };
     
 this.getFechasReservaFija = function(hDesde, hHast, idDia, anio, fprimerReserva){
@@ -579,7 +660,7 @@ this.getFechasReservaFija = function(hDesde, hHast, idDia, anio, fprimerReserva)
         
         $scope.FechasReservaFija = data;
         
-        console.log($scope.FechasReservaFija);
+        //console.log($scope.FechasReservaFija);
         //console.log('PRIMERA FECHA FIJA->' + $scope.FechasReservaFija[0].fecha);
 
 
@@ -687,50 +768,7 @@ this.cambiaHasta = function(){
     console.log('llegue al cambia hasta');
 };
     
-/**************************************FUNCIONES DE CALENDARIO*********************************************************************************/
-function disabled(data) {
-    var date = data.date,
-    mode = data.mode;
-    //Acá deshabilito los días que el complejo no abre.
-    /*
-    0 = domingo.
-    1 = lunes.
-    2 = martes.
-    3 = miercoles.
-    4 = jueves.
-    5 = viernes.
-    6 = sabado.
-    */
-    var diasQueAbre = []; 
-    angular.forEach(self.diasComplejo, function(aux) {
-        switch(aux.iddia) {
-            case '1':
-            diasQueAbre.push(1);
-            break;
-            case '2':
-            diasQueAbre.push(2);
-            break;
-            case '3':
-            diasQueAbre.push(3);
-            break;
-            case '4':
-            diasQueAbre.push(4);
-            break;
-            case '5':
-            diasQueAbre.push(5);
-            break;
-            case '6':
-            diasQueAbre.push(6);
-            break;
-            case '7':
-            diasQueAbre.push(0);
-            break;
-        }
-    });
-
-    return mode === 'day' && diasQueAbre.indexOf(date.getDay()) === -1;
-};
-    
+/**************************************FUNCIONES DE CALENDARIO*********************************************************************************/   
 this.completarPago = function(){
     
     console.log(self.reservaSeleccionada.IdReserva);
@@ -760,6 +798,7 @@ this.completarPago = function(){
 
 /*************************************SECCION DE LLAMADOS*****************************************************/
 self.init();
+self.obtenerDiaActual();
     
 /******************************SECCION FECHAS********************************************************/ 
     $scope.today = function() {
@@ -783,17 +822,58 @@ self.init();
         language: 'es-es',  
         formatYear: 'yy',
         maxDate: new Date(2020, 5, 22),
-        minDate: new Date(),
+        //minDate: new Date(),
         startingDay: 1
       };
 
-      // Disable weekend selection
-      function disabled(data) {
-        var date = data.date,
-          mode = data.mode;
-        //return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-          //return mode === 'day' && (date < new Date(2016,04,21));
-      }
+// Disable weekend selection
+function disabled(data) {
+    var date = data.date,
+    mode = data.mode;
+    //Acá deshabilito los días que el complejo no abre.
+    /*
+    0 = domingo.
+    1 = lunes.
+    2 = martes.
+    3 = miercoles.
+    4 = jueves.
+    5 = viernes.
+    6 = sabado.
+    */
+    console.log(self.diasComplejo);
+    var diasQueAbre = [];
+    
+    angular.forEach(self.diasComplejo, function(aux) {
+        
+        console.log(aux.iddia);
+        switch(aux.iddia) {
+            case '1':
+            diasQueAbre.push(1);
+            break;
+            case '2':
+            diasQueAbre.push(2);
+            break;
+            case '3':
+            diasQueAbre.push(3);
+            break;
+            case '4':
+            diasQueAbre.push(4);
+            break;
+            case '5':
+            diasQueAbre.push(5);
+            break;
+            case '6':
+            diasQueAbre.push(6);
+            break;
+            case '7':
+            diasQueAbre.push(0);
+            break;
+        }
+    });
+
+    console.log(diasQueAbre);
+    return mode === 'day' && diasQueAbre.indexOf(date.getDay()) === -1;
+}
     
       $scope.dateOptionsFechaFiltro = {
         dateDisabled: disabled,

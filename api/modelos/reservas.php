@@ -360,7 +360,32 @@ class Reserva
         
     }
     
-    /*public function getReservasByDuenioFecha($idComplejo, $idCancha, $fecha){
+    public function getMailsReservas($idComplejo, $idCancha){
+        
+        $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
+        $stmt->bind_param('i', $idComplejo);
+        $stmt->execute(); 
+        
+        $stmt = $this->connection->prepare('SET @pIdCancha := ?');
+        $stmt->bind_param('i', $idCancha);
+        $stmt->execute();
+        
+        //echo 'Datos para query','ID COmplejo: ' . $idComplejo . ' Fecha: ' . $fecha, "\n";
+        $query = "CALL SP_getMailsReservas(@pIdComplejo, @pIdCancha);";
+        
+        $reservas = array();
+        
+        if( $result = $this->connection->query($query) ){
+            while($fila = $result->fetch_assoc()){
+                $reservas[] = $fila;
+            }
+              
+            $result->free();
+        }
+        return $reservas;
+    }
+    
+    /*public function getReservasByDuenioFecha($idComplejo, $idCancha, $fecha){     
         
         
         $stmt = $this->connection->prepare('SET @pIdComplejo := ?');
