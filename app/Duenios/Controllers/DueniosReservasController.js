@@ -77,6 +77,10 @@ this.horasHasta = [];
     
 this.fechaSeleccionada = new Date();
 this.FechaReserva = new Date();
+this.Hoy = new Date();
+    
+function pad(n) {return n < 10 ? "0"+n : n;}
+self.Hoy = self.Hoy.getFullYear()+"-"+pad(self.Hoy.getMonth()+1)+"-"+pad(self.Hoy.getDate());
     
 /*************************************SECCION DE METODOS*****************************************************/
     
@@ -177,10 +181,10 @@ this.init = function(){
     
     DuenioDiasService.query({idDuenio:self.IdDuenio}).$promise.then(function(data) {
         self.diasComplejo = data;
-        console.log(self.diasComplejo);
+        //console.log(self.diasComplejo);
     }); 
      
-    console.log(self.diasComplejo);
+    //console.log(self.diasComplejo);
     self.traerReservas();
     //self.obtenerDiaActual();
 
@@ -233,12 +237,16 @@ this.clic = function(indice, fila){
     self.reservaSeleccionada.PorcentajeLuz = fila[indice].PorcentajeLuz;
     self.reservaSeleccionada.PorcentSenia = fila[indice].PorcentSenia;
     self.reservaSeleccionada.Luz = fila[indice].Luz;
+    self.reservaSeleccionada.IdReserva = fila[indice].idReserva;
     
-    if(fila[indice].nombre == 'Disponible')
+    console.log("Fila Indice Nombre: " + fila[indice].nombre + " IdReserva: " + fila[indice].idReserva);
+    
+    if(fila[indice].idReserva == undefined || fila[indice].idReserva == null || fila[indice].idReserva == '')
         self.reservaSeleccionada.Usuario = '';
     else
         self.reservaSeleccionada.Usuario = fila[indice].nombre;
     
+    console.log("Usuario: " + self.reservaSeleccionada.Usuario);
     self.reservaSeleccionada.Precio = fila[indice].precioCancha;
     
     if(fila[indice].pagado == null)
@@ -254,7 +262,7 @@ this.clic = function(indice, fila){
         self.reservaSeleccionada.Resta = parseInt(fila[indice].resta);
     
     self.reservaSeleccionada.EstadoReserva = fila[indice].estadoReserva;
-    self.reservaSeleccionada.IdReserva = fila[indice].idReserva;
+    
     self.reservaSeleccionada.HorasCancelacion = fila[indice].horasCancelacion; 
     self.reservaSeleccionada.IdCliente = fila[indice].idCliente;
     self.reservaSeleccionada.IdCancha = fila[indice].idCancha;
@@ -264,6 +272,37 @@ this.clic = function(indice, fila){
 
     //self.llenarComboHorasHasta();
     self.llenarComboHorasHasta(indice, fila);
+    console.log(self.reservaSeleccionada);
+};
+   
+this.limpiarForm = function(form){
+        
+    form.$setPristine();
+    self.reservaSeleccionada.CantJugadoresNombreCancha = '';
+    self.reservaSeleccionada.CantJugadores = 0;
+    self.reservaSeleccionada.Superficie = '';
+    self.reservaSeleccionada.Usuario = '';
+    self.reservaSeleccionada.Precio = '0';
+    self.reservaSeleccionada.Pagado = 0;
+    self.reservaSeleccionada.Resta = 0;
+    self.reservaSeleccionada.EstadoReserva = 0;
+    self.reservaSeleccionada.IdReserva = 0;
+    self.reservaSeleccionada.puedeCancelar = false;
+    self.reservaSeleccionada.HorasCancelacion = '';
+    self.reservaSeleccionada.IdCliente = 0;
+    self.reservaSeleccionada.TotalPagar = 0;
+    self.reservaSeleccionada.IdCancha = 0;
+    self.reservaSeleccionada.UsuarioReserva = '';
+    self.reservaSeleccionada.totalCalculado = 0;
+    self.reservaSeleccionada.horaDesde = '';
+    self.reservaSeleccionada.horaHasta = '';
+    self.reservaSeleccionada.HoraCobroLuz = '';
+    self.reservaSeleccionada.PorcentajeLuz = 0;
+    self.reservaSeleccionada.PorcentSenia = 0;
+    self.reservaSeleccionada.Luz = 0;
+    console.log("Limpio Datos");
+    
+        
 };
     
 this.cambiaFecha = function(dt)
@@ -347,24 +386,38 @@ this.borrarReserva = function()
     var sPag = parseFloat(self.reservaSeleccionada.Pagado);
     var msj = "";
     
-    if(!devuelvo)
-        msj = "No se realizará el reembolso ya que se superaron las horas de antelación de aviso";
-    else if(sPag > 0) 
-        msj = "Se reembolsarán la suma de $ " + sPag + ".";
-
+    console.log("Cliente: " + self.reservaSeleccionada.IdCliente);
+    if(self.reservaSeleccionada.IdCliente != 1){
+        
+        if(!devuelvo)
+            msj = "No se realizará el reembolso ya que se superaron las horas de antelación de aviso";
+        else if(sPag > 0) 
+            msj = "Se reembolsarán la suma de $ " + sPag + ".";
+        
+    }
+    else{
+        
+        if(!devuelvo)
+            msj = "No se realizara la devolucion ya que se superaron las horas de antelación de aviso";
+        else if(sPag > 0) 
+            msj = "Se debe reembolsar la suma de $ " + sPag + ".";
+    }
+    
     bootbox.confirm("¿Seguro desea cancelar la reserva? <br>" + msj, function(result) {
         if(result)
         {
-            if(sPag > 0 && devuelvo)
+            if(sPag > 0 && devuelvo && self.reservaSeleccionada.IdCliente != 1)//si es cliente de la pagina
             {
                 //INSERTO LA DEVOLUCION
                 var devNueva = new DevolucionesService();
                 devNueva.data = {
                     "idCliente": self.reservaSeleccionada.IdCliente,
                     "idDuenio": self.IdDuenio,
-                    "monto": parseFloat(self.reservaSeleccionada.Pagado)
+                    "monto": parseFloat(self.reservaSeleccionada.Pagado),
+                    "tipo": 1
                 };  
 
+                
                 DevolucionesService.save(devNueva.data, function(reponse){
                         idRetorno = reponse.data[0];
                         //console.log('se guardo devolucion -->' + idRetorno);
@@ -601,14 +654,25 @@ this.calcularPago = function(){
 this.reservar = function(aceptaReservaFija){
 
     var ReservaNueva = new ReservasService();
-    var estadoReserva = 2;
+    var estadoReserva = 0;
     //console.log(self.Fecha.replace('-', '/').replace(' - ', '/'));
     var horaHasta = document.getElementById("horaHasta");
     var selectedText = horaHasta.options[horaHasta.selectedIndex].text;
+    self.reservaSeleccionada.UsuarioReserva = document.getElementById("usuario").value.toString();
     
+    if(self.reservaSeleccionada.UsuarioReserva == ''){
+        
+        bootbox.alert("Debe ingresar el nombre del cliente...", function() {});
+        return false;
+    }
+        
     //console.log(horaHasta);
 
-    if(self.reservaSeleccionada.totalCalculado  == 0)
+    console.log("Resta: " + self.reservaSeleccionada.Resta);
+    
+    if(self.reservaSeleccionada.Resta == 0)
+        estadoReserva = 2;
+    else
         estadoReserva = 1;
     
     ReservaNueva.data= {
@@ -651,6 +715,13 @@ this.reservar = function(aceptaReservaFija){
     bootbox.alert("Reserva exitosa", function() {});
     self.init();
     $('#reservasModal').modal('hide');
+    
+    
+    self.reservaSeleccionada.IdCancha = 0;
+    self.reservaSeleccionada.horaDesde = '';
+    self.reservaSeleccionada.totalCalculado = 0;
+    self.reservaSeleccionada.Pagado = 0;
+    self.reservaSeleccionada.UsuarioReserva = '';
 
 };
     
@@ -840,12 +911,12 @@ function disabled(data) {
     5 = viernes.
     6 = sabado.
     */
-    console.log(self.diasComplejo);
+    //console.log(self.diasComplejo);
     var diasQueAbre = [];
     
     angular.forEach(self.diasComplejo, function(aux) {
         
-        console.log(aux.iddia);
+        //console.log(aux.iddia);
         switch(aux.iddia) {
             case '1':
             diasQueAbre.push(1);
@@ -871,7 +942,7 @@ function disabled(data) {
         }
     });
 
-    console.log(diasQueAbre);
+    //console.log(diasQueAbre);
     return mode === 'day' && diasQueAbre.indexOf(date.getDay()) === -1;
 }
     

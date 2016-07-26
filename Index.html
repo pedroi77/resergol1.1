@@ -291,8 +291,7 @@
                             <div class="form center-block" >
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" ng-change="due.mayusculas()" tooltip-placement="left" 
-                                     uib-tooltip="Solo se permite mayusculas" placeholder="Usuario" ng-maxlength="25" name="usuarioDuenio" ng-model="due.Duenio.usuario" required ng-class="{ error:frmDatosUsuario.usuario.$error.required && frmDatosUsuario.usuario.$dirty, warning:frmDatosUsuario.usuario.$error.usuario }" ng-blur="due.existeUsuario()">
+                                        <input id="usuario" type="text" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required" ng-change="due.mayusculas()" tooltip-placement="left" uib-tooltip="Solo se permite mayusculas" placeholder="Usuario" ng-maxlength="25" name="usuario" ng-model="due.Duenio.usuario" required ng-class="{ error:frmDatosUsuario.usuario.$error.required && frmDatosUsuario.usuario.$dirty, warning:frmDatosUsuario.usuario.$error.usuario }" ng-blur="due.existeUsuario()">
                                         <span ng-show="!frmDatosUsuario.$pristine && due.Duenio.existe" class= "msjError">
                                             Este usuario ya existe.
                                         </span>
