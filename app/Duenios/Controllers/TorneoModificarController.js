@@ -197,10 +197,11 @@ resergolApp.controller("TorneoModificarController", function($scope, $state,$sta
                                   parseInt(self.Torneo.fechaInicio.substring(5,7)-1), 
                                   parseInt(self.Torneo.fechaInicio.substring(8,10)));
             
-            self.TorneoHasta = new Date( parseInt(self.Torneo.fechaInicio.substring(0,4)), 
-                                  parseInt(self.Torneo.fechaInicio.substring(5,7)-1), 
-                                  parseInt(self.Torneo.fechaInicio.substring(8,10)));;
+            self.TorneoHasta = new Date( parseInt(self.Torneo.fechaFin.substring(0,4)), 
+                                  parseInt(self.Torneo.fechaFin.substring(5,7)-1), 
+                                  parseInt(self.Torneo.fechaFin.substring(8,10)));;
             
+           
             
         });
         
