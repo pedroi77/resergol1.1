@@ -1,7 +1,7 @@
 
 var resergolApp = angular.module("resergolApp");
 
-resergolApp.controller("MisTorneosController", function($scope,$state, $stateParams, store, ProvinciasService, LocalidadesService, DuenioDiasService, TorneosClientesService, DevolucionesService, EquipoTorneoService){
+resergolApp.controller("MisTorneosController", function($scope,$state, $stateParams, store, ProvinciasService, LocalidadesService, DuenioDiasService, TorneosClientesService, DevolucionesService, EquipoTorneoService, ReservasCancelacionService){
 	
     var self = this;
     
@@ -140,7 +140,7 @@ resergolApp.controller("MisTorneosController", function($scope,$state, $statePar
                         devNueva.data = {
                             "idCliente": $scope.idCliente,
                             "idDuenio": tor.IdDuenio,
-                            "monto": parseFloat(tor.Pagado),
+                            "monto": parseFloat(tor.PrecioInscripcion),
                             "tipo": 2
                         };  
                    

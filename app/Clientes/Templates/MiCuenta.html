@@ -141,7 +141,7 @@
                     <button id="volver" class="btn btn-warning btn-lg btn-block" ui-sref="Clientes.buscarCanchas" onclick="$('html,body').animate({scrollTop:10},'slow');return false;">Cancelar / Salir</button>
                 </div>
                 <div class="form-group col-md-4 " >
-                    <button class="btn btn-primary btn-lg btn-block btn-custom" ng-disabled="!frmDatosUsuario.$valid" ng-click="cue.guardarDatos()">Guardar cambios</button>
+                    <button class="btn btn-primary btn-lg btn-block btn-custom" ng-disabled="!frmDatosUsuario.$valid || (cue.datos.existe || cue.datos.existeMail || cue.datos.existeDni)" ng-click="cue.guardarDatos()">Guardar cambios</button>
                 </div>
                 
             </fieldset> 
