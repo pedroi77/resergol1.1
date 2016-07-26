@@ -75,7 +75,9 @@ resergolApp.controller("MiCuentaController", function($scope, $rootScope, $sce, 
                         data[0].NroTarjeta = parseInt(data[0].NroTarjeta);
                         
                     	self.datos = data[0];
-                        self.usuarioOrig = data[0].Usuario;
+                        self.datos.Usuario = self.datos.Usuario.toUpperCase();
+                        
+                        self.usuarioOrig = data[0].Usuario.toUpperCase();
                         self.emailOrig = data[0].Email;
                         self.idTipoDocOrig = data[0].IdTipoDoc;
                         self.numDocOrig = data[0].NroDoc;

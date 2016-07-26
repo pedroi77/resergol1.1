@@ -123,12 +123,15 @@ resergolApp.controller("TorneoCopaController", function($scope, $stateParams, st
                 
                 console.log(self.campeon);
                 
-                
-                if(self.campeon.IdEquipo>0){
-                    self.muestraCampeon = true;
+                if (self.campeon.IdEquipo != undefined){
+                    if(self.campeon.IdEquipo>0){
+                        self.muestraCampeon = true;
+                    }else{
+                        self.muestraCampeon = false;
+                    }
                 }else{
                     self.muestraCampeon = false;
-                }
+                };
             }); 
              
         }); 
