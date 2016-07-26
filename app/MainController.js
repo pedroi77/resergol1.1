@@ -74,7 +74,7 @@ resergolApp.controller("MainController", function($scope, $state,store, UsuarioS
                           form.$setPristine();
                     }    
                 }else{
-                    bootbox.alert("Ingreso la contraseña 3 veces mal, su usuario a sido bloqueado. Contactese con el administrador de la pagina para reactivar su cuenta.", function() {});
+                    bootbox.alert("Ingreso la contraseña 3 veces mal, su usuario ha sido bloqueado. Contactese con el administrador de la pagina para reactivar su cuenta.", function() {});
                 }
                 
             }
@@ -104,7 +104,7 @@ resergolApp.controller("MainController", function($scope, $state,store, UsuarioS
                          form.$setPristine();
                      }
                 }else{
-                    bootbox.alert("Ingreso la contraseña 3 veces mal, su usuario a sido bloqueado. Contactese con el administrador de la pagina para reactivar su cuenta.", function() {});
+                    bootbox.alert("Ingreso la contraseña 3 veces mal, su usuario ha sido bloqueado. Contactese con el administrador de la pagina para reactivar su cuenta.", function() {});
                  }
                 
             }else{

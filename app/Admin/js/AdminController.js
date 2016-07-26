@@ -71,7 +71,7 @@ app.controller("AdminController", function(DueniosPendientesService, AceptarDuen
         mailNuevo.data = {
             "receptor":  self.duePendientes[indice].Email,
             "asunto": 'Aviso Resergol ' ,
-            "mensaje": 'Resergol le informa que su solicitud de cuenta de complejo a sido rechazada por reglas del negocio. Lamentamos no poder aceptarlo. <br><br> Atentamente el equipo de resergol.' 
+            "mensaje": 'Resergol le informa que su solicitud de cuenta de complejo ha sido rechazada por reglas del negocio. Lamentamos no poder aceptarlo. <br><br> Atentamente el equipo de resergol.' 
         };  
 
         MandarMailsService.save(mailNuevo.data, function(reponse){
