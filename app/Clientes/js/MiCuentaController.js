@@ -309,7 +309,7 @@ this.existeUsuario = function(){
         
          if(!token || !sesion ){
              self.IniciarSesion = 'Iniciar Sesion';
-             self.brand = "Open Gallo"; //???
+             self.brand = "Mi Complejo"; //???
          }    
          else{
              self.Usuario.tipo=  sessionStorage.tipo;

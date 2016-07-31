@@ -175,6 +175,7 @@ this.obtenerDiaActual = function(){
 
     self.Fecha = yyyy+'-'+mm+'-'+dd;
     self.FechaReserva = dd+'/'+mm+'/'+yyyy;
+    
 };
     
 this.init = function(){
@@ -314,7 +315,7 @@ this.cambiaFecha = function(dt)
     //hoy = pad(hoy.getFullYear()+"-"+pad(hoy.getMonth()+1)+"-"+hoy.getDate());
     
     self.Fecha = pad($scope.fechaElegida.getFullYear()+"-"+pad($scope.fechaElegida.getMonth()+1)+"-"+$scope.fechaElegida.getDate());
-    self.FechaReserva = pad($scope.fechaElegida.getDate()+"/"+pad($scope.fechaElegida.getMonth()+1)+"/"+$scope.fechaElegida.getFullYear());
+    self.FechaReserva = pad($scope.fechaElegida.getDate())+"/"+pad($scope.fechaElegida.getMonth()+1)+"/"+$scope.fechaElegida.getFullYear();
 
     self.traerReservas();
     
@@ -716,12 +717,14 @@ this.reservar = function(aceptaReservaFija){
     self.init();
     $('#reservasModal').modal('hide');
     
-    
-    self.reservaSeleccionada.IdCancha = 0;
-    self.reservaSeleccionada.horaDesde = '';
-    self.reservaSeleccionada.totalCalculado = 0;
-    self.reservaSeleccionada.Pagado = 0;
-    self.reservaSeleccionada.UsuarioReserva = '';
+    if(aceptaReservaFija == 0)
+    {
+        self.reservaSeleccionada.IdCancha = 0;
+        self.reservaSeleccionada.horaDesde = '';
+        self.reservaSeleccionada.totalCalculado = 0;
+        self.reservaSeleccionada.Pagado = 0;
+        self.reservaSeleccionada.UsuarioReserva = '';
+    }
 
 };
     
@@ -825,6 +828,12 @@ this.getFechasReservaFija = function(hDesde, hHast, idDia, anio, fprimerReserva)
                 
             }
         }
+        
+        self.reservaSeleccionada.IdCancha = 0;
+        self.reservaSeleccionada.horaDesde = '';
+        self.reservaSeleccionada.totalCalculado = 0;
+        self.reservaSeleccionada.Pagado = 0;
+        self.reservaSeleccionada.UsuarioReserva = '';
    });
 };
     

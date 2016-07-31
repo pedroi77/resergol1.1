@@ -32,7 +32,8 @@ app.controller("DueniosController", function(UsuarioService, DueniosService, Doc
             contraseniasIguales: true
       };
    
-    this.mensajeBienvenida = 'En Resergol te damos la posibilidad de llegar a todos los jugadores del fútbol amateur de manera gratuita. Sólo tenés que completar los siguientes datos y te mandaremos un  e-mail como aviso para que puedas registrar tu complejo!';
+    this.mensajeBienvenida = 'Llega a todos los jugadores del fútbol amateur de manera gratuita en Resergol.     '
+    this.mensajeBienvenida += 'Por favor completá los siguientes datos y recibirás un mail de aceptación.';
     
     
     

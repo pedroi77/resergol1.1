@@ -53,7 +53,7 @@ app.controller("AdminController", function(DueniosPendientesService, AceptarDuen
         mailNuevo.data = {
             "receptor":  self.duePendientes[indice].Email,
             "asunto": 'Aviso Resergol ' ,
-            "mensaje": 'Resergol le informa que se activo su cuenta de complejo. Desde este momento puede ingresar con el usuario y contraseña que se registro. <br> Le deseamos la mejor experiencia en la plataforma RESERGOL.<br><br> Atentamente el equipo de resergol.' 
+            "mensaje": 'Resergol le informa que se activo su cuenta de complejo. Desde este momento puede ingresar con el usuario y contrase&ntilde;a que se registro. <br> Le deseamos la mejor experiencia en la plataforma RESERGOL.<br><br> Atentamente el equipo de resergol.' 
         };  
 
         MandarMailsService.save(mailNuevo.data, function(reponse){

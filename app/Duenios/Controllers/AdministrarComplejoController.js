@@ -256,8 +256,10 @@ this.traerDatosComplejos = function(){
             self.Complejo.emailComplejo = data[0].EmailComplejo;
             self.Complejo.porcentajeLuz = parseInt(data[0].PorcentajeLuz);
             self.Complejo.nroCelular = parseInt(data[0].nroCelular);
-            self.Complejo.CBU = parseInt(data[0].CBU);
-            self.Complejo.nroCuenta = parseInt(data[0].NroCuenta);
+            //self.Complejo.CBU = parseInt(data[0].CBU);
+            //self.Complejo.nroCuenta = parseInt(data[0].NroCuenta);
+            self.Complejo.CBU = data[0].CBU;
+            self.Complejo.nroCuenta = data[0].NroCuenta;
             self.Complejo.X = data[0].X;
             self.Complejo.Y = data[0].Y;
             
@@ -575,6 +577,7 @@ this.traerDatosComplejos = function(){
         //console.log("Datos del complejo: " + self.Complejo.idLoc + self.Complejo.idProv);
 
         //console.log("Estamos en el hacerCambiosComplejo, Datos:  " + AdministrarComplejo.data);
+        self.Complejo.CBU = self.Complejo.CBU.toString();
         console.log(AdministrarComplejo.data);
 
         AdministrarComplejoService.save(AdministrarComplejo.data, function(reponse){
@@ -600,62 +603,62 @@ this.traerDatosComplejos = function(){
         
         if(self.Complejo.diasComplejo.length == 0){
             
-            mensaje += 'No ha ingresado ningún dia';  
+            mensaje += 'No ha ingresado ningún dia <br>';  
             hayError = 1;
         }
         
         if(self.Complejo.porcentajeSenia.length == 0){
-            mensaje += 'Debe ingresar un porcentaje de seña';  
+            mensaje += 'Debe ingresar un porcentaje de seña <br>';  
             hayError = 1; 
         }
         
         if(self.Complejo.porcentajeSenia == 0){
-            mensaje += 'El porcentaje de la seña no puede ser 0';  
+            mensaje += 'El porcentaje de la seña no puede ser 0 <br>';  
             hayError = 1; 
         }
         
         if(self.Complejo.porcentajeSenia > 100){
-            mensaje += 'El porcentaje de la seña se exedio del 100%';  
+            mensaje += 'El porcentaje de la seña se exedio del 100% <br>';  
             hayError = 1; 
         }
         
         if(self.Complejo.porcentajeLuz.length == 0){
-            mensaje += 'Debe ingresar un porcentaje de luz';  
+            mensaje += 'Debe ingresar un porcentaje de luz <br>';  
             hayError = 1; 
         }
         
         if(self.Complejo.porcentajeLuz == 0){
-            mensaje += 'El porcentaje de la seña no puede ser 0';  
+            mensaje += 'El porcentaje de la seña no puede ser 0 <br>';  
             hayError = 1; 
         }
         
         if(self.Complejo.porcentajeLuz > 100){
-            mensaje += 'El porcentaje de la seña se exedio del 100%';  
+            mensaje += 'El porcentaje de la seña se exedio del 100% <br>';  
             hayError = 1; 
         }
         
         if(self.Complejo.existeMailComplejo){
-            mensaje += 'El mail del complejo ya existe';  
+            mensaje += 'El mail del complejo ya existe <br>';  
             hayError = 1; 
         }
         
         if(self.Complejo.existeMailDuenio){
-            mensaje += 'El mail del usuario ya existe';  
+            mensaje += 'El mail del usuario ya existe <br>';  
             hayError = 1; 
         }
         
         if(self.Complejo.existeUsuario){
-            mensaje += 'El usuario ya existe';  
+            mensaje += 'El usuario ya existe <br>';  
             hayError = 1; 
         }
         
-        if(self.Complejo.CBU.length == 0){
-            mensaje += 'Debe ingresar CBU';  
+        if(self.Complejo.CBU.length != 22){
+            mensaje += 'Debe ingresar CBU (22 numeros) <br>';  
             hayError = 1; 
         }
         
-        if(self.Complejo.nroCuenta.length == 0){
-            mensaje += 'Debe ingresar un Número de Cuenta';  
+        if(self.Complejo.nroCuenta.length < 10 || self.Complejo.nroCuenta.length > 14){
+            mensaje += 'Debe ingresar un Número de Cuenta (10 a 14 numeros) <br>';  
             hayError = 1; 
         }
         

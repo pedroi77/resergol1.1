@@ -22,7 +22,11 @@ resergolApp.controller("MainController", function($scope, $state,store, UsuarioS
                 $state.go('Clientes.buscarCanchas');
                 break;
             case 'D':
-                $state.go('Duenios.reserva');
+                //console.log('iddddddddddddddddddd ' + sessionStorage.idComplejo); 
+                //if(sessionStorage.idComplejo != null)
+                    $state.go('Duenios.reserva');
+                //else
+                    //$state.go('Duenios.complejo');  
                 break;
             case 'A':
                 $state.go('Admin.administracion');
@@ -98,7 +102,12 @@ resergolApp.controller("MainController", function($scope, $state,store, UsuarioS
                     self.Usuario.login = true;
                     store.set('token',  duenio[1]);
                     self.guardarSession();
-                    $state.go('Duenios.reserva');
+                    console.log('IDCOMPPPPPPPPP ' + sessionStorage.idComplejo);
+                    if(sessionStorage.idComplejo != null && sessionStorage.idComplejo != 'null')
+                        $state.go('Duenios.reserva');
+                    else  
+                        $state.go('Duenios.complejo');
+
                     if(!(form == null)){
                          $('#loginModal').modal('hide');
                          form.$setPristine();
@@ -227,7 +236,7 @@ resergolApp.controller("MainController", function($scope, $state,store, UsuarioS
         
          if(!token || !sesion ){
              self.IniciarSesion = 'Iniciar Sesion';
-             self.brand = "Open Gallo"; //???
+             self.brand = "Mi Complejo"; //???
          }    
          else{
              self.Usuario.tipo=  sessionStorage.tipo;

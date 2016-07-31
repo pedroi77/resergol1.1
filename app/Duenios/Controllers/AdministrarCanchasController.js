@@ -133,7 +133,7 @@ this.validarDatos = function(){
         //si el precio de la camcha fue modificado puede pasar 2 cosas
         //Puede pedir que los que alquilaron las canchas no se les modifique el precio
         //o el duenio puede optar por cambiar el precio de las canchas aunque la cancha ya fue alquilada
-        if(self.CanchaSeleccionada.precioModificado != self.CanchaSeleccionada.Precio){
+        if(self.CanchaSeleccionada.precioModificado != self.CanchaSeleccionada.Precio && self.CanchaSeleccionada.precioModificado != 0){
             
             console.log("Son distintos");
             bootbox.confirm("¿Desea actualizar el importe de todas las reservas de esta cancha notificando a los clientes que la alquilaron?", function(result) {

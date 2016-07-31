@@ -373,7 +373,9 @@ app.controller("ClientesController", function(ClientesService, UsuarioService, D
         
         
         ClientesService.save(clienteNuevo.data, function(reponse){
-            alert("El registro se realizo correctamente! " + reponse.data);  //Quitar el id
+           bootbox.alert("El registro se realizó correctamente!", function() {
+            });
+            
           },function(errorResponse){
               console.log(errorResponse.data.message);  
          });
