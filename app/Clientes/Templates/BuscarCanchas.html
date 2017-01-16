@@ -1,0 +1,254 @@
+
+<div class="container-fluid">
+
+    <br>
+     <!--Filtros
+            A NIVEL CANCHA
+                Localidad
+                provincia
+                dia
+                horario
+                CantJugadores	  INT          NOT NULL,
+                IdSuperficie	  INT          NOT NULL,
+                Techada	        BOOL         NOT NULL,
+                Luz	            BOOL         NOT NULL,
+                Precio	        DECIMAL(6,2) NOT NULL,
+            A NIVEL COMPLEJO
+                Estacionamiento		bool			NOT NULL,
+                Buffet				bool			NOT NULL,
+                Duchas				bool			NOT NULL,
+                Parrillas			bool			NOT NULL,
+                WiFi				bool			NOT NULL
+            -->
+    
+    <div class="container" ng-controller="BuscarCanchasController as bus">
+        <div class ="principal row">
+            <!-- Comienza la clase  row -->
+           
+           <div class="col-md-6">
+                <section class="widget">
+                    <div class="body">
+                        <form id="user-form" class="form-horizontal form-label-left">
+                            <fieldset>
+                                <legend class="section-buscar legend-mod">Datos de la cancha</legend></legend>
+                                <label for="provincias" class="control-label col-sm-2">Provincia</label>    
+                          
+                                <div class=" col-sm-4 ">
+                                  
+                                    <select style="margin-bottom:5px;"  data-live-search="true" class="selectpicker form-control ac-select stateList" ng-model="bus.provincias.selectedOption" 
+                                            
+                                            ng-options="provincia as provincia.Nombre for provincia in bus.provincias.prov track by
+                                                        provincia.IdProvincia" ng-change="bus.getLocalidades()">
+                                    </select>
+                                    
+                                </div>    
+                          
+                                <label for="localidades" class="control-label col-sm-2">Localidad</label>
+                                <div class=" col-sm-4">    
+                                    <select data-live-search="true" style="margin-bottom:5px;font-size:12px;" class="form-control" ng-model="bus.localidades.selectedOption" 
+                                                ng-options="localidad.Nombre for localidad in bus.localidades.loc track by localidad.Nombre" >
+                                    </select>
+                                </div>
+                            
+                                <label for="jugadores" class="control-label col-sm-2">Jugadores</label>
+                                <div class="col-sm-4">
+                                    
+                                    <select data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="selectedCantJugadoresId" 
+                                                ng-options="cantJugador.id as cantJugador.desc for cantJugador in bus.cantJugadores" >
+                                    </select>
+
+                                </div>    
+                          
+                                <label for="superficie" class="control-label col-sm-2">Superficie</label>
+                                <div class="col-sm-4">    
+                                    <select  data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="bus.superficies.selectedOption" 
+                                            ng-options="superficie.Descripcion for superficie in bus.superficies.sup track by
+                                                        superficie.IdSuperficie">
+                                    </select> 
+                                </div>
+                             
+                               <label for="sel2" class="control-label col-sm-2" >Fecha</label>
+                               <div class="col-sm-4">    
+                                    <p class="input-group">
+                                                      <input type="text" id="fecha" readonly='true' class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="false" close-text="Cerrar" alt-input-formats="altInputFormats" />
+                                        
+                                                     <!--
+                                                                         ng-model="tor.FecInscDesde" 
+                                                                         min-date="dateOptionsInscDesde.minDate"    
+                                                                         is-open="FecInscripcionDesde.opened" 
+                                                                         datepicker-options="dateOptionsInscDesde" 
+                                                                         ng-required="true"  
+                                                                         close-text="Cerrar"
+                                                                         alt-input-formats="altInputFormats" 
+                                                                          ng-blur="tor.setearDesdeInsc()"/>-->
+                                        
+                                                      <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                      </span>
+                                   </p>
+                                </div>
+                            
+                            
+                                <label for="horas" class="control-label col-sm-2">Hora</label>
+                                <div class="col-sm-4" >    
+                                    <select data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="selectedHoraId" 
+                                                ng-options="hora.id as hora.desc for hora in bus.horas" >
+                                    </select>
+                                </div>
+                              
+                                <br>
+                            
+                                
+                            
+                            <label for="precio" class="control-label col-sm-3 ">Precio máximo</label>
+                                <div class="col-sm-3">       
+                                    <input type="number" min="0" id="precioMaximo" class="input-sm col-sm-3 form-control">
+                                </div>
+                                
+                                <div class="form-group col-sm-6">
+                                    <div class="col-sm-12"> 
+                                        <label class="checkbox-inline"><input type="checkbox" id="techada" value="">Techada</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="conLuz" value="">Con Luz</label>
+                                    </div>
+                                    
+                                </div>
+                                
+                             
+                                           
+                            
+                                
+                                
+                                <!----------------------------------------------------------------------------------------->
+                                <legend class="section-buscar legend-mod">Datos del complejo</legend>    
+                                        
+                                <div class="form-group " >
+                                    <div class="col-sm-12">
+                                        <label class="checkbox-inline"><input type="checkbox" id="conEstac" value="">Estacionamiento</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="conDuchas" value="">Duchas</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="conBuffet" value="">Buffet</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="conParrilla" value="">Parrilla</label>
+                                        <label class="checkbox-inline"><input type="checkbox" id="conWifi" value="">WiFi</label>
+                                    <div>
+                                </div>
+                                
+                               <br>
+                                
+                                <div class="col-sm-8">
+                                    <button class="btn btn-md btn-success btn-block"
+                                            onclick="$('html, body').animate({ scrollTop: $('#divpag').offset().top }, 1000);"  ng-click="bus.getCanchas()"><i class="fa fa-plus glyphicon glyphicon-search"></i>Buscar</button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <button class="btn btn-md btn-info btn-block" ng-click="bus.limpiarFiltros()"><i class="fa fa-plus glyphicon glyphicon-erase"></i>Limpiar filtros</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </section>
+               
+            </div>    
+
+            <div class="col-md-6">
+                <div class="text-center"><h4><strong>¡TOP 3 CANCHAS MÁS VOTADAS!</strong></h4></div>
+                
+                    <uib-carousel active="bus.active" interval="bus.myInterval" no-wrap="bus.noWrapSlides">
+                        <uib-slide ng-repeat="cancha in canchasTOP" index="cancha.contador">
+                            <img ng-src="{{cancha.Imagen}}" style="margin:auto;">
+                            <div class="carousel-caption text-center">
+                                <div class="row">
+                                        <div class="col-md-8">
+                                            <h4 class="fa fa-user titul" style="padding:1px;">
+                                                "{{cancha.NombreCancha}}", en <a style="color:green;" ui-sref="Clientes.verComplejo">{{cancha.NombreComplejo}}</a>             
+                                            </h4>
+                                        </div>
+                                        <div class="col-md-4 text-center">
+                                            <button class="{{cancha.PuntajeClass}}" id="cuatro">
+                                                <span>{{cancha.PuntajeDesc}}</span>
+                                            </button>
+                                        </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h6>{{cancha.Calle}} {{cancha.Altura}}, {{cancha.Localidad}} ({{cancha.Provincia}}).</h6>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="#" class="btn btn-primary"
+                                            ui-sref="Clientes.verCancha({idCan:'{{cancha.IdCancha}}', idComp:'{{cancha.IdComplejo}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span>  VER EN DETALLE</a>
+                                        </div>
+                            </div>
+                        </uib-slide>
+                    </uib-carousel>
+                
+            </div> 
+            </div>
+            <!--<div class="alert alert-success" ng-show="canchas.length > 0">
+                 <h5>Total Filtered Client: {{canchasPaginadas.length}}</h5>
+            </div>-->
+            <div style="color:#FFCCCC;" ng-show="bus.seBusco && canchas.length == 0">
+                <p>No se encontraron canchas para los filtros ingresados...</p>
+            </div>
+            
+            <!-- /.row -->
+            <hr>
+            <!-- aca dejar un unico cuadro y crear en con ng-repeat los cuadros necesarios -->
+            <div class ="principal row filtro-Complejos" ng-controller="ClientesController as cli">
+                
+                
+                <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="cancha in canchasPaginadas">
+    				<div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
+                        <div class="col-md-12" style="height:400px">
+						<p>
+							<!--<img src="/../resergol1.1/images/canchas/cancha1.jpg" class="img-thumbnail" style="height:250px;" alt="">-->
+                            <img  ng-src="{{cancha.Imagen}}" class="img-responsive" alt="Image">
+                        </p>
+                        </div>
+						<div class="caption">
+							<div class="blur"></div>
+							<div class="caption-text">
+								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:1px;">                       {{cancha.NombreCancha}}
+                                    <button class="{{cancha.PuntajeClass}}" id="cuatro">
+                                        <span>{{cancha.PuntajeDesc}}</span>
+                                    </button>
+                                </h3>
+                                <h4 class="fa fa-user titul" style="padding:1px;">
+                                    en <a style="color:orange;" ui-sref="Clientes.verComplejo">{{cancha.NombreComplejo}}</a>             
+                                </h4>
+                                <h6 style="border-bottom:1px solid white; padding:3px;">
+                                {{cancha.Calle}} {{cancha.Altura}}
+                                </h6>
+								<ul>
+                                    <!--<li>Dirección: {{cancha.Calle}} {{cancha.Altura}}</li>-->
+                                    <li>Tamaño: {{cancha.CantJugadores}} vs. {{cancha.CantJugadores}} </li>
+                                    <li>Superficie: {{cancha.Superficie}}</li>
+                                    <li>Techada: {{cancha.Techada == 1 ? "SI" : "NO"}} </li>
+                                    <li>Luz: {{cancha.Luz == 1 ? "SI" : "NO"}}</li>
+                                    <li>Precio p/Hora: ${{cancha.muestroPConLuz ? cancha.PrecioConLuz : cancha.Precio | currency:''}} </li>
+                                </ul>
+                                <div class="col-md-12 text-center">
+								<a href="#" class="btn btn-success"
+                                   ui-sref="Clientes.verCancha({idCan:'{{cancha.IdCancha}}', idComp:'{{cancha.IdComplejo}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER CANCHA</a>
+                                </div>
+							</div>
+						</div>
+                        
+                     
+                        
+					</div>
+	           </div>
+                
+                  
+				
+    </div>  
+      <div class="text-center" id="divpag">        
+        <uib-pagination previous-text="Anterior" next-text="Siguiente" first-text="Inicio" last-text="Fin" total-items="totalItems" ng-show = "canchas.length > 0" items-per-page="itemsPerPage" ng-model="pagination.currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" on-select-page="onGoToPage(page)" ng-change="pageChanged(pagination.currentPage)"></uib-pagination>       
+      </div>
+        <div class="col-sm-1">
+        <!--<button id="btnSubir" class="btn btn-primary" onclick="$('html,body').animate({scrollTop:10},'
+                                                               ');return false;" ng-show = "canchas.length > 0"><i class="fa fa-plus glyphicon glyphicon-arrow-up"></i></button>-->
+            <button id="btnSubir" class="btn btn-primary" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" ng-show = "canchas.length > 0"><i class="fa fa-plus glyphicon glyphicon-arrow-up"></i></button> 
+
+      </div>     
+      <div class="col-sm-3" style="color:white;" ng-show="canchas.length > 0">
+        <p>Mostrando {{canchasPaginadas.length}} de {{canchas.length}} canchas...</p>
+      </div>
+</div> 
+</div>
+</div>

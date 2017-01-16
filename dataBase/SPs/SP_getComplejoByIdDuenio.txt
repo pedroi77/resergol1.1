@@ -1,0 +1,66 @@
+create PROCEDURE SP_getComplejoByIdDuenio
+AS
+
+
+
+if estado = 3
+
+select * 
+from duenios due
+inner join complejos com 
+on due.IdDuenio = com.IdDuenio
+
+else
+
+SELECT *
+FROM duenios DUE 
+INNER JOIN dueniospendientes duepen
+on due.IdDuenio = duepen.IdDuenio
+
+DECLARE Aux   INT;
+    
+    SET resultado = 0;
+    SET Aux = -1;
+        
+	SELECT IFNULL(IdPersona, -1) INTO Aux 
+	FROM Personas 
+	WHERE Email = pEmail;
+
+
+
+
+
+
+
+
+
+
+
+create PROCEDURE SP_getComplejoByIdDuenio(
+    pIdDuenio int
+)
+BEGIN
+
+DECLARE estado INT;
+    
+select IdEstado into estado
+from duenios
+where IdDuenio = pIdDuenio;
+
+if estado = 2 THEN
+
+SELECT *
+FROM duenios DUE 
+INNER JOIN dueniospendientes duepen
+on due.IdDuenio = duepen.IdDuenio
+where due.IdDuenio = pIdDuenio;
+
+ELSE 
+
+select * 
+from duenios due
+inner join complejos com 
+on due.IdDuenio = com.IdDuenio
+where due.IdDuenio = pIdDuenio;
+
+end if;

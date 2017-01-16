@@ -1,0 +1,442 @@
+<div class="container" ng-controller="VerCanchaController as can">
+	<div class="row form-group">
+        <div class="col-xs-12">
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="active"><a href="#step-1">
+                    <h4 class="list-group-item-heading" style={color:black};>Datos de la reserva</h4>
+                    <p class="list-group-item-text">Seleccioná el día que querés jugar</p>
+                </a></li>
+                <li class="disabled"><a href="#step-2">
+                    <h4 class="list-group-item-heading">Pago</h4>
+                    <p class="list-group-item-text">Realizá la reserva pagando con tu tarjeta.</p>
+                </a></li>
+                <li class="disabled"><a href="#step-3">
+                    <h4 class="list-group-item-heading">Información de la reserva</h4>
+                    <p class="list-group-item-text">Gracias por confiar en Resergol!</p>
+                </a></li>
+            </ul>
+        </div>
+	</div>
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-12" ng-repeat="canc in cancha">
+
+         <div class="row">
+                <div class="col-md-3 boxComplejo"> 
+                    <section class="widget2 boxInfoReserva">
+                        <div class="row">
+                         <header>
+                             <h3 class="fa fa-user titul">Estás reservando...</h3>
+                             <h5 class="fa fa-user titul">"{{canc.nombre}}", en {{canc.Complejo}}.</a></h5>
+                         </header>
+
+                          <ul class="liSeparados">
+                              <li>
+                            <b>Provincia:</b> <label>{{canc.Provincia}}</label>
+                              </li>
+                              <li>
+                                <b>Localidad:</b> <label>{{canc.Localidad}}</label>  
+                              </li>
+                              <li>
+                                <b>Direccion:</b> <label>{{canc.Calle}} {{canc.Altura}}</label>  
+                              </li>
+                              <li>
+                               <b>Superficie:</b> <label>{{canc.Superficie}}</label>  
+                              </li>
+                              <li>
+                                <b>Tamaño:</b> <label>{{canc.CantJugadores}} ({{canc.CantJugadores * 2}} jugadores)</label>  
+                              </li>
+                              <li>
+                                <b>Precio base p/hora:</b> <label>${{canc.Precio}}</label>
+                                <label class="glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title="Tanto el precio como la seña que se indican no incluyen luz." ></label>  
+                              </li>
+                          </ul>
+                        </div>   
+                    </section>
+              </div>
+            <!--<button id="activate-step-2" class="btn btn-primary btn-lg">Activate Step 2</button>-->
+            
+            <div class="col-md-9 boxInfoReserva">      
+           <section class="widget">
+                    <fieldset>
+                    <div class="body">
+                        <div class="form-group">
+                            <form action="" class="">
+                                <div class="form-group">
+                                    <label for="diaReserva" class="control-label col-sm-1">Día:<span class="required"></span></label>
+                                    <div class="row">
+                                    <div class='col-sm-4 date'>
+                                    <p class="input-group">
+                                                      <input type="text" id="fecha" readonly='true' class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-change="can.cambiaFecha(dt)" ng-required="false" close-text="Cerrar" alt-input-formats="altInputFormats" />
+                                        
+                                                      <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                      </span>
+                                   </p>
+                                    </div>
+                                    <div class='col-sm-4'>
+                                    <label class="checkbox-inline"><input id="chkReservaFija" type="checkbox" value="" >Reserva fija.
+                                    </label>
+                                    <label class="glyphicon glyphicon-exclamation-sign" data-toggle="tooltip" title="La reserva fija se realizará para el resto del año, a partir del día y horario seleccionado. En caso de aumentos o modificaciones será notificado y podrá cancelar las reservas. Sólo se pagará la primer reserva a través de Resergol, el resto se irá pagando en el complejo." ></label>
+                                </div>
+                                </div>
+                                </div>        
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <label for="desde" class="control-label col-sm-1">Desde <span class="required"></span></label>
+                                    <div class="col-xs-12 col-sm-3">  
+                                        <div class="controls" ng-class="">
+                                            <select data-live-search="true" ng-change="can.changeSelectedHoraD(can.selectedHoraDId)" style="margin-bottom:5px;" class="form-control" ng-model="can.selectedHoraDId" 
+                                            ng-options="hora.id as hora.desc for hora in can.horasD" >
+                                    </select>
+                                            
+                                            
+                                            <!--<input id="horaDesdee" type="time" 
+                                                   name="horaDesde" 
+                                                   step="3600"
+                                                   ng-model="can.horaDesde"
+                                                   ng-change="can.changeSelectedHoraD(can.horaDesde)"
+                                                   class="editable-input form-control "
+                                                   min={{can.horaD}} max={{can.horaH}}
+                                                   required/>-->
+                                        </div>
+                                    </div> 
+                                    <label for="hasta" class="control-label col-sm-1">Hasta <span class="required"></span></label>
+                                    <div class="col-xs-12 col-sm-3">  
+                                        <div class="controls" ng-class="">
+                                            
+                                            <select data-live-search="true" ng-change="can.changeSelectedHoraH(can.selectedHoraHId)" style="margin-bottom:5px;" class="form-control" ng-model="can.selectedHoraHId" 
+                                                ng-options="hora.id as hora.desc for hora in can.horasH" >
+                                            </select>
+                                            
+                                            <!--<input id="horaHastaa" type="time" 
+                                                   name="horaDesde2" 
+                                                   step="3600"
+                                                   ng-model="can.horaDesde2"
+                                                   ng-change="can.changeSelectedHoraH(horaDesde)"
+                                                   class="editable-input form-control "
+                                                   min={{can.horaD2}} max={{can.horaH2}}
+                                                   required/>-->
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                </div>
+                                
+                                <br>
+                                <br>
+                                <br>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-12 col-md-12"> 
+                                        <div class='col-sm-4 input-group'>
+
+                                            <label class="radio-inline">
+                                              <input name="radioGroup" id="rbPagaSeña" ng-click="clickRadioButton()" value="option1" type="radio"> Señar
+                                            </label>
+                                            <label class="radio-inline">
+                                              <input name="radioGroup" id="rbPagaCanchaCompleta" ng-click="clickRadioButton()" value="option2" checked="" type="radio"> Pago completo.
+                                            </label>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="uneditable-input h3">A pagar: $ {{precioAPagar | currency:""}}</span>
+                                            <br>
+                                            <span class="uneditable-input h5">Restante: $ {{restante | currency:""}}</span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button id="activate-step-2" ng-click="can.paso1Click()" ng-disabled="!can.paso1Completo" class="btn btn-primary btn-md">Reservar</button>
+                                        </div>
+                                            <div class="col-md-6">
+                                            <button id="" ui-sref="Clientes.verCancha" ng-click="can.cancelarPaso()" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-md">CANCELAR / VOLVER</button>    
+                                        </div>
+                                            
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <em>Nota: recordá que el precio de la cancha puede variar según el horario seleccionado.</em>
+                                </div>
+                            </form>
+            
+            
+            
+                        
+                        </div>
+                </div>
+                        
+            
+        </div>
+    </div>
+ </div>
+    <div class="row setup-content" id="step-2">
+                <div class="col-xs-12">
+
+         <div class="row">
+                <div class="col-md-3 boxComplejo"> 
+                    <section class="widget2 boxInfoReserva">
+                        <div class="row">
+                         <header>
+                            <h3 class="fa fa-user titul">Estás reservando...</h3>
+                             <h5 class="fa fa-user titul">Cancha 1, en Todo Futbol</a></h5>
+                         </header>
+
+                          <ul class="liSeparados">
+                              <li>
+                            <b>Provincia:</b> <label>Buenos Aires</label>
+                              </li>
+                              <li>
+                                <b>Localidad:</b> <label>Lomas de Zamora</label>  
+                              </li>
+                              <li>
+                                <b>Direccion:</b> <label>Laprida 950</label>  
+                              </li>
+                              <li>
+                               <b>Superficie:</b> <label>Pasto Sintético</label>  
+                              </li>
+                              <li>
+                                <b>Tamaño:</b> <label>6 (12 jugadores)</label>  
+                              </li>
+                          </ul>
+                        </div>   
+                    </section>
+              </div>
+            <!--<button id="activate-step-2" class="btn btn-primary btn-lg">Activate Step 2</button>-->
+            
+            <div class="col-md-9 boxInfoReserva">      
+           <section class="widget">
+               <div class="row">
+        <div class="col-xs-12 col-md-6">
+            
+            <div class="panel panel-default">
+                
+                
+                <div class="panel-heading">
+                    <h3 class="panel-title"><img class="pull-right" src="http://i76.imgup.net/accepted_c22e0.png"></h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" id="payment-form">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group" style="color:black;">
+                                    <label for="cardNumber">N° DE TARJETA</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Número de tarjeta" required autofocus data-stripe="number" />
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                    </div>
+                                </div>                            
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-7 col-md-7"  style="color:black;">
+                                <div class="form-group">
+                                    <label for="expMonth" style={color:black};>FECHA DE EXPIRACIÓN</label>
+                                    <div class="col-xs-6 col-lg-6 pl-ziro">
+                                        <input type="text" class="form-control" id="expMonth" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
+                                    </div>
+                                    <div class="col-xs-6 col-lg-6 pl-ziro">
+                                        <input type="text" class="form-control" id="expYear" name="expYear" placeholder="YY" required data-stripe="exp_year" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-5 col-md-5 pull-right"  style="color:black;">
+                                <div class="form-group">
+                                    <label for="cvCode">CÓDIGO</label>
+                                    <input type="password" class="form-control" id="cvCode" name="cvCode" placeholder="" required data-stripe="cvc" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button id="pagar" class="btn btn-success btn-lg btn-block" type="submit" ng-click="can.pagarYReservar()">PAGAR</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="row">
+                <div class="col-md-10">
+               <h4>Estás reservando la cancha para el día <b>{{fechaPartido | date: format: shortDate}}</b> de <b>{{can.selectedHoraDId}}</b> hs a <b>{{can.selectedHoraHId}}</b> hs.</h4>
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>A pagar:  <b>$ {{precioAPagar | currency:""}}</b><h4>
+                    <h5>Restante:  <b>$ {{restante | currency:""}}</b><h5>        
+                </div>    
+            </div>
+            <div class="row">
+                <label class="checkbox-inline"><input id="chkGuardaTarjeta" type="checkbox" value="" >Deseo guardar datos de la tarjeta para futuros pagos.</label>
+            </div>
+            <br>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="" ui-sref="Clientes.verCancha" ng-click="can.cancelarPaso()" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-md">CANCELAR / VOLVER</button>  
+                </div>
+                
+            </div>
+        </div>           
+    </div>
+</section>
+</div>
+                        
+            
+        </div>
+    </div>
+        
+        
+    
+    </div>
+        <div class="row setup-content" id="step-3">
+                <div class="col-xs-12">
+
+         <div class="row">
+                <div class="col-md-3 boxComplejo"> 
+                    <section class="widget2 boxInfoReserva">
+                        <div class="row">
+                         <header>
+                            <h3 class="fa fa-user titul">¡LISTO!</h3>
+                             <h5 class="fa fa-user titul">Operación realizada con éxito.</a></h5>
+                         </header>
+                          <ul class="liSeparados">
+                              <li>
+                            <!--<button id="btnImpComprobante" ng-click="can.imprimirComprobante()" class="btn btn-success btn-md view-pdf" href="https://www.polyu.edu.hk/iaee/files/pdfsample.pdf">IMPRIMIR COMPROBANTE</button>-->
+                            <button id="btnImpComprobante" ng-click="can.imprimirComprobante()" class="btn btn-success btn-md " >IMPRIMIR COMPROBANTE</button>      
+                              </li>
+                              <li>
+                                <button id="" ui-sref="Clientes.misReservas({idCli:'{{idCliente}}'})" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-primary btn-md">IR A MIS RESERVAS</button> 
+                              </li>
+                              <li>
+                               <button id="" ui-sref="Clientes.verCancha" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" class="btn btn-danger btn-md">VOLVER</button>  
+                              </li>
+                          </ul>
+                        </div>   
+                    </section>
+              </div>
+            <!--<button id="activate-step-2" class="btn btn-primary btn-lg">Activate Step 2</button>-->
+            
+            <div class="col-md-9 boxInfoReserva">      
+           <section class="widget">
+               <div class="row">
+       
+        <div class="col-xs-12 col-md-12">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 text-center">
+                <h3>Reserva exitosa, ¡El equipo de Resergol desea que disfrutes el partido!<h3>
+                </div>
+                <div class="text-center" ng-show="cancha[0].HorasCancelacion > 0">
+                    <h5>En caso de ser posible, esta reserva podrá ser cancelada con devolución de importe, {{cancha[0].HorasCancelacion}}hs antes del partido.<h5>
+                </div>    
+                    
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <img id="logoMediano" class="img-responsive" src="/../resergol1.1/images/logo/logoMediano.png" alt="">
+                </div>    
+            </div>
+            <br>
+            <hr>
+        </div>           
+    </div>
+</section>
+</div>
+                        
+            
+        </div>
+    </div>
+        
+        
+    
+    </div>
+
+</div>
+
+
+
+
+<script type="text/javascript">
+    
+$(document).ready(function(){  /* jQuery toggle layout */
+    
+(function(a){a.createModal=function(b){defaults={title:"",message:"Your Message Goes Here!",closeButton:true,scrollable:false};var b=a.extend({},defaults,b);var c=(b.scrollable===true)?'style="max-height: 420px;overflow-y: auto;"':"";html='<div class="modal fade" id="myModal">';html+='<div class="modal-dialog">';html+='<div class="modal-content">';html+='<div class="modal-header">';html+='<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';if(b.title.length>0){html+='<h4 class="modal-title">'+b.title+"</h4>"}html+="</div>";html+='<div class="modal-body" '+c+">";html+=b.message;html+="</div>";html+='<div class="modal-footer">';if(b.closeButton===true){html+='<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>'}html+="</div>";html+="</div>";html+="</div>";html+="</div>";a("body").prepend(html);a("#myModal").modal().on("hidden.bs.modal",function(){a(this).remove()})}})(jQuery);
+
+/*
+* Here is how you use it
+*/
+$(function(){    
+    $('.view-pdf').on('click',function(){
+        var pdf_link = $(this).attr('href');
+
+        //var iframe = '<div class="iframe-container"><iframe src="'+pdf_link+'"></iframe></div>'
+        //var iframe = '<object data="'+pdf_link+'" type="application/pdf"><embed src="'+pdf_link+'" type="application/pdf" /></object>'        
+        var iframe = '<object type="application/pdf" data="'+pdf_link+'" width="100%" height="500">No Support</object>'
+        $.createModal({
+            title:'My Title',
+            message: iframe,
+            closeButton:true,
+            scrollable:false
+        });
+        return false;        
+    });    
+})    
+    
+    
+//////////////////////////////////////////////////////    
+    
+var navListItems = $('ul.setup-panel li a'),
+        allWells = $('.setup-content');
+
+    allWells.hide();
+
+    navListItems.click(function(e)
+    {
+        e.preventDefault();
+        var $target = $($(this).attr('href')),
+            $item = $(this).closest('li');
+        
+        if (!$item.hasClass('disabled')) {
+            navListItems.closest('li').removeClass('active');
+            navListItems.closest('li').addClass('letraNegra');
+            $item.addClass('active');
+            allWells.hide();
+            $target.show();
+        }
+    });
+    
+    $('ul.setup-panel li.active a').trigger('click');
+    /*
+    // DEMO ONLY //
+    $('#activate-step-2').on('click', function(e) {
+        console.log('3 click');
+        $('ul.setup-panel li:eq(1)').removeClass('disabled');
+        $('ul.setup-panel li a[href="#step-2"]').trigger('click');
+        $(this).remove();
+    }) 
+    
+    
+    //DESPUES DE HABER PAGADO, AL ULTIMO PASO DONDE AVISO QUE SE RESERVÓ LA CANCHA, ETC.//
+    $('#pagar').on('click', function(e) {
+        $('ul.setup-panel li:eq(2)').removeClass('disabled');
+        $('ul.setup-panel li a[href="#step-3"]').trigger('click');
+        //$(this).remove();
+        $(this).prop('disabled', true);
+    })  */
+    
+});
+
+</script>
+
+
+
+
+
+
+

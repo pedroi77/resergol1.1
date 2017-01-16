@@ -1,0 +1,256 @@
+<!--main-->
+<div class="container" ng-controller="VerComplejoController as com">
+    
+   <div class="row" ng-repeat="comp in complejo">
+
+            <div class="col-md-3 boxComplejo"> 
+            <section class="widget boxComplejo">
+                    <div class="row">
+                     <header>
+                        <h3 class="fa fa-user titul">{{comp.nombreComplejo}}</h3>
+                     </header>
+                      <ul class="liSeparados">
+                          <li>
+                        <b>Provincia:</b> <label>{{comp.Provincia}}</label>
+                          </li>
+                          <li>
+                            <b>Localidad:</b> <label>{{comp.Localidad}}</label>  
+                          </li>
+                          <li>
+                            <b>Direccion:</b> <label>{{comp.Calle}} {{comp.Altura}}</label>  
+                          </li>
+                          <li>
+                           <b>Tel.:</b> <label>{{comp.nroTelefono}} {{comp.nroCelular}}</label>  
+                          </li>
+                          <li class="glyphicon glyphicon-time" uib-popover-html="DiasYHorariosTooltip" popover-placement="right" popover-trigger="mouseenter">
+                          </li>
+                      </ul>    
+                    </div>   
+                       <div>
+                        <a id="btnVerCanchasComplejo"
+                         class="btn btn-success center-block" onclick="$('html,body').animate({scrollTop:1000},'slow');" style="border-radius: 7px;" role="button">VER CANCHAS</a>
+                    </div>
+           </section>
+           
+           
+          </div>
+       
+       
+       <div class="col-md-6">
+          <uib-carousel active="com.active" interval="com.myInterval" no-wrap="com.noWrapSlides">
+                <uib-slide ng-repeat="img in imagenesComplejo" index="img.id">
+                    <img ng-src="{{img.imagen}}" style="margin:auto;">
+                    <div class="carousel-caption">
+                    </div>
+                </uib-slide>
+            </uib-carousel>
+    </div> 
+       
+       <div class="col-md-3"> 
+           
+           <section class="widget2">
+              <div class="panel-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                        <header>
+                            <h4><i class="fa fa-user"></i>Descripción</h4>
+                        </header>
+                      <p>{{comp.Descripcion}}</p>
+                      </div>
+                  </div>
+                  </div>
+               </section>
+            
+           <section class="widget2 boxServAdicionales">
+                <div class="panel-heading" ><h4>Servicios adicionales</h4></div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label>Buffet </label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[comp.Buffet]" aria-hidden="true"></span>    
+                      </div>
+                      <div class="col-md-6">
+                        <label>Parrilla </label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[comp.Parrillas]" aria-hidden="true"></span>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label>Duchas </label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[comp.Duchas]" aria-hidden="true"></span>
+                      </div>
+                      <div class="col-md-6">
+                        <label>Wifi</label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[comp.WiFi]" aria-hidden="true"></span>  
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-8">
+                        <label>Estacionamiento</label><span ng-class="{1:'glyphicon glyphicon-ok', 0:'glyphicon glyphicon-remove'}[comp.Estacionamiento]" aria-hidden="true"></span>  
+                      </div>
+                  </div>   
+            </section>
+
+
+                   
+                  </div>
+           
+           
+          </div>
+        
+         <div class="widget2">
+            <div class="row">
+                      <div class="col-md-2 text-center">
+                          <h6>Punt. Complejo </h6><h4><span class="label {{com.PuntajeClass}}">{{com.PuntajeDesc}}</span></h4>
+                      </div>
+                      <br>
+                      <div class="col-md-2">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-success" ng-click="com.puntuar(5) || !com.estaLogueado || com.seVoto5" ng-disabled="!com.estaLogueado || com.seVoto5" id="cinco">"Una fantasía"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-primary" ng-click="com.puntuar(4) || !com.estaLogueado || com.seVoto4" ng-disabled="!com.estaLogueado || com.seVoto4" id="cuatro">"Muy bueno!"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-info" ng-click="com.puntuar(3) || !com.estaLogueado || com.seVoto3" ng-disabled="!com.estaLogueado || com.seVoto3" id="tres">"Mas o menos"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-warning" ng-click="com.puntuar(2) || !com.estaLogueado || com.seVoto2" ng-disabled="!com.estaLogueado || com.seVoto2" id="dos">"No me gusta"</button>
+                        </div>
+                          <br2>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="botonesPuntuacion">
+                            <button class="btn btn-danger" ng-click="com.puntuar(1) || !com.estaLogueado || com.seVoto1" ng-disabled="!com.estaLogueado || com.seVoto1" id="uno">"Muy malo"</button>
+                        </div>
+                      </div>
+                          </div>
+        </div>
+            
+         <div class="row">
+           
+             <div class="col-md-4">
+              <div class="widget">
+                <h4 class="fa fa-user titul">Ubicación</h4>
+                <div class="boxMapa">
+                    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options">
+                        <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+                        </ui-gmap-marker>
+                    </ui-gmap-google-map>
+                </div>
+              </div>
+             </div>
+             
+             <div class="col-md-6">
+                <div class="detailBox">
+                    <div class="titleBox">
+                        <label>Comentarios</label>
+                    </div>
+                    <div class="commentBox">
+                        <p class="taskDescription">Mirá lo que opina la gente acerca de "{{nombreComplejo}}"</p>
+                    </div>
+                    <div class="actionBox">
+                        <ul class="commentList">
+                            <li ng-repeat="comm in ComentariosComplejo">
+                                    <div class="commentText">
+                                        <p style="color:gray">{{comm.Usuario}}:  </p>
+                                        <p class="">{{comm.Comentario}}</p> <span class="date sub-text">{{comm.Fecha}}</span>
+
+                                    </div>
+                                </li>
+                        </ul>
+                        <form class="form-inline" name="algo" id="algo" role="form">
+                            <div class="form-group">
+                                 <input class="form-control" id="txtComentar" ng-maxlength="100" ng-model="com.comment" ng-disabled="!com.estaLogueado" type="text" placeholder="Agregar comentario" />
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-default" id="btnComentar" ng-click="com.comentar() || !com.estaLogueado" ng-disabled="!com.estaLogueado || !algo.$valid">Comentar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+             </div>
+             
+        
+         </div>
+         
+         
+
+<div class="container col-md-12">
+  <div class="row">
+    <h2>Nuestras canchas</h2>
+        <p><b>Importante: El precio indicado por cada cancha, es el precio base (no incluye luz).</p>
+        <p>Seleccioná la cancha que desees reservar o ver más en detalle.</b></p>
+  </div>
+    
+    <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="canc in canchas">
+    				<div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
+                        <div class="col-md-12" style="height:400px">
+						<p>
+                            <img  ng-src="{{canc.imagen}}" class="img-responsive" alt="Image">
+                        </p>
+                        </div>
+						<div class="caption">
+							<div class="blur"></div>
+							<div class="caption-text">
+								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:1px;">                       {{canc.nombre}}
+                                </h3>
+                                <h4 style="border-bottom:1px solid white; padding:3px;">
+                                    ${{canc.Precio | currency:''}}
+                                </h4>
+								<ul>
+                                    <li>Tamaño: {{canc.CantJugadores}} vs. {{canc.CantJugadores}} </li>
+                                    <li>Superficie: {{canc.Descripcion}}</li>
+                                    <li>Techada: {{canc.Techada == 1 ? "SI" : "NO"}} </li>
+                                    <li>Luz: {{canc.Luz == 1 ? "SI" : "NO"}}</li>
+                                </ul>
+                                <div class="col-md-12 text-center">
+								<a href="#" class="btn btn-success"
+                                   ui-sref="Clientes.verCancha({idCan:'{{canc.IdCancha}}', idComp:'{{idComplejo}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER CANCHA</a>
+                                </div>
+							</div>
+						</div>
+                        
+                     
+                        
+					</div>
+	           </div>                          
+                          
+    <!--<div class="row">
+        <div class="col-lg-3" ng-repeat="canc in canchas">
+              <div class="cuadro_intro_hover " style="background-color:#cccccc;">
+            <p>
+              <img src="/../resergol1.1/images/canchas/cancha2.jpg" class="img-responsive" alt="">
+            </p>
+            <div class="caption">
+              <div class="blur"></div>
+              <div class="caption-text">
+                <h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:10px;">{{canc.nombre}}</h3>
+                <ul>
+                                    <li>Cant. Jugadores: {{canc.CantJugadores}} vs {{canc.CantJugadores}}</li>
+                                    <li>Superficie: {{canc.descripcion}}</li>
+                                    <li>Techada: {{canc.techada == 1 ? "SI" : "NO"}} </li>
+                                    <li>Luz: {{cancha.luz == 1 ? "SI" : "NO"}}</li>
+                                    <li>Precio p/Hora: ${{canc.precio | currency:''}}</li>
+                                </ul>
+                <a class=" btn btn-default" ui-sref="Clientes.verCancha({idCan:'{{canc.idcancha}}', idComp:'{{idComplejo}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-plus"><label>VER</label></span></a>
+              </div>
+            </div>
+          </div>
+      </div>-->
+
+   
+    </div>
+</div>
+
+    <div class="clearfix"></div>
+
+    <hr>
+  </div>
+</div>
+

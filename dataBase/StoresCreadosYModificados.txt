@@ -1,0 +1,134 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_existenReservasFijas`(IN `pIdCliente` INT, IN `pIdComplejo` INT, IN `pIdCancha` INT, IN `pHoraInicio` TIME, IN `pHoraFin` TIME)
+BEGIN
+
+    select  count(*) as cantidad
+    from reservas res
+    where res.IdEstado = 3
+    and res.IdCliente = pIdCliente
+    and res.IdComplejo = pIdComplejo
+    and res.IdCancha = pIdCancha
+    and res.HoraInicio = pHoraInicio
+    and res.HoraFin = pHoraFin;
+
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_deleteReservasFijas`(IN `pIdCliente` INT, IN `pIdComplejo` INT, IN `pIdCancha` INT, IN `pHoraInicio` TIME, IN `pHoraFin` TIME)
+BEGIN
+
+    delete from reservas 
+    where IdEstado = 3
+    and IdCliente = pIdCliente
+    and IdComplejo = pIdComplejo
+    and IdCancha = pIdCancha
+    and HoraInicio = pHoraInicio
+    and HoraFin = pHoraFin;
+
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_updateComplejo`(IN `pNombre` VARCHAR(60), IN `pDescripcion` VARCHAR(200), IN `pEstacionamiento` TINYINT, IN `pBuffet` TINYINT, IN `pDuchas` TINYINT, IN `pParrillas` TINYINT, IN `pWiFi` INT, IN `pHoraCobroLuz` TIME, IN `pPorcentajeSeña` INT, IN `pHorasCancelacion` INT, IN `pTiempoReserva` TIME, IN `pEmail` VARCHAR(60), IN `pIdEstado` INT, IN `pIdDuenio` INT, IN `pPorcentajeLuz` INT, IN `pnroCelular` INT, IN `pnroTelefono` INT, IN `pIdComplejo` INT)
+BEGIN
+
+
+	DECLARE Error INT DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+
+UPDATE complejos SET 
+	Nombre = pNombre
+	,Descripcion = pDescripcion
+	,Estacionamiento = pEstacionamiento
+	,Buffet = pBuffet			
+	,Duchas = pDuchas		
+	,Parrillas = pParrillas			
+	,WiFi =	pWiFi			
+	,HoraCobroLuz =	pHoraCobroLuz	
+	,PorcentajeSeña = pPorcentajeSeña
+	,HorasCancelacion = pHorasCancelacion	
+	,TiempoReserva = pTiempoReserva		
+	,Email = pEmail			
+	,IdEstado =	pIdEstado		
+	,IdDuenio =	pIdDuenio	
+	,PorcentajeLuz = pPorcentajeLuz	
+	,nroCelular = pnroCelular	
+	,nroTelefono = pnroTelefono	 
+WHERE 
+	IdComplejo = pIdComplejo;
+
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_getMailsReservas`(IN `pIdComplejo` INT, IN `pIdCancha` INT)
+BEGIN
+
+    select DISTINCT
+        res.IdComplejo 
+        ,cli.IdPersona 
+        ,per.Email 
+        ,per.Nombre
+        ,per.Apellido
+        ,cli.Usuario
+    from reservas res 
+    inner join clientes cli 
+    on res.IdCliente = cli.IdCliente 
+    inner join personas per 
+    on cli.IdCliente = per.IdPersona 
+    where res.IdComplejo = pIdComplejo 
+    and res.IdCancha = IdCancha;
+
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_updateComplejoDireccion`(IN `pCalle` VARCHAR(40), IN `pAltura` INT, IN `pIdLocalidad` INT, IN `pIdProvincia` INT, IN `pX` INT, IN `pY` INT, IN `pIdComplejo` INT, IN `vResultado` INT)
+BEGIN 
+
+	DECLARE Error INT DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+    SET vResultado = 1;
+
+UPDATE complejosdireccion SET 
+	Calle = pCalle
+	,Altura = pAltura
+	,IdLocalidad = pIdLocalidad
+	,IdProvincia = pIdProvincia
+	,X = pX
+	,Y = pY
+WHERE 
+	IdComplejo = pIdComplejo;
+
+	IF (Error=-1)  THEN
+        SET vResultado = -1; /*Devuelve -1 en caso de error*/
+    END IF;
+
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_updateDuenio`(IN `pIdDuenio` INT, IN `pUsuario` VARCHAR(50), IN `pContrasenia` VARCHAR(50), OUT `pIdPersona` INT)
+BEGIN
+
+UPDATE duenios SET 
+    Usuario = pUsuario
+    ,Contrasenia = pContrasenia
+    ,IdEstado = 3
+WHERE
+    IdDuenio=pIdDuenio;
+    SET pIdPersona = (SELECT IdPersona FROM duenios where IdDuenio=pIdDuenio);
+
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_updatePersona`(IN `pIdPersona` INT, IN `pNombre` VARCHAR(60), IN `pIdTipoDoc` INT, IN `pApellido` VARCHAR(60), IN `pNroDoc` VARCHAR(20), IN `pEmail` VARCHAR(60), OUT `vResultado` INT)
+BEGIN
+
+	DECLARE Error INT DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION  SET Error = -1;
+    SET vResultado = 1;
+
+UPDATE personas SET 
+    Nombre = pNombre
+    ,Apellido = pApellido
+    ,IdTipoDoc = pIdTipoDoc
+    ,NroDoc = pNroDoc
+    ,Email = pEmail
+WHERE 
+    IdPersona = pIdPersona;
+
+    IF (Error=-1)  THEN
+        SET vResultado = -1; /*Devuelve -1 en caso de error*/
+    END IF;
+
+END

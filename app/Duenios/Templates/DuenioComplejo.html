@@ -1,0 +1,443 @@
+<!--<div class="container-fluid">-->
+
+
+<!--<div class="container-fluid">-->
+<div class="container-fluid">
+    <header class="row widget" >
+        <div style = "color: white; " class="container">
+            <h3  style=" font-size: 50px; text-align:center; font-style:italic;" >Mi complejo</h3>
+        </div>
+    </header>
+</div>    
+
+
+<div id="main" ng-controller="AdministrarComplejoController as admCom"  class="container clear-top" style="min-height: 300px;">
+    <form class="modal-body" name="frmAdminDuenio">
+        <div class="row">
+            <div class="col-md-7">
+                <section class="widget">
+                    
+                    <div class="body">
+                        <form id="user-form" class="form-horizontal form-label-left"
+                                novalidate="novalidate"
+                                method="post"
+                                data-parsley-priority-enabled="false"
+                                data-parsley-excluded="input[name=gender]">
+                            
+                            <div class="row">
+                               <div class="col-md-12">
+                                    <img src="/../resergol1.1/images/duenios/complejo.jpg" class="img-responsive" alt="Image" style="display:block;margin:0 auto 0 auto;">
+                                </div>
+                            </div>
+                            
+                            <fieldset>
+                                <legend class="section legend-mod">Caracteristicas</legend>
+                                <div class="form-group">
+                                    <label for="nombre" class="control-label  col-sm-4">Nombre del complejo<span class="required">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input placeholder="Ingrese un nombre" id="nombre" style="margin-bottom:15px;" class="form-control input-transparent" type="text" name="nombre" ng-model="admCom.Complejo.nombreComplejo" value="{{admCom.Complejo.nombreComplejo}}">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom:15px;">
+                                    <div class="col-sm-12">
+                                        <label class="checkbox-inline"><input id="estacionamiento" ng-model="admCom.Complejo.estacionamiento" type="checkbox">Estacionamiento</label>
+                                        <label class="checkbox-inline"><input id="duchas" ng-model="admCom.Complejo.duchas" type="checkbox">Duchas</label>
+                                        <label class="checkbox-inline"><input id="buffet" ng-model="admCom.Complejo.buffet" type="checkbox">Buffet</label>
+                                        <label class="checkbox-inline"><input id="parrilla" ng-model="admCom.Complejo.parrilla" type="checkbox">Parrilla</label>
+                                        <label class="checkbox-inline"><input id="wifi" ng-model="admCom.Complejo.wifi" type="checkbox">WiFi</label>
+                                       
+                                
+
+                                        <div class="form-group" style="margin-bottom:5px;">
+                                            <label for="descripcion" class="control-label col-sm-4">Descripción<span class="required"></span></label>
+                                        </div>
+                                
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <textarea ng-model="admCom.Complejo.descripcionComplejo" placeholder="Descripción breve del complejo." class="form-control" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                
+                                        <legend class="section legend-mod">Dias y horarios</legend>    
+                                
+                                        <div class="row" style="margin-bottom:15px;">
+                                            <label for="diaDesde" class="control-label  col-sm-1">De</label>
+                                            <div class="col-xs-12 col-sm-3">  
+                                              <select id="diaDesde" style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="admCom.Complejo.selectedOption" 
+                                                    ng-options="Nombre as dias.Nombre for dias in admCom.dias.dia track by
+                                                                dias.idDia">
+                                                </select>
+                                            </div>
+                                            <label for="diaHasta" class="control-label  col-sm-1">A</label>
+                                            <div class="col-xs-12 col-sm-3">  
+                                                <select id="diaHasta" ng-model="diaHasta" style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="admCom.Complejo.selectedOption" 
+                                                    ng-options="Nombre as dias.Nombre for dias in admCom.dias.dia track by
+                                                                dias.idDia">
+                                                </select>
+                                            </div>
+                                        </div>
+                                
+                                        <div class="row" style="margin-bottom:15px;">
+                                            <label for="diaHasta" class="control-label  col-sm-1">De</label>
+                                            <div class="col-xs-12 col-sm-3">  
+                                                <select id="horaDesde" data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="selectedHoraIdDesde" ng-change="admCom.cambiaHasta()"
+                                                        ng-options="hora.id as hora.desc for hora in admCom.horasDesde" >
+                                                </select>
+                                            </div>
+                                            <label for="sel2" class=" col-sm-1">A</label>
+                                            <div class="col-xs-12 col-sm-3">  
+                                                <select id="horaHasta" data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="selectedHoraIdHasta"
+                                                        ng-options="hora.id as hora.desc for hora in admCom.horasHasta" >
+                                                </select>
+                                            </div>    
+                                            <div class="col-sm-4">
+                                               
+                                                <input ng-click="admCom.validarDatosHorarios()" value="Agregar" class="btn btn-primary">
+                                            </div>
+                                        </div>
+                                
+                                        <div class="table-responsive col-md-12 row" style="margin-bottom:5px;">          
+
+                                            <table id="dtDias" ng-table="adm.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+                                                <tr ng-repeat="dias in admCom.Complejo.diasComplejo" style="background-color:white;">
+                                                    <td class="text-center" title="'DE'">{{dias.diaDesde}}</td>
+                                                    <td class="text-center" title="'A'"  >{{dias.diaHasta}}</td>
+                                                    <td class="text-center" title="'DE'">{{dias.horaDesde}}</td>
+                                                    <td class="text-center" title="'A'">{{dias.horaHasta}}</td>
+                                                    <td class="text-center" title="'IdDiaDesde'"  ng-if='false'>{{dias.idDiaDesde}}</td>
+                                                    <td class="text-center" title="'IdDiaHasta'"  ng-if='false'>{{dias.idDiaHasta}}</td>
+                                                    <td class="text-center" title="''">
+                                                        <button type="button" ng-click="admCom.deleteRow(dias)" class="btn btn-sm btn-danger">
+                                                            <i class="glyphicon glyphicon-remove-circle"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            
+                            <!--CONFIGURACIONES ESPECIALES-->  
+                            <fieldset>
+                                <legend class="section legend-mod">Configuraciones especiales</legend>
+                                
+                                <div class="form-group" style="margin-bottom:15px; ">
+                                    <label id="horaSeñaLabel" for="horaSeña" class="control-label col-sm-6">Hora a partir de la cual se cobra luz<span class="required">*</span></label>
+                                    <div class="col-xs-12 col-sm-3">  
+                                        <select id="horaDesdeLuz" data-live-search="true" style="margin-bottom:15px;" class="form-control" ng-model="admCom.horaLuzSeleccionada" ng-change="admCom.pruebaLuz()" ng-options="hora.desc for hora in admCom.horaLuz.hora track by hora.id">
+                                        </select>
+                                    </div>    
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom:15px;">
+                                    <label for="porcentajeExtra" class="control-label col-sm-6">Porcentaje extra por jugar con luz</label>
+                                    <div class="col-xs-12 col-sm-3">  
+                                        <input style="margin-bottom:15px;" id="porcentajeLuz" ng-model="admCom.Complejo.porcentajeLuz" class="form-control input-transparent" type="number" value="admCom.Complejo.porcentajeLuz" name="porcentajeLuz"> 
+                                    </div>    
+                                </div>
+                                
+                                 <div class="form-group" style="margin-bottom:15px;">
+                                    <label for="porcentajeSeña" class="control-label col-sm-6">Porcentaje de seña para reservar</label>
+                                    <div class="col-xs-12 col-sm-3">  
+                                        <input style="margin-bottom:15px;" id="porcentajeSenia" required="required" placeholder="24 Hs" ng-model="admCom.Complejo.porcentajeSenia" class="form-control input-transparent" type="number" value="admCom.Complejo.porcentajeSenia" name="porcentajeSenia">
+                                    </div>    
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom:15px;">
+                                    <label for="horasAviso" class="control-label col-sm-6">Tiempo de aviso de cancelación de cancha (horas)</label>
+                                    <div style="color: black;" class="col-xs-12 col-sm-4">
+                                        <input style="margin-bottom:15px;" id="horasAviso" required="required" placeholder="24 Hs" class="form-control input-transparent" type="number" ng-model="admCom.Complejo.horasCancelacion" value="admCom.Complejo.horasCancelacion" name="horasAviso">
+                                    </div>
+                                </div>
+                            </fieldset>
+                            
+                            
+                            
+                            <!--DATOS DE CONTACTO--> 
+                            <fieldset>
+                                <legend class="section legend-mod">Datos de contacto</legend>
+                                
+                                <div class="form-group">
+                                    <label id="email-label" for="email" class="control-label col-sm-4">Correo electrónico <span class="required">*</span></label>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <input style="margin-bottom:5px;" id="email" type="email"
+                                        ng-model="admCom.Complejo.emailComplejo" class="form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" name="email" placeholder="Correo electrónico" value="admCom.Complejo.emailComplejo" required ng-class="{ error:frmAdminDuenio.email.$error.required && frmAdminDuenio.email.$dirty, warning:frmAdminDuenio.email.$error.email }" ng-blur="admCom.existeEmailComplejo()">
+                                        <span ng-show="!frmAdminDuenio.$pristine && admCom.Complejo.existeMailComplejo" class= "msjError">
+                                            EMail existente.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="telefono-particular" class="control-label col-sm-4">Teléfono particular</label>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <input style="margin-bottom:5px;" id="telefono" type="number" required="required" class="form-control input-transparent" ng-model="admCom.Complejo.nroTelefono" name="telefono" placeholder="Teléfono" value="{{admCom.Complejo.nroTelefono}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4">Teléfono celular</label>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <input style="margin-bottom:5px;" id="celular" type="number" data-trigger="change" required="required" class="form-control input-transparent" ng-model="admCom.Complejo.nroCelular" name="celular" placeholder="Celular" value="{{admCom.Complejo.nroCelular}}">
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </form>
+                    </div>
+                
+                </section>
+                
+                <section class="widget">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-4">
+                            <button type="button" class="btn btn-danger">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" ng-Click="admCom.validarDatos()">Grabar</button>
+                        </div>
+                    </div>
+                </section>
+                
+                 
+                
+            </div>
+            
+            <div class="col-md-5">
+                <section class="widget">
+                    <header>
+                        <h4><i class="fa fa-user"></i>Ubicación</h4>
+                    </header>
+                    
+                    <fieldset>
+                    <div class="body">
+                        <p class="mensajeExplicacion">Datos de la ubicación del complejo(provincia, localidad, dirección).</p>
+                        
+                        <div class="form-group">
+                            <form action="" class="">
+                                <div class="form-group">
+                                    <label for="provincias" class="control-label col-sm-2">Provincia</label>
+                                    <div class="col-xs-12 col-sm-10">
+                                        <select style="margin-bottom:5px;" class="form-control ac-select stateList" ng-model="admCom.provinciaSeleccionada" 
+                                            ng-options="provincia.Nombre for provincia in admCom.provincias.prov track by
+                                                        provincia.Nombre" ng-change="admCom.getLocalidades()" ng-blur="admCom.armarDir()">
+                                        </select> 
+                                    </div>    
+                                </div>        
+                                
+                                <div class="form-group">
+                                    <label for="localidades" class="control-label col-sm-2">Localidad</label>
+                                    <div class="col-xs-12 col-sm-10">    
+                                        <select style="margin-bottom:5px;" class="form-control" ng-model="admCom.localidadSeleccionada" 
+                                                ng-options="localidad.Nombre for localidad in admCom.localidades.loc track by localidad.Nombre" ng-seleted="3" ng-blur="admCom.armarDir()">
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="calle" class="control-label col-sm-2">Dirección</label>
+                                    <div class="col-xs-12 col-sm-10">    
+                                        <input style="margin-bottom:5px;" id="direccion" class="form-control input-transparent" type="text" placeholder="Dirección" ng-maxlength="60" name="direccion" ng-model="admCom.Complejo.calle"
+                                               value="{{admCom.Complejo.calle}}" ng-blur="admCom.armarDir()">
+                                    </div>    
+                                </div>  
+                                
+                                <div class="form-group">
+                                    <label for="altura" class="control-label col-sm-2">Altura</label>
+                                    <div class="col-xs-12 col-sm-10">    
+                                        <input type="number" id="altura" class="form-control input-transparent" style="margin-bottom:5px;" placeholder="1000"  name="altura" ng-model="admCom.Complejo.altura" value="{{admCom.Complejo.altura}}" ng-blur="admCom.armarDir()" />
+                                    </div>    
+                                </div >  
+                                
+                               
+                                
+                            </form>
+                    </div>
+                </div>
+                        
+                    </fieldset>
+                </section>
+                
+                <section class="widget">
+                
+                    <header>
+                        <h4><i class="fa fa-book"></i>Mapa</h4>
+                    </header>
+                    
+                    
+                    <div class="body">
+                        <p class="mensajeExplicacion">Visualice el complejo en Google Maps.</p>
+                        
+                         <!--<div class="boxMapa"> --> 
+                               <form name="searchForm" novalidate ng-submit="search()">
+                                    <div class="input-group">
+                                        <input name="place" type="text" class="form-control" 
+                                        ng-model="searchPlace" required autofocus />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" 
+                                            ng-disabled="searchForm.$invalid" >Buscar</button>
+                                        </span>
+                                    </div>
+                                </form>
+
+                                <div id="map" > </div>
+                            
+                         <!-- </div> --> 
+                                    
+                       
+                    </div>
+                    
+                </section>
+                <section class="widget">
+                    <header>
+                        <h4><i class="fa fa-user"></i>Datos del dueño</h4>
+                        <div class="widget-controls">
+                            <a data-widgster="expand" title="Expandir" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                            <a data-widgster="collapse" title="Contraer" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                            <a data-widgster="close" title="Cerrar" href="#"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </header>
+                    
+                    <fieldset>
+                    <div class="body">
+                        <p class="mensajeExplicacion">Administre aquí los datos del dueño del complejo.</p>
+                        <div class="form-group">
+                            <form action="" class="">
+                                
+                                <div class="form-group" style="margin-bottom:50px;">
+                                    <label for="usuario" class="control-label  col-sm-4">Usuario<span class="required">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="usuario" type="text" placeholder="Usuario" ng-maxlength="25" name="usuarioDuenio" ng-model="admCom.Complejo.usuario" value="admCom.Complejo.usuario" ng-blur="admCom.existeUsuario()">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom:50px;">
+                                    <label for="contraseña" class="control-label col-sm-4">Contraseña <span class="required">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="contrasenia" type="password" placeholder="Contraseña" ng-minlength="6" ng-maxlength="25" name="contrasenia" ng-model="admCom.Complejo.contrasenia" value="admCom.Complejo.contrasenia">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom:50px;">
+                                    <label for="nombreD" class="control-label  col-sm-4">Nombre<span class="required">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="nombre" type="text" placeholder="Nombre" ng-maxlength="60" name="nombre" ng-model="admCom.Complejo.nombreDuenio" value="{{admCom.Complejo.nombreDuenio}}">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom:50px;">
+                                    <label for="apellido" class="control-label col-sm-4">Apellido <span class="required">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="apellido" type="text" placeholder="Apellido" ng-maxlength="60" name="apellido" ng-model="admCom.Complejo.apellidoDuenio" value="admCom.Complejo.apellidoDuenio"> 
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom:50px;">
+                                    <label for="tipoDoc" class="control-label col-sm-4">Tipo doc.</label>
+                                    <div class="col-xs-12 col-sm-8">    
+                                       <select style="margin-bottom:5px;" class="form-control" ng-model="admCom.tipoDocSeleccionado" 
+                                                             ng-options="tipoDoc.Descripcion for tipoDoc in admCom.tiposDoc.tipos 
+                                                                         track by tipoDoc.IdTipoDoc">
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom:50px;">
+                                    <label for="nro-documento" class="control-label col-sm-4">Documento <span class="required">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control input-transparent col-sm-4" style="margin-bottom:5px;" id="nroDoc" type="number" placeholder="Nro Documento" ng-maxlength="10" name="nroDoc" ng-model="admCom.Complejo.nroDoc" ng-blur="due.existeDni()" value="{{admCom.Complejo.nroDoc}}">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="margin-bottom:50px;">
+                                    <label for="email" class="control-label col-sm-4">Mail <span class="required">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control input-transparent form-control ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" style="margin-bottom:5px;" id="email" type="email" placeholder="example@email.com" name="email" ng-model="admCom.Complejo.emailDuenio" ng-blur="admCom.existeEmailDuenio()" value="{{admCom.Complejo.emailDuenio}}" required ng-class="{ error:frmAdminDuenio.email.$error.required && frmAdminDuenio.email.$dirty, warning:frmAdminDuenio.email.$error.email }">
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    
+                    
+                    </div>
+                    </fieldset>
+                </section>
+                
+                 <section class="widget">
+                    <header>
+                        <h4><i class="fa fa-book"></i>Transferencias</h4>
+                        <div class="widget-controls">
+                            <a data-widgster="expand" title="Expandir" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                            <a data-widgster="collapse" title="Contraer" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                            <a data-widgster="close" title="Cerrar" href="#"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </header>
+                    
+                    <fieldset>
+                    <div class="body">
+                        <p class="mensajeExplicacion">Datos necesarios para realizar las transferencias de las reservas.</p>
+                                
+                         <div class="form-group">
+                            <form action="" class="">
+                                
+                                <div class="form-group">
+                                    <label for="CBU" class="control-label col-sm-4">CBU</label>
+                                    <div class="col-xs-12 col-sm-8">    
+                                        <input id="CBU" required="required" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder="CBU"  name="cbu" ng-model="admCom.Complejo.CBU"/>
+                                    </div>    
+                                </div>  
+                                
+                                <div class="form-group">
+                                <label for="nroCuenta" class="control-label col-sm-4">Nro de cuenta</label>
+                                    <div class="col-xs-12 col-sm-8">    
+                                        <input required="required" id="nroCuenta" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder="Nro de cuenta"  name="" ng-model="admCom.Complejo.nroCuenta"/>
+                                    </div>    
+                                </div> 
+
+                            </form>
+                        </div>
+                        
+                    </div>
+                    </fieldset>
+                   
+                </section>
+                
+                
+                <section class="widget">
+                    <header>
+                        <h4><i class="fa fa-book"></i>Ver</h4>
+                        <div class="widget-controls">
+                            <a data-widgster="expand" title="Expandir" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                            <a data-widgster="collapse" title="Contraer" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                            <a data-widgster="close" title="Cerrar" href="#"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </header>
+                    
+                    <fieldset>
+                    <div class="body">
+                        <p class="mensajeExplicacion">Administración de imagenes del complejo.</p>
+                                
+                         <div class="form-group">
+                            <form action="" class="">
+                                <div class="form-group">
+                                    <a ui-sref="Duenios.complejoImagenes"  class="btn btn-success btn-lg btn-block" role="button">Imagenes del complejo</a>
+                                    <a ui-sref="Duenios.verComplejo({idComp:'{{admCom.Complejo.idComplejo}}'})" class="btn btn-info btn-lg btn-block" role="button">Como me ven los usuarios</a>
+                                </div>  
+                            </form>
+                      
+                        
+                    </fieldset>
+                   
+                </section> 
+            </div>
+        </div>
+    </form>
+</div>
+<div class="clearfix"></div>
+
+
+                                                              
+
+
+
+

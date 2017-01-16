@@ -1,0 +1,186 @@
+<div class="container-fluid" ng-controller="MiCuentaController as cue">
+        
+        <header class="row widget" >
+            <div style = "color: white" class="container">
+                <h6  style=" font-size: 30px; text-align:center;  font-style:italic;" >Información de tu cuenta.</h6>
+            </div>
+        </header>
+        
+        
+        
+        <div class="col-md-12 ">     
+       
+      <!--<div class="modal-body" >-->
+      <form class="modal-body" name="frmDatosUsuario" id="frmDatosUsuario">
+      <div class = 'form-horizontal well' >
+        <fieldset>
+         <legend>Datos de usuario</legend>
+          <div class="control-group">
+              <div class="col-md-6">    
+              <div class="form-group">
+                <input type="text" id="usuario" name="usuario" ng-model="cue.datos.Usuario" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required input-md" placeholder="Usuario" ng-maxlength="25" name="usuarioCliente" required ng-class="{ error:frmDatosUsuario.usuario.$error.required && frmDatosUsuario.usuario.$dirty, warning:frmDatosUsuario.usuario.$error.usuario }" ng-blur="cue.existeUsuario()" ng-change="cue.mayusculas()" tooltip-placement="left" 
+                                     uib-tooltip="Solo mayusculas"  >
+                <span ng-show="!frmDatosUsuario.$pristine && cue.datos.existe" class= "msjError">
+                    Este usuario ya existe.
+                </span>
+                <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.usuario.$error.maxlength" class= "msjError">
+                    Supero la cantidad máxima de caracteres.
+                </span>
+              </div>
+              <div class="form-group">
+                <input ng-disabled="!cue.habilitaModifContrasenia"  type="password" id="contraseña" ng-model="cue.contrasenia" class="form-control input-md" placeholder="Ingrese contraseña actual" >
+              </div>
+              <div class="form-group">
+                <input ng-disabled="!cue.habilitaModifContrasenia" type="password" name="contraseniaNueva" id="contraseniaNueva" ng-model="cue.contraseniaNueva1" ng-class="{ error: frmDatosUsuario.contraseniaNueva.$error.required && frmDatosUsuario.contraseniaNueva.$dirty, warning: frmDatosUsuario.contraseniaNueva.$error.contraseniaNueva}" class="form-control input-md ng-dirty ng-touched ng-valid-password ng-valid ng-valid-required" ng-minlength="6" ng-maxlength="25" placeholder="Ingrese nueva contraseña">
+                <span ng-show="!frmDatosUsuario.$pristine && (frmDatosUsuario.contraseniaNueva.$error.maxlength || frmDatosUsuario.contraseniaNueva.$error.minlength )" class= "msjError">
+                   Debe tener entre 6 y 25 caracteres.
+                </span>
+              </div>      
+             </div>
+             <div class="col-md-6">
+                <div class="form-group">
+                    <input type="email" id="email" ng-model="cue.datos.Email" class="form-control input-md ng-dirty ng-touched ng-valid-email ng-valid ng-valid-required" placeholder="example@email.com" required ng-class="{ error:frmDatosUsuario.email.$error.required && frmDatosUsuario.email.$dirty, warning:frmDatosUsuario.email.$error.email }" ng-blur="cue.existeEmail()" name="email">
+                    <span ng-show="!frmDatosUsuario.$pristine && cue.datos.existeMail" class= "msjError">
+                        Email existente.
+                    </span>
+                </div> 
+              <div class="form-group">
+                <a class="btn btn-primary btn-xs" ng-click="cue.habilitarModPass(1)" style="margin: 5px;">Modificar Contraseña</a>
+                <a class="btn btn-default btn-xs" ng-click="cue.habilitarModPass(0)" style="margin: 5px;">NO modificar Contraseña</a>
+              </div> 
+              <div class="form-group">
+                  <input ng-disabled="!cue.habilitaModifContrasenia" type="password" name="nuevaContraseniaRepetida" id="nuevaContraseniaRepetida" ng-model="cue.contraseniaNueva2" placeholder="Repita nueva contraseña" ng-class="{ error: frmDatosUsuario.nuevaContraseniaRepetida.$error.required && frmDatosUsuario.nuevaContraseniaRepetida.$dirty, warning: frmDatosUsuario.nuevaContraseniaRepetida.$error.nuevaContraseniaRepetida}" class="form-control input-md ng-dirty ng-touched ng-valid-password ng-valid ng-valid-required" ng-minlength="6" ng-maxlength="25">
+                  <span ng-show="!frmDatosUsuario.$pristine && (frmDatosUsuario.nuevaContraseniaRepetida.$error.maxlength || frmDatosUsuario.nuevaContraseniaRepetida.$error.minlength )" class= "msjError">
+                       Debe tener entre 6 y 25 caracteres.
+                  </span>
+              </div>      
+             </div>
+            </div> 
+          </fieldset>
+        </div>
+        <div class = 'form-horizontal well' >
+        <fieldset>
+            <legend>Datos personales</legend>    
+                 <div class="control-group">
+                    <form class="form center-block">
+                        <div class="col-md-6">    
+                            <div class="form-group">
+                              <input type="text" id="nombre" name="nombre" ng-model="cue.datos.Nombre" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required input-md" ng-maxlength="60" required ng-class="{ error:frmDatosUsuario.nombre.$error.required && frmDatosUsuario.nombre.$dirty, warning:frmDatosUsuario.nombre.$error.nombre}" placeholder="Nombre">
+                              <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.nombre.$error.maxlength" class= "msjError">
+                                  Supero la cantidad máxima de caracteres.
+                              </span>
+                            </div>
+                            <div class="form-group">
+                                <select style="margin-bottom:5px;" class="form-control" ng-model="cue.tipoDocSeleccionado" 
+                                     ng-options="tipoDoc.Descripcion for tipoDoc in cue.tiposDoc.tipos 
+                                                 track by tipoDoc.IdTipoDoc" ng-change="cue.existeDni()">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="apellido" name="apellido" ng-model="cue.datos.Apellido" class="form-control ng-dirty ng-touched ng-valid-usuario ng-valid ng-valid-required input-md" ng-maxlength="60" placeholder="Apellido" required ng-class="{ error:frmDatosUsuario.apellido.$error.required && frmDatosUsuario.apellido.$dirty, warning:frmDatosUsuario.apellido.$error.apellido}">
+                                <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.apellido.$error.maxlength" class= "msjError">
+                                    Supero la cantidad máxima de caracteres.
+                                </span>
+                            </div> 
+                            <div class="form-group">
+                                <input type="number" id="nroDocumento" name="nroDocumento" ng-model="cue.datos.NroDoc" ng-change="cue.existeDni()" class="form-control input-md" placeholder="N° Documento"
+                                required ng-maxlength="cue.tipoDocSeleccionado.IdTipoDoc == 1 ? 8 : 11" ng-minlength="cue.tipoDocSeleccionado.IdTipoDoc == 1 ? 7 : 10" ng-class="{ error:frmDatosUsuario.nroDocumento.$error.required && frmDatosUsuario.nroDocumento.$dirty, warning:frmDatosUsuario.nroDocumento.$error.nroDocumento}">
+                                <span ng-show="!frmDatosUsuario.$pristine && frmDatosUsuario.nroDocumento.$error.maxlength || frmDatosUsuario.nroDocumento.$error.minlength" class= "msjError">
+                                    Tamaño inválido.
+                                </span>
+                                <span ng-show="!frmDatosUsuario.$pristine && cue.datos.existeDni" class= "msjError">
+                                    Este documento ya existe.
+                                </span>
+                            </div>  
+                        </div>    
+        </fieldset>
+        </div>
+        </form>
+        <div class = 'form-horizontal well' >    
+        <fieldset>
+            <legend>Datos de la tarjeta</legend>    
+                 <div class="control-group">
+                       <form class="center-block" name="frmTarj" id="frmTarj">                
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="number" id="nroTarjeta" name="nroTarjeta" ng-model="cue.datos.NroTarjeta" class="form-control" placeholder="Nro de tarjeta">
+                                </div> 
+                            </div>
+                        </form>
+                        <div class="col-md-1">     
+                        </div>
+                     <form class="form center-block" id="datosTar" name="datosTar">
+                      	<div class="col-md-2">    
+                            <div class="form-group" >
+                                 <input type="number" id="mesVencimiento" name="mesVencimiento" ng-model="cue.datos.Mes" class="form-control input-md ng-dirty ng-touched ng-valid-mesVencimiento ng-valid" min="1" max="12" placeholder="Mes vto. (2 digitos)">
+                                 <span ng-show="!datosTar.$pristine && (datosTar.mesVencimiento.$error.max || datosTar.mesVencimiento.$error.min )" class= "msjError">
+                                   Mes inválido.
+                                </span>    
+                            </div>
+                        </div>
+                        <div class="col-md-2">    
+                            <div class="form-group" >
+                              <input type="number" id="anioVencimiento" name="anioVencimiento" ng-model="cue.datos.Anio" class="form-control input-md ng-dirty ng-touched ng-valid-anioVencimiento ng-valid" ng-min="cue.anioMin" ng-max="cue.anioMax" placeholder="Año vto. (2 digitos)">
+                              <span ng-show="!datosTar.$pristine && (datosTar.anioVencimiento.$error.max || datosTar.anioVencimiento.$error.min )" class= "msjError">
+                                   Año inválido.
+                              </span>      
+                            </div>
+                        </div>
+                     </form>
+                        <div class="col-md-1">     
+                        </div>
+                        </fieldset>              
+                        </div>
+                    <!--</div>-->
+                <div class="form-group col-md-4" >
+                    <button id="volver" ng-click="cue.borrarCuenta()" class="btn btn-danger btn-lg btn-block" >Quiero borrar mi cuenta</button>
+                </div>
+                <div class="form-group col-md-4" >
+                    <button id="volver" class="btn btn-warning btn-lg btn-block" ui-sref="Clientes.buscarCanchas" onclick="$('html,body').animate({scrollTop:10},'slow');return false;">Cancelar / Salir</button>
+                </div>
+                <div class="form-group col-md-4 " >
+                    <button class="btn btn-primary btn-lg btn-block btn-custom" ng-disabled="!frmDatosUsuario.$valid || (cue.datos.existe || cue.datos.existeMail || cue.datos.existeDni)" ng-click="cue.guardarDatos()">Guardar cambios</button>
+                </div>
+                
+            </fieldset> 
+            </div>
+        
+      
+        </div>
+    
+    <div/>    
+ 
+	
+
+
+
+
+<script type="text/javascript">
+    
+$(document).ready(function(){  /* jQuery toggle layout */
+    
+    
+(function(a){a.createModal=function(b){defaults={title:"",message:"Your Message Goes Here!",closeButton:true,scrollable:false};var b=a.extend({},defaults,b);var c=(b.scrollable===true)?'style="max-height: 420px;overflow-y: auto;"':"";html='<div class="modal fade" id="myModal">';html+='<div class="modal-dialog">';html+='<div class="modal-content">';html+='<div class="modal-header">';html+='<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';if(b.title.length>0){html+='<h4 class="modal-title">'+b.title+"</h4>"}html+="</div>";html+='<div class="modal-body" '+c+">";html+=b.message;html+="</div>";html+='<div class="modal-footer">';if(b.closeButton===true){html+='<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>'}html+="</div>";html+="</div>";html+="</div>";html+="</div>";a("body").prepend(html);a("#myModal").modal().on("hidden.bs.modal",function(){a(this).remove()})}})(jQuery);
+/*
+* Here is how you use it
+*/
+$(function(){    
+    $('.view-pdf').on('click',function(){
+        var pdf_link = $(this).attr('href');
+        //var iframe = '<div class="iframe-container"><iframe src="'+pdf_link+'"></iframe></div>'
+        //var iframe = '<object data="'+pdf_link+'" type="application/pdf"><embed src="'+pdf_link+'" type="application/pdf" /></object>'        
+        var iframe = '<object type="application/pdf" data="'+pdf_link+'" width="100%" height="500">No Support</object>'
+        $.createModal({
+            title:'My Title',
+            message: iframe,
+            closeButton:true,
+            scrollable:false
+        });
+        return false;        
+    });    
+})
+    
+});
+</script>

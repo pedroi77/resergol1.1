@@ -1,0 +1,83 @@
+
+    <div class="container  ">
+        <div class="container">
+            <header class="row widget" >
+                <div style = "color: white; " class="container">
+                    <h3  style=" font-size: 50px; text-align:center; font-style:italic;" ></span>Buscar torneo</h3>
+                </div>
+            </header>
+        </div>
+    </div>    
+
+    
+    <div class="container" id="mainTorneo" ng-controller="TorneoBuscarController as tor" >
+        <div class="container widget col-xs-12 col-sm-6 col-md-12">
+            <header>
+                <h4><i class="fa fa-user"></i><p class="mensajeExplicacion">Seleccione los estados de los torneos que desea visualizar</h4>
+            </header>
+
+            <div class="col-sm-12"> 
+                <label class="checkbox-inline"><input type="checkbox" id="activos" ng-model="tor.activos" >Activos</label>
+                <label class="checkbox-inline"><input type="checkbox" id="inscripcion" ng-model="tor.insc" >En inscripción</label>
+                <label class="checkbox-inline"><input type="checkbox" id="finalizados" ng-model="tor.finalizados">Finalizados</label>
+                <label class="checkbox-inline"><input type="checkbox" id="todos" ng-model="tor.todos" ng-click= "tor.setTodos()">Todos</label>
+                <button class="btn btn-md btn-info  " style="margin-left:15px;" ng-click="tor.init()">
+                    <i class="fa fa-plus glyphicon glyphicon-search"></i>Buscar
+                </button>
+            </div>
+            
+            <br> <br/>
+            <br> <br/>
+            
+            
+            <table ng-table="tor.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+                    <tr ng-repeat="torneo in tor.torneo.torneos" style="background-color:white;">
+                        <td title=""  ng-if="false">{{torneo.idTorneo}}</td>
+                        <td title="'Nombre'"  >{{torneo.nombre}}</td>
+                        <td title="'Tipo'"  >{{torneo.tipo}}</td>
+                        <td title="'Estado'"  >{{torneo.descripcion}}</td>
+                        <td title="'Cant. de equipos'"  >{{torneo.CantEquipos}}</td>
+                        <td title="'Cant de inscriptos'"  >{{torneo.Inscriptos}}</td>
+                        <td title="'Cant de jugadores'"  >{{torneo.CantJugadores}}</td>
+                        <td title="'Acción'">
+                            <button type="button" ng-click="tor.modificar($index)" ng-disabled="torneo.descripcion=='Activo'" class="btn btn-sm btn-success">
+                                <i class="glyphicon glyphicon-edit">
+                                    Modificar
+                                </i>
+                            </button>
+
+                            <button type="button" ng-click="tor.verEquipos($index,true)" ng-disabled="torneo.Inscriptos == 0" class="btn btn-sm btn-info">
+                                <i class="glyphicon glyphicon-copy">
+                                    Equipos
+                                </i>
+                            </button>
+                            
+                            <button type="button" ng-click="tor.armarFixture($index)" ng-disabled="torneo.CantEquipos != torneo.Inscriptos || torneo.descripcion != 'Inscripcion' " class="btn btn-sm btn-danger">
+                                <i class="glyphicon glyphicon-calendar">
+                                    Armar Fixture
+                                </i>
+                            </button>
+
+                            <button type="button" ng-click="tor.cargarFixture($index,true)" ng-disabled="torneo.descripcion!='Activo'" class="btn btn-sm btn-warning">
+                                <i class="glyphicon glyphicon-pencil">
+                                    Cargar resultados
+                                </i>
+                            </button>
+                        </td>	
+                    </tr>
+            </table>
+                        
+           
+          
+           
+                
+            
+        </div>
+    </div>
+
+ 
+   <div class="clearfix"></div>
+        
+    <div/>    
+ 
+       

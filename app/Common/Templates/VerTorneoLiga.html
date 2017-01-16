@@ -1,0 +1,192 @@
+
+<div class="container" id="mainTorneo" ng-controller="TorneoLigaController  as tor" >                
+    
+    <div class="container  ">
+        <div class="container">
+            <header class="row widget" >
+                <div style = "color: white; " class="container">
+                    <h3  style=" font-size: 50px; text-align:center; font-style:italic;" ></span>Torneo  {{tor.torneo.nombre}}</h3>
+                </div>
+            </header>
+        </div>
+    </div>    
+            
+
+    <!-- Portfolio Item Row -->
+    <div class="row">
+
+        <div class="col-md-6">
+            <br> </br>
+            <uib-carousel active="tor.active" interval="tor.myInterval" no-wrap="tor.noWrapSlides">
+                <uib-slide ng-repeat="img in tor.imagenes" index="img.id">
+                    <img ng-src="{{img.imagen}}" style="margin:auto;">
+                    <div class="carousel-caption">
+                    </div>
+                </uib-slide>
+            </uib-carousel>
+            
+            <br> </br>
+            <div class="col-sm-12" ng-controller= "ClientesController as cli">
+                <button class="btn btn-md btn-primary btn-block"
+                        ng-disabled="!tor.valida"
+                        ng-click= "!tor.valida || tor.inscripcionTorneoLiga()">
+                    Inscribite! <i class="glyphicon glyphicon-hand-right"></i>
+                </button>
+            </div> 
+        </div>
+
+        <div class="col-md-6">
+            <h3>Descripción del torneo</h3>
+            <p>{{tor.torneo.Descripcion}}</p>
+            <h3>Reglas</h3>
+            <p>{{tor.torneo.Reglas}}</p>
+            <h3>Caracteristicas del torneo</h3>
+            <ul>
+                <li>Tipo de torneo {{tor.torneo.tipo}}.</li>
+                <li>Cantidad de equipos {{tor.torneo.CantEquipos}}.</li>
+                <li>{{tor.torneo.CantJugadores}} jugadores por equipo (en cancha).</li>
+                <li>Superficie {{tor.torneo.superficie}}.</li>
+                <li>{{(tor.torneo.idaYvuelta==1)?'Ida y vuelta.':'Solo ida.'; }}</li>
+                <li>Duración del partido {{tor.torneo.tiempoPartido}} (Minutos).</li>
+                <li>Precio de inscripción {{tor.torneo.PrecioInscripcion}}$.</li>
+                <li>Fechas de inscripcion {{tor.torneo.FecIniInscripcion}} al {{tor.torneo.FecFinInscripcion}}.</li>
+                <li>Inicio y fin del torneo {{tor.torneo.FechaInicio}} al {{tor.torneo.FechaFin}}.</li>
+                <li>Horas de aviso de cancelación {{tor.torneo.HorasCancelacion}}.</li>
+            </ul>
+
+           
+        </div>
+
+            
+
+    </div>
+        <!-- /.row -->
+        
+       <div class="container" ui-view></div>
+
+      
+        <hr>
+    <div class="row" class="col-md-12">
+        <div class="col-md-5">
+            <h3>Tabla de posiciones</h3>
+           <table ng-table="tor.table" class="table table-hover" > <!-- class table hover-->
+                <tr ng-repeat="equipo in tor.tabla"  >
+                    <td title="'Pos'"  >{{equipo.pos}}</td>    
+                    <td title="'Equipo'">{{equipo.nombre}}</td>
+                    <td title="'Puntos'"  >{{equipo.CantPuntos}}</td>
+                    <td title="'PJ'"  >{{equipo.Jugados}}</td>
+                    <td title="'PG'"  >{{equipo.Ganados}}</td>
+                    <td title="'PE'"  >{{equipo.Empatados}}</td>
+                    <td title="'PP'"  >{{equipo.Perdidos}}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="col-md-7">
+            <h3>Mira aca el fixture!  {{tor.msjFecha}}</h3>
+
+            <table  ng-table="tor.table" class="table table-hover" > 
+                <tr ng-repeat="partido in tor.fixture"  >
+                    <td title="'Fecha'"  >{{partido.fecha}}</td>    
+                    <td title="'Hora'"  >{{partido.horaInicio}}</td>
+                    <td title=""  >{{partido.equipo1}}</td>    
+                    <td title="" ng-switch="partido.isEditing" style="width:15%"  demo-tracked-table-cell>
+                        <span ng-switch-default class="editable-text">{{partido.gol1}}</span>
+                        <div class="controls" ng-class="" ng-switch-when="true">
+                            <input type="number" 
+                                   name="gol1" 
+                                   ng-model="partido.gol1" 
+                                   ng-blur="tor.validaGol($index)"
+                                   min=0 max=500
+                                   class="editable-input form-control" required/>
+                        </div>
+                    </td>
+
+                    <td title=""  >{{partido.VS}}</td>
+
+                    <td title="" ng-switch="partido.isEditing" style="width:15%">
+                        <span ng-switch-default class="editable-text">{{partido.gol2}}</span>
+                        <div class="controls" ng-class="" ng-switch-when="true">
+                            <input type="number" 
+                                   name="gol2" 
+                                   ng-model="partido.gol2" 
+                                   ng-blur="tor.validaGol($index)"
+                                   min=0 max=500
+                                   class="editable-input form-control" required/>
+                        </div>
+                    </td>
+
+                    <td title=""  >{{partido.equipo2}}</td>
+                    <td title="'Cancha'"  >{{partido.cancha}}</td>
+                    <td>
+                         <button class="btn btn-primary btn-sm" ng-click="tor.updateFixture($index)" ng-if="partido.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>
+                        <button class="btn btn-default btn-sm" ng-click="partido.isEditing = false" ng-if="partido.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
+                        <button class="btn btn-default btn-sm" ng-click="partido.isEditing = true" ng-if="main.Usuario.tipo=='D' && !partido.isEditing"><span class="glyphicon glyphicon-pencil"></span></button>
+                    </td>
+                </tr>
+            </table>
+           
+            <h4>Fechas</h4>
+            <div>
+                <button ng-repeat="fecha in tor.fechas" type="button" class="btn btn-default btn-sm" ng-click="tor.cargarFixture(fecha.idFecha)">{{fecha.idFecha}}</button>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="col-lg-12" ng-show="tor.muestraCampeon">
+        <h3 class="page-header">El campeón es {{tor.campeon.nombre}}!!</h3>
+        <a href="#" >
+		  <!--<img class="img-responsive portfolio-item " style=" height:249px;" src="{{tor.campeon.imagen}}" alt=""  >-->
+          <img class="img-responsive portfolio-item " src="{{tor.campeon.imagen}}" alt=""  >
+        </a>
+        
+    </div>
+
+    <div class="col-lg-12">
+        <h3 class="page-header">En estas canchas se juega este torneo!</h3>
+    </div>    
+
+
+    <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="cancha in tor.canchas">
+        
+        
+        <div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
+            <div class="col-md-12" style="height:400px">
+            <p>
+                <img  ng-src="{{cancha.Imagen}}" class="img-responsive" alt="" style=" height:249px;">
+            </p>
+            </div>
+            <div class="caption">
+                <div class="blur"></div>
+                <div class="caption-text">
+                    <h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:1px;">                       {{cancha.NombreCancha}}
+                       
+                    </h3>
+                    <h4 class="fa fa-user titul" style="padding:1px;">
+                        en <a style="color:orange;" ui-sref="Clientes.verComplejo">{{cancha.NombreComplejo}}</a>             
+                    </h4>
+                    <h6 style="border-bottom:1px solid white; padding:3px;">
+                    {{cancha.Calle}} {{cancha.Altura}}
+                    </h6>
+                    <ul>
+                        <!--<li>Dirección: {{cancha.Calle}} {{cancha.Altura}}</li>-->
+                        <li>Tamaño: {{cancha.CantJugadores}} vs. {{cancha.CantJugadores}} </li>
+                        <li>Superficie: {{cancha.Superficie}}</li>
+                        <li>Techada: {{cancha.Techada == 1 ? "SI" : "NO"}} </li>
+                        <li>Luz: {{cancha.Luz == 1 ? "SI" : "NO"}}</li>
+                        <li>Precio p/Hora: ${{cancha.muestroPConLuz ? cancha.PrecioConLuz : cancha.Precio | currency:''}} </li>
+                    </ul>
+                    <div class="col-md-12 text-center">
+                    <a href="#" class="btn btn-success"
+                       ui-sref="Clientes.verCancha({idCan:'{{cancha.IdCancha}}', idComp:'{{cancha.IdComplejo}}'})" onclick="$('html,body').animate({scrollTop:0},'fast');return false;"><span class="glyphicon glyphicon-eye-open"></span> VER CANCHA</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    
+</div> 

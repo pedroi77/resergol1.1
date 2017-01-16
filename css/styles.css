@@ -1,0 +1,1254 @@
+/*
+A custom Bootstrap 3.2 'Google Plus style' theme
+from http://bootply.com
+
+This CSS code should follow the 'bootstrap.css'
+in your HTML file.
+
+license: MIT
+author: bootply.com
+*/
+/*<PI> comento las lineas de abajo*/
+
+/*@import url(http://fonts.googleapis.com/css?family=Roboto:400);
+body {
+  
+  background-color: #92AB99; 
+  -webkit-font-smoothing: antialiased;
+  font: normal 14px Roboto,arial,sans-serif;
+  
+}
+*/
+ ;
+
+
+.navbar-default2  {background-color: skyblue; margin-top:0px;border-width:0;z-index:5;}
+.navbar-default2 .navbar-nav > .active > a,.navbar-default .navbar-nav > li:hover > a {border:0 solid #4285f4;border-bottom-width:0px;font-weight:750;background-color:rgba(51, 51, 51, 0.3); }
+.navbar-default2 .navbar-nav :hover { background-color: rgba(51, 51, 51, 0.2);;}
+
+.navbar-default2 .navbar-nav > .prueba > a,.navbar-default .navbar-nav > li:hover > a {border:0 solid #4225f4;border-bottom-width:0px;font-weight:750;background-color:rgba(51, 51, 51, 0.3); }
+
+nav.navbar {
+    color: #f8f8f8;
+    background: rgba(51, 51, 51, 0.2);
+}
+
+.nav>li>a {
+    color:white;
+}
+  
+
+/*.navbar-default {background-color:#f4f4f4;margin-top:0px;border-width:0;z-index:5;}*/
+.navbar-default >.navbar-nav :hover { background-color: rgba(51, 51, 51, 0.2); color: #f8f8f8;}
+.navbar-default {background-color:rgba(51, 51, 51, 0.3);margin-top:0px;border-width:0;z-index:5;}
+.navbar-default .navbar-nav > .active > a,.navbar-default .navbar-nav > li:hover > a {border-bottom-width:2px;font-weight:750; color:white;}
+.navbar-default .navbar-nav > a {color:white;}
+.navbar-default .dropdown-menu {background-color:#ffffff;}
+.navbar-default .dropdown-menu li > a {padding-left:30px;}
+
+.navbar-default .nav>li>a {
+    color:white;
+}
+  
+
+.header {background-color:#ffffff;border-width:0;}
+.header .navbar-collapse {background-color:#ffffff;}
+/*.btn,.form-control,.panel,.list-group,.well {border-radius:1px;box-shadow:0 0 0;}*//*<PI>*/
+.form-control {border-color:#d7d7d7;}
+.btn-primary {border-color:transparent;}
+.btn-primary,.label-primary,.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {background-color:#4285f4;}
+.btn-plus {background-color:#ffffff;border-width:1px;border-color:#dddddd;box-shadow:1px 1px 0 #999999;border-radius:3px;color:#666666;text-shadow:0 0 1px #bbbbbb;}
+.well,.panel {border-color:#d2d2d2;box-shadow:0 1px 0 #cfcfcf;border-radius:3px;}
+.btn-success,.label-success,.progress-bar-success{background-color:#65b045;}
+.btn-info,.label-info,.progress-bar-info{background-color:#a0c3ff;border-color:#a0c3ff;}
+.btn-danger,.label-danger,.progress-bar-danger{background-color:#dd4b39;}
+.btn-warning,.label-warning,.progress-bar-warning{background-color:#f4b400;color:#444444;}
+
+
+/*IVAN*/
+label{font-weight:normal;}
+.titul{ text-align: center;}
+
+.carousel-caption {
+  position: static;
+  left: 0%;
+  right: 0%;
+  bottom: 0px;
+  z-index: 10;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  color: #000;
+  text-shadow: none;
+  & .btn {
+    text-shadow: none; // No shadow for button elements in carousel-caption
+  }
+}
+
+.carousel {
+    position: relative;
+}
+
+.controllers {
+    position: absolute;
+    top: 0px;
+}
+
+.carousel-control.left, 
+.carousel-control.right {
+    background-image: none;
+}
+
+.carouselImagenes{
+    
+       width:750px;
+       height:400px;
+       
+    }
+
+
+.btn-custom {
+  background-color: #4a8c33;
+  border-color: #4a8c33;
+}
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active,
+.btn-custom.active {
+  background-color: #40792c;
+  border-color: #366725;
+}
+.btn-custom.disabled:hover,
+.btn-custom.disabled:focus,
+.btn-custom.disabled:active,
+.btn-custom.disabled.active,
+.btn-custom[disabled]:hover,
+.btn-custom[disabled]:focus,
+.btn-custom[disabled]:active,
+.btn-custom[disabled].active,
+fieldset[disabled] .btn-custom:hover,
+fieldset[disabled] .btn-custom:focus,
+fieldset[disabled] .btn-custom:active,
+fieldset[disabled] .btn-custom.active {
+  background-color: #4a8c33;
+  border-color: #4a8c33;
+}
+
+
+
+hr {border-color:#ececec;}
+button {
+ outline: 0;
+}
+textarea {
+ resize: none;
+ outline: 0; 
+}
+.panel .btn i,.btn span{
+ color:#666666;
+}
+.panel .panel-heading {
+ background-color:#ffffff;
+ font-weight:700;
+ font-size:16px;
+ color:#262626;
+ border-color:#ffffff;
+}
+.panel .panel-heading a {
+ font-weight:400;
+ font-size:11px;
+}
+.panel .panel-default {
+ border-color:#cccccc;
+}
+.panel .panel-thumbnail {
+ padding:0;
+}
+.panel .img-circle {
+ width:50px;
+ height:50px;
+}
+.list-group-item:first-child,.list-group-item:last-child {
+ border-radius:0;
+}
+h3,h4,h5 { 
+ border:0 solid #efefef; 
+ border-bottom-width:0px;
+ padding-bottom:10px;
+}
+.modal-dialog {
+ width: 450px;
+}
+
+.modal-registracion {
+ width: 600px;
+}
+
+.modal-footer {
+ border-width:0;
+}
+.dropdown-menu {
+ background-color:#f4f4f4;
+ border-color:#f0f0f0;
+ border-radius:0;
+ margin-top:-1px;
+}
+/* end theme */
+
+/* template layout*/
+#subnav {
+ position:fixed;
+ width:100%;
+}
+
+@media (max-width: 768px) {
+ #subnav {
+  padding-top: 6px;
+ }
+}
+
+#main {
+ padding-top:20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.carousel>.carousel-inner>.item>.circleElement {
+    background-color: #000;
+    border-radius: 50%;
+    position: absolute;
+    top: 11%;
+    left: 0%;
+    width: 400px;
+    height: 400px;
+    opacity: .5;
+}
+
+.carousel-indicators li { cursor: pointer }
+.carousel-control {
+    width: 60px;
+    height: 0;
+    margin-top: 75px;
+    font-size: 100px;
+    background: none;
+    border: none;
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 300;
+}
+.carousel-indicators li {
+    background-color: #999;
+    background-color: rgba(255,255,255,0.3);
+}
+.carousel-caption {
+    padding: 0px;
+    text-align: center;
+}
+.carousel-caption h3 {
+    font-family: "Verdana";
+    font-weight: 100;
+    font-size: 22px;
+    font-weight: bold;
+}
+.carousel-caption p {
+    font-family: "Verdana";
+    margin-top: 10px;
+    font-size: 16px;
+    margin-bottom: -8px;
+    font-weight: 300;
+    line-height: 30px;
+}
+.carousel-fade .carousel-inner .item {
+    opacity: 0;
+    -webkit-transition-property: opacity;
+    -moz-transition-property: opacity;
+    -o-transition-property: opacity;
+    transition-property: opacity;
+}
+.carousel-fade .carousel-inner .active { opacity: 1 }
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+}
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right { opacity: 1 }
+.carousel-fade .carousel-control { z-index: 2 }
+@media only screen and (max-width:767px) { 
+    h1 { font-size: 30px !important }
+    .carousel-caption {
+        padding: 15px;
+        text-align: center;
+    }
+    .carousel-caption h3 { font-size: 30px }
+    .carousel-caption p {
+        margin-top: 5px;
+        font-size: 8px;
+        margin-bottom: -6px;
+    }
+    body { padding: 0 !important }
+    .carousel { margin-bottom: 0 }
+    .hero-unit { padding-bottom: 60px }
+    .hero-unit p { font-size: 16px }
+}
+.carousel-container {
+    width: 100% !important;
+    padding-left: 0%;
+    margin-top: 0px;
+}
+
+.anchoCarousel 
+{
+    max-width: 600px;
+    
+}
+
+.anchobtnBusqueda 
+{
+    min-width: 250px;
+    max-width: 250px;
+    
+}
+
+.carousel-inner > .item > img{
+    width: 100%; 
+    min-height: 300px;
+    max-height: 328px;    
+    border-radius: 15px;
+     }
+
+.carousel-altoBusqueda > .item > img{
+    max-height: 250px;   
+     }
+
+.carousel-altoTorneos> .item > img{
+    max-height: 312px;  
+     }
+
+
+.busqueda
+{
+    padding-top: 50px;
+}
+
+#carouselCanchas .carousel-caption {
+    left:0;
+	right:0;
+	bottom:0;
+	text-align:center;
+	padding:10px;
+	text-shadow:none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*=============================================================
+    <PI> agrego unos estilos de prueba para dueños. Inicio
+    http://www.w3schools.com/jsref/event_onmousemove.asp
+========================================================  */
+.altoDuenioImg{
+     min-height: 365px;   
+     max-height: 400px;   
+     }
+
+.div-opciones{
+    border-style: solid;
+    border-width:2px;
+    border-radius:10px;
+    margin: auto;
+}
+
+
+
+.page-title {
+    color: white;
+    font-weight: 300;
+    line-height: 1;
+    margin: 11px 0 18px;
+}
+
+.column-title{
+    color: white;
+    font-weight: 200;
+}
+
+h2 {
+    font-size: 29.25px;
+}
+
+.azul {
+	background: #34495e;
+	color:#fff;
+	border-style: solid;
+    border-width:2px;
+    border-radius:10px;
+    margin: auto;
+}
+    
+.azul-medio{
+	background: #718EA4;
+	color:#fff;
+	border-style: solid;
+    border-width:2px;
+    border-radius:10px;
+    margin: auto;
+}
+
+.costado {
+	background:#2D5050;
+	color:#fff;
+}
+
+footer {
+	background:#517272;
+	color:#fff;
+}
+
+
+img {border-radius: 10px; border:1px solid white}
+
+
+
+.seleccion:hover{
+    	background:  rgba(51, 51, 51, 0.3);
+}
+
+body.background-dark {
+  background-color: rgba(102, 105, 104, 0.9);
+  background-image: radial-gradient(farthest-side ellipse at 10% 0, rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9));
+  background-image: -webkit-radial-gradient(10% 0, farthest-side ellipse, rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9));
+  background-image: -moz-radial-gradient(10% 0, farthest-side ellipse, rgba(102, 105, 104, 0.9), rgba(93, 112, 119, 0.89), rgba(160, 174, 150, 0.9));
+}
+
+
+
+.fontMasChica{
+    font-weight: 200;
+}
+
+.font-titulo-Filtro{
+    font-weight: 500;
+    font-size:17px;
+    
+}
+
+.horas{
+   background-color: #437983;
+   font-weight: 300;
+   font-size:20px;
+}
+
+.thReservas {
+   background-color: #437983;
+   height:120px;
+   font-weight: 300;
+   font-size:20px;
+   width:125;
+   vertical-align:bottom;
+}
+
+.celdaReserva{
+    background-color: #88CC88;
+    height:80px;
+    width:125;
+    vertical-align:bottom;
+}
+
+.widget {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    padding: 12px 17px;
+    color: #f8f8f8;
+    background: rgba(51, 51, 51, 0.2);
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.widget table{
+    color:black;
+}
+
+.uib-datepicker-popup.dropdown-menu{display:block;float:none;margin:0;color:black;}.
+
+
+.widget-controls > a, .widget-controls > span {
+    padding: 1px 4px;
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.45);
+    -webkit-transition: color 0.15s ease-in-out;
+    -o-transition: color 0.15s ease-in-out;
+    transition: color 0.15s ease-in-out;
+}
+
+.widget-controls {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    font-size: 12px;
+    word-spacing: 1px;
+}
+
+.filtro-reservas{
+    color: white;
+}
+
+.espacios{
+    border-radius: 3px;
+    /*padding: 17px 20px;*/
+    margin-bottom: 30px;
+    margin-top: 20px;
+    
+}
+
+
+*:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.combo-horario{
+    width:60px; 
+    height:30px;
+    color:black;
+}
+
+
+
+body {
+  font-weight: 300;
+  padding-bottom: 100px;
+  background-color: rgba(74, 121, 147, 0.89);
+  background-image: radial-gradient(farthest-side ellipse at 10% 0, rgba(74, 121, 147, 0.89), rgba(204, 204, 204, 0.85) 80%, rgba(185, 135, 131, 0.87) 120%);
+  background-image: -webkit-radial-gradient(10% 0, farthest-side ellipse, rgba(74, 121, 147, 0.89), rgba(204, 204, 204, 0.85) 80%, rgba(185, 135, 131, 0.87) 120%);
+  background-image: -moz-radial-gradient(10% 0, farthest-side ellipse, rgba(74, 121, 147, 0.89), rgba(204, 204, 204, 0.85) 80%, rgba(185, 135, 131, 0.87) 120%);
+  background-attachment: fixed, fixed;
+}
+
+
+legend-mod {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 18px;
+    font-size: 19.5px;
+    line-height: inherit;
+    color: white;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.section {
+    font-size: 14px;
+    color: #d2d2d2;
+    vertical-align: middle;
+    line-height: 30px;
+    padding: 10px 0 0;
+}
+
+.section-buscar {
+    font-size: 16px;
+    color: #d2d2d2;
+    vertical-align: middle;
+    line-height: 30px;
+    padding: 10px 0 0;
+}
+
+.section-Inscripcion {
+    font-size: 24px;
+    color: #d2d2d2;
+    vertical-align: middle;
+    line-height: 30px;
+    padding: 10px 0 0;
+}
+
+
+label,
+input,
+button,
+select,
+textarea {
+  font-weight: 300;
+}
+
+
+
+.control-label {
+    text-align: left;
+    
+}
+
+form-label-leftl {
+    text-align: left;
+  }
+  
+ .form-control.input-transparent {
+  border: none;
+  color: #f8f8f8;
+  background-color: rgba(51, 51, 51, 0.4);
+}
+
+.mensajeExplicacion {
+    font-style:italic;
+}
+
+.comentarios{
+    border-radius:10px;
+}
+
+.btn-circle {
+  width: 140px;
+  height: 140px;
+  line-height: 140px; /* adjust line height to align vertically*/
+  padding:0;
+  border-radius: 100%;
+}
+
+
+.tabla-listaNegra{
+    background-color:white;
+    color:black;
+}
+/*<PI> fin*/
+
+
+
+
+
+
+
+
+
+/*=============================================================
+    Authour URL: www.designbootstrap.com
+    
+    http://www.designbootstrap.com/
+
+    License: MIT     
+========================================================  */
+
+/*============================================================
+BACKGROUND COLORS
+============================================================*/
+.db-bk-color-one {
+    background-color: #f55039;
+}
+
+.db-bk-color-two {
+    background-color: #46A6F7;
+}
+
+.db-bk-color-three {
+    background-color: #47887E;
+}
+
+.db-bk-color-six {
+    background-color: #F59B24;
+}
+/*============================================================
+PRICING STYLES
+==========================================================*/
+.db-padding-btm {
+    padding-bottom: 50px;
+}
+.db-button-color-square {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.50);
+    border: none;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+}
+
+    .db-button-color-square:hover {
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.50);
+        border: none;
+    }
+
+
+.db-pricing-eleven {
+    margin-bottom: 30px;
+    margin-top: 50px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+    color: #fff;
+    line-height: 30px;
+}
+
+    .db-pricing-eleven ul {
+        list-style: none;
+        margin: 0;
+        text-align: center;
+        padding-left: 0px;
+    }
+
+        .db-pricing-eleven ul li {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            cursor: pointer;
+        }
+
+            .db-pricing-eleven ul li i {
+                margin-right: 5px;
+            }
+
+
+    .db-pricing-eleven .price {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 40px 20px 20px 20px;
+        font-size: 60px;
+        font-weight: 900;
+        color: #FFFFFF;
+    }
+
+        .db-pricing-eleven .price small {
+            color: #B8B8B8;
+            display: block;
+            font-size: 12px;
+            margin-top: 22px;
+        }
+
+    .db-pricing-eleven .type {
+        background-color: #53AF81;
+        padding: 50px 20px;
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 30px;
+    }
+
+    .db-pricing-eleven .pricing-footer {
+        padding: 20px;
+    }
+
+.db-attached > .col-lg-4,
+.db-attached > .col-lg-3,
+.db-attached > .col-md-4,
+.db-attached > .col-md-3,
+.db-attached > .col-sm-4,
+.db-attached > .col-sm-3 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.db-pricing-eleven.popular {
+    margin-top: 10px;
+}
+
+    .db-pricing-eleven.popular .price {
+        padding-top: 80px;
+    }
+
+
+.btnBusqueda
+{
+    padding-left: 50px;
+    
+}
+
+.menuLink {color: green;}
+
+.box
+{
+    background-color: darkseagreen;
+    height: 100px;
+    width: 300px;
+    border-radius: 15px;
+
+}
+
+.boxMapa
+{   
+    margin-top: 20px;
+
+    height: 220px;
+    width: 230px;
+    background-color: darkseagreen;
+    border-radius: 15px;
+
+}
+
+.boxMapaDuenio
+{   
+    margin-top: 20px;
+    background-color: darkseagreen;
+    height: 300px;
+    width: 300px;
+    border-radius: 15px;
+
+}
+
+.box-IconosComplejo
+{   
+    margin-top: 30px;
+    background-color: darkseagreen;
+    height: 50px;
+    width: 600px;
+    border-radius: 15px;
+
+}
+
+
+.letraHorarios
+{
+    font-family: sans-serif;
+}
+
+
+.infoUbicacionComplejo
+{
+   display: inline-block;
+}
+
+#map-container
+{ 
+    height: 300px;
+}
+
+#map-outer {  height: 300px; 
+	  				padding: 20px; 
+					border: 2px solid #CCC; 
+					margin-bottom: 20px; 
+					background-color:#FFF }
+
+
+#map-containerIvan { height: 220px }
+
+
+.cuadro_intro_hover{
+    	padding: 0px;
+		position: relative;
+		overflow: hidden;
+		height: 200px;
+	}
+	.cuadro_intro_hover:hover .caption{
+		opacity: 1;
+		transform: translateY(-150px);
+		-webkit-transform:translateY(-150px);
+		-moz-transform:translateY(-150px);
+		-ms-transform:translateY(-150px);
+		-o-transform:translateY(-150px);
+	}
+	.cuadro_intro_hover img{
+		z-index: 4;
+	}
+	.cuadro_intro_hover .caption{
+		position: absolute;
+		top:150px;
+		-webkit-transition:all 0.3s ease-in-out;
+		-moz-transition:all 0.3s ease-in-out;
+		-o-transition:all 0.3s ease-in-out;
+		-ms-transition:all 0.3s ease-in-out;
+		transition:all 0.3s ease-in-out;
+		width: 100%;
+	}
+	.cuadro_intro_hover .blur{
+		background-color: rgba(0,0,0,0.7);
+		height: 300px;
+		z-index: 5;
+		position: absolute;
+		width: 100%;
+	}
+	.cuadro_intro_hover .caption-text{
+		z-index: 10;
+		color: #fff;
+		position: absolute;
+		height: 300px;
+		text-align: center;
+		top:-20px;
+		width: 100%;
+    }
+        
+        
+
+/*IVAN - PARA LOS COMENTARIOS DE LOS USUARIOS*/
+@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
+
+.detailBox {
+    width:750px;
+    border:1px solid #bbb;
+    margin-left:0px;
+    background-color: aliceblue;
+
+}
+.titleBox {
+    background-color:#fdfdfd;
+    padding:10px;
+}
+.titleBox label{
+  color:#444;
+  margin:0;
+  display:inline-block;
+}
+
+.commentBox {
+    padding:10px;
+    border-top:1px dotted #bbb;
+}
+.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+    width:65%;
+}
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+    width:18%;
+}
+.actionBox .form-group * {
+    width:100%;
+}
+.taskDescription {
+    margin-top:10px 0;
+}
+.commentList {
+    padding:0;
+    list-style:none;
+    min-height:150px;
+    max-height:150px;
+    overflow: scroll;
+}
+.commentList li {
+    margin:0;
+    margin-top:5px;
+}
+.commentList li > div {
+    display:table-cell;
+}
+.commenterImage {
+    width:30px;
+    margin-right:5px;
+    height:100%;
+    float:left;
+}
+.commenterImage img {
+    width:100%;
+    border-radius:50%;
+}
+.commentText p {
+    margin:0;
+}
+.sub-text {
+    color:#aaa;
+    font-family:verdana;
+    font-size:11px;
+}
+.actionBox {
+    border-top:1px dotted #bbb;
+    padding:10px;
+}
+/*IVAN-FIN DE LOS COMENTARIOS DE LOS USUARIOS*/
+
+.boxComplejo
+{
+    min-height: 310px;
+    max-height: 310px;
+}
+
+.boxServAdicionales
+{
+    min-height: 135px;
+    max-height: 135px;
+}
+
+.boxInfoCancha
+{
+    min-height: 145px;
+    max-height: 145px;
+}
+
+.boxInfoReserva
+{
+    min-height: 300px;
+    max-height: 300px;
+}
+
+
+
+.widget {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    padding: 12px 17px;
+    color: #f8f8f8;
+    background: rgba(51, 51, 51, 0.2);
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.widget2 {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    padding: 12px 17px;
+    color: #f8f8f8;
+    background: rgba(51, 51, 51, 0.2);
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.botonesPuntuacion {
+    color: aliceblue;
+
+}
+
+.imgMiniatura > img
+{
+
+    min-height: 120px;
+    max-height: 120px;
+    min-width: 150px;
+    max-width: 150px;
+    
+}
+
+.liSeparados li
+{
+    margin-top: 10px;
+}
+
+
+/*IVAN CAROUSEL CANCHAS*/
+
+.carouselCanchas {
+    margin-bottom: 0;
+	padding: 0 40px 30px 40px;
+}
+/* Reposition the controls slightly */
+.carouselCanchas-control {
+	left: -12px;
+}
+.carouselCanchas-control.right {
+	right: -12px;
+}
+/* Changes the position of the indicators */
+.carouselCanchas-indicators {
+	right: 50%;
+	top: auto;
+	bottom: 0px;
+	margin-right: -19px;
+}
+/* Changes the colour of the indicators */
+.carouselCanchas-indicators li {
+	background: #c0c0c0;
+}
+.carouselCanchas-indicators .active {
+background: #333333;
+}
+
+/*FIN IVAN CAROUSEL CANCHAS*/
+
+/*IVAN CAROUSEL COMPLEJOS*/
+
+.carouselComplejos {
+    margin-bottom: 0;
+	padding: 0 40px 30px 40px;
+}
+/* Reposition the controls slightly */
+.carouselComplejos-control {
+	left: -12px;
+}
+.carouselComplejos-control.right {
+	right: -12px;
+}
+/* Changes the position of the indicators */
+.carouselComplejos-indicators {
+	right: 50%;
+	top: auto;
+	bottom: 0px;
+	margin-right: -19px;
+}
+/* Changes the colour of the indicators */
+.carouselComplejos-indicators li {
+	background: #c0c0c0;
+}
+.carouselComplejos-indicators .active {
+background: #333333;
+}
+
+/*FIN IVAN CAROUSEL COMPLEJOS*/
+
+
+/*****TABLA by Matias*******/
+.features-table {
+    text-shadow: 0 1px 0 #fff;
+    color: green;
+    background: white;  
+    height: 60px;
+    width: 100px;
+}
+
+.features-table td {
+  height: 30px;
+  line-height: 30px;
+  padding: 0 20px;
+  border-bottom: 1px solid #cdcdcd;
+  box-shadow: 0 1px 0 white;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/*Body*/
+.features-table tbody td {
+  text-align: center;
+  font: normal 12px Tahoma;
+  width: 20px;
+}
+
+.statsData{
+    background-color: darkgreen;
+    color: white;
+
+}
+
+.tableStyle {
+    border: 1px solid rgb(212,212,212);
+    width: 400px; 
+    height: 300px;
+}
+/*****Fin TABLA*******/
+
+/*********BOTONES FECHAS DE FIXTURE**********/
+.fechas{
+    
+    border: 5px;
+    height: 15px;
+    text-align: center;
+    padding: 2px;
+    
+    
+}
+
+/*********FIN BOTONES FECHAS DE FIXTURE**********/
+
+#logoMediano {
+    border:0;
+     display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+
+
+    .iframe-container {    
+    padding-bottom: 60%;
+    padding-top: 30px; height: 0; overflow: hidden;
+}
+ 
+.iframe-container iframe,
+.iframe-container object,
+.iframe-container embed{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal.in .modal-dialog {
+  transform: none; /*translate(0px, 0px);*/
+}
+
+.error {
+  border-color: red;
+}
+ 
+.warning {
+  border-color: yellow;
+}
+
+.msjError{
+    color:red;
+}
+
+
+.msjErrorTorneo{
+    color:#F48F3C;
+}
+
+
+ .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+
+  .imgCarga {
+  width: 750px;
+  height: 500px;
+  float: none;
+  position: relative;
+  display: inline;	
+}
+
+
+  .imgSelect {
+  width: 750px;
+  height: 400px;
+  float: none;
+  position: relative;
+  display: inline;	
+}
+
+.angular-google-map-container { height: 225px; width: 325px;}
+
+
+#map { 
+    height: 300px;
+    margin: 10px 0;
+}
+.alert {
+    padding: 10px !important;
+    margin: 0 0 10px !important;
+}

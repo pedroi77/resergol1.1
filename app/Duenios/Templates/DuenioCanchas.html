@@ -1,0 +1,212 @@
+<div class="container-fluid">
+    
+    <div class="container">
+        <header class="row widget" >
+            <div style = "color: white; " class="container">
+                <h3  style=" font-size: 50px; text-align:center; font-style:italic;" >Mis canchas</h3>
+            </div>
+        </header>
+    </div>    
+    
+    <div id="main" ng-controller="AdministrarCanchasController as admCan"  class="container clear-top" style="min-height: 300px;">
+        <div class="container" id="main">
+            <div class="container">
+                <div class=" principal row " style="margin-bottom: 0px;">
+
+                    <div class="col-md-6">
+                        <section class="widget">
+                            <header>
+                                <h4 class="text-center"><i class="fa fa-user"></i>- Datos de la Cancha -</h4>
+                            </header>
+
+                            <fieldset>
+                                <div class="body">
+                                    <!--p class="mensajeExplicacion">Configuración de la cancha.</p -->
+
+                                    <div class="form-group">
+                                        <form class="">
+                                            <div class="form-group">
+                                                <label for="nombre" class="control-label col-sm-4">Nombre</label>
+                                                <div class="col-xs-12 col-sm-8">    
+                                                    <input id="nombre" class="form-control input-transparent" style="margin-bottom:5px;" type="text" placeholder="Nombre"  name="nombre" ng-model="admCan.CanchaSeleccionada.nombre" value="admCan.CanchaSeleccionada.nombre"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="cantJugadores" class="control-label col-sm-4">Jugadores</label>
+                                                <div class="col-xs-12 col-sm-8">    
+                                                    
+                                                    <select data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="admCan.cantJugadores.selectedOption" 
+                                                    ng-options="cantJugador.desc for cantJugador in admCan.cantJugadores.jug track by cantJugador.id" >
+                                                    </select>
+                                                    
+                                                    <!--select class="form-control" ng-change="cli.existeDni()" ng-model="cli.tiposDoc.selectedOption" 
+                                                             ng-options="tipoDoc.Descripcion for tipoDoc in cli.tiposDoc.tipos 
+                                                                         track by tipoDoc.IdTipoDoc" >
+                                                    </select -->
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="superficie" class="control-label col-sm-4">Superficie</label>
+                                                <div class="col-xs-12 col-sm-8">
+                                                    <select  data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="admCan.superficies.selectedOption" ng-options="superficie.Descripcion for superficie in admCan.superficies.sup track by superficie.IdSuperficie">
+                                                    </select>
+                                                </div>    
+                                            </div>        
+
+                                            <div class="form-group">
+                                                <label for="calle" class="control-label col-sm-4">Precio por hora</label>
+                                                <div class="col-xs-12 col-sm-8">    
+                                                    <input id="precio" class="form-control input-transparent" style="margin-bottom:5px;" type="number" placeholder=" $300"  name="precio" ng-model="admCan.CanchaSeleccionada.Precio" value="admCan.CanchaSeleccionada.Precio"/>
+                                                </div>    
+                                            </div>  
+
+                                            <div class="form-group" >
+                                                <div class="col-sm-12" >
+                                                    <label class="checkbox-inline"><input id="techada" type="checkbox" ng-model="admCan.CanchaSeleccionada.Techada">Techada</label>
+                                                    <label class="checkbox-inline"><input id="luz"type="checkbox" ng-model="admCan.CanchaSeleccionada.Luz">Con Luz</label>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="form-group" style="margin-top:20px;">
+                                                <div class="col-md-4"> 
+                                                    <div class="form-group">
+                                                        <button ng-disabled="!admCan.CanchaSeleccionada.guardoCancha" class="btn  btn-md btn-danger btn-block" style="border-radius: 7px;" ng-click="!admCan.CanchaSeleccionada.guardoCancha || admCan.inactivarCancha()">
+                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                            Eliminar
+                                                        </button>   
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4"> 
+                                                    <div class="form-group">
+                                                        <button ng-disabled="!admCan.CanchaSeleccionada.guardoCancha" class="btn  btn-md btn-info btn-block"  style="border-radius: 7px;" role="button" ng-click="!admCan.CanchaSeleccionada.guardoCancha || admCan.irImagenes()">
+                                                            <i class="glyphicon glyphicon-camera"></i>
+                                                            Imagenes
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4"> 
+                                                    <div class="form-group">
+                                                        <button id="guardar" class="btn  btn-md btn-success btn-block" style="border-radius: 7px;" ng-click="admCan.validarDatos()">
+                                                            <i class="glyphicon glyphicon-floppy-save"></i>
+                                                            {{admCan.CanchaSeleccionada.mensajeBoton}}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div> 
+
+                                            <div class="form-group" >
+                                                <div class="col-md-12"> 
+                                                    <div class="form-group">
+                                                        <a class="btn  btn-md btn-primary btn-block" style="border-radius: 7px;" ng-click="admCan.blanquearDatos()" role="button">
+                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                            Nuevo
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </section>
+                    </div>
+                    
+                    <div class="col-md-6" style="height:400px">
+                        <p>
+                            <img id="miImg" src="{{admCan.CanchaSeleccionada.imagenCancha}}" class="img-responsive imgSelect" alt="Image">
+                        </p>
+                    </div>
+                    
+                </div>
+                <br>
+                <div class=" principal row " style="margin-bottom: 0px;">
+                    <div>
+                        <!--section class="widget altoDuenioImg">
+                            <img src="{{}}" class="img-responsive" alt="" >
+                        </section-->
+                        <div id="divCancha" class="col-lg-3" style="height:250px;" ng-repeat="cancha in admCan.Canchas"> 
+                            <div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
+                                <p>
+                                    <img ng-src="{{cancha.imagen}}" class="img-responsive" alt="">
+                                </p>
+                                
+                                <div class="caption">
+                                    <div class="blur"></div>
+                                    <div class="caption-text">
+                                        <h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:1px;">                                            {{cancha.nombre}}
+                                        </h3>
+                                        <ul>
+                                        <!--<li>Dirección: {{cancha.Calle}} {{cancha.Altura}}</li>-->
+                                            <li>Tamaño: {{cancha.CantJugadores}} vs. {{cancha.CantJugadores}} </li>
+                                            <li>Superficie: {{cancha.Descripcion}}</li>
+                                            <li>Techada: {{cancha.Techada == 1 ? "SI" : "NO"}} </li>
+                                            <li>Luz: {{cancha.Luz == 1 ? "SI" : "NO"}}</li>
+                                            <li>Precio p/Hora: {{cancha.Precio}} </li>
+                                            <li>Estado: {{cancha.estado}} </li>
+                                            <li ng-if="false">superficieID: {{cancha.IdSuperficie}} </li>
+                                            <li ng-if="false">canchaID: {{cancha.IdCancha}} </li> 
+                                            <li ng-if="false">complejoID: {{cancha.IdComplejo}} </li>
+                                            <li ng-if="false">estadoID: {{cancha.IdEstado}} </li>
+                                        </ul>
+                                        <div class="col-md-12 text-center">
+                                            <a class="btn btn-success" ng-click="admCan.elegirCancha(cancha)"><span class="glyphicon icon-edit"></span>Modificar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>       
+     
+    <!--modal nueva imagen-->
+    <div id="imagenModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-registracion">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class = 'form-horizontal well'>
+                        <fieldset>
+                            <div class="col-xs-12 col-sm-6 col-md-12">
+                                <img src="/../resergol1.1/images/canchas/cancha2.jpg" class="img-responsive" alt="Image" >
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-md-6"> 
+                                <div class="form-group">
+                                    <button class="btn  btn-md btn-info btn-block" style="border-radius: 7px;">
+                                        <i class="glyphicon glyphicon-folder-open"></i>
+                                        Seleccionar
+                                    </button>   
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6"> 
+                                <div class="form-group">
+                                    <button class="btn  btn-md btn-success btn-block" style="border-radius: 7px;">
+                                        <i class="glyphicon glyphicon-floppy-save"></i>
+                                    Guardar foto
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

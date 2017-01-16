@@ -1,0 +1,211 @@
+<div class="container-fluid">
+
+    <br>
+    
+    <div class="container" ng-controller="BuscarTorneosController as bus">
+        <div class ="principal row">
+            <!-- Comienza la clase  row -->
+           
+           <div class="col-md-6">
+                <section class="widget">
+                    <div class="body">
+                        <form id="user-form" class="form-horizontal form-label-left">
+                            <fieldset>
+                                <legend class="section-buscar legend-mod">Filtros de torneos</legend></legend>
+                                
+                                
+                                <label for="precio" class="control-label col-sm-2">Nombre</label>
+                                <div class="col-sm-10">       
+                                    <input  type="text" id="nombreTorneo" class="input-sm col-sm-3 form-control" 
+                                           style="margin-bottom:9px;">
+                                </div>
+                            
+                                <label class="control-label col-sm-2">Tipo</label>    
+                          
+                                <div class=" col-sm-4 ">
+                                    <select style="margin-bottom:5px;"  data-live-search="true" class="selectpicker form-control ac-select stateList" ng-model="bus.tiposTorneos.selectedOption" 
+                                            ng-options="tiposTorneos as tiposTorneos.Nombre for tiposTorneos in bus.tiposTorneos.tiposTorneos track by
+                                                        tiposTorneos.IdTipoTorneo" ng-change="bus.getCantEquipos()">
+                                    </select>
+                                </div>    
+                          
+                                <label class="control-label col-sm-2">Equipos</label>
+                                <div class=" col-sm-4">    
+                                    <select style="margin-bottom:5px;"  data-live-search="true" class="selectpicker form-control ac-select stateList" ng-model="bus.cantEquipos.selectedOption" 
+                                            ng-options="cantEquipos as cantEquipos.cantidad for cantEquipos in bus.cantEquipos.cantEquipos track by
+                                                        cantEquipos.cantidad" ng-change="bus.getCantEquipos()">
+                                    </select>
+                                </div>
+                            
+                                <label for="provincias" class="control-label col-sm-2">Provincia</label>    
+                          
+                                <div class=" col-sm-4 ">
+                                    <select style="margin-bottom:5px;"  data-live-search="true" class="selectpicker form-control ac-select stateList" ng-model="bus.provincias.selectedOption" 
+                                            ng-options="provincia as provincia.Nombre for provincia in bus.provincias.prov track by
+                                                        provincia.IdProvincia" ng-change="bus.getLocalidades()">
+                                    </select>
+                                </div>    
+                          
+                                <label for="localidades" class="control-label col-sm-2">Localidad</label>
+                                <div class=" col-sm-4">    
+                                    <select data-live-search="true" style="margin-bottom:5px;font-size:12px;" class="form-control" ng-model="bus.localidades.selectedOption" 
+                                                    ng-options="localidad.Nombre for localidad in bus.localidades.loc track by localidad.Nombre" >
+                                    </select>
+                                </div>
+                            
+                                <label class="control-label col-sm-2">Jugadores</label>
+                                <div class="col-sm-4">
+                                    <select data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="selectedCantJugadoresId" 
+                                                ng-options="cantJugador.id as cantJugador.desc for cantJugador in bus.cantJugadores" >
+                                    </select>
+                                </div>    
+                          
+                                <label for="superficie" class="control-label col-sm-2">Superficie</label>
+                                <div class="col-sm-4">    
+                                    <select  data-live-search="true" style="margin-bottom:5px;" class="form-control" ng-model="bus.superficies.selectedOption" 
+                                            ng-options="superficie.Descripcion for superficie in bus.superficies.sup track by
+                                                        superficie.IdSuperficie">
+                                    </select> 
+                                </div>
+                             
+                              
+                                <br>
+                            
+                                
+                                
+                               <div class="col-sm-12"  style="margin-bottom:10px;">
+                                   <label class="checkbox-inline"><input id="inscripcion" type="checkbox" checked="true" value="">En Inscripción</label>
+                                    <label class="checkbox-inline"><input id="activos" type="checkbox" checked="true" value="">Activos</label>
+                                    <label class="checkbox-inline"><input id="finalizados" type="checkbox" value="">Finalizados</label>
+                                    <label class="checkbox-inline"><input id="idayvuelta" type="checkbox" value="">Ida y Vuelta</label>
+                                </div>
+                                
+                               <br>
+                                
+                                <div class="col-sm-8">
+                                    <button class="btn btn-md btn-success btn-block"
+                                            onclick="$('html, body').animate({ scrollTop: $('#divpag').offset().top }, 1000);"  ng-click="bus.getTorneos()"><i class="fa fa-plus glyphicon glyphicon-search"></i>Buscar</button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <button class="btn btn-md btn-info btn-block" ng-click="bus.limpiarFiltros()"><i class="fa fa-plus glyphicon glyphicon-erase"></i>Limpiar filtros</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </section>
+               
+            </div>    
+         
+
+            <div class="col-md-6">
+                <img class="img-responsive" src="http://localhost:8080/resergol1.1/api/Imagenes/torneosDefault.jpeg" alt="">
+            </div>
+                
+            </div> 
+
+           
+
+            <!--<div style="color:#FFCCCC;" ng-show="bus.seBusco && torneos.length == 0">-->
+            <div style="color:#FFCCCC;" ng-show="bus.seBusco && torneos.length == 0">
+                <p>No se encontraron torneos para los filtros ingresados...</p>
+            </div>
+            <!-- /.row -->
+            <hr>
+            <!-- aca dejar un unico cuadro y crear en con ng-repeat los cuadros necesarios -->
+            <div class ="principal row filtro-Complejos" ng-controller="ClientesController as cli">    
+                <div id="divTorneo" class="col-lg-3" style="height:250px;" ng-repeat="torneo in torneosPaginados">
+    				<div class="cuadro_intro_hover" style="background-color:#cccccc; height:250px;">
+                        <div class="col-md-12" style="height:400px">
+						<p>
+                            <img  ng-src="{{torneo.Imagen}}" class="img-responsive" alt="Image">
+                        </p>
+                        </div>
+						<div class="caption">
+							<div class="blur"></div>
+							<div class="caption-text">
+								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:1px;">           {{torneo.Nombre}} ${{torneo.PrecioInscripcion | currency:''}}
+                                    <!--<button class="{{cancha.PuntajeClass}}" id="cuatro">
+                                        <span>{{cancha.PuntajeDesc}}</span>
+                                    </button>-->
+                                </h3>
+                                <h4 class="fa fa-user titul" style="padding:1px;">
+                                    en <a style="color:orange;" ui-sref="Clientes.verComplejo({idComp:'{{torneo.IdComplejo}}'})">{{torneo.Complejo}}</a>             
+                                </h4>
+                                <h6 style="border-bottom:1px solid white; padding:3px;">
+                                {{torneo.Calle}} {{torneo.Altura}}
+                                </h6>
+								<ul>
+                                    <li>Tipo: {{torneo.Tipo}}</li>
+                                    <li>Estado: {{torneo.Descripcion}}</li>
+                                    <li>Cant. Equipos: {{torneo.CantEquipos}}</li>
+                                    <li>Jugadores: {{torneo.CantJugadores}} vs. {{torneo.CantJugadores}} </li>
+                                    <!--<li>Superficie: {{torneo.Superficie}}</li>-->
+                                    <li>Ida y Vuelta: {{torneo.IdaYvuelta == 1 ? "SI" : "NO"}}</li>
+                                </ul>
+                                <div class="col-md-12 text-center">
+								<a href="" class="btn btn-success"
+                                    ng-click="bus.verTorneo(torneo)"><span class="glyphicon glyphicon-eye-open"></span> VER TORNEO</a>
+                                </div>
+							</div>
+						</div>
+                        
+					</div>
+	           </div>
+                <!--<div class="col-md-3 portfolio-item">
+                    <a href="#">
+                        <img class="img-responsive" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irTorneoCopa()">
+                    </a>
+                    <h3>
+                        <p href="#"><strong>Sudamericana</strong></p>
+                    </h3>
+                    <p>Copa</p>
+                </div>
+                
+                 <div class="col-md-3 portfolio-item">
+                    <a href="#">
+                        <img class="img-responsive" src="/../resergol1.1/images/complejos/complejo2.jpg" alt="" ng-click="cli.irTorneoCopa()">
+                    </a>
+                    <h3>
+                        <p href="#"><strong>Libertadores</strong></p>
+                    </h3>
+                    <p>Copa</p>
+                </div>
+                
+                 <div class="col-md-3 portfolio-item">
+                    <a href="#">
+                        <img class="img-responsive" src="/../resergol1.1/images/complejos/complejo2.jpg" alt=""  ng-click="cli.irTorneoLiga()">
+                    </a>
+                    <h3>
+                        <p href="#"><strong>Champions</strong></p>
+                    </h3>
+                    <p>Liga</p>
+                </div>
+                
+                 <div class="col-md-3 portfolio-item">
+                    <a href="#">
+                        <img class="img-responsive" src="/../resergol1.1/images/complejos/complejo2.jpg" alt=""  ng-click="cli.irTorneoLiga()">
+                    </a>
+                    <h3>
+                        <p href="#"><strong>UEFA</strong></p>
+                    </h3>
+                    <p>Liga</p>
+                </div>-->
+            </div> 
+
+            <div class="text-center" id="divpag">        
+        <uib-pagination previous-text="Anterior" next-text="Siguiente" first-text="Inicio" last-text="Fin" total-items="totalItems" ng-show = "torneos.length > 0" items-per-page="itemsPerPage" ng-model="pagination.currentPage" class="pagination-sm" boundary-links="true" num-pages="numPages" on-select-page="onGoToPage(page)" ng-change="pageChanged(pagination.currentPage)"></uib-pagination>       
+      </div>
+        <div class="col-sm-1">
+        <!--<button id="btnSubir" class="btn btn-primary" onclick="$('html,body').animate({scrollTop:10},'
+                                                               ');return false;" ng-show = "canchas.length > 0"><i class="fa fa-plus glyphicon glyphicon-arrow-up"></i></button>-->
+            <button id="btnSubir" class="btn btn-primary" onclick="$('html,body').animate({scrollTop:10},'slow');return false;" ng-show = "torneos.length > 0"><i class="fa fa-plus glyphicon glyphicon-arrow-up"></i></button> 
+
+      </div>     
+      <div class="col-sm-3" style="color:white;" ng-show="torneos.length > 0">
+        <p>Mostrando {{torneosPaginados.length}} de {{torneos.length}} torneos...</p>
+      </div>
+
+    </div>
+    </div>
+</div>     
+<hr>

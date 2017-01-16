@@ -1,0 +1,34 @@
+
+    
+    <div class="container" id="mainTorneo" ng-controller="TorneoEquiposController  as tor" >        
+        <div class="container">
+            <header class="row widget col-xs-12 col-sm-6 col-md-12" >
+                <div style = "color: white; " class="container">
+                    <h3  style=" font-size: 50px; text-align:center; font-style:italic;" ></span>Equipos del torneo {{tor.nombre}}</h3>
+                </div>
+            </header>
+        </div>
+
+        <div class="container widget col-xs-12 col-sm-6 col-md-12">
+            <header>
+                <h4><i class="fa fa-user"></i><p class="mensajeExplicacion">{{tor.insc}}  Equipos inscriptos de {{tor.cantEquipos}}.</h4>
+            </header>
+            
+            
+            <table ng-table="tor.table" class="table table-condensed table-bordered table-striped" style="background-color:lightgrey;">
+                    <tr ng-repeat="equipo in tor.equipos" style="background-color:white;">
+                        <td title=""  ng-if="false">{{equipo.IdEquipo}}</td>
+                        <td title="'Nombre'"  >{{equipo.nombre}}</td>
+                        <td title="'Fecha de Inscripcion'"  >{{equipo.fechaInscripcion}}</td>
+                        <td title="'Estado'"  >{{equipo.Estado}}</td>
+                    </tr>
+            </table>
+            
+        </div>
+    </div>
+
+ 
+   <div class="clearfix"></div>
+        
+    <div/>    
+ 

@@ -1,0 +1,109 @@
+
+<body class="background-dark">
+
+    <div class="container" id="main"   ng-controller="TorneoImgController as tor">
+
+        <div class="container-fluid">
+
+            <header class="row widget" >
+                <div style = "color: white; " class="container">
+                    <h3  style=" font-size: 50px; text-align:center; font-style:italic;" ></span>
+                    {{tor.msjPantalla}}</h3>
+                </div>
+            </header>
+        </div>    
+        
+        <div class="container">
+            
+            <div class=" principal row " style="margin-bottom: 20px; display: inline;">
+                
+                <div class= "col-md-3 " style="height:400px; position:relative;" >
+                    <buton  href="#imagenModal" class="btn  btn-md btn-danger   pull-right btn-circle" ng-click="tor.borrar()"  style="position:absolute; bottom:1px; left:120px;">
+                        <i class="glyphicon glyphicon-trash"></i>
+                        Eliminar imagen
+                    </buton>
+                </div>
+             
+                <div class="col-xs-12 col-sm-6 col-md-6" style="height:400px">
+                    <img id="miImg" src= {{tor.imagenes.selectedOption.imagen}}  class="img-responsive imgSelect" alt="Image">
+                </div>
+         
+                
+                <div class= "col-md-3" style="height:400px; position:relative;">
+                    <buton href="#imagenModal" role="button" data-toggle="modal" class="btn  btn-md btn-success   pull-right btn-circle" style="position:absolute; bottom:1px;">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        Agregar imagen
+                    </buton>
+                </div>    
+                
+            </div>
+            
+            <div class="principal row">
+            	<div class="col-md-3 seleccion"  ng-repeat="img in tor.imagenes.tipos"   >
+    				<p>
+    					<img  ng-src="{{img.imagen}}"  ng-click="tor.imagenes.selectedOption = img" class="img-responsive" alt="" style="background-color:#cccccc; height:250px;">
+    				</p>
+        	    </div>
+                
+                
+            </div>
+        </div>
+    
+                
+        <!--modal nueva imagen-->
+        <div id="imagenModal" class="modal fade "  aria-hidden="true"  >
+            <div class="modal-dialog modal-registracion">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+
+                    <div class="modal-body" >
+                        <div class = 'form-horizontal well'>
+                            <fieldset>
+                                <div class="col-xs-12 col-sm-6 col-md-12">
+                                    <img  ngf-src="picFile[0]" class="img-responsive imgCarga" alt="Image" >
+                                </div>
+                            </fieldset>
+                        </div>
+
+
+                        <fieldset>
+                            <form name="TorneoImgService" ng-submit="uploadFile()">
+                                <div class="col-md-12"> 
+                                    <div class="form-group">
+
+                                        <div class="input-box">
+                                            <input type="file" id="file" class="input-text" ngf-change="onChange($files)" ngf-select uploader-model="file" ng-model="picFile" name="attachement" accept="image/png, image/jpeg, image/jpg" />
+                                        </div>
+                                    </div>
+                                    
+                                     <span ng-show="tor.bMensaje" class= "msjError">
+                                        Solo se permiten archivos con extension jpg, jpeg, gif, png
+                                    </span>
+                                    <button  class="btn  btn-md btn-success btn-block" style="border-radius: 7px;"   ng-click="uploadFile()"  data-dismiss="modal" ng-disabled="tor.archivoInvalido" >
+                                        <i class="glyphicon glyphicon-floppy-save"></i>
+                                        Guardar foto
+                                    </button>
+                                </div>
+
+
+                            </form>
+                        </fieldset>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    
+    </div>
+
+
+    <!--pi-->
+    <div class="clearfix"></div>
+      
+    <div/>    
+
+</body>

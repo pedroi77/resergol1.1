@@ -1,0 +1,193 @@
+<div class="container-fluid" ng-controller="DueniosReservasController as dueRes">
+
+    <div class="container">
+        <header class="row widget" >
+            <div style = "color: white" class="container">
+                <h3  style=" font-size: 50px; text-align:center;  font-style:italic;">RESERVAS DEL DIA {{dueRes.FechaReserva}}</h3>
+
+               <div class="principal row" style= "text-align:center">
+                   <!--button type="button" class="btn" style="border-radius: 8px; background-color: transparent">
+                        <i class="glyphicon glyphicon-arrow-left"></i>
+                    </button>
+
+                    <label class="fontMasChica" style="text-align:center">Jueves 1 de Octubre de 2015</label >
+
+                    <button type="button" class="btn" style="border-radius: 8px; background-color: transparent">
+                        <i class="glyphicon glyphicon-arrow-right"></i>
+                    </button -->   
+                </div>
+            </div>
+        </header>
+    </div>
+    
+    <div class="col-md-12">
+        <div class="col-sm-4">  
+            <label for="sel2" class="control-label col-sm-3" >Fecha</label>
+            <p class="input-group">
+                <input type="text" id="fecha" readonly='true' class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="false" close-text="Cerrar" alt-input-formats="altInputFormats" ng-change="dueRes.cambiaFecha(dt)"/>
+
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+        </div>
+    </div>
+    
+    <div class="col-md-12">
+        <div class="container">
+            <div class ="principal row filtro-reservas">
+                <div class="table-responsive col-md-12 ">     
+                    <section class="widget">
+                        
+                        <table id="tablaReservas" class="table table-bordered text-center " style= "table-layout: fixed; vertical-align:center;">
+                            
+                            <tr ng-repeat="row in data" >
+                                <td href="{{col.referencia}}" ng-click="dueRes.clic($index, row)" style="{{col.estilo}}" role="button" data-toggle="modal" class="seleccion celdaReserva" ng-repeat="col in row track by $index">{{col.nombre}}</td>
+                            </tr>
+
+                        </table>
+                     </section>    
+                </div>
+            </div>
+        </div>    
+    </div>
+ 
+    <div class="clearfix">
+    
+    </div>
+           
+    <!--reservas modal-->
+    <div id="reservasModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <form class="modal-body" name="frmReservasModal">
+            <div class="modal-dialog modal-registracion">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" ng-click="dueRes.limpiarForm(frmReservasModal)" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class = 'form-horizontal well'>
+
+                            <fieldset>
+                                <legend>Datos de la cancha</legend>
+                                <div class="control-group">
+                                    <form class="form center-block">
+                                        <div class="col-md-4"> 
+                                            <div class="form-group">
+                                                <label class="control-label">Cancha:</label>
+                                                <br>
+                                                <label class="control-label">Precio</label>
+                                                <br>
+                                                <label class="control-label">Cant. de jugadores:</label>
+                                                <br>
+                                                <label class="control-label">Superficie:</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label class="control-label">{{dueRes.reservaSeleccionada.NombreCancha}}</label>
+                                                <br>
+                                                <label class="control-label">$ {{dueRes.reservaSeleccionada.Precio}}</label>
+                                                <br>
+                                                <label class="control-label">{{dueRes.reservaSeleccionada.CantJugadores}} vs {{dueRes.reservaSeleccionada.CantJugadores}}</label>
+                                                <br>
+                                                <label class="control-label">{{dueRes.reservaSeleccionada.Superficie}}</label>
+                                            </div>
+                                        </div>  
+                                    </form>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>Datos de la reserva</legend>    
+                                <div class="control-group">
+                                    <form class="form center-block">
+                                        <div class="col-md-2">    
+                                            <div class="form-group" style= "margin-top:8px;">
+                                                <label >Usuario:</label>
+                                            </div>
+                                            <div class="form-group" style= "margin-top:22px;">
+                                                <label >Horario:</label>
+                                            </div>
+                                            <div class="form-group" style= "margin-top:26px;">
+                                                <label >Pagado:</label>
+                                            </div>
+                                            <div class="form-group" style= "margin-top:22px;">
+                                                <label>Resta:</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <!--input type="text" id="usuario" ng-disabled="dueRes.reservaSeleccionada.Usuario != ''" class="form-control input-md"  placeholder="Cliente" ng-model="dueRes.reservaSeleccionada.UsuarioReserva" value="{{dueRes.reservaSeleccionada.Usuario}}" -->
+
+                                                <input type="text" id="usuario" ng-disabled="dueRes.reservaSeleccionada.IdReserva > 0" class="form-control input-md"  placeholder="Cliente" ng-model="dueRes.reservaSeleccionada.Usuario" value="{{dueRes.reservaSeleccionada.Usuario}}">
+                                            </div> 
+
+                                            <div class="form-group">
+                                                <label for="sel2"  class="fontMasChica" style= "margin-left: 2px;" >Desde:</label>
+                                                <input type="text" ng-disabled="true" id="pagado" style="width: 100px" class="input-md" value="{{dueRes.reservaSeleccionada.horaDesde}}">
+
+                                                <label for="sel2" class="fontMasChica" style= "margin-left: 20px; " > Hasta:</label>
+                                                <select ng-disabled="dueRes.reservaSeleccionada.Usuario != ''" id="horaHasta" data-live-search="true" style="margin-bottom:2px, width: 100px;" class="" ng-model="selectedHoraIdHasta"
+                                                ng-change="dueRes.calcularPago()" ng-options="hora.id as hora.desc for hora in dueRes.horasHasta"></select>
+                                            </div>
+
+                                            <div class ="principal row" style= "margin-top:0px;">
+                                                <input type="text" ng-disabled="dueRes.reservaSeleccionada.EstadoReserva == 2" id="pagado" ng-change="dueRes.CalcularResta()" ng-model="dueRes.reservaSeleccionada.Pagado" class="form-control input-md" value="{{dueRes.reservaSeleccionada.Pagado}}">
+                                            </div>
+
+                                            <div class="form-group" style= "margin-top:8px;">
+                                                <input type="text" id="resta" ng-disabled="true" class="form-control input-md" value="{{dueRes.reservaSeleccionada.Resta}}">
+                                            </div> 
+                                        </div>
+                                    </form>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="col-md-4"> 
+                                        <div class="form-group">
+                                            <button class="btn  btn-md btn-danger btn-block" ng-click="dueRes.borrarReserva()" ng-disabled="dueRes.Fecha < dueRes.Hoy" style="border-radius: 7px;">Cancelar Reserva</button>   
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4"> 
+                                        <div class="form-group">
+                                            <button class="btn  btn-md btn-warning btn-block" ng-click="dueRes.reservar(1)" ng-disabled="dueRes.reservaSeleccionada.EstadoReserva == '2' || dueRes.Fecha < dueRes.Hoy" style="border-radius: 7px;">Reserva Fija</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4"> 
+                                        <div class="form-group">
+                                            <button class="btn  btn-md btn-success btn-block" ng-disabled="dueRes.reservaSeleccionada.IdReserva == 0 || dueRes.reservaSeleccionada.EstadoReserva == 2 || dueRes.Fecha < dueRes.Hoy" ng-click="dueRes.completarPago()" style="border-radius: 7px;">Completar pago</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="col-md-12"> 
+                                        <div class="form-group">
+                                            <button class="btn  btn-md btn-primary btn-block" ng-click="dueRes.reservar(0)" 
+                                                    ng-disabled="dueRes.reservaSeleccionada.IdReserva > 0 || dueRes.reservaSeleccionada.Resta < 0 || dueRes.Fecha < dueRes.Hoy" style="border-radius: 7px;">Reservar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+    
+
+	
+	
+	  
